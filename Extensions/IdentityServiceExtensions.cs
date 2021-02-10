@@ -18,6 +18,11 @@ namespace ALBaB.Extensions
             services.AddIdentityCore<AppUser> (opt =>
             {
                opt.Password.RequireNonAlphanumeric = false; 
+               opt.Password.RequireDigit =false;
+               opt.Password.RequiredUniqueChars = 0;
+               opt.Password.RequiredLength = 5;
+               opt.Password.RequireLowercase = false;
+               opt.Password.RequireUppercase = false;
 
             })
                .AddRoles<AppRole>()
@@ -39,7 +44,7 @@ namespace ALBaB.Extensions
                 };
                 
 
-            });*/
+            }); */
 
             services.AddAuthentication(); 
 

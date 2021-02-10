@@ -1,6 +1,7 @@
 using ALBaB.Data;
 using ALBaB.Entities;
 using ALBaB.Entities.DTOs;
+using ALBaB.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace ALBaB.Extensions
         {
             
            
-          
+            services.AddScoped<ITokenService,TokenService>();
            
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
