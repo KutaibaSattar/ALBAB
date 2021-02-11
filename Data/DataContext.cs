@@ -24,6 +24,9 @@ namespace ALBaB.Data
             
         }
 
+         public DbSet<dbAccounts> dbAccounts {get;set;}
+
+
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
