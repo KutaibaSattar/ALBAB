@@ -35,15 +35,14 @@ namespace BabALSaray.Controllers
         {
 
 
-            var dbaccountsTree = await _context.dbAccounts.ToListAsync();
+            var dbaccounts = await _context.dbAccounts.ToListAsync();
 
-            var dbaccounts = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
-            .AsQueryable(); //.ToListAsync();
+           /*  var dbaccounts = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
+            .AsQueryable(); //.ToListAsync(); */
 
             //var dbaccountsTree = await Task.FromResult(dbaccounts.ToList());
-
-
-            var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccountsTree);
+           
+            var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
      
 
             return Ok(result);

@@ -7,6 +7,7 @@ using ALBaB.Entities.DTOs;
 using ALBaB.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,11 +33,15 @@ namespace ALBaB
 
 
              
-           //services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+        
            services.AddControllers();
            
           
-            //services.AddControllers();
+        // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
            
         }
 
@@ -52,15 +57,17 @@ namespace ALBaB
 
           /*  1-  command in on a HTTP address, redirected to the HTTP endpoints. */
             app.UseHttpsRedirection();
-
+           
            /* 2- set up routing.We've seen routing and action because 
            we were able to go from our browser weatherforecast endpoint
             and get to weatherforecast controller. */
-            app.UseRouting();
-
-           app.UseAuthentication();
+           app.UseRouting();
+         
+         
+          app.UseAuthentication();
           app.UseAuthorization(); 
             
+           app.UseStaticFiles(); // for api static  like angular
 
           /* 3- we've got the middleware to actually use the endpoints and we've got a method
                 here to map the controllers.And this takes a look inside our controllers
@@ -69,6 +76,19 @@ namespace ALBaB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+              app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                    
+                }
             });
         }
     }

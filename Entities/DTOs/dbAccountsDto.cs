@@ -23,7 +23,7 @@ namespace ALBaB.Entities.DTOs
 
         public int? ParentId { get; set; }
 
-        public ICollection<dbAccountsDto> Children { get; set; }
+        //public ICollection<dbAccountsDto> Children { get; set; }
         /*  public dbAccountsDto(){
 
              Children = new Collection<dbAccountsDto>();

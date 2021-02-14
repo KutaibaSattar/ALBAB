@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@angular/cli": "^11.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  }
+}
