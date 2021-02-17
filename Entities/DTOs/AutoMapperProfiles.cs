@@ -9,6 +9,7 @@ namespace ALBaB.Entities.DTOs
         {
             CreateMap<AppUser,RegisterDto>().ReverseMap();
             CreateMap<AppUser,AppUserDto>().ReverseMap();
+            CreateMap<AppUser,MemberDto>().ReverseMap();
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
 
 

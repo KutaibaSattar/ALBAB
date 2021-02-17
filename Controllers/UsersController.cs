@@ -23,11 +23,11 @@ namespace ALBaB.Controllers
        
        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
           var users = await _context.Users.ToListAsync();
             
-         var result = _mapper.Map<List<AppUser>,List<AppUserDto>>(users);
+         var result = _mapper.Map<List<AppUser>,List<MemberDto>>(users);
            
           return Ok(result); 
 

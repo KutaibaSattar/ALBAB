@@ -8,15 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'ClientApp';
-  constructor (private http : HttpClient){}
+  constructor (){}
 
   ngOnInit(){
-    this.http.get('https://localhost:5001/api/dbaccounts').subscribe((res:Response) =>{
-
-    console.log(res)
-
-    })
-
+  
   }
 
 }
