@@ -1,11 +1,67 @@
+ 
  <!-- HEADER -->
  <header id="main-header" class="bg-warning text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <i class="fa fa-users"></i> Users</h1>
+            <i class="fa fa-users"></i>Members</h1> 
         </div>
       </div>
     </div>
   </header>
+   <!-- SEARCH -->
+  <section id="search" class="py-1 mb-2 bg-light">
+    <div class="container">
+      <div class="row">
+        <button class="btn btn-warning ml-3" >Add User</button>   
+        <div class="col-md-6 ml-auto">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Users...">
+            <div class="input-group-append">
+              <button class="btn btn-warning">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+    
+    </div>
+  </section>
+   <!-- USERS -->
+   <section id="users">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h4>Active Users</h4>
+            </div>
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>#Phone</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody  *ngFor="let user of memberList">
+                <tr>
+                  <td>{{user.id}}</td>
+                  <td>{{user.userName}}</td>
+                  <td>{{user.phoneNumber}}</td>
+                  <td>
+                    <a href="details.html" class="btn btn-secondary">
+                      <i class="fa fa-angle-double-right"></i> Details
+                    </a>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

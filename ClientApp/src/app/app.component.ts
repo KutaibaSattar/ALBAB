@@ -8,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'ClientApp';
+  currentYear: any;
   constructor (){}
 
   ngOnInit(){
+    this.currentYear = new Date().getFullYear();
+    console.log(this.currentYear);
   
   }
 

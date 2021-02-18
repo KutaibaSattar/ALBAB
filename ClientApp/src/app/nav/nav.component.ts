@@ -7,13 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  currentYear: any;
+ 
   
   constructor() { }
 
   ngOnInit(): void {
-    this.currentYear = new Date().getFullYear();
-    console.log(this.currentYear);
+   
   }
 
 }
