@@ -7,7 +7,7 @@ import { MemberListComponent } from './_account/member-list/member-list.componen
 const routes: Routes = [
   {path: '', component: DashboardComponent },
   {path: 'members', component: MemberListComponent },
-  {path: 'members/:id', component: MemberDetailsComponent },
+  {path: 'memberdetails', component: MemberDetailsComponent },
   {path: 'dashboard', component: DashboardComponent },
   {path: '**' ,component: DashboardComponent, pathMatch:'full' },
   
