@@ -25,8 +25,12 @@ export class MemberListComponent implements OnInit {
 
     }
 
- }
+    OnClick(){
+      console.log('Hello');
+
+    }
+
+  }
 
  
-
 

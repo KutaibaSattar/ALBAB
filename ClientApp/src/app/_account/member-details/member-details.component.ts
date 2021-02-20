@@ -1,5 +1,7 @@
 import {Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+
 
 
 @Component({
@@ -9,7 +11,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MemberDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog : MatDialog) { }
   form: FormGroup = new FormGroup({
     $key: new FormControl(null),
     userName: new FormControl('')
@@ -19,6 +21,10 @@ export class MemberDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+  }
+  openDialog(){
+    this.dialog.open(MemberDetailsComponent);
+    console.log('Hello');
   }
 
 }
