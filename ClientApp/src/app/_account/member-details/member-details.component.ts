@@ -22,9 +22,6 @@ export class MemberDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  openDialog(){
-    this.dialog.open(MemberDetailsComponent);
-    console.log('Hello');
-  }
+  
 
 }
