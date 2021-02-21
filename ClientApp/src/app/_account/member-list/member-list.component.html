@@ -14,7 +14,7 @@
   <section id="search" class="py-1 mb-2 bg-light">
     <div class="container">
       <div class="row">
-        <button class="btn btn-warning ml-3" >Add User</button>
+        <button class="btn btn-warning ml-3" (click)="OnClick()" >Add User</button>
         <div class="col-md-6 ml-auto">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Users...">
@@ -25,7 +25,6 @@
         </div>
       </div>
 
-<button disabled="disabled"></button>
     </div>
   </section>
    <!-- USERS -->
@@ -52,7 +51,7 @@
                   <td>{{user.userName}}</td>
                   <td>{{user.phoneNumber}}</td>
                   <td>
-                    <a [routerLink]="" (click)="OnClick()" class="btn btn-secondary">
+                    <a [routerLink]=""  class="btn btn-secondary">
                       <i class="fa fa-angle-double-right"></i> Details
                     </a>
                   </td>

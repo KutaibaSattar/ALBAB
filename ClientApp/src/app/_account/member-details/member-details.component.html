@@ -1,11 +1,29 @@
- <div class="form-group">
+<h2 mat-dialog-title>New User</h2>
+<hr>
+<mat-dialog-content>
+  <form #form="ngForm" autocomplete="off">
+    <div class="form-row">
+     <div class="form-group col-md-12">
+       <div class="input-group">
+         <input name="userName" class="form-control border-primary" placeholder="Enter username" >
+       </div>
 
+     </div>
+     <div class="form-group col-md-6">
+       <input name="password" placeholder="Password" class="form-control">
+     </div>
+   </div>
+   <div class="form-group">
 
-<form [formGroup] ="form" >
+     <div class="input-group">
 
-I am memeber Details components
+       <input name="telephone" class="form-control" placeholder="Contact">
+     </div>
+   </div>
+   <div class="form-group">
+     <button type="submit" class="btn btn-dark" [mat-dialog-close]><i class="fa fa-database"></i> Submit</button>
+     <button type="button" class="btn btn-outline-dark ml-1" mat-dialog-close><i class="fa fa-close"></i> Close</button>
+   </div>
+ </form>
+</mat-dialog-content>
 
-
-
-</form>
-</div> 

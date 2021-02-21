@@ -14,11 +14,11 @@ export class MemberListComponent implements OnInit {
   constructor(private memberService : AccountService,private dialog : MatDialog ) { }
 
   ngOnInit(): void {
-    
+
     this.loadMembers()
-      
+
       }
-  
+
   loadMembers(){
         this.memberService.getMembers().subscribe( (res)=>{
           this.memberList = res;
@@ -28,12 +28,13 @@ export class MemberListComponent implements OnInit {
     }
 
     OnClick(){
-      this.dialog.open(MemberDetailsComponent);
-     
+
+      this.dialog.open(MemberDetailsComponent).afterClosed().subscribe(res => console.log(res));
+
 
     }
 
   }
 
- 
+
 
