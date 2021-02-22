@@ -37,6 +37,7 @@ namespace ALBaB.Data
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnabled);
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
+        
       
       
 

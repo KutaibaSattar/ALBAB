@@ -1,6 +1,7 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Member } from 'src/app/_models/member';
 
 
 
@@ -10,18 +11,18 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./member-details.component.scss']
 })
 export class MemberDetailsComponent implements OnInit {
+  formData: Member
 
-  constructor(private dialog : MatDialog) { }
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    userName: new FormControl('')
-
-
-  });
+  constructor() {}
 
 
   ngOnInit(): void {
+
+    /* this.formData = {
+      userName : '',
+      phoneNumber : ''
+    } */
   }
-  
+
 
 }

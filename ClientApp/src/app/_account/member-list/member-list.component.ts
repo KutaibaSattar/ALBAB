@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Member } from '../../_models/member';
 import { AccountService } from '../../_service/account.service';
@@ -12,6 +13,11 @@ import { MemberDetailsComponent } from '../member-details/member-details.compone
 export class MemberListComponent implements OnInit {
   memberList : Member[];
   constructor(private memberService : AccountService,private dialog : MatDialog ) { }
+
+  form: FormGroup = new FormGroup({
+    $key: new FormControl(null),
+    userName: new FormControl('')
+  });
 
   ngOnInit(): void {
 
@@ -29,7 +35,9 @@ export class MemberListComponent implements OnInit {
 
     OnClick(){
 
-      this.dialog.open(MemberDetailsComponent).afterClosed().subscribe(res => console.log(res));
+      this.dialog.open(MemberDetailsComponent, {data:this.form.controls})
+
+      .afterClosed().subscribe(res => console.log('close',res));
 
 
     }

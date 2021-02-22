@@ -7,7 +7,8 @@ namespace Entities.DTOs
       [Required]
        public string UserName { get; set; } 
       
-      [Required]
+       /* [Required] */
+       [EmailAddress]
        public string Email { get; set; } 
       
       [Required]

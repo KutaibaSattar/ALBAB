@@ -8,6 +8,7 @@ using AutoMapper;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controllers
 {
@@ -31,55 +32,68 @@ namespace Controllers
 
         [HttpPost("register")]
 
-        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registorDto)
+        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
+       
         {
+            
+         // because using ActionResult so we can return BadRequest
+           
+           if (registerDto.Email != null){
+               if (await CheckEmailExistsAsync(registerDto.Email))
+            {
+                  return BadRequest("Email is taken");   
+            }
+           }
+            
+            
+       
+           
+            
+            
+            
+            if (await UserExists(registerDto.UserName)) return BadRequest("User Name is taken");
 
-            var user = _mapper.Map<RegisterDto, AppUser>(registorDto);
+            var user = _mapper.Map<AppUser>(registerDto);
 
-            var result = await _userManager.CreateAsync(user, registorDto.Password);
-        
-              if (!result.Succeeded) return BadRequest(result.Errors);
-
-         var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+  
+            user.UserName = registerDto.UserName.ToLower();
           
-          if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-        
+            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+                       
+           if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+           if (!result.Succeeded) return BadRequest(result.Errors);
 
             return new AppUserDto
             {
                 UserName = user.UserName,
                 Token = await _tokenService.CreateToken(user),
-                PhoneNumber = user.PhoneNumber,
-                Email = user.Email,
+                Email = user.Email
+
+            }; 
 
 
-            };
+       }
+
+        private async Task<bool> UserExists(string username)
+        {
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
+
 
         }
 
-         [HttpPost("login")]
-        public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
+        [HttpGet("emailexists")]
+
+        public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
         {
-          /*   var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); */
+          
+           return await _userManager.FindByEmailAsync(email) != null;
 
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
            
-           if (user == null) return Unauthorized("Not Authorized"/* new ApiResponse(401) */);
-            
-            var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
-            
-            if (!result.Succeeded) return Unauthorized("Not Authorized"/* new ApiResponse(401) */);
-            
-           
-            return new AppUserDto
-            {
-                UserName = user.UserName,
-                Token = await _tokenService.CreateToken(user),
-                PhoneNumber = user.PhoneNumber
-                
-            };
 
+           
         }
 
 
