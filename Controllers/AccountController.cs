@@ -30,6 +30,42 @@ namespace Controllers
 
         }
 
+       [HttpPost("login")]
+        public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
+        {
+          /*   var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); */
+          var userId =  await UserExists(loginDto.PhoneNumber);
+          
+           var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            /*  if (await UserExists(loginDto.Username)) return BadRequest("User Name is taken"); */
+            
+            /* var user = await _userManager.FindByNameAsync(loginDto.Username) ?? await _userManager.FindByEmailAsync(loginDto.Username); */
+
+           /*  var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            user = await _userManager.FindByLoginAsync(loginDto.Email); */
+           
+           if (user == null) return Unauthorized("Unauthorized");
+            
+            var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
+            
+            if (!result.Succeeded) return Unauthorized("Unauthorized");
+            
+           
+            return new AppUserDto
+            {
+                UserName = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+
+                
+            };
+
+        }
+       
+       
+       
         [HttpPost("register")]
 
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
@@ -38,12 +74,12 @@ namespace Controllers
             
          // because using ActionResult so we can return BadRequest
            
-           if (registerDto.Email != null){
-               if (await CheckEmailExistsAsync(registerDto.Email))
+          /* if (registerDto.PhoneNumber != null){
+               if (await CheckEmailExistsAsync(registerDto.PhoneNumber))
             {
                   return BadRequest("Email is taken");   
             }
-           }
+           } */
             
             
        
@@ -51,12 +87,12 @@ namespace Controllers
             
             
             
-            if (await UserExists(registerDto.UserName)) return BadRequest("User Name is taken");
+            if (await UserExists(registerDto.PhoneNumber) != null) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
   
-            user.UserName = registerDto.UserName.ToLower();
+            //user.UserName = registerDto.UserName.ToLower();
           
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -77,10 +113,11 @@ namespace Controllers
 
        }
 
-        private async Task<bool> UserExists(string username)
+        private async Task<int?> UserExists(string phone)
         {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-
+            var user = await _userManager.Users.FirstAsync(x => x.PhoneNumber == phone);
+           
+           return user.Id;
 
         }
 

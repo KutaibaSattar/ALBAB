@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace ALBaB.Migrations
-{
-    public partial class SeedAccountTable : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
+ protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql("Insert Into dbAccounts (Name,Key,ParentId,lvl,Created) values ('All Accounts','All Accounts',NULL,0,'2021/1/1')");//1
             migrationBuilder.Sql("Insert Into dbAccounts (Name,Key,ParentId,lvl,Created) values ('Balance Sheet','Balance Sheet',1,1,'2021/1/1')");//2
@@ -38,10 +32,3 @@ namespace ALBaB.Migrations
 
 
         }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
-    }
-}

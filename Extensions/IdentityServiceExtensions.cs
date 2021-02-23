@@ -24,9 +24,10 @@ namespace ALBaB.Extensions
                opt.Password.RequiredLength = 5;
                opt.Password.RequireLowercase = false;
                opt.Password.RequireUppercase = false;
-               var allowed = opt.User.AllowedUserNameCharacters 
-                  + " ";
-               opt.User.AllowedUserNameCharacters= allowed; 
+               opt.User.RequireUniqueEmail = true;
+               
+               opt.User.AllowedUserNameCharacters = null;
+                
                
 
             })
@@ -39,7 +40,7 @@ namespace ALBaB.Extensions
             
         // For return token
         
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer( options =>{
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -51,7 +52,7 @@ namespace ALBaB.Extensions
                 };
                 
 
-            }); 
+            });  */
             services.AddAuthentication(); 
 
             return services;

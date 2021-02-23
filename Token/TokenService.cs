@@ -29,9 +29,8 @@ namespace ALBaB.Token
         {
             var claims = new List<Claim> // not sensitive information
             {
-              new Claim(JwtRegisteredClaimNames.Email,user.Email),
-              new Claim(JwtRegisteredClaimNames.GivenName,user.UserName),
-
+              new Claim(JwtRegisteredClaimNames.NameId,user.PhoneNumber),
+              //new Claim(JwtRegisteredClaimNames.GivenName,user.UserName),
 
             };
 

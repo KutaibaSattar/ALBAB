@@ -55,7 +55,8 @@ namespace ALBaB.Data
                 .HasMany (ur => ur.UserRoles)
                 .WithOne (u => u.Role)
                 .HasForeignKey (ur => ur.RoleId)
-                .IsRequired();                    
+                .IsRequired();  
+                       
           
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
