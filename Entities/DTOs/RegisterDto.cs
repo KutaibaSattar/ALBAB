@@ -8,7 +8,7 @@ namespace Entities.DTOs
        public string UserName { get; set; } 
           
      [Required]
-     [RegularExpression("^[0-9]*$", ErrorMessage = "Phone must be numeric")]
+     //[RegularExpression("^[0-9]*$", ErrorMessage = "Phone or code must be numeric")]
      public string PhoneNumber { get; set; } 
       
       [Required]

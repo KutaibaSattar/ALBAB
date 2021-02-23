@@ -84,10 +84,10 @@ namespace Controllers
             
        
            
+           ;
             
             
-            
-            if (await UserExists(registerDto.PhoneNumber) != null) return BadRequest("User Name is taken");
+            await UserExists(registerDto.PhoneNumber) BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
@@ -113,9 +113,9 @@ namespace Controllers
 
        }
 
-        private async Task<int?> UserExists(string phone)
+        private async Task<int> UserExists(string phone)
         {
-            var user = await _userManager.Users.FirstAsync(x => x.PhoneNumber == phone);
+           var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phone);
            
            return user.Id;
 
