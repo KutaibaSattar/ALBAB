@@ -16,6 +16,8 @@ namespace ALBaB.Entities.DTOs
       public DateTime LastActive { get; set; } =  DateTime.Now; 
       public string Introduction { get; set; }
       public string LookingFor { get; set; }
-      public string Interests { get; set; }   
+      public string Interests { get; set; }  
+
+      
     }
 }

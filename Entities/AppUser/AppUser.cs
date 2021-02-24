@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace ALBaB.Entities
@@ -8,17 +9,8 @@ namespace ALBaB.Entities
     public class AppUser : IdentityUser<int>
     {
 
-      
-    
- 
-      [DataType(DataType.Text)]
-      [Display(Name = "Display Name")]
-       override public string UserName {get;set;} 
-     
-     [Required]
-      override public string PhoneNumber {get;set;}
-    
-      
+      [Required] 
+      public string DisplayName {get;set;} 
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now; 
       public string Introduction { get; set; }

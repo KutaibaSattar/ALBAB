@@ -84,19 +84,19 @@ namespace Controllers
             
        
            
-           ;
+         
             
             
-            await UserExists(registerDto.PhoneNumber) BadRequest("User Name is taken");
+            if(await UserExists(registerDto.UserName)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
   
             //user.UserName = registerDto.UserName.ToLower();
           
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+           var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+          var roleResult = await _userManager.AddToRoleAsync(user, "Member");
                        
            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
@@ -104,21 +104,22 @@ namespace Controllers
 
             return new AppUserDto
             {
-                UserName = user.UserName,
+                UserName = user.DisplayName,
                 Token = await _tokenService.CreateToken(user),
-                Email = user.Email
+                Email = user.Email,
+                PhoneNumber = user.UserName
+            
 
             }; 
 
 
        }
 
-        private async Task<int> UserExists(string phone)
+        private async Task<bool> UserExists(string userId)
         {
-           var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phone);
+          return await _userManager.FindByNameAsync(userId)  != null;
            
-           return user.Id;
-
+                  
         }
 
         [HttpGet("emailexists")]
@@ -126,7 +127,7 @@ namespace Controllers
         public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
         {
           
-           return await _userManager.FindByEmailAsync(email) != null;
+           return await _userManager.FindByNameAsync(email) != null;
 
            
 

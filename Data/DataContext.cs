@@ -37,7 +37,17 @@ namespace ALBaB.Data
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnabled);
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
-        
+       
+      /*  builder.Entity<AppUser>(entity =>
+       {
+           entity.ToTable(name:"Users");
+           entity.Property(e => e.UserName).HasColumnName("UserId");
+           
+
+       }); */
+       /*  builder.Entity<AppUser>().Property(u => u.UserName)
+                .IsRequired().HasMaxLength(256).HasAnnotation("Index", new IndexAnnotation(
+                    new IndexAttribute("UserNameIndex") { IsUnique = true, Order = 1})); */
       
       
 
