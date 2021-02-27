@@ -1,6 +1,13 @@
- protected override void Up(MigrationBuilder migrationBuilder)
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace ALBaB.Migrations
+{
+    public partial class SeedingAccountsTable : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
         {
-             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('All Accounts','All Accounts',NULL,0,'2021/01/01')");//1
+            migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created)" + 
+            "values ('All Accounts','All Accounts',NULL,0,'2021/01/01')");//1
             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('Balance Sheet','Balance Sheet',1,1,'2021/01/01')");//2
             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('Assets','Assets',2,2,'2021/01/01')");//3
             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('Fixed Assets','Fixed Assets',3,3,'2021/01/01')");//4
@@ -30,5 +37,11 @@
             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('Other Income','Other Income',22,3,'2021/01/01')"); //28
             migrationBuilder.Sql("Insert Into dbAccounts (Name,KeyId,ParentId,lvl,Created) values ('Miscellaneous revenues','Miscellaneous revenues',28,4,'2021/01/01')"); //29
 
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
 
         }
+    }
+}

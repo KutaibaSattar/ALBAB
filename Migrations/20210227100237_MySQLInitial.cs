@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ALBaB.Migrations
 {
-    public partial class MySQLInitializing : Migration
+    public partial class MySQLInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,7 +64,6 @@ namespace ALBaB.Migrations
                     Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     lvl = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LastActive = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

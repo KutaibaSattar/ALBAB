@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210226165930_MySQLInitializing")]
-    partial class MySQLInitializing
+    [Migration("20210227100237_MySQLInitial")]
+    partial class MySQLInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,9 +138,6 @@ namespace ALBaB.Migrations
 
                     b.Property<string>("KeyId")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("LastActive")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

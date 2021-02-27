@@ -10,6 +10,7 @@ namespace ALBaB.Entities
     {
 
       [Required] 
+      [MaxLength(50)]
       public string DisplayName {get;set;} 
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now; 

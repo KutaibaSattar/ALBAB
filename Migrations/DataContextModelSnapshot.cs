@@ -137,9 +137,6 @@ namespace ALBaB.Migrations
                     b.Property<string>("KeyId")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("LastActive")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
