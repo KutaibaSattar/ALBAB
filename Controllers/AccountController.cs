@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ALBaB.Controllers;
 using ALBaB.Data;
@@ -34,9 +35,9 @@ namespace Controllers
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
         {
           /*   var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); */
-          var userId =  await UserExists(loginDto.PhoneNumber);
+        
           
-           var user = await _userManager.FindByIdAsync(userId.ToString());
+           var user = await _userManager.FindByNameAsync(loginDto.UserId);
 
             /*  if (await UserExists(loginDto.Username)) return BadRequest("User Name is taken"); */
             
@@ -49,12 +50,16 @@ namespace Controllers
             
             var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
             
+            user.LastActive = DateTime.Now; 
+            await _userManager.UpdateAsync(user); 
+           
             if (!result.Succeeded) return Unauthorized("Unauthorized");
             
            
             return new AppUserDto
             {
-                UserName = user.UserName,
+                UserId = user.UserName,
+                DisplayName = user.DisplayName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber
@@ -81,7 +86,6 @@ namespace Controllers
             }
            } */
             
-            
        
            
          
@@ -104,12 +108,12 @@ namespace Controllers
 
             return new AppUserDto
             {
-                UserName = user.DisplayName,
+                DisplayName = user.DisplayName,
+                UserId = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 PhoneNumber = user.UserName
             
-
             }; 
 
 

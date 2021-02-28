@@ -8,8 +8,11 @@ namespace ALBaB.Entities.DTOs
         public AutoMapperProfiles()
         {
             CreateMap<AppUser,RegisterDto>().ReverseMap();
+           
             CreateMap<AppUser,AppUserDto>().ReverseMap();
-            CreateMap<AppUser,MemberDto>().ReverseMap();
+           
+            CreateMap<AppUser,MemberDto>().ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+           
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
 
 

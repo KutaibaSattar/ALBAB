@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Member } from '../../_models/member';
 import { AccountService } from '../../_service/account.service';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
@@ -16,7 +16,8 @@ export class MemberListComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     $key: new FormControl(null),
-    userName: new FormControl('')
+    userId: new FormControl(''),
+    dispalyName: new FormControl(''),
   });
 
   ngOnInit(): void {
@@ -33,9 +34,13 @@ export class MemberListComponent implements OnInit {
 
     }
 
-    OnClick(){
-
-      this.dialog.open(MemberDetailsComponent, {data:this.form.controls})
+    AddOrUpdateUser(){
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.disableClose = true;
+      dialogConfig.width = "50%"
+      dialogConfig.data = {};
+      this.dialog.open(MemberDetailsComponent, dialogConfig)
 
       .afterClosed().subscribe(res => console.log('close',res));
 

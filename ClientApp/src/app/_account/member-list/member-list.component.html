@@ -14,7 +14,7 @@
   <section id="search" class="py-1 mb-2 bg-light">
     <div class="container">
       <div class="row">
-        <button class="btn btn-warning ml-3" (click)="OnClick()" >Add User</button>
+        <button class="btn btn-warning ml-3" (click)="AddOrUpdateUser()" >Add User</button>
         <div class="col-md-6 ml-auto">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Users...">
@@ -40,16 +40,19 @@
               <thead class="thead-dark">
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <th>#Phone</th>
+                  <th>UserId</th>
+                  <th>Dispaly Name</th>
+                  <th>Contact No</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody  *ngFor="let user of memberList">
                 <tr>
                   <td>{{user.id}}</td>
-                  <td>{{user.userName}}</td>
+                  <td>{{user.userId}}</td>
+                  <td>{{user.displayName}}</td>
                   <td>{{user.phoneNumber}}</td>
+
                   <td>
                     <a [routerLink]=""  class="btn btn-secondary">
                       <i class="fa fa-angle-double-right"></i> Details
