@@ -1,27 +1,36 @@
-<h2 mat-dialog-title>New User</h2>
+<header id="main-header" class="bg-warning text-white">
+  <div class="container">
+   <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fa fa-user"></i>New User</h1>
+      </div>
+    </div>
+  </div>
+</header>
 <hr>
 <mat-dialog-content>
-  <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
-    <div class="form-row">
-     <div class="form-group col-md-12">
-       <div class="input-group">
-         <input name="userId" [(ngModel)]="formData.userId" class="form-control border-primary" placeholder="UserId" >
-       </div>
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="onSubmit(f)">
+
+     <div class="form-group col-md-6">
+
+         <input  ngModel  name="userId"  class="form-control border-primary" placeholder="UserId" >
 
      </div>
+
      <div class="form-group col-md-6">
-       <input name="password" [(ngModel)]="formData.password" placeholder="Password" class="form-control">
+       <input name="password" type="password"  ngModel  placeholder="Password" class="form-control">
      </div>
-   </div>
-   <div class="form-group">
+
+   <div class="form-group col-md-9" >
 
      <div class="input-group">
 
-       <input name="telephone" [(ngModel)]="formData.displayName" class="form-control" placeholder="Display Name">
+       <input name="displayName"  ngModel  class="form-control" placeholder="Display Name">
      </div>
    </div>
    <div class="form-group">
-     <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
+     <button type="submit" class="btn btn-outline-primary ml-3"><i class="fa fa-paper-plane"></i> Submit</button>
      <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i> Close</button>
    </div>
  </form>

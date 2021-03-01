@@ -10,6 +10,8 @@ import { MemberDetailsComponent } from './_account/member-details/member-details
 import { DashboardComponent } from './_account/dashboard/dashboard.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatDialogModule} from '@angular/material/dialog';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './_account/login/login.component';
 
 
 
@@ -23,6 +25,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MemberListComponent,
     MemberDetailsComponent,
     DashboardComponent,
+    HomeComponent,
+    LoginComponent,
     ],
   imports: [
     BrowserModule,

@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ALBaB.Controllers;
 using ALBaB.Data;
@@ -86,12 +88,16 @@ namespace Controllers
             }
            } */
             
-       
-           
+           /*  var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound("Could not find user");
+           var userRoles = await _userManager.GetRolesAsync(user); */
+          var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+           //var user = await _userManager.FindByEmailAsync(email);
          
+         // var email = HttpContext.User.RetrieveEmailFromPrincipal();
             
             
-            if(await UserExists(registerDto.UserName)) return BadRequest("User Name is taken");
+            if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
