@@ -64,10 +64,9 @@ namespace ALBaB
            app.UseRouting();
          
          
-          app.UseAuthentication();
-          app.UseAuthorization(); 
-            
-           app.UseStaticFiles(); // for api static  like angular
+         app.UseAuthentication();
+         app.UseAuthorization(); 
+         app.UseStaticFiles(); // for api static  like angular
 
           /* 3- we've got the middleware to actually use the endpoints and we've got a method
                 here to map the controllers.And this takes a look inside our controllers

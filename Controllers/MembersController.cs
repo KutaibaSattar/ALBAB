@@ -11,18 +11,17 @@ using AutoMapper;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-
-namespace Controllers
+namespace ALBAB.Controllers
 {
-    public class AccountController : BaseController
+    public class MembersController :BaseController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
 
         private readonly IMapper _mapper;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
+       
+        public MembersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
             , IMapper mapper, ITokenService tokenService)
         {
             _tokenService = tokenService;
@@ -33,47 +32,7 @@ namespace Controllers
 
         }
 
-       [HttpPost("login")]
-        public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
-        {
-          /*   var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); */
-        
-          
-           var user = await _userManager.FindByNameAsync(loginDto.UserId);
-
-            /*  if (await UserExists(loginDto.Username)) return BadRequest("User Name is taken"); */
-            
-            /* var user = await _userManager.FindByNameAsync(loginDto.Username) ?? await _userManager.FindByEmailAsync(loginDto.Username); */
-
-           /*  var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            user = await _userManager.FindByLoginAsync(loginDto.Email); */
-           
-           if (user == null) return Unauthorized("Unauthorized");
-            
-            var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
-            
-            user.LastActive = DateTime.Now; 
-            await _userManager.UpdateAsync(user); 
-           
-            if (!result.Succeeded) return Unauthorized("Unauthorized");
-             
-           
-         
-            return new AppUserDto
-            {
-                UserId = user.UserName,
-                DisplayName = user.DisplayName,
-                Token = await _tokenService.CreateToken(user),
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber
-               
-                
-            };
-
-               
-
-        }
-       
+      
        
        
         [HttpPost("register")]
@@ -150,4 +109,5 @@ namespace Controllers
 
 
     }
+  
 }

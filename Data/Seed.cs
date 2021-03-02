@@ -101,7 +101,7 @@ namespace BabALSaray.Data
             {
                 new  AppRole {Name = "Member"},
                 new  AppRole {Name = "Admin"},
-                new  AppRole {Name = "Moderator"},
+                new  AppRole {Name = "User"},
 
             };
 
@@ -111,15 +111,15 @@ namespace BabALSaray.Data
             }
 
             foreach (var userAccount in users){
-                await userManager.AddToRoleAsync(userAccount, "Member");
+                await userManager.AddToRoleAsync(userAccount, "User");
 
             }
 
              var admin = new AppUser
                {
                 UserName =  "971551234560",
-                 DisplayName ="admin",
-                 Email = "admin@seraime.com",
+                DisplayName ="MD",
+                Email = "admin@seraime.com",
                 PhoneNumber ="+971 55 1234560"
                  
                 
@@ -128,7 +128,7 @@ namespace BabALSaray.Data
            
                      
             
-            await userManager.AddToRolesAsync(admin, new[] {"Admin","Moderator"});
+            await userManager.AddToRolesAsync(admin, new[] {"Admin","User"});
             
         } 
 

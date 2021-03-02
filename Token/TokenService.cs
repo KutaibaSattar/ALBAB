@@ -29,13 +29,14 @@ namespace ALBaB.Token
         {
             var claims = new List<Claim> // not sensitive information
             {
-              new Claim(JwtRegisteredClaimNames.NameId,user.UserName),
-              //new Claim(JwtRegisteredClaimNames.GivenName,user.UserName),
-
+              new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
+              new Claim(JwtRegisteredClaimNames.GivenName,user.DisplayName),
+              new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
             };
 
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user); //all roles of user
            
+            // we dont user JwtRegisteredClaimNames because no options of Role has
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role,role)));
             
 

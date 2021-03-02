@@ -4,6 +4,8 @@ using ALBaB.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ALBaB.Extensions
 {
@@ -36,9 +38,9 @@ namespace ALBaB.Extensions
                .AddEntityFrameworkStores<DataContext>() ;
 
             
-        // For return token
+        // For Authentication Sheceme
         
-       /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer( options =>{
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -50,9 +52,13 @@ namespace ALBaB.Extensions
                 };
                 
 
-            });  */
-            services.AddAuthentication(); 
+            }); 
+           
+            services.AddAuthorization( opt =>{
+                opt.AddPolicy("RequiredAdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("RequiredUserRole", policy => policy.RequireRole("User"));
 
+            });
             return services;
 
             
