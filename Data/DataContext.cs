@@ -1,11 +1,14 @@
-using System.Reflection;
+using System;
 using ALBaB.Entities;
+using ALBAB.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Data
 {
+   
    
    /* if we weren't interested in dealing with roles and getting a list of roles,this would be all 
     <AppUser, AppRole, int>
@@ -38,6 +41,38 @@ namespace ALBaB.Data
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
        
+        foreach(var entity in builder.Model.GetEntityTypes())
+        {
+           
+            
+            
+            // Replace table names
+            entity.SetTableName(entity.GetTableName().ToSnakeCase());
+           
+            // Replace column names            
+            foreach(var property in entity.GetProperties())
+            {
+               
+                property.SetColumnName(property.Name.ToSnakeCase()) ;
+            } 
+
+            foreach(var key in entity.GetKeys())
+            {
+                key.SetName(key.GetName().ToString().ToSnakeCase());
+            }
+
+           foreach(var key in entity.GetForeignKeys())
+            {
+                key.SetConstraintName(key.GetConstraintName().ToSnakeCase());
+            } 
+
+            /* foreach(var index in entity.GetIndexes())
+            {
+               
+                index.SetName(index.Name.ToSnakeCase());
+            } */
+        }
+       
       /*  builder.Entity<AppUser>(entity =>
        {
            entity.ToTable(name:"Users");
@@ -66,13 +101,20 @@ namespace ALBaB.Data
                 .WithOne (u => u.Role)
                 .HasForeignKey (ur => ur.RoleId)
                 .IsRequired();  
+
+                builder.Entity<AppUser>().OwnsOne(a => a.Address, u => {
+                    u.WithOwner().HasForeignKey("id");
+                    u.Property<int>("appuserid");});
                        
           
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+         
 
                
         }
 
-       
+        private string ToSnakeCase()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

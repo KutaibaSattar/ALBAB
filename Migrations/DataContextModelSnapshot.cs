@@ -4,6 +4,7 @@ using ALBaB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ALBaB.Migrations
 {
@@ -14,91 +15,116 @@ namespace ALBaB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .UseIdentityByDefaultColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("ALBaB.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrencystamp");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalizedname");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_aspnetroles");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("aspnetroles");
                 });
 
             modelBuilder.Entity("ALBaB.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrencystamp");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("displayname");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
 
                     b.Property<string>("Interests")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("interests");
 
                     b.Property<string>("Introduction")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("introduction");
 
                     b.Property<DateTime>("LastActive")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("lastactive");
 
                     b.Property<string>("LookingFor")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("lookingfor");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalizedemail");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalizedusername");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("passwordhash");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("phonenumber");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("securitystamp");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("username");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_aspnetusers");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -107,164 +133,208 @@ namespace ALBaB.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("aspnetusers");
                 });
 
             modelBuilder.Entity("ALBaB.Entities.AppUserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("roleid");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("UserId", "RoleId")
+                        .HasName("pk_aspnetuserroles");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("aspnetuserroles");
                 });
 
             modelBuilder.Entity("ALBaB.Entities.dbAccounts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created");
 
                     b.Property<string>("KeyId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("keyid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<int?>("ParentId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("parentid");
 
                     b.Property<int>("lvl")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("lvl");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_dbaccounts");
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("dbAccounts");
+                    b.ToTable("dbaccounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("claimtype");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("claimvalue");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("roleid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_aspnetroleclaims");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("aspnetroleclaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("claimtype");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("claimvalue");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_aspnetuserclaims");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("aspnetuserclaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("loginprovider");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("providerkey");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("providerdisplayname");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("LoginProvider", "ProviderKey")
+                        .HasName("pk_aspnetuserlogins");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("aspnetuserlogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("loginprovider");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("Value")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text")
+                        .HasColumnName("value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "Name")
+                        .HasName("pk_aspnetusertokens");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("aspnetusertokens");
                 });
 
             modelBuilder.Entity("ALBaB.Entities.AppUser", b =>
                 {
                     b.OwnsOne("ALBaB.Entities.Address", "Address", b1 =>
                         {
-                            b1.Property<int>("AppUserId")
-                                .HasColumnType("int");
+                            b1.Property<int>("id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .UseIdentityByDefaultColumn();
 
                             b1.Property<string>("City")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+                                .HasColumnType("text")
+                                .HasColumnName("city");
 
                             b1.Property<string>("Country")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+                                .HasColumnType("text")
+                                .HasColumnName("country");
 
                             b1.Property<string>("Line1")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+                                .HasColumnType("text")
+                                .HasColumnName("line1");
 
                             b1.Property<string>("Line2")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+                                .HasColumnType("text")
+                                .HasColumnName("line2");
 
                             b1.Property<string>("Region")
-                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+                                .HasColumnType("text")
+                                .HasColumnName("region");
 
-                            b1.HasKey("AppUserId");
+                            b1.Property<int>("appuserid")
+                                .HasColumnType("integer");
 
-                            b1.ToTable("AspNetUsers");
+                            b1.HasKey("id");
+
+                            b1.ToTable("aspnetusers");
 
                             b1.WithOwner()
-                                .HasForeignKey("AppUserId");
+                                .HasForeignKey("id")
+                                .HasConstraintName("fk_aspnetusers_aspnetusers_appuserid");
                         });
 
                     b.Navigation("Address");
@@ -275,12 +345,14 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBaB.Entities.AppRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
+                        .HasConstraintName("fk_aspnetuserroles_aspnetroles_roleid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ALBaB.Entities.AppUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_aspnetuserroles_aspnetusers_userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -293,7 +365,8 @@ namespace ALBaB.Migrations
                 {
                     b.HasOne("ALBaB.Entities.dbAccounts", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .HasConstraintName("fk_dbaccounts_dbaccounts_parentid");
 
                     b.Navigation("Parent");
                 });
@@ -303,6 +376,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBaB.Entities.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
+                        .HasConstraintName("fk_aspnetroleclaims_aspnetroles_roleid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -312,6 +386,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBaB.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_aspnetuserclaims_aspnetusers_userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -321,6 +396,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBaB.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_aspnetuserlogins_aspnetusers_userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -330,6 +406,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBaB.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_aspnetusertokens_aspnetusers_userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

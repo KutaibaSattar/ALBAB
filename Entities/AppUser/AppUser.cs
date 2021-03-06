@@ -18,7 +18,7 @@ namespace ALBaB.Entities
       public string LookingFor { get; set; }
       public string Interests { get; set; }
 
-      public Address Address {get;set;}    
+     public Address Address {get;set;}    
       
 
      public ICollection<AppUserRole> UserRoles { get; set; }  

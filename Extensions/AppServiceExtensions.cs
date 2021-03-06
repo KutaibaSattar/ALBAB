@@ -24,7 +24,8 @@ namespace ALBaB.Extensions
 
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseMySql(config.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21)));
+               /*  opt.UseMySql(config.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21))); */
+                opt.UseNpgsql(config.GetConnectionString("postgresConnection"));
             }
             );
 

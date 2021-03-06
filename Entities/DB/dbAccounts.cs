@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ALBaB.Entities
 {
-    public class dbAccounts
+        public class dbAccounts
     {
         public int Id { get; set; }
 
