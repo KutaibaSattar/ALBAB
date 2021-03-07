@@ -42,6 +42,6 @@ export class JwtInterceptor implements HttpInterceptor {
        otherwise it invokes the HttpXhrBackend.
       That means then the actual request will be sent to the server. */
 
-    return next.handle(request);
+    return next.handle(request); // because we changed the request by clone it so we send again by next
   }
 }
