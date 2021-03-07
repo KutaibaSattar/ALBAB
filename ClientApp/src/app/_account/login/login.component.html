@@ -15,16 +15,16 @@
             <h4>Account Login</h4>
           </div>
           <div class="card-body">
-            <form [formGroup]="this.loginForm" (ngSubmit)= "this.onSubmit()">
+            <form #f="ngForm" (ngSubmit)= "signIn(f.value)">
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control">
+                <label for="textId">User Id</label>
+                <input type="userId" id="textId" name="userId"class="form-control" ngModel>
               </div>
               <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control">
+                <label for="textpassword">Password</label>
+                <input type="password" id="textpassword" name="password" class="form-control" ngModel>
               </div>
-              <button [disabled]="this.loginForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                <p class="mt-5 mb-3 text-muted text-center">BaB ALSaray © 2021</p>
             </form>
           </div>

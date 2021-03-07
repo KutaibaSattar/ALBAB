@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from 'src/app/_service/account.service';
+import { AuthService } from 'src/app/_service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,19 +10,31 @@ import { AccountService } from 'src/app/_service/account.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) {}
-  loginForm: FormGroup;
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {}
+
   returnUrl: string;
+  invalidLogin: boolean;
   ngOnInit(): void {
   }
 
-  onSubmit () {
+  signIn (credential : any) {
 
-    this.accountService.login(this.loginForm.value).subscribe(() => {
-      this.router.navigateByUrl(this.returnUrl);
-      }, error => { console.log(error);
+    console.log(credential);
+
+    this.authService.login(credential).subscribe((result : any) => {
+
+      if (result)
+      this.router.navigate(['/']);
+      else
+      this.invalidLogin = true;
+
       });
 
-  }
+    }
+
+     /*  }, error => { console.log(error);
+      });
+
+  } */
 
 }

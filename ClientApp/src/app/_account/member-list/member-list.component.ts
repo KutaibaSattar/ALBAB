@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Member } from '../../_models/member';
-import { AccountService } from '../../_service/account.service';
+import { AuthService } from '../../_service/auth.service';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { MemberDetailsComponent } from '../member-details/member-details.compone
 })
 export class MemberListComponent implements OnInit {
   memberList : Member[];
-  constructor(private memberService : AccountService,private dialog : MatDialog ) { }
+  constructor(private memberService : AuthService,private dialog : MatDialog ) { }
 
   form: FormGroup = new FormGroup({
     $key: new FormControl(null),
