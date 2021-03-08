@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   constructor() {}
-
+    // HttpInterceptor with request
   /*   next : next interceptor in que otherwise
   it represents HttpXhrBackend in case if there are no more interceptors. */
   /* The return type of intercept is Observable<HttpEvent<any>>;
@@ -26,16 +26,18 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    var currentUser = { token: '' };
+    //var currentUser = { token: '' };
     if (sessionStorage.currentUser != null) {
-      currentUser = JSON.parse(sessionStorage.currentUser);
+      //currentUser = JSON.parse(sessionStorage.currentUser);
+      request = request.clone({
+        setHeaders: {
+          Authorization: 'Bearer ' + sessionStorage.currentUser,
+        },
+      });
     }
+   /*  So we have duplicated the request.
+    And also added a request header called "Authorization". */
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: 'Bearer ' + currentUser.token,
-      },
-    });
     /* Now we invoke the next interceptor, if any.
        Otherwise we have to invoke the HttpXhrBackend, if there are no more interceptors.
        The next.handleRequest invokes the next interceptor, if any;

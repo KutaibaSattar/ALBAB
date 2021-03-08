@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
 
   signIn (credential : any) {
 
-    console.log(credential);
 
     this.authService.login(credential).subscribe((result : any) => {
 

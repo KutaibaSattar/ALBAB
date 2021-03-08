@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable , ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AuthService {
   If you don't want to send the Authorization token by using an interceptor use HttpXhrBackend.
   If you want to send Authorization token by using interceptor, use HttpClient in a regular way.
  */
-  constructor(private http : HttpClient) {}
+  constructor(private http : HttpClient, private httpBackend : HttpBackend) {}
+
 
   getMembers()  {
    return this.http.get<Member[]>(this.baseUrl+ 'users');
@@ -54,12 +56,14 @@ export class AuthService {
   login(credential: any) {
 
     // return the observable of response but we need true or faulse
+    let httpWithoutIntercep = new HttpClient(this.httpBackend)
 
-    return  this.http.post(this.baseUrl + 'account/login',credential).pipe(
+    return httpWithoutIntercep.post(this.baseUrl + 'account/login',credential).pipe(
       map((response: any) => {
        let result = response;
        if (result && result.token){
-         localStorage.setItem('token', result.token);
+          sessionStorage.setItem('currentUser', result.token);
+         //this.isLoggedIn();
          return true;
        }
        return false;
@@ -70,19 +74,36 @@ export class AuthService {
 
   }
 
- setCurrentUser(user: User) {
+ getCurrentUser(user: User) {
+  let token = sessionStorage.getItem('currentUser')
+  if (!token) return null;
+
+  let jwtHelper =  new JwtHelperService('currentUser');
+
   //this.currentUserSource.next(user);
 
  }
 
  logOut(){
-  localStorage.removeItem('token')
+  sessionStorage.removeItem('currentUser');
+
 
  }
 
  isLoggedIn(){
+  let token = sessionStorage.getItem('currentUser');
 
-      return false;
+  if (!token) return false;
+
+  const jwtHelper = new JwtHelperService();
+  let expDate = jwtHelper.getTokenExpirationDate(token);
+  let isExp = jwtHelper.isTokenExpired(token);
+
+  console.log(expDate, isExp);
+
+  return !isExp;
+
+
  }
 
 
