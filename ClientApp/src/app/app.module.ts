@@ -42,10 +42,10 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
   ],
   providers: [
-   {
+ /*   {
     //multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
    provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
-   }
+   } */
   ],
   bootstrap: [AppComponent]
 })

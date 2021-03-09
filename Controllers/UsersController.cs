@@ -14,7 +14,7 @@ using Entities.DTOs;
 
 namespace ALBaB.Controllers
 {
-   [Authorize(Policy = "RequiredUserRole")]
+   //[Authorize(Policy = "RequiredUserRole")]
     public class UsersController : BaseController
     {
         private readonly DataContext _context;
@@ -86,7 +86,7 @@ namespace ALBaB.Controllers
        }
 
        
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {

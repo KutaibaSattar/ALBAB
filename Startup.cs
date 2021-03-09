@@ -36,13 +36,16 @@ namespace ALBaB
              
         
            services.AddControllers();
+           services.AddCors();
+
            
           
         // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+           
+            /* services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });
+            }); */
            
         }
 
@@ -64,11 +67,11 @@ namespace ALBaB
            /* 2- set up routing.We've seen routing and action because 
            we were able to go from our browser weatherforecast endpoint
             and get to weatherforecast controller. */
-           app.UseRouting();
+        app.UseRouting();
+        app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
          
-         
-         app.UseAuthentication();
-         app.UseAuthorization(); 
+        app.UseAuthentication();
+        app.UseAuthorization(); 
        
        
        //  app.UseStaticFiles(); // for api static  like angular
