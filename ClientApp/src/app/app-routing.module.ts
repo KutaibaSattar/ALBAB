@@ -4,6 +4,8 @@ import { DashboardComponent } from './_account/dashboard/dashboard.component';
 import { LoginComponent } from './_account/login/login.component';
 import { MemberDetailsComponent } from './_account/member-details/member-details.component';
 import { MemberListComponent } from './_account/member-list/member-list.component';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+
 
 const routes: Routes = [
   {path: '', component: DashboardComponent },
@@ -11,7 +13,9 @@ const routes: Routes = [
   {path: 'memberdetails', component: MemberDetailsComponent },
   {path: 'dashboard', component: DashboardComponent },
   {path: 'login', component: LoginComponent },
+  {path: 'errors', component: TestErrorsComponent },
   {path: '**' ,component: DashboardComponent, pathMatch:'full' },
+
 
 ];
 

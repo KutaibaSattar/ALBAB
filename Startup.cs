@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ALBaB.Data;
 using ALBaB.Entities.DTOs;
+using ALBaB.Errors;
 using ALBaB.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,9 +49,11 @@ namespace ALBaB
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+           app.UseMiddleware<ExceptionMiddleware>();
+           
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ALBaB v1"));
             }
@@ -66,7 +69,9 @@ namespace ALBaB
          
          app.UseAuthentication();
          app.UseAuthorization(); 
-         app.UseStaticFiles(); // for api static  like angular
+       
+       
+       //  app.UseStaticFiles(); // for api static  like angular
 
           /* 3- we've got the middleware to actually use the endpoints and we've got a method
                 here to map the controllers.And this takes a look inside our controllers
@@ -76,7 +81,8 @@ namespace ALBaB
             {
                 endpoints.MapControllers();
             });
-              app.UseSpa(spa =>
+           
+             /*  app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
@@ -88,7 +94,7 @@ namespace ALBaB
                     spa.UseAngularCliServer(npmScript: "start");
                     
                 }
-            });
+            }); */
         }
     }
 }

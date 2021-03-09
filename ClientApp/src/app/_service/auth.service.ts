@@ -27,6 +27,7 @@ export class AuthService {
  */
   constructor(private http : HttpClient, private httpBackend : HttpBackend) {}
 
+  isLoggedIn : boolean;
 
   getMembers()  {
    return this.http.get<Member[]>(this.baseUrl+ 'users');
@@ -86,25 +87,21 @@ export class AuthService {
 
  logOut(){
   sessionStorage.removeItem('currentUser');
-
+  this.isLoggedIn = false
 
  }
 
- isLoggedIn(){
+ LoggedIn(){
   let token = sessionStorage.getItem('currentUser');
 
   if (!token) return false;
 
   const jwtHelper = new JwtHelperService();
   let expDate = jwtHelper.getTokenExpirationDate(token);
-  let isExp = jwtHelper.isTokenExpired(token);
+  this.isLoggedIn = !jwtHelper.isTokenExpired(token);
+  console.log(expDate,  this.isLoggedIn);
 
-  console.log(expDate, isExp);
-
-  return !isExp;
-
-
- }
+}
 
 
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ALBaB.Data;
 using ALBaB.Entities;
-using BabALSaray.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

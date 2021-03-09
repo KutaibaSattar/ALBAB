@@ -7,7 +7,7 @@ using ALBaB.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BabALSaray.Data
+namespace ALBaB.Data
 {
     public class Seed
     {

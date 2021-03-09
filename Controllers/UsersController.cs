@@ -31,7 +31,7 @@ namespace ALBaB.Controllers
 
         }
         
-        [HttpPost("register-member")]
+        [HttpPost("register")]
 
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
        

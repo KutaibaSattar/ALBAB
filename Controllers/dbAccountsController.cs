@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ALBaB.Controllers;
 using ALBaB.Entities.DTOs;
 
-namespace BabALSaray.Controllers
+namespace ALBaB.Controllers
 {
     public class dbAccountsController : BaseController
     {

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl:'api/'
+  apiUrl:'api/',
+  apiUrlSeperate: '5001/api/'
 };
 
 /*
