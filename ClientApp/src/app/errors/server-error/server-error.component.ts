@@ -16,7 +16,7 @@ export class ServerErrorComponent implements OnInit {
        Not unlike these two cases, the question mark in the case of null propagation 
        indicates that we will not proceed to what is on the right hand side if what is on the left is null. */
     
-       const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.getCurrentNavigation();
     this.error = navigation?.extras?.state?.error;
     ;
     

@@ -83,16 +83,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 
 
               else {
-                this.toastr.error(errorResponse.error + errorResponse.status);
+                this.toastr.error(errorResponse.error ,errorResponse.status.toFixed());
 
               }
             break;
 
             case 401: // auth
-            this.toastr.error('UnAuthorized' + errorResponse.status);
+            this.toastr.error('UnAuthorized' ,errorResponse.status.toFixed());
               break;
             case 404: // not found
-              this.toastr.error('Not found'+ errorResponse.status);
+              this.toastr.error('Not found' ,errorResponse.status.toFixed());
               this.router.navigateByUrl('/not-found');
               break;
             case 500: // server inetrnal error

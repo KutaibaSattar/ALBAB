@@ -14,7 +14,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './_account/login/login.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
-
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -31,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     HomeComponent,
     LoginComponent,
+   
     ],
   imports: [
     BrowserModule,

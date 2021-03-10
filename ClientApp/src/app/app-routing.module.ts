@@ -5,6 +5,10 @@ import { LoginComponent } from './_account/login/login.component';
 import { MemberDetailsComponent } from './_account/member-details/member-details.component';
 import { MemberListComponent } from './_account/member-list/member-list.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+
+
 
 
 const routes: Routes = [
@@ -14,6 +18,8 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent },
   {path: 'login', component: LoginComponent },
   {path: 'errors', component: TestErrorsComponent },
+  { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
+  { path: 'server-error', component: ServerErrorComponent, },
   {path: '**' ,component: DashboardComponent, pathMatch:'full' },
 
 
