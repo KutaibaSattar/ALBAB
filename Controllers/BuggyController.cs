@@ -31,7 +31,7 @@ namespace ALBaB.Controllers
 
                if (thing ==null) 
                {
-                    return NotFound();
+                    return NotFound("Not found");
                }
            
                 
@@ -55,12 +55,12 @@ namespace ALBaB.Controllers
         [HttpGet("bad-request")]
        public ActionResult GetBadRequest()
         {
-                return BadRequest("this was not good request"); //(new ApiResponse(400));
+                return BadRequest("Baad request"); //(new ApiResponse(400));
             
         }
 
         
-         [HttpGet("bad-request/{id}")] // Validation Error passing string instead of integer
+       [HttpGet("bad-request/{id}")] // Validation Error passing string instead of integer
        public ActionResult GetBadRequest(int id)
         {
              return Ok();   

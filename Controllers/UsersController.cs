@@ -86,7 +86,7 @@ namespace ALBaB.Controllers
        }
 
        
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {

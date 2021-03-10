@@ -6,6 +6,7 @@ using ALBaB.Controllers;
 using ALBaB.Data;
 using ALBaB.Entities;
 using ALBaB.Entities.DTOs;
+using ALBaB.Errors;
 using ALBaB.Token;
 using AutoMapper;
 using Entities.DTOs;
@@ -48,14 +49,14 @@ namespace Controllers
            /*  var user = await _userManager.FindByEmailAsync(loginDto.Email);
             user = await _userManager.FindByLoginAsync(loginDto.Email); */
            
-           if (user == null) return Unauthorized("Unauthorized");
+           if (user == null) return Unauthorized(new ApiResponse(401));
             
             var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
             
             user.LastActive = DateTime.Now; 
             await _userManager.UpdateAsync(user); 
            
-            if (!result.Succeeded) return Unauthorized("Unauthorized");
+            if (!result.Succeeded) return Unauthorized();
              
            
          

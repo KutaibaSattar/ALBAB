@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-test-errors',
@@ -7,20 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-errors.component.css']
 })
 export class TestErrorsComponent implements OnInit {
-  baseUrl = '5000/api/';
+  baseUrl = environment.apiUrl;
   validationErrors: string[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   get404Error() {
-    this.http.get(this.baseUrl + 'buggy/not-found').subscribe(res => {
-      console.log(res);
-    }, error => {
-      console.log(error);
-
+    this.http.get(this.baseUrl + 'buggy/not-found').subscribe(res => {}, error =>
+    {
+      console.log('ErrorRes',JSON.stringify(error) );
+      this.toastr.error(error.error)
     });
     }
 
@@ -51,7 +52,7 @@ export class TestErrorsComponent implements OnInit {
     });
      }
 
-     get400ValidationError() {
+     get400ValidationError() {  //post no page we have
     this.http.post(this.baseUrl + 'account/register', {}).subscribe(res => {
       console.log(res);
     }, error => {

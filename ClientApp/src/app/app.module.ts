@@ -13,6 +13,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './_account/login/login.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -37,15 +40,18 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+
+    }),
 
 
 
   ],
   providers: [
- /*   {
-    //multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
-   provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
-   } */
+     //multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
+     {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
+     {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
   ],
   bootstrap: [AppComponent]
 })

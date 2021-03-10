@@ -57,7 +57,8 @@ export class AuthService {
   login(credential: any) {
 
     // return the observable of response but we need true or faulse
-    let httpWithoutIntercep = new HttpClient(this.httpBackend)
+    //let httpWithoutIntercep = new HttpClient(this.httpBackend)
+    let httpWithoutIntercep = this.http
 
     return httpWithoutIntercep.post(this.baseUrl + 'account/login',credential).pipe(
       map((response: any) => {
