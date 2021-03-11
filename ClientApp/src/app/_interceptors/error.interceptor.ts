@@ -92,7 +92,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.toastr.error('UnAuthorized' ,errorResponse.status.toFixed());
               break;
             case 404: // not found
-              this.toastr.error('Not found' ,errorResponse.status.toFixed());
+              //this.toastr.error('Not found' ,errorResponse.status.toFixed());
               this.router.navigateByUrl('/not-found');
               break;
             case 500: // server inetrnal error

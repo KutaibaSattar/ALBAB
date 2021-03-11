@@ -18,9 +18,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     HomeComponent,
     LoginComponent,
-   
+
+
     ],
   imports: [
     BrowserModule,

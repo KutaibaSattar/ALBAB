@@ -27,7 +27,12 @@ export class AuthService {
  */
   constructor(private http : HttpClient, private httpBackend : HttpBackend) {}
 
-  isLoggedIn : boolean;
+
+  /*how many previous values do we want it to store?
+  Now, we're only interested in one value here, so we're just going to add the value of one.*/
+  private currentUserSource = new ReplaySubject<User>(1); // buffer for only one user object
+
+   currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
   getMembers()  {
    return this.http.get<Member[]>(this.baseUrl+ 'users');
@@ -45,7 +50,7 @@ export class AuthService {
     /* .pipe(
       map(( user: User) => {
         if (user) {
-            sessionStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));
             this.currentUserSource.next(user);
         }
       })
@@ -54,19 +59,20 @@ export class AuthService {
 
   }
 
-  login(credential: any) {
+  login(credential: any) : Observable<boolean> {
 
     // return the observable of response but we need true or faulse
     //let httpWithoutIntercep = new HttpClient(this.httpBackend)
     let httpWithoutIntercep = this.http
 
     return httpWithoutIntercep.post(this.baseUrl + 'account/login',credential).pipe(
-      map((response: any) => {
-       let result = response;
-       if (result && result.token){
-          sessionStorage.setItem('currentUser', result.token);
-         //this.isLoggedIn();
-         return true;
+      map((response: User) => {
+       const user = response;
+
+       if (user){
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user); // store user in current user source
+          return true;
        }
        return false;
 
@@ -76,32 +82,47 @@ export class AuthService {
 
   }
 
- getCurrentUser(user: User) {
-  let token = sessionStorage.getItem('currentUser')
+setCurrentUser (user: User){
+  this.currentUserSource.next(user);  // store user in current user source
+  this.LoggedIn();
+
+}
+
+  getCurrentUser(user: User) {
+  let token = localStorage.getItem('token')
   if (!token) return null;
 
-  let jwtHelper =  new JwtHelperService('currentUser');
+  let jwtHelper =  new JwtHelperService('token');
 
   //this.currentUserSource.next(user);
 
  }
 
  logOut(){
-  sessionStorage.removeItem('currentUser');
-  this.isLoggedIn = false
+  localStorage.removeItem('token');
+  this.currentUserSource.next(null);
+
 
  }
 
  LoggedIn(){
-  let token = sessionStorage.getItem('currentUser');
-
+  let token = localStorage.getItem('token');
   if (!token) return false;
-
   const jwtHelper = new JwtHelperService();
   let expDate = jwtHelper.getTokenExpirationDate(token);
-  this.isLoggedIn = !jwtHelper.isTokenExpired(token);
-  console.log(expDate,  this.isLoggedIn);
+  if (jwtHelper.isTokenExpired(token))
+  {
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
+  }
 
+}
+
+getDecodedToken(token){
+  let x = JSON.parse(atob(token.split('.')[1]));
+  console.log('atob', x);
+  console.log(Date.now(),x.exp * 1000)
+  return JSON.parse(atob(token.split('.')[1]));
 }
 
 

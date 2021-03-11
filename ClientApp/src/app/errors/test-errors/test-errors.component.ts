@@ -21,7 +21,6 @@ export class TestErrorsComponent implements OnInit {
     this.http.get(this.baseUrl + 'buggy/not-found').subscribe(res => {}, error =>
     {
       console.log('ErrorRes',JSON.stringify(error) );
-      this.toastr.error(error.error)
     });
     }
 

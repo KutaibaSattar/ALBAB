@@ -7,6 +7,8 @@ import { MemberListComponent } from './_account/member-list/member-list.componen
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 
 
@@ -25,8 +27,16 @@ const routes: Routes = [
 
 ];
 
+
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  declarations:[
+    ServerErrorComponent
+
+  ],
+  imports: [RouterModule.forRoot(routes),
+    BrowserModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

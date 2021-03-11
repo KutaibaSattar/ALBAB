@@ -14,7 +14,7 @@ using Entities.DTOs;
 
 namespace ALBaB.Controllers
 {
-   //[Authorize(Policy = "RequiredUserRole")]
+   [Authorize(Policy = "RequiredUserRole")]
     public class UsersController : BaseController
     {
         private readonly DataContext _context;
@@ -37,23 +37,7 @@ namespace ALBaB.Controllers
        
         {
             
-         // because using ActionResult so we can return BadRequest
-           
-          /* if (registerDto.PhoneNumber != null){
-               if (await CheckEmailExistsAsync(registerDto.PhoneNumber))
-            {
-                  return BadRequest("Email is taken");   
-            }
-           } */
-            
-           /*  var user = await _userManager.FindByNameAsync(username);
-            if (user == null) return NotFound("Could not find user");
-           var userRoles = await _userManager.GetRolesAsync(user); */
           
-           //var user = await _userManager.FindByEmailAsync(email);
-         
-         // var email = HttpContext.User.RetrieveEmailFromPrincipal();
-            
          
             
 
@@ -63,7 +47,7 @@ namespace ALBaB.Controllers
             var user = _mapper.Map<AppUser>(registerDto);
 
   
-            //user.UserName = registerDto.UserName.ToLower();
+           
           
            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -122,11 +106,7 @@ namespace ALBaB.Controllers
             
             var user = await _userManager.FindByEmailAsync(role);
 
-            // calling extension userManager from  UserManagerExtensions, HttpContext can reached only inside controller
            
-            //var user = await _userManager.FindByEmailFromClaimPrinciple(HttpContext.User); 
-
-
             var userToReturn = _mapper.Map<AppUserDto>(user);
 
             return Ok(userToReturn);

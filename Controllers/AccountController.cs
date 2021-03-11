@@ -37,18 +37,11 @@ namespace Controllers
        [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
         {
-          /*   var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); */
-        
+              
           
            var user = await _userManager.FindByNameAsync(loginDto.UserId);
 
-            /*  if (await UserExists(loginDto.Username)) return BadRequest("User Name is taken"); */
-            
-            /* var user = await _userManager.FindByNameAsync(loginDto.Username) ?? await _userManager.FindByEmailAsync(loginDto.Username); */
-
-           /*  var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            user = await _userManager.FindByLoginAsync(loginDto.Email); */
-           
+          
            if (user == null) return Unauthorized(new ApiResponse(401));
             
             var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
@@ -83,22 +76,7 @@ namespace Controllers
        
         {
             
-         // because using ActionResult so we can return BadRequest
-           
-          /* if (registerDto.PhoneNumber != null){
-               if (await CheckEmailExistsAsync(registerDto.PhoneNumber))
-            {
-                  return BadRequest("Email is taken");   
-            }
-           } */
-            
-           /*  var user = await _userManager.FindByNameAsync(username);
-            if (user == null) return NotFound("Could not find user");
-           var userRoles = await _userManager.GetRolesAsync(user); */
-          
-           //var user = await _userManager.FindByEmailAsync(email);
-         
-         // var email = HttpContext.User.RetrieveEmailFromPrincipal();
+        
             
             
             if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");

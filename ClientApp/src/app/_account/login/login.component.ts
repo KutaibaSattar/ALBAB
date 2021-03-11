@@ -20,13 +20,13 @@ export class LoginComponent implements OnInit {
   signIn (credential : any) {
 
 
-    this.authService.login(credential).subscribe((result : any) => {
+    this.authService.login(credential).subscribe((result : boolean) => {
 
       if (result)
       this.router.navigate(['/']);
-      else
+      /* else
       this.invalidLogin = true;
-      this.authService.LoggedIn();
+      this.authService.LoggedIn(); */
       });
 
     }
