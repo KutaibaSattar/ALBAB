@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ALBaB.Entities.DTOs
+namespace ALBAB.Entities.AppAccounts
 {
     public class dbAccountsDto
     {

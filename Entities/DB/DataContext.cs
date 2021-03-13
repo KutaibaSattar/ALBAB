@@ -1,12 +1,13 @@
 using System;
-using ALBaB.Entities;
 using ALBAB.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.Products;
 
-namespace ALBaB.Data
+namespace ALBAB.Entities.DB
 {
    
    
@@ -28,8 +29,11 @@ namespace ALBaB.Data
         }
 
          public DbSet<dbAccounts> dbAccounts {get;set;}
+         public DbSet<Product> product {get;set;}  
 
+         public DbSet<ProductBrand> productBrands  {get;set;} 
 
+         public DbSet<ProductType> productType {get;set;} 
       
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ALBaB": {
+    "ALBAB": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

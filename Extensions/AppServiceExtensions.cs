@@ -1,15 +1,14 @@
 using System;
-using ALBaB.Data;
-using ALBaB.Entities;
-using ALBaB.Entities.DTOs;
-using ALBaB.Token;
-using Microsoft.AspNetCore.Identity;
+using ALBAB.Data;
+using ALBAB.Entities;
+using ALBAB.Entities.DB;
+using ALBAB.Token;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
     public static class AppServiceExtensions
     {
@@ -31,7 +30,7 @@ namespace ALBaB.Extensions
 
               services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ALBaB", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ALBAB", Version = "v1" });
             });
 
           

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ALBaB.Entities
+namespace ALBAB.Entities.AppAccounts
 {
      [Owned]
     public class Address

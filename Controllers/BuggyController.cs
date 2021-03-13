@@ -1,9 +1,9 @@
-using ALBaB.Entities;
-using ALBaB.Data;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ALBaB.Controllers
+namespace ALBAB.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class BuggyController : BaseController

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.DTOs
+namespace ALBAB.Entities
 {
     public class RegisterDto
     {

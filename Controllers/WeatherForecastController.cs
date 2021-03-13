@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ALBAB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace ALBaB.Controllers
+namespace Controllers
 {
     [ApiController]
     [Route("[controller]")]

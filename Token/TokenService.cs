@@ -5,13 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ALBaB.Entities;
-using ALBaB.Token;
+using ALBAB.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ALBAB.Entities.AppAccounts;
 
-namespace ALBaB.Token
+namespace ALBAB.Token
 {
     public class TokenService : ITokenService // our interface
     {

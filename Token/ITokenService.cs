@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
-using ALBaB.Entities;
 
-namespace ALBaB.Token
+using ALBAB.Entities.AppAccounts;
+
+namespace ALBAB.Token
 {
     public interface ITokenService
     {

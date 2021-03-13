@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ALBaB.Entities
+
+namespace ALBAB.Entities.AppAccounts
 {
         public class dbAccounts
     {

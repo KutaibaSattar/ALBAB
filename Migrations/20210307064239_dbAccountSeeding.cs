@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ALBaB.Migrations
+namespace ALBAB.Migrations
 {
     public partial class dbAccountSeeding : Migration
     {

@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ALBaB.Entities;
+using ALBAB.Entities.AppAccounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
     public static class UserManagerExtensions
     {

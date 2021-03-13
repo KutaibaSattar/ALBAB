@@ -2,12 +2,12 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ALBab.Errors;
+using ALBAB.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ALBaB.Errors
+namespace ALBAB.Errors
 {
     public class ExceptionMiddleware // on Startup class only for internal server error 500 like null exceptions
     {

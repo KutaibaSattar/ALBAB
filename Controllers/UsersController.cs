@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ALBaB.Data;
-using ALBaB.Entities;
+using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using ALBaB.Entities.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Security.Claims;
-using Entities.DTOs;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities;
 
-namespace ALBaB.Controllers
+
+namespace ALBAB.Controllers
 {
    [Authorize(Policy = "RequiredUserRole")]
     public class UsersController : BaseController

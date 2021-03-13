@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ALBaB.Data;
-using ALBaB.Entities;
+using ALBAB.Data;
+using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.DB.SeedData;
 
-namespace ALBaB
+namespace ALBAB
 {
     public class Program
     {
@@ -21,6 +23,7 @@ namespace ALBaB
            var host =  CreateHostBuilder(args).Build();
            using var scope = host.Services.CreateScope();
            var services = scope.ServiceProvider;
+           var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 
                try
             {
@@ -32,6 +35,7 @@ namespace ALBaB
                 //await context.Database.MigrateAsync();
                 
                 await Seed.SeedUsersAsync(userManager,roleManager,context); 
+                await StoreContextSeed.SeedAsync(context,loggerFactory);
                 
             }
             catch (Exception ex)

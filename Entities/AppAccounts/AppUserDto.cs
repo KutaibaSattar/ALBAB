@@ -1,4 +1,4 @@
-namespace ALBaB.Entities.DTOs
+namespace ALBAB.Entities.AppAccounts
 {
     public class AppUserDto
     {

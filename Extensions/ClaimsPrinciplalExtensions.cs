@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Security.Claims;
 
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
     public static class ClaimsPrinciplalExtensions
     {

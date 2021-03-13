@@ -1,0 +1,46 @@
+[
+  {
+    "Id": 1,
+    "Name": "Automatic Sliding"
+  },
+  {
+    "Id": 2,
+    "Name": "Automatic Swing"
+  },
+  {
+    "Id": 3,
+    "Name": "Barrier"
+  },
+  {
+    "Id": 4,
+    "Name": "Garage Door Panal"
+  },
+  {
+    "Id": 5,
+    "Name": "Garage Door Accessories"
+  },
+  {
+    "Id": 6,
+    "Name": "Automatic OverHead"
+  },
+  {
+    "Id": 7,
+    "Name": "Spare Parts"
+  },
+  {
+    "Id": 9,
+    "Name": "Several Accessories"
+  },
+  {
+    "Id": 10,
+    "Name": "Distance Controler"
+  },
+  {
+    "Id": 11,
+    "Name": "Automatic Glass Door"
+  },
+  {
+    "Id": 12,
+    "Name": "Automatic Rolling Shutter"
+  }
+]

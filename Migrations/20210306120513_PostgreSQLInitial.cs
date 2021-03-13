@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ALBaB.Migrations
+namespace ALBAB.Migrations
 {
     public partial class PostgreSQLInitial : Migration
     {

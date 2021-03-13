@@ -2,19 +2,16 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ALBaB.Controllers;
-using ALBaB.Data;
-using ALBaB.Entities;
-using ALBaB.Entities.DTOs;
-using ALBaB.Errors;
-using ALBaB.Token;
+using Controllers;
+using ALBAB.Errors;
+using ALBAB.Token;
 using AutoMapper;
-using Entities.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities;
 
-
-namespace Controllers
+namespace ALBAB.Controllers
 {
     public class AccountController : BaseController
     {

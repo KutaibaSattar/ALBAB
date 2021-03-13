@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "Name": "SERAI"
+  },
+  {
+    "Id": 2,
+    "Name": "CASIT"
+  },
+  {
+    "Id": 3,
+    "Name": "DOCO"
+  },
+  {
+    "Id": 4,
+    "Name": "ITALPANNALI"
+  },
+  {
+    "Id": 5,
+    "Name": "MARANTIC"
+  },
+  {
+    "Id": 6,
+    "Name": "HF"
+  },
+  {
+    "Id": 7,
+    "Name": "APRIMATIC"
+  },
+  {
+    "Id": 8,
+    "Name": "POWERTECH"
+  },
+  {
+    "Id": 9,
+    "Name": "KTH"
+  },
+  {
+    "Id": 10,
+    "Name": "Others"
+  }
+]

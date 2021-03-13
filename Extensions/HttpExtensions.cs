@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
     public static class HttpExtensions
     {

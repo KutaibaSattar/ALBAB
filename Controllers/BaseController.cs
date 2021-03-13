@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ALBaB.Controllers
+namespace ALBAB.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

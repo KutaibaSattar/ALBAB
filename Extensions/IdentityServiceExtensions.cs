@@ -1,13 +1,13 @@
 using System.Text;
-using ALBaB.Entities;
-using ALBaB.Data;
+using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ALBAB.Entities.AppAccounts;
 
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
      /* inside here we'll make this a static class because it's going to contain extension methods */
     public static class IdentityServiceExtensions

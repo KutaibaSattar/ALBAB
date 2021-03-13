@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ALBaB.Data;
-using ALBaB.Entities.DTOs;
-using ALBaB.Errors;
-using ALBaB.Extensions;
+using ALBAB.Data;
+using ALBAB.Errors;
+using ALBAB.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -15,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace ALBaB
+namespace ALBAB
 {
     public class Startup
     {
@@ -58,7 +57,7 @@ namespace ALBaB
             {
                 //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ALBaB v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ALBAB v1"));
             }
 
           /*  1-  command in on a HTTP address, redirected to the HTTP endpoints. */

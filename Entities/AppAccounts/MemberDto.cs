@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ALBaB.Entities.DTOs
+namespace ALBAB.Entities
 {
     public class MemberDto
     {

@@ -2,15 +2,14 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ALBaB.Controllers;
-using ALBaB.Data;
-using ALBaB.Entities;
-using ALBaB.Entities.DTOs;
-using ALBaB.Token;
+using ALBAB.Data;
+using ALBAB.Token;
 using AutoMapper;
-using Entities.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities;
+
 namespace ALBAB.Controllers
 {
     public class MembersController :BaseController

@@ -1,4 +1,4 @@
-namespace ALBab.Errors
+namespace ALBAB.Errors
 {
     public class ApiException // Using inside ExceptionMiddleware for 500
     {

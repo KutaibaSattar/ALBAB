@@ -1,6 +1,6 @@
 using System;
 
-namespace ALBaB.Errors
+namespace ALBAB.Errors
 {
     public class ApiResponse // this one just for testing 
     {

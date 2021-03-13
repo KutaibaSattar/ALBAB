@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ALBaB.Entities;
 using AutoMapper;
-using ALBaB.Data;
-using Microsoft.AspNetCore.Authorization;
+using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ALBaB.Controllers;
-using ALBaB.Entities.DTOs;
+using ALBAB.Entities.AppAccounts;
 
-namespace ALBaB.Controllers
+namespace ALBAB.Controllers
 {
     public class dbAccountsController : BaseController
     {

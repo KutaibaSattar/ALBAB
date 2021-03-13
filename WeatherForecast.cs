@@ -1,6 +1,6 @@
 using System;
 
-namespace ALBaB
+namespace ALBAB
 {
     public class WeatherForecast
     {

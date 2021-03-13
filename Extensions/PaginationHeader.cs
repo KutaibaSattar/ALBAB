@@ -1,4 +1,4 @@
-namespace ALBaB.Extensions
+namespace ALBAB.Extensions
 {
     public class PaginationHeader
     {

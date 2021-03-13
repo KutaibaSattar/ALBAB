@@ -1,13 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using ALBaB.Controllers;
-using ALBaB.Entities;
+using ALBAB.Entities.AppAccounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
+namespace ALBAB.Controllers
 {
     public class AdminController : BaseController
     {

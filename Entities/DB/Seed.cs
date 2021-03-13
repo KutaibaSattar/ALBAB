@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ALBaB.Data;
-using ALBaB.Entities;
-//using ALBaB.Entities.OrderAggregate;
+using ALBAB.Entities.DB;
+using ALBAB.Entities.AppAccounts;
+//using ALBAB.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALBaB.Data
+namespace ALBAB.Data
 {
     public class Seed
     {

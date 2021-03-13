@@ -1,7 +1,8 @@
-using AutoMapper;
-using Entities.DTOs;
 
-namespace ALBaB.Entities.DTOs
+using AutoMapper;
+using ALBAB.Entities.AppAccounts;
+
+namespace ALBAB.Entities
 {
     public class AutoMapperProfiles : Profile
     {
