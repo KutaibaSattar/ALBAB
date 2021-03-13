@@ -7,7 +7,7 @@ using ALBAB.Entities.AppAccounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALBAB.Data
+namespace ALBAB.Entities.DB.SeedData
 {
     public class Seed
     {

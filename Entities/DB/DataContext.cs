@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
+using ALBAB.Entities.OrderAggregate;
 
 namespace ALBAB.Entities.DB
 {
@@ -33,7 +34,9 @@ namespace ALBAB.Entities.DB
 
          public DbSet<ProductBrand> productBrands  {get;set;} 
 
-         public DbSet<ProductType> productType {get;set;} 
+         public DbSet<ProductType> productTypes {get;set;} 
+         public DbSet<Order> orders { get; set; }
+         public DbSet<OrderItem> orderItems { get; set; }
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -109,6 +112,8 @@ namespace ALBAB.Entities.DB
                 builder.Entity<AppUser>().OwnsOne(a => a.Address, u => {
                     u.WithOwner().HasForeignKey("id");
                     u.Property<int>("appuserid");});
+               
+               
                        
           
          

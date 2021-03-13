@@ -23,13 +23,13 @@ namespace ALBAB.Entities.DB.SeedData
                }
 
             } */
-             if (!context.productType.Any())
+             if (!context.productTypes.Any())
             {
                 var typesData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/type.json");
                 var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                foreach (var item in types)
                {
-                   context.productType.Add(item);
+                   context.productTypes.Add(item);
                }
 
             }

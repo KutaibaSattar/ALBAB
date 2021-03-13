@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ALBAB.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 
 namespace ALBAB.Entities.AppAccounts
@@ -18,9 +19,10 @@ namespace ALBAB.Entities.AppAccounts
       public string Interests { get; set; }
 
      public Address Address {get;set;}    
-      
-
+     
      public ICollection<AppUserRole> UserRoles { get; set; }  
+
+     public Order order { get; set; }
         
     }
 }

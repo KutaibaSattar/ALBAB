@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ALBAB.Data;
 using ALBAB.Token;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
