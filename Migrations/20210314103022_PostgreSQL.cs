@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ALBAB.Migrations
+namespace ALBaB.Migrations
 {
-    public partial class PostgreSQLInitial : Migration
+    public partial class PostgreSQL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,6 +76,48 @@ namespace ALBAB.Migrations
                         principalTable: "dbaccounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ordermethod",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    shortname = table.Column<string>(type: "text", nullable: true),
+                    ordertime = table.Column<string>(type: "text", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    price = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_ordermethod", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "productbrands",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_productbrands", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "producttypes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_producttypes", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,6 +226,92 @@ namespace ALBAB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "orders",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    orderdate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    line1 = table.Column<string>(type: "text", nullable: true),
+                    line2 = table.Column<string>(type: "text", nullable: true),
+                    region = table.Column<string>(type: "text", nullable: true),
+                    city = table.Column<string>(type: "text", nullable: true),
+                    country = table.Column<string>(type: "text", nullable: true),
+                    ordermethodid = table.Column<int>(type: "integer", nullable: true),
+                    subtotal = table.Column<decimal>(type: "numeric", nullable: false),
+                    status = table.Column<string>(type: "varchar(10)", nullable: false),
+                    paymentintentid = table.Column<string>(type: "text", nullable: true),
+                    appuserid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_orders", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_orders_aspnetusers_appuserid",
+                        column: x => x.appuserid,
+                        principalTable: "aspnetusers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_orders_ordermethod_ordermethodid",
+                        column: x => x.ordermethodid,
+                        principalTable: "ordermethod",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "products",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    pictureurl = table.Column<string>(type: "text", nullable: true),
+                    producttypeid = table.Column<int>(type: "integer", nullable: false),
+                    productbrandid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_products", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_products_productbrands_productbrandid",
+                        column: x => x.productbrandid,
+                        principalTable: "productbrands",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_products_producttypes_producttypeid",
+                        column: x => x.producttypeid,
+                        principalTable: "producttypes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "orderitems",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    orderid = table.Column<int>(type: "integer", nullable: false),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    quantity = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_orderitems", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_orderitems_orders_orderid",
+                        column: x => x.orderid,
+                        principalTable: "orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_aspnetroleclaims_roleid",
                 table: "aspnetroleclaims",
@@ -225,6 +353,31 @@ namespace ALBAB.Migrations
                 name: "IX_dbaccounts_parentid",
                 table: "dbaccounts",
                 column: "parentid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orderitems_orderid",
+                table: "orderitems",
+                column: "orderid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orders_appuserid",
+                table: "orders",
+                column: "appuserid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orders_ordermethodid",
+                table: "orders",
+                column: "ordermethodid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_products_productbrandid",
+                table: "products",
+                column: "productbrandid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_products_producttypeid",
+                table: "products",
+                column: "producttypeid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -248,10 +401,28 @@ namespace ALBAB.Migrations
                 name: "dbaccounts");
 
             migrationBuilder.DropTable(
+                name: "orderitems");
+
+            migrationBuilder.DropTable(
+                name: "products");
+
+            migrationBuilder.DropTable(
                 name: "aspnetroles");
 
             migrationBuilder.DropTable(
+                name: "orders");
+
+            migrationBuilder.DropTable(
+                name: "productbrands");
+
+            migrationBuilder.DropTable(
+                name: "producttypes");
+
+            migrationBuilder.DropTable(
                 name: "aspnetusers");
+
+            migrationBuilder.DropTable(
+                name: "ordermethod");
         }
     }
 }

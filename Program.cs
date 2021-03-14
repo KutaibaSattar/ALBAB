@@ -40,8 +40,8 @@ namespace ALBAB
             catch (Exception ex)
             {
                 
-                var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occured during migration");
+                 var logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                 logger.LogError(ex.Message);
             } 
 
 

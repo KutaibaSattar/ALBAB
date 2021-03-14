@@ -1,6 +1,9 @@
+using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.DB;
 
 namespace ALBAB.Entities.OrderAggregate
 {
@@ -23,18 +26,25 @@ namespace ALBAB.Entities.OrderAggregate
         } */
 
         public DateTimeOffset OrderDate { get; set; }= DateTimeOffset.Now;
-        public OrderAddress OrderAddress { get; set; }
+       
+      public Address Address {get;set;}    
         public OrderMethod  OrderMethod { get; set; }
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
         public decimal Subtotal { get; set; }
         
-        [Column(TypeName = "nvarchar(10)")]
+        [Column(TypeName = "varchar(10)")]
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public string PaymentIntentId { get; set; }
+        public AppUser AppUser { get; set; }
+        public int AppUserId { get; set; }
 
         public decimal GetTotal()
         {
            return Subtotal + OrderMethod.Price;
+        }
+
+        public Order (){
+                OrderItems = new Collection<OrderItem>();
         }
 
 

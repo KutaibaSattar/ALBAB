@@ -6,14 +6,15 @@ namespace ALBAB.Entities.OrderAggregate
         {
         }
 
-        public OrderItem(ProductItemOrdered itemOrdered, decimal price, decimal quantity)
+        public OrderItem( decimal price, decimal quantity)
         {
-            ItemOrdered = itemOrdered;
             Price = price;
             Quantity = quantity;
         }
 
-        public ProductItemOrdered ItemOrdered { get; set; }
+        public Order Order  { get; set; }
+       
+        public int OrderId  { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         

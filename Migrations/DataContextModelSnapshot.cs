@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ALBAB.Migrations
+namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -190,6 +190,107 @@ namespace ALBAB.Migrations
                     b.ToTable("dbaccounts");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("appuserid");
+
+                    b.Property<DateTimeOffset>("OrderDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("orderdate");
+
+                    b.Property<int?>("OrderMethodId")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordermethodid");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("text")
+                        .HasColumnName("paymentintentid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("status");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("numeric")
+                        .HasColumnName("subtotal");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("OrderMethodId");
+
+                    b.ToTable("orders");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer")
+                        .HasColumnName("orderid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric")
+                        .HasColumnName("quantity");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orderitems");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("orderitems");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.OrderMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("OrderTime")
+                        .HasColumnType("text")
+                        .HasColumnName("ordertime");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
+                    b.Property<string>("ShortName")
+                        .HasColumnType("text")
+                        .HasColumnName("shortname");
+
+                    b.HasKey("Id")
+                        .HasName("pk_ordermethod");
+
+                    b.ToTable("ordermethod");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -223,13 +324,13 @@ namespace ALBAB.Migrations
                         .HasColumnName("price");
 
                     b.HasKey("Id")
-                        .HasName("pk_product");
+                        .HasName("pk_products");
 
                     b.HasIndex("ProductBrandId");
 
                     b.HasIndex("ProductTypeId");
 
-                    b.ToTable("product");
+                    b.ToTable("products");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.Products.ProductBrand", b =>
@@ -245,9 +346,9 @@ namespace ALBAB.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_productbrand");
+                        .HasName("pk_productbrands");
 
-                    b.ToTable("productbrand");
+                    b.ToTable("productbrands");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.Products.ProductType", b =>
@@ -263,9 +364,9 @@ namespace ALBAB.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_producttype");
+                        .HasName("pk_producttypes");
 
-                    b.ToTable("producttype");
+                    b.ToTable("producttypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -376,7 +477,7 @@ namespace ALBAB.Migrations
 
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUser", b =>
                 {
-                    b.OwnsOne("ALBAB.Entities.AppAccounts.Address", "Address", b1 =>
+                    b.OwnsOne("ALBAB.Entities.DB.Address", "Address", b1 =>
                         {
                             b1.Property<int>("id")
                                 .ValueGeneratedOnAdd()
@@ -449,19 +550,88 @@ namespace ALBAB.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
+                {
+                    b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
+                        .WithMany("orders")
+                        .HasForeignKey("AppUserId")
+                        .HasConstraintName("fk_orders_aspnetusers_appuserid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ALBAB.Entities.OrderAggregate.OrderMethod", "OrderMethod")
+                        .WithMany()
+                        .HasForeignKey("OrderMethodId")
+                        .HasConstraintName("fk_orders_ordermethod_ordermethodid");
+
+                    b.OwnsOne("ALBAB.Entities.DB.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .UseIdentityByDefaultColumn();
+
+                            b1.Property<string>("City")
+                                .HasColumnType("text")
+                                .HasColumnName("city");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("text")
+                                .HasColumnName("country");
+
+                            b1.Property<string>("Line1")
+                                .HasColumnType("text")
+                                .HasColumnName("line1");
+
+                            b1.Property<string>("Line2")
+                                .HasColumnType("text")
+                                .HasColumnName("line2");
+
+                            b1.Property<string>("Region")
+                                .HasColumnType("text")
+                                .HasColumnName("region");
+
+                            b1.HasKey("id");
+
+                            b1.ToTable("orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("id")
+                                .HasConstraintName("fk_orders_orders_orderid");
+                        });
+
+                    b.Navigation("Address");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("OrderMethod");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.OrderItem", b =>
+                {
+                    b.HasOne("ALBAB.Entities.OrderAggregate.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .HasConstraintName("fk_orderitems_orders_orderid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.Products.Product", b =>
                 {
                     b.HasOne("ALBAB.Entities.Products.ProductBrand", "ProductBrand")
                         .WithMany()
                         .HasForeignKey("ProductBrandId")
-                        .HasConstraintName("fk_product_productbrand_productbrandid")
+                        .HasConstraintName("fk_products_productbrands_productbrandid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ALBAB.Entities.Products.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
-                        .HasConstraintName("fk_product_producttype_producttypeid")
+                        .HasConstraintName("fk_products_producttypes_producttypeid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -517,12 +687,19 @@ namespace ALBAB.Migrations
 
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUser", b =>
                 {
+                    b.Navigation("orders");
+
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccounts", b =>
                 {
                     b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

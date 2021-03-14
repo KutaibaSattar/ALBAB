@@ -30,8 +30,7 @@ namespace ALBAB.Entities.DB
         }
 
          public DbSet<dbAccounts> dbAccounts {get;set;}
-         public DbSet<Product> product {get;set;}  
-
+         public DbSet<Product> products {get;set;}  
          public DbSet<ProductBrand> productBrands  {get;set;} 
 
          public DbSet<ProductType> productTypes {get;set;} 
@@ -48,6 +47,8 @@ namespace ALBAB.Entities.DB
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
        
+       
+        
         foreach(var entity in builder.Model.GetEntityTypes())
         {
            
@@ -73,11 +74,11 @@ namespace ALBAB.Entities.DB
                 key.SetConstraintName(key.GetConstraintName().ToSnakeCase());
             } 
 
-            /* foreach(var index in entity.GetIndexes())
+            foreach(var index in entity.GetIndexes())
             {
-               
-                index.SetName(index.Name.ToSnakeCase());
-            } */
+               index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
+              
+            }
         }
        
       /*  builder.Entity<AppUser>(entity =>
@@ -109,9 +110,17 @@ namespace ALBAB.Entities.DB
                 .HasForeignKey (ur => ur.RoleId)
                 .IsRequired();  
 
-                builder.Entity<AppUser>().OwnsOne(a => a.Address, u => {
+             builder.Entity<AppUser>().OwnsOne(a => a.Address, u => {
                     u.WithOwner().HasForeignKey("id");
                     u.Property<int>("appuserid");});
+
+               builder.Entity<Order>().OwnsOne(o => o.Address, a =>{
+                   a.WithOwner().HasForeignKey("id");
+                   a.Property<int>("id");
+
+               });
+
+                 
                
                
                        
