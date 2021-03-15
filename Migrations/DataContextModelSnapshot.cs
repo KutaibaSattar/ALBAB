@@ -47,7 +47,7 @@ namespace ALBaB.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
+                        .HasDatabaseName("rolenameindex");
 
                     b.ToTable("aspnetroles");
                 });
@@ -127,11 +127,11 @@ namespace ALBaB.Migrations
                         .HasName("pk_aspnetusers");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                        .HasDatabaseName("emailindex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("usernameindex");
 
                     b.ToTable("aspnetusers");
                 });
@@ -149,7 +149,8 @@ namespace ALBaB.Migrations
                     b.HasKey("UserId", "RoleId")
                         .HasName("pk_aspnetuserroles");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_aspnetuserroles_roleid");
 
                     b.ToTable("aspnetuserroles");
                 });
@@ -185,7 +186,8 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_dbaccounts");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId")
+                        .HasDatabaseName("ix_dbaccounts_parentid");
 
                     b.ToTable("dbaccounts");
                 });
@@ -214,9 +216,9 @@ namespace ALBaB.Migrations
                         .HasColumnType("text")
                         .HasColumnName("paymentintentid");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)")
+                    b.Property<int>("Status")
+                        .HasMaxLength(5)
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<decimal>("Subtotal")
@@ -226,9 +228,11 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("AppUserId")
+                        .HasDatabaseName("ix_orders_appuserid");
 
-                    b.HasIndex("OrderMethodId");
+                    b.HasIndex("OrderMethodId")
+                        .HasDatabaseName("ix_orders_ordermethodid");
 
                     b.ToTable("orders");
                 });
@@ -256,7 +260,8 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_orderitems");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId")
+                        .HasDatabaseName("ix_orderitems_orderid");
 
                     b.ToTable("orderitems");
                 });
@@ -311,6 +316,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("text")
                         .HasColumnName("pictureurl");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
                     b.Property<int>("ProductBrandId")
                         .HasColumnType("integer")
                         .HasColumnName("productbrandid");
@@ -319,16 +328,14 @@ namespace ALBaB.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("producttypeid");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("price");
-
                     b.HasKey("Id")
                         .HasName("pk_products");
 
-                    b.HasIndex("ProductBrandId");
+                    b.HasIndex("ProductBrandId")
+                        .HasDatabaseName("ix_products_productbrandid");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("ProductTypeId")
+                        .HasDatabaseName("ix_products_producttypeid");
 
                     b.ToTable("products");
                 });
@@ -392,7 +399,8 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_aspnetroleclaims");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_aspnetroleclaims_roleid");
 
                     b.ToTable("aspnetroleclaims");
                 });
@@ -420,7 +428,8 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_aspnetuserclaims");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_aspnetuserclaims_userid");
 
                     b.ToTable("aspnetuserclaims");
                 });
@@ -446,7 +455,8 @@ namespace ALBaB.Migrations
                     b.HasKey("LoginProvider", "ProviderKey")
                         .HasName("pk_aspnetuserlogins");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_aspnetuserlogins_userid");
 
                     b.ToTable("aspnetuserlogins");
                 });

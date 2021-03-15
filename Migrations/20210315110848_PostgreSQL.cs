@@ -240,7 +240,7 @@ namespace ALBaB.Migrations
                     country = table.Column<string>(type: "text", nullable: true),
                     ordermethodid = table.Column<int>(type: "integer", nullable: true),
                     subtotal = table.Column<decimal>(type: "numeric", nullable: false),
-                    status = table.Column<string>(type: "varchar(10)", nullable: false),
+                    status = table.Column<int>(type: "integer", maxLength: 5, nullable: false),
                     paymentintentid = table.Column<string>(type: "text", nullable: true),
                     appuserid = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -313,69 +313,69 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_aspnetroleclaims_roleid",
+                name: "ix_aspnetroleclaims_roleid",
                 table: "aspnetroleclaims",
                 column: "roleid");
 
             migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
+                name: "rolenameindex",
                 table: "aspnetroles",
                 column: "normalizedname",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_aspnetuserclaims_userid",
+                name: "ix_aspnetuserclaims_userid",
                 table: "aspnetuserclaims",
                 column: "userid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_aspnetuserlogins_userid",
+                name: "ix_aspnetuserlogins_userid",
                 table: "aspnetuserlogins",
                 column: "userid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_aspnetuserroles_roleid",
+                name: "ix_aspnetuserroles_roleid",
                 table: "aspnetuserroles",
                 column: "roleid");
 
             migrationBuilder.CreateIndex(
-                name: "EmailIndex",
+                name: "emailindex",
                 table: "aspnetusers",
                 column: "normalizedemail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
+                name: "usernameindex",
                 table: "aspnetusers",
                 column: "normalizedusername",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_dbaccounts_parentid",
+                name: "ix_dbaccounts_parentid",
                 table: "dbaccounts",
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orderitems_orderid",
+                name: "ix_orderitems_orderid",
                 table: "orderitems",
                 column: "orderid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_appuserid",
+                name: "ix_orders_appuserid",
                 table: "orders",
                 column: "appuserid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_ordermethodid",
+                name: "ix_orders_ordermethodid",
                 table: "orders",
                 column: "ordermethodid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_productbrandid",
+                name: "ix_products_productbrandid",
                 table: "products",
                 column: "productbrandid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_producttypeid",
+                name: "ix_products_producttypeid",
                 table: "products",
                 column: "producttypeid");
         }

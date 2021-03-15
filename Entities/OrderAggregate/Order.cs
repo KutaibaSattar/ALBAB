@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.DB;
+using System.ComponentModel.DataAnnotations;
 
 namespace ALBAB.Entities.OrderAggregate
 {
@@ -32,7 +33,7 @@ namespace ALBAB.Entities.OrderAggregate
         public ICollection<OrderItem> OrderItems { get; set; }
         public decimal Subtotal { get; set; }
         
-        [Column(TypeName = "varchar(10)")]
+        [StringLength(5)]
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public string PaymentIntentId { get; set; }
         public AppUser AppUser { get; set; }

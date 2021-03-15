@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.Products;
 
 namespace ALBAB.Entities
 {
@@ -15,6 +16,8 @@ namespace ALBAB.Entities
             CreateMap<AppUser,MemberDto>().ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
            
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
+
+            CreateMap<Product,ProductDto>().ReverseMap();
 
 
         }
