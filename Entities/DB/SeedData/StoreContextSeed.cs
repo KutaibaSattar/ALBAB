@@ -13,23 +13,23 @@ namespace ALBAB.Entities.DB.SeedData
         public static async Task SeedAsync(DataContext context, ILoggerFactory loggerFactory){
               try
         {
-            if (!context.productBrands.Any())
+            if (!context.brands.Any())
             {
                 var brandsData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/brand.json");
-                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                var brands = JsonSerializer.Deserialize<List<Brand>>(brandsData);
                foreach (var item in brands)
                {
-                   context.productBrands.Add(item);
+                   context.brands.Add(item);
                }
 
             }
-             if (!context.productTypes.Any())
+             if (!context.models.Any())
             {
                 var typesData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/type.json");
-                var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+                var types = JsonSerializer.Deserialize<List<Model>>(typesData);
                foreach (var item in types)
                {
-                   context.productTypes.Add(item);
+                   context.models.Add(item);
                }
 
             }
@@ -42,7 +42,7 @@ namespace ALBAB.Entities.DB.SeedData
                    context.products.Add(item);
                }
 
-            } 
+            }  
             await context.SaveChangesAsync();
         }
         catch (System.Exception ex)

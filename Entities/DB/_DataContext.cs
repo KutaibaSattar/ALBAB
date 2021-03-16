@@ -31,9 +31,9 @@ namespace ALBAB.Entities.DB
 
          public DbSet<dbAccounts> dbAccounts {get;set;}
          public DbSet<Product> products {get;set;}  
-         public DbSet<ProductBrand> productBrands  {get;set;} 
+         public DbSet<Brand> brands  {get;set;} 
 
-         public DbSet<ProductType> productTypes {get;set;} 
+         public DbSet<Model> models {get;set;} 
          public DbSet<Order> orders { get; set; }
          public DbSet<OrderItem> orderItems { get; set; }
       

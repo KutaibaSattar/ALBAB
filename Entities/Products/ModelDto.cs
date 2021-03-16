@@ -1,7 +1,9 @@
 namespace ALBAB.Entities.Products
 {
-    public class ProductType : BaseEntity
+    public class ModelDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
+        
     }
 }

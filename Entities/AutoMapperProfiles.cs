@@ -1,4 +1,5 @@
 
+using System.Reflection.PortableExecutable;
 using AutoMapper;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
@@ -17,7 +18,12 @@ namespace ALBAB.Entities
            
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
 
-            CreateMap<Product,ProductDto>().ReverseMap();
+            CreateMap<Brand,BrandDto>();
+           
+            CreateMap<Model,ModelDto>();
+
+            CreateMap<Product,ProductDto>().ForMember(pd => pd.BrandName, opt => opt.MapFrom(p => p.Model.Brand.Name));
+ 
 
 
         }

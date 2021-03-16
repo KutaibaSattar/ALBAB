@@ -56,6 +56,19 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "brands",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_brands", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "dbaccounts",
                 columns: table => new
                 {
@@ -92,32 +105,6 @@ namespace ALBaB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_ordermethod", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "productbrands",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_productbrands", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "producttypes",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_producttypes", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +214,26 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "models",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: true),
+                    brandid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_models", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_models_brands_brandid",
+                        column: x => x.brandid,
+                        principalTable: "brands",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "orders",
                 columns: table => new
                 {
@@ -271,22 +278,15 @@ namespace ALBaB.Migrations
                     description = table.Column<string>(type: "text", nullable: true),
                     price = table.Column<decimal>(type: "numeric", nullable: false),
                     pictureurl = table.Column<string>(type: "text", nullable: true),
-                    producttypeid = table.Column<int>(type: "integer", nullable: false),
-                    productbrandid = table.Column<int>(type: "integer", nullable: false)
+                    modelid = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_products", x => x.id);
                     table.ForeignKey(
-                        name: "fk_products_productbrands_productbrandid",
-                        column: x => x.productbrandid,
-                        principalTable: "productbrands",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_products_producttypes_producttypeid",
-                        column: x => x.producttypeid,
-                        principalTable: "producttypes",
+                        name: "fk_products_models_modelid",
+                        column: x => x.modelid,
+                        principalTable: "models",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -355,6 +355,11 @@ namespace ALBaB.Migrations
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
+                name: "ix_models_brandid",
+                table: "models",
+                column: "brandid");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_orderitems_orderid",
                 table: "orderitems",
                 column: "orderid");
@@ -370,14 +375,9 @@ namespace ALBaB.Migrations
                 column: "ordermethodid");
 
             migrationBuilder.CreateIndex(
-                name: "ix_products_productbrandid",
+                name: "ix_products_modelid",
                 table: "products",
-                column: "productbrandid");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_products_producttypeid",
-                table: "products",
-                column: "producttypeid");
+                column: "modelid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -413,16 +413,16 @@ namespace ALBaB.Migrations
                 name: "orders");
 
             migrationBuilder.DropTable(
-                name: "productbrands");
-
-            migrationBuilder.DropTable(
-                name: "producttypes");
+                name: "models");
 
             migrationBuilder.DropTable(
                 name: "aspnetusers");
 
             migrationBuilder.DropTable(
                 name: "ordermethod");
+
+            migrationBuilder.DropTable(
+                name: "brands");
         }
     }
 }

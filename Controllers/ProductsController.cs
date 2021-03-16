@@ -27,11 +27,11 @@ namespace ALBAB.Controllers
         [HttpGet("products")]
          public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
          {
-           var products = await _context.products.Include(t => t.ProductType).Include(b => b.ProductBrand).ToListAsync();
+           var products = await _context.products.Include(m => m.Model).ThenInclude(b => b.Brand).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<ProductDto>>(products);
            
-           return Ok(products);  
+           return Ok(result);  
 
          }  
         

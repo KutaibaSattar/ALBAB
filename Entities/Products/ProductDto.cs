@@ -10,12 +10,11 @@ namespace ALBAB.Entities.Products
 
         public string PictureUrl { get; set; }
 
-        public ProductType ProductType { get; set; }
-       /*  public int ProductTypeId { get; set; } */
+        public int ModelId { get; set; }
 
-        public ProductBrand ProductBrand { get; set; }
-       
-       /*  public int ProductBrandId { get; set; } */
-        
-    }
+       public string ModelName { get; set; }
+
+         public string BrandName { get; set; }
+
+      }
 }

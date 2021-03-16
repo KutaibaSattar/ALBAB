@@ -1,12 +1,30 @@
-﻿Id,Name
-1,Automatic Sliding
-2,Automatic Swing
-3,Barrier
-4,Garage Door Panal
-5,Garage Door Accessories
-6,Automatic OverHeadl
-7,Spare Parts
-9,Several Accessories
-10,Distance Control
-11,Automatic Glass Door
-12,Automatic Rolling Shutter
+﻿Id,productbrandId,Name
+1,2,Automatic Sliding
+2,2,Automatic Swing
+3,2,Barrier
+4,1,Automatic Sliding
+5,1,Automatic Swing
+6,4,Garage Door Panal
+7,6,Garage Door Panal
+8,3,Garage Door Accessories
+9,5,Automatic OverHeadl
+10,6,Automatic OverHeadl
+11,1,Spare Parts
+12,2,Several Accessories
+13,1,Distance Control
+14,7,Automatic Glass Door
+15,9,Automatic Glass Door
+16,1,Automatic Rolling Shutter
+17,7,Automatic Sliding
+18,7,Several Accessories
+19,2,Distance Control
+20,1,Several Accessories
+21,9,Spare Parts
+22,10,Several Accessories
+23,1,Barrier
+24,1,Rolling Shutter
+25,10,Barrier
+26,8,Automatic Sliding
+27,8,Automatic Swing
+28,8,Automatic OverHeadl
+29,10,Distance Control

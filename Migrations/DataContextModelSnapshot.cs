@@ -296,6 +296,49 @@ namespace ALBaB.Migrations
                     b.ToTable("ordermethod");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.Products.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_brands");
+
+                    b.ToTable("brands");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.Products.Model", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("integer")
+                        .HasColumnName("brandid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_models");
+
+                    b.HasIndex("BrandId")
+                        .HasDatabaseName("ix_models_brandid");
+
+                    b.ToTable("models");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -307,6 +350,10 @@ namespace ALBaB.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<int>("ModelId")
+                        .HasColumnType("integer")
+                        .HasColumnName("modelid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text")
@@ -320,60 +367,13 @@ namespace ALBaB.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("price");
 
-                    b.Property<int>("ProductBrandId")
-                        .HasColumnType("integer")
-                        .HasColumnName("productbrandid");
-
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("producttypeid");
-
                     b.HasKey("Id")
                         .HasName("pk_products");
 
-                    b.HasIndex("ProductBrandId")
-                        .HasDatabaseName("ix_products_productbrandid");
-
-                    b.HasIndex("ProductTypeId")
-                        .HasDatabaseName("ix_products_producttypeid");
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("ix_products_modelid");
 
                     b.ToTable("products");
-                });
-
-            modelBuilder.Entity("ALBAB.Entities.Products.ProductBrand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_productbrands");
-
-                    b.ToTable("productbrands");
-                });
-
-            modelBuilder.Entity("ALBAB.Entities.Products.ProductType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_producttypes");
-
-                    b.ToTable("producttypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -629,25 +629,28 @@ namespace ALBaB.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.Products.Model", b =>
+                {
+                    b.HasOne("ALBAB.Entities.Products.Brand", "Brand")
+                        .WithMany("Models")
+                        .HasForeignKey("BrandId")
+                        .HasConstraintName("fk_models_brands_brandid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.Products.Product", b =>
                 {
-                    b.HasOne("ALBAB.Entities.Products.ProductBrand", "ProductBrand")
+                    b.HasOne("ALBAB.Entities.Products.Model", "Model")
                         .WithMany()
-                        .HasForeignKey("ProductBrandId")
-                        .HasConstraintName("fk_products_productbrands_productbrandid")
+                        .HasForeignKey("ModelId")
+                        .HasConstraintName("fk_products_models_modelid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ALBAB.Entities.Products.ProductType", "ProductType")
-                        .WithMany()
-                        .HasForeignKey("ProductTypeId")
-                        .HasConstraintName("fk_products_producttypes_producttypeid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductBrand");
-
-                    b.Navigation("ProductType");
+                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -710,6 +713,11 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.Products.Brand", b =>
+                {
+                    b.Navigation("Models");
                 });
 #pragma warning restore 612, 618
         }

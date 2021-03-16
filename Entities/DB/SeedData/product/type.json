@@ -1,46 +1,147 @@
 [
   {
     "Id": 1,
+    "BrandId": 2,
     "Name": "Automatic Sliding"
   },
   {
     "Id": 2,
+    "BrandId": 2,
     "Name": "Automatic Swing"
   },
   {
     "Id": 3,
+    "BrandId": 2,
     "Name": "Barrier"
   },
   {
     "Id": 4,
-    "Name": "Garage Door Panal"
+    "BrandId": 1,
+    "Name": "Automatic Sliding"
   },
   {
     "Id": 5,
-    "Name": "Garage Door Accessories"
+    "BrandId": 1,
+    "Name": "Automatic Swing"
   },
   {
     "Id": 6,
-    "Name": "Automatic OverHead"
+    "BrandId": 4,
+    "Name": "Garage Door Panal"
   },
   {
     "Id": 7,
-    "Name": "Spare Parts"
+    "BrandId": 6,
+    "Name": "Garage Door Panal"
+  },
+  {
+    "Id": 8,
+    "BrandId": 3,
+    "Name": "Garage Door Accessories"
   },
   {
     "Id": 9,
-    "Name": "Several Accessories"
+    "BrandId": 5,
+    "Name": "Automatic OverHeadl"
   },
   {
     "Id": 10,
-    "Name": "Distance Controler"
+    "BrandId": 6,
+    "Name": "Automatic OverHeadl"
   },
   {
     "Id": 11,
-    "Name": "Automatic Glass Door"
+    "BrandId": 1,
+    "Name": "Spare Parts"
   },
   {
     "Id": 12,
+    "BrandId": 2,
+    "Name": "Several Accessories"
+  },
+  {
+    "Id": 13,
+    "BrandId": 1,
+    "Name": "Distance Control"
+  },
+  {
+    "Id": 14,
+    "BrandId": 7,
+    "Name": "Automatic Glass Door"
+  },
+  {
+    "Id": 15,
+    "BrandId": 9,
+    "Name": "Automatic Glass Door"
+  },
+  {
+    "Id": 16,
+    "BrandId": 1,
     "Name": "Automatic Rolling Shutter"
+  },
+  {
+    "Id": 17,
+    "BrandId": 7,
+    "Name": "Automatic Sliding"
+  },
+  {
+    "Id": 18,
+    "BrandId": 7,
+    "Name": "Several Accessories"
+  },
+  {
+    "Id": 19,
+    "BrandId": 2,
+    "Name": "Distance Control"
+  },
+  {
+    "Id": 20,
+    "BrandId": 1,
+    "Name": "Several Accessories"
+  },
+  {
+    "Id": 21,
+    "BrandId": 9,
+    "Name": "Spare Parts"
+  },
+  {
+    "Id": 22,
+    "BrandId": 10,
+    "Name": "Several Accessories"
+  },
+  {
+    "Id": 23,
+    "BrandId": 1,
+    "Name": "Barrier"
+  },
+  {
+    "Id": 24,
+    "BrandId": 1,
+    "Name": "Rolling Shutter"
+  },
+  {
+    "Id": 25,
+    "BrandId": 10,
+    "Name": "Barrier"
+  },
+  {
+    "Id": 26,
+    "BrandId": 8,
+    "Name": "Automatic Sliding"
+  },
+  {
+    "Id": 27,
+    "BrandId": 8,
+    "Name": "Automatic Swing"
+  },
+  {
+    "Id": 28,
+    "BrandId": 8,
+    "Name": "Automatic OverHeadl"
+  },
+  {
+    "Id": 29,
+    "BrandId": 10,
+    "Name": "Distance Control"
   }
 ]

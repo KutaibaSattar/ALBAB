@@ -1,21 +1,18 @@
+using System;
+
 namespace ALBAB.Entities.Products
 {
     public class Product : BaseEntity
     {
         public string Name { get; set; }
-
         public string Description { get; set; }
-
-        public decimal Price { get; set; }  
-
+        public decimal Price { get; set; }
         public string PictureUrl { get; set; }
-
-        public ProductType ProductType { get; set; }
-        public int ProductTypeId { get; set; }
-
-        public ProductBrand ProductBrand { get; set; }
-        public int ProductBrandId { get; set; }
+        /* public DateTime LastUpdate { get; set; } */
+        public int ModelId { get; set; }
+        public Model Model { get; set; }
         
+       
     }
 
    
