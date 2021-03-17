@@ -10,11 +10,16 @@ import { MemberDetailsComponent } from './_account/member-details/member-details
 import { DashboardComponent } from './_account/dashboard/dashboard.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './_account/login/login.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductsComponent } from './products/products.component';
+
+
+
 
 
 
@@ -27,6 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     HomeComponent,
     LoginComponent,
+    ProductsComponent,
 
 
     ],
@@ -38,6 +44,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatAutocompleteModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
 

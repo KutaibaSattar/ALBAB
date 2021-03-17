@@ -5,14 +5,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class GoodsService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  getBrand(){
+  getProducts(){
 
-    this.http.get(this.baseUrl+'')
+  return  this.http.get(this.baseUrl+'goods/products');
 
   }
 }

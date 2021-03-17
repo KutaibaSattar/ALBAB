@@ -2,7 +2,7 @@ import {Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Member } from 'src/app/_models/member';
-import { AuthService } from 'src/app/_service/auth.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 
 
