@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,9 +12,9 @@ export class GoodsService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(){
+  getProducts() : Observable<any>{
 
-  return  this.http.get(this.baseUrl+'goods/products');
+  return this.http.get(this.baseUrl+'goods/products')
 
   }
 }
