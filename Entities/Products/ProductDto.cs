@@ -2,6 +2,7 @@ namespace ALBAB.Entities.Products
 {
     public class ProductDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -12,9 +13,9 @@ namespace ALBAB.Entities.Products
 
         public int ModelId { get; set; }
 
-       public string ModelName { get; set; }
+       public string Model { get; set; }
 
-         public string BrandName { get; set; }
+         public string Brand { get; set; }
 
       }
 }

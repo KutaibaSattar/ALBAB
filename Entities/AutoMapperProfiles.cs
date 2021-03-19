@@ -22,7 +22,9 @@ namespace ALBAB.Entities
            
             CreateMap<Model,ModelDto>();
 
-            CreateMap<Product,ProductDto>().ForMember(pd => pd.BrandName, opt => opt.MapFrom(p => p.Model.Brand.Name));
+            CreateMap<Product,ProductDto>()
+            .ForMember(pd => pd.Brand, opt => opt.MapFrom(p => p.Model.Brand.Name))
+            .ForMember(pd => pd.Model, opt => opt.MapFrom(p => p.Model.Name));
  
 
 

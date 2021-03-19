@@ -14,9 +14,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class MemberDetailsComponent implements OnInit {
   formData: Member;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data, public dialogRef: MatDialogRef<MemberDetailsComponent>,
-   private accountService :AuthService  ) {
-     console.log("Data", data )}
+  constructor(public dialogRef: MatDialogRef<MemberDetailsComponent>,
+   private accountService :AuthService  ) { }
 
 
   ngOnInit(): void {

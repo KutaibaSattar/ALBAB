@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Product } from '../_models/product';
 import { GoodsService } from '../_services/goods.service';
 export interface User {
   name: string;
@@ -13,81 +15,71 @@ export interface User {
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  users: User[] = [
-    {name: 'Mary', id: 1},
-    {name: 'Shelley', id: 2},
-    {name: 'Igor',id: 3}
-  ];
-  product : any;
-  productName : string[];
+  
+  product : Product[];
   control = new FormControl();
-  filtered$ : Observable<any>;
-  filtered
   filteredOptions: Observable<Array<any>>;
 
   constructor(private goodsService: GoodsService) { }
 
   ngOnInit(): void {
     //this.getProduct();
-    this.getUser();
-
-}
-
-getAll(){
- return this.control.valueChanges
-   .pipe(startWith(''),
-      map((value:any) => {
-        let testing = this._filter(value)
-        console.log('testing',testing);
-        console.log(value);
-        return testing;
-        }),
-
-    );
-}
-
-private _filter(value:string): /* string[] */User[] {
-
-  const filterValue = value.toLowerCase();
-
-  //return this.product.filter(option => option.toLowerCase().includes(filterValue));
-
-  return this.users.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-
-}
+   
+      this.goodsService.getProducts().subscribe(
+        (res => {
+          this.product = res/* .map(a =>a.name) */;
+          console.log(this.product)  
+        }))
+        this.getUser();
+      }
 
 
 
-getProduct(){
-this.goodsService.getProducts().subscribe(
-  (res => {
-    this.product = res.map(a =>a.name);
-    this.filteredOptions =  this.getAll();
-
-  })
 
 
-)
-}
+
 getUser(){
   this.filteredOptions = this.control.valueChanges
   .pipe(
     startWith(''),
-    map(value => typeof value === 'string' ? value : value.name),
-    map(name => name ? this._filter(name) : this.users.slice())
+    /*map(value => typeof value === 'string' ? value : value.name),
+    map(name => name ? this._filter(name) : this.users.slice()),*/
+    map((val) => this.filter(val))
+    
   );
 }
 
-displayFn(user: number): string {
+displayFn(user: User): any {
+ console.log(user);
 
- /*  return user && user.name ? user.name : ''; */
+ return user && user.name ? user.name : ''; 
  // return user ? this.options.find(x => x.id === user).name : undefined;
- if (user && this.users){
-  this.users.find(x => x.id === user);
- }
-
-  return 'Hello';
+ 
+  //return 'Hello';
 }
+filter(val: any): any {
+ if (this.product !== undefined)
+  return this.product.filter((item: any) => {
+    //If the user selects an option, the value becomes a Human object,
+    //therefore we need to reset the val for the filter because an
+    //object cannot be used in this toLowerCase filter
+    if (typeof val === 'object') { val = "" };
+    const TempString = item.name //+ ' - ' + item.Surname;
+    return TempString.toLowerCase().includes(val.toLowerCase());
+  });
+}
+OnHumanSelected(option: MatOption) {
+ console.log(option.value);
+  console.log(this.control); //This has the correct data
+  console.log(this.control.value); //Why is this different than the above result?
+  console.log(this.product); //I want this to log the Selected Human Object
+}
+
+onChanged(){
+
+}
+
+
 
 
 }

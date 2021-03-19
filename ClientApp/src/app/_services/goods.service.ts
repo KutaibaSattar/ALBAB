@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Product } from '../_models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,9 @@ export class GoodsService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts() : Observable<any>{
+  getProducts() : Observable<Product[]>{
 
-  return this.http.get(this.baseUrl+'goods/products')
+  return this.http.get<Product[]>(this.baseUrl+'goods/products')
 
   }
 }

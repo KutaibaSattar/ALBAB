@@ -1,16 +1,90 @@
-<p>products works!</p>
+  <header id="main-header" class="py-2 bg-success text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>
+            <i class="fa fa-folder"></i> Categories</h1>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<form class="example-form">
+  <!-- SEARCH -->
+  <section id="search" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ml-auto">
+          <div class="input-group">
+            <input type="text" class="form-control" (input)="onChanged()" matInput [formControl]="control" [matAutocomplete]="auto" placeholder="Product">
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <div class="input-group-append">
+              <button class="btn btn-success">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <input type="text"
-           placeholder="Pick one"
-           aria-label="Number"
-           matInput
-           [formControl]="control"
-           [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
-        {{option.name}}
-      </mat-option>
-    </mat-autocomplete>
-</form>
+  <!-- CATEGORIES -->
+  <section id="categories">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h4>Latest Categories</h4>
+            </div>
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Brand</th>
+                  <th>Model</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                 <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of product">
+                  <td>{{item.id}}</td>
+                  <td>{{item.brand}}</td>
+                  <td>{{item.model}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.description}}</td>
+                  <td>May 10 2018</td>
+                  <td>
+                    <a href="details.html" class="btn btn-secondary">
+                      <i class="fa fa-angle-double-right"></i> Details
+                    </a>
+                  </td>
+                </tr>
+               
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center">
+            Copyright &copy;
+            <span id="year"></span>
+            Blogen
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
