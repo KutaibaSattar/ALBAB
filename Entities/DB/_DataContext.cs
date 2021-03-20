@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.OrderAggregate;
+using ALBAB.Entities.Purchases;
 
 namespace ALBAB.Entities.DB
 {
@@ -28,6 +29,10 @@ namespace ALBAB.Entities.DB
         {
             
         }
+
+        public DbSet<AppUser> AppUser { get; set; }
+        public DbSet<PurchDTL> PurchDTLs { get; set; }
+        public DbSet<PurchHDR> PurchHDRs { get; set; }
 
          public DbSet<dbAccounts> dbAccounts {get;set;}
          public DbSet<Product> products {get;set;}  
