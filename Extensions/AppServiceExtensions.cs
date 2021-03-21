@@ -19,7 +19,9 @@ namespace ALBAB.Extensions
             services.AddScoped<ITokenService,TokenService>();
            
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-
+           
+     
+           
             services.AddDbContext<DataContext>(opt =>
             {
                /* opt.UseSqlite(config.GetConnectionString("SQLiteConnection")); */

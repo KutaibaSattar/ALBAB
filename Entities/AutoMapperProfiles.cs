@@ -3,6 +3,7 @@ using System.Reflection.PortableExecutable;
 using AutoMapper;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
+using ALBAB.Entities.Purchases;
 
 namespace ALBAB.Entities
 {
@@ -25,6 +26,11 @@ namespace ALBAB.Entities
             CreateMap<Product,ProductDto>()
             .ForMember(pd => pd.Brand, opt => opt.MapFrom(p => p.Model.Brand.Name))
             .ForMember(pd => pd.Model, opt => opt.MapFrom(p => p.Model.Name));
+
+             CreateMap<PurchHDR,PurchHDRDto>();
+            
+             CreateMap<PurchDTL,PurchDTLDto>();
+
  
 
 

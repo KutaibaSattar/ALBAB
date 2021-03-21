@@ -23,6 +23,12 @@ import { ProductsComponent } from './products/products.component';
 
 
 
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +39,8 @@ import { ProductsComponent } from './products/products.component';
     HomeComponent,
     LoginComponent,
     ProductsComponent,
+
+
 
 
     ],
@@ -49,6 +57,8 @@ import { ProductsComponent } from './products/products.component';
       positionClass: 'toast-bottom-right'
 
     }),
+
+
 
 
 
