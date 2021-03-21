@@ -5,18 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MemberListComponent } from './_account/member-list/member-list.component';
-import { MemberDetailsComponent } from './_account/member-details/member-details.component';
-import { DashboardComponent } from './_account/dashboard/dashboard.component';
+import { MemberListComponent } from './account/member-list/member-list.component';
+import { MemberDetailsComponent } from './account/member-details/member-details.component';
+import { DashboardComponent } from './account/dashboard/dashboard.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './_account/login/login.component';
+import { LoginComponent } from './account/login/login.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { ProductsComponent } from './products/products.component';
+import { PurchaseComponent } from './Purchases/purchase.component';
 
 
 
@@ -39,6 +40,7 @@ import { ProductsComponent } from './products/products.component';
     HomeComponent,
     LoginComponent,
     ProductsComponent,
+    PurchaseComponent
 
 
 

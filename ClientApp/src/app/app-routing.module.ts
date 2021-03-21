@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './_account/dashboard/dashboard.component';
-import { LoginComponent } from './_account/login/login.component';
-import { MemberDetailsComponent } from './_account/member-details/member-details.component';
-import { MemberListComponent } from './_account/member-list/member-list.component';
+import { DashboardComponent } from './account/dashboard/dashboard.component';
+import { LoginComponent } from './account/login/login.component';
+import { MemberDetailsComponent } from './account/member-details/member-details.component';
+import { MemberListComponent } from './account/member-list/member-list.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductsComponent } from './products/products.component';
-import { PurchaseComponent } from './_Purchases/purchase.component';
+import { PurchaseComponent } from './Purchases/purchase.component';
 
 
 
