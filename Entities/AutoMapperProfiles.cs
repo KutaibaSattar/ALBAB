@@ -24,12 +24,13 @@ namespace ALBAB.Entities
             CreateMap<Model,ModelDto>();
 
             CreateMap<Product,ProductDto>()
-            .ForMember(pd => pd.Brand, opt => opt.MapFrom(p => p.Model.Brand.Name))
-            .ForMember(pd => pd.Model, opt => opt.MapFrom(p => p.Model.Name));
+            .ForMember(dst => dst.Brand, opt => opt.MapFrom(src => src.Model.Brand.Name))
+            .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
              CreateMap<PurchHDR,PurchHDRDto>();
             
-             CreateMap<PurchDTL,PurchDTLDto>();
+             CreateMap<PurchDTL,PurchDTLDto>()
+               .ForMember(dst => dst.ProductName, opt => opt.MapFrom(src => src.Product.Name));
 
  
 

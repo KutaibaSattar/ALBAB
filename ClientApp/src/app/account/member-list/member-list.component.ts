@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Member } from '../../_models/member';
-import { AuthService } from '../../_services/auth.service';
+import { Member } from '../../models/member';
+import { AuthService } from '../../services/auth.service';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
 
 @Component({

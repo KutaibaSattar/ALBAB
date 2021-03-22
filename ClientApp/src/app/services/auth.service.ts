@@ -2,9 +2,9 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable , ReplaySubject } from 'rxjs';
 import { environment } from 'environments/environment';
-import { Member } from '../_models/member';
+import { Member } from '../models/member';
 import {map} from 'rxjs/operators';
-import { User } from '../_models/user';
+import { User } from '../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({

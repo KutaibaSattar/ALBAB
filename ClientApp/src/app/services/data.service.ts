@@ -10,18 +10,21 @@ export class DataService {
 
   constructor(private baseUrl: string, private http: HttpClient) { }
 
+  // tslint:disable-next-line: typedef
   getAll() {
-    return this.http.get(this.baseUrl)
+    return this.http.get(this.baseUrl);
 
   }
 
+  // tslint:disable-next-line: typedef
   create(resource){
-    return this.http.post(this.baseUrl , resource )
+    return this.http.post(this.baseUrl , resource );
 
   }
 
+  // tslint:disable-next-line: typedef
   delete(id){
-      return this.http.delete(this.baseUrl + id)
+      return this.http.delete(this.baseUrl + id);
   }
 
 

@@ -25,9 +25,20 @@ namespace ALBAB.Controllers
           [HttpGet("purchinv")]
          public async Task<ActionResult<IEnumerable<PurchHDR>>> Getpurchases()
          {
-           var purchases = await _context.PurchHDRs.Include(d => d.purchDTL).ToListAsync();
+           var purchases = await _context.PurchHDRs.Include(d => d.purchDTL).ThenInclude(p =>p.Product).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<PurchHDRDto>>(purchases);
+           
+           return Ok(result);  
+
+         }  
+
+          [HttpGet("purchdtl")]
+         public async Task<ActionResult<IEnumerable<PurchHDR>>> GetpurchDetails()
+         {
+           var purchdetails = await _context.PurchDTLs.Include(p =>p.Product).ToListAsync();
+
+           var result = _mapper.Map<IEnumerable<PurchDTLDto>>(purchdetails);
            
            return Ok(result);  
 

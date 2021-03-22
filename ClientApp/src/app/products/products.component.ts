@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Product } from '../_models/product';
-import { GoodsService } from '../_services/goods.service';
+import { Product } from '../models/product';
+import { GoodsService } from '../services/goods.service';
 export interface User {
   name: string;
   id: number;

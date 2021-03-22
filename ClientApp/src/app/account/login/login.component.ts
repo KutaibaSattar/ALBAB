@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'app/_services/auth.service';
+import { AuthService } from 'app/services/auth.service';
 
 
 @Component({
@@ -18,13 +17,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signIn (credential : any) {
+  // tslint:disable-next-line: typedef
+  signIn(credential: any) {
 
 
-    this.authService.login(credential).subscribe((result : boolean) => {
+    // tslint:disable-next-line: deprecation
+    this.authService.login(credential).subscribe((result: boolean) => {
 
-      if (result)
+      if (result) {
       this.router.navigate(['/']);
+      }
       /* else
       this.invalidLogin = true;
       this.authService.LoggedIn(); */

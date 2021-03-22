@@ -20,6 +20,9 @@ namespace ALBAB.Extensions
            
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
            
+          /*  services.AddControllersWithViews()
+                        .AddNewtonsoftJson(options =>
+                            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); */
      
            
             services.AddDbContext<DataContext>(opt =>

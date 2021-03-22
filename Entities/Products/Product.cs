@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using ALBAB.Entities.Purchases;
 
 namespace ALBAB.Entities.Products
 {
@@ -11,7 +14,8 @@ namespace ALBAB.Entities.Products
         /* public DateTime LastUpdate { get; set; } */
         public int ModelId { get; set; }
         public Model Model { get; set; }
-        
+         public ICollection<PurchDTL> PurchDTLs {get;set;}
+              
        
     }
 
