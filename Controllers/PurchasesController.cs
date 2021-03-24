@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ALBAB.Controllers
 {
-    public class PurchaseController : BaseController
+    public class PurchasesController : BaseController
     {
          private readonly DataContext _context;
        private readonly IMapper _mapper;
       
       
 
-        public PurchaseController(DataContext context, IMapper mapper)
+        public PurchasesController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
@@ -23,7 +23,7 @@ namespace ALBAB.Controllers
         }
 
           [HttpGet("purchinv")]
-         public async Task<ActionResult<IEnumerable<PurchHDR>>> Getpurchases()
+         public async Task<ActionResult<IEnumerable<PurchHDRDto>>> Getpurchases()
          {
            var purchases = await _context.PurchHDRs.Include(d => d.purchDTL).ThenInclude(p =>p.Product).ToListAsync();
 
@@ -34,7 +34,7 @@ namespace ALBAB.Controllers
          }  
 
           [HttpGet("purchdtl")]
-         public async Task<ActionResult<IEnumerable<PurchHDR>>> GetpurchDetails()
+         public async Task<ActionResult<IEnumerable<PurchDTLDto>>> GetpurchDetails()
          {
            var purchdetails = await _context.PurchDTLs.Include(p =>p.Product).ToListAsync();
 
@@ -43,5 +43,12 @@ namespace ALBAB.Controllers
            return Ok(result);  
 
          }  
+
+          [HttpPost]
+         public ActionResult CreatePurchase(PurchHDRDto purchHDR)
+         {
+            return  Ok(purchHDR);
+
+         }
     }
 }
