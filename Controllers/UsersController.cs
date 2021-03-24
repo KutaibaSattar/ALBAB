@@ -85,7 +85,7 @@ namespace ALBAB.Controllers
    
        [HttpGet("{id}")]
 
-      public async Task<ActionResult<AppUser>> GetUsers(int id)
+      public async Task<ActionResult<AppUser>> GetUser(int id)
         {
            
             var user = await _context.Users.FindAsync(id);

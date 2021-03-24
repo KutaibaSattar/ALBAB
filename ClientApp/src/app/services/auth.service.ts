@@ -25,7 +25,7 @@ export class AuthService {
   If you don't want to send the Authorization token by using an interceptor use HttpXhrBackend.
   If you want to send Authorization token by using interceptor, use HttpClient in a regular way.
  */
-  constructor(private http : HttpClient, private httpBackend : HttpBackend) {}
+  constructor(private http: HttpClient, private httpBackend: HttpBackend) {}
 
 
   /*how many previous values do we want it to store?
@@ -35,17 +35,17 @@ export class AuthService {
    currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
   getMembers()  {
-   return this.http.get<Member[]>(this.baseUrl+ 'users');
+   return this.http.get<Member[]>(this.baseUrl + 'users');
   }
 
   getMember(Id: number)  {
-   return this.http.get<Member>(this.baseUrl+ 'users/' + Id);
+   return this.http.get<Member>(this.baseUrl + 'users/' + Id);
   }
 
   registor(model: any) {
 
     return this.http.post<Member>(this.baseUrl + 'account/register', model).pipe(
-      map((response: Member) => {console.log('mapMember', response)}));
+      map((response: Member) => {console.log('mapMember', response); }));
 
     /* .pipe(
       map(( user: User) => {
@@ -59,13 +59,13 @@ export class AuthService {
 
   }
 
-  login(credential: any) : Observable<boolean> {
+  login(credential: any): Observable<boolean> {
 
     // return the observable of response but we need true or faulse
-    //let httpWithoutIntercep = new HttpClient(this.httpBackend)
-    let httpWithoutIntercep = this.http
+    // let httpWithoutIntercep = new HttpClient(this.httpBackend)
+    const httpWithoutIntercep = this.http;
 
-    return httpWithoutIntercep.post(this.baseUrl + 'account/login',credential).pipe(
+    return httpWithoutIntercep.post(this.baseUrl + 'account/login', credential).pipe(
       map((response: User) => {
        const user = response;
 
@@ -78,23 +78,23 @@ export class AuthService {
 
 
       })
-    )
+    );
 
   }
 
-setCurrentUser (user: User){
+setCurrentUser(user: User){
   this.currentUserSource.next(user);  // store user in current user source
   this.LoggedIn();
 
 }
 
   getCurrentUser(user: User) {
-  let token = localStorage.getItem('token')
-  if (!token) return null;
+  const token = localStorage.getItem('token');
+  if (!token) { return null; }
 
-  let jwtHelper =  new JwtHelperService('token');
+  const jwtHelper =  new JwtHelperService('token');
 
-  //this.currentUserSource.next(user);
+  // this.currentUserSource.next(user);
 
  }
 
@@ -106,10 +106,10 @@ setCurrentUser (user: User){
  }
 
  LoggedIn(){
-  let token = localStorage.getItem('token');
-  if (!token) return false;
+  const token = localStorage.getItem('token');
+  if (!token) { return false; }
   const jwtHelper = new JwtHelperService();
-  let expDate = jwtHelper.getTokenExpirationDate(token);
+  const expDate = jwtHelper.getTokenExpirationDate(token);
   if (jwtHelper.isTokenExpired(token))
   {
     localStorage.removeItem('token');
@@ -119,9 +119,9 @@ setCurrentUser (user: User){
 }
 
 getDecodedToken(token){
-  let x = JSON.parse(atob(token.split('.')[1]));
+  const x = JSON.parse(atob(token.split('.')[1]));
   console.log('atob', x);
-  console.log(Date.now(),x.exp * 1000)
+  console.log(Date.now(), x.exp * 1000);
   return JSON.parse(atob(token.split('.')[1]));
 }
 

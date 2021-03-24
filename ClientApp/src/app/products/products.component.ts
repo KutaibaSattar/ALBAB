@@ -15,22 +15,23 @@ export interface User {
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  
-  product : Product[];
+
+  product: Product[];
   control = new FormControl();
   filteredOptions: Observable<Array<any>>;
 
   constructor(private goodsService: GoodsService) { }
 
   ngOnInit(): void {
-    //this.getProduct();
-   
+    // this.getProduct();
+
+      // tslint:disable-next-line: deprecation
       this.goodsService.getProducts().subscribe(
         (res => {
           this.product = res/* .map(a =>a.name) */;
-          console.log(this.product)  
-        }))
-        this.getUser();
+          console.log(this.product);
+        }));
+      this.getUser();
       }
 
 
@@ -38,41 +39,43 @@ export class ProductsComponent implements OnInit {
 
 
 
-getUser(){
+getUser(): any{
   this.filteredOptions = this.control.valueChanges
   .pipe(
     startWith(''),
     /*map(value => typeof value === 'string' ? value : value.name),
     map(name => name ? this._filter(name) : this.users.slice()),*/
     map((val) => this.filter(val))
-    
+
   );
 }
 
 displayFn(user: User): any {
  console.log(user);
 
- return user && user.name ? user.name : ''; 
+ return user && user.name ? user.name : '';
  // return user ? this.options.find(x => x.id === user).name : undefined;
- 
-  //return 'Hello';
+
+  // return 'Hello';
 }
 filter(val: any): any {
- if (this.product !== undefined)
+ if (this.product !== undefined) {
   return this.product.filter((item: any) => {
-    //If the user selects an option, the value becomes a Human object,
-    //therefore we need to reset the val for the filter because an
-    //object cannot be used in this toLowerCase filter
-    if (typeof val === 'object') { val = "" };
-    const TempString = item.name //+ ' - ' + item.Surname;
+    // If the user selects an option, the value becomes a Human object,
+    // therefore we need to reset the val for the filter because an
+    // object cannot be used in this toLowerCase filter
+    if (typeof val === 'object') { val = ''; }
+    const TempString = item.name; // + ' - ' + item.Surname;
     return TempString.toLowerCase().includes(val.toLowerCase());
   });
+ }
 }
+// tslint:disable-next-line: typedef
 OnHumanSelected(option: MatOption) {
  console.log(option.value);
-  console.log(this.control); //This has the correct data
-  console.log(this.control.value); //Why is this different than the above result?
-  console.log(this.product); //I want this to log the Selected Human Object
+ console.log(this.control); // This has the correct data
+ console.log(this.control.value); // Why is this different than the above result?
+ console.log(this.product); // I want this to log the Selected Human Object
 }
 
 onChanged(){

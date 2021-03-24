@@ -19,16 +19,22 @@ export class PurchaseService extends DataService {
 
    }
 
+   private currentUserSource = new ReplaySubject<Purchase>(1); // buffer for only one user object
+
+   currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
+
 // tslint:disable-next-line: typedef
 getPurchase(){
 
  return this.getAll().pipe(
-    map((response: Purchase) => {
-        const purchase = response;
-        if (purchase) {
-            return purchase;
+    map((purch: Purchase) => {
+       if (purch){
+        this.currentUserSource.next(purch);
+        const purchase = purch[0];
+        return purchase;
+       }
 
-                 }
+       /*  (purchase).filter(item => item.idex === 0); */
     })
 
   );

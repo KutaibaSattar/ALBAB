@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="purchase" class="container">
   <form #form="ngForm" autocomplete="off" (ngSubmit)="OnSubmit(form)">
 
   <div class="row">
@@ -21,10 +21,14 @@
 
       <div class="form-group">
         <label>Supplier</label>
-        <select name="accId" #accId="ngModel" [(ngModel)]="purchase.aappUserId" class="form-control"
-          [class.is.invalid]="purchase.aappUserId ==0" required>
-         <!--  <option *ngFor="let item of myaccut" [ngValue]="item.acctId">{{item.acctName}}</option> -->
-        </select>
+        <div class="input-group">
+          <input type="text" class="form-control" matInput [formControl]="control" [matAutocomplete]="auto" placeholder="Customer">
+          <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn" >
+            <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
+              {{option.displayName}} -  {{option.userId}}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
       </div>
     </div>
     <div class="col-md-6">
@@ -76,7 +80,7 @@
     </thead>
 
     <tbody>
-      <tr *ngIf="purchaseItems.length==0" [class.is.invalid]="!isValid && purchaseItems.length==0">
+      <tr [class.is.invalid]="!isValid && purchaseItems.length==0">
         <td class="font-italic text-center" colspan="5">
           No item selected for this order
         </td>
