@@ -3,7 +3,7 @@ export interface Purchase {
     purNo:string
     purDate? :Date
     gtotal:number
-    aappUserId:number
+    appUserId:number
 
 
 }

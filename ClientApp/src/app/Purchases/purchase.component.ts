@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { Member } from 'app/models/member';
 import { AuthService } from 'app/services/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Purchase } from '../models/purchase';
 import { PurchaseItem } from '../models/purchase-item';
 import { PurchaseService } from '../services/purchase.service';
+
 
 @Component({
   selector: 'app-purchase',
@@ -15,14 +17,17 @@ import { PurchaseService } from '../services/purchase.service';
   styleUrls: ['./purchase.component.scss']
 })
 export class PurchaseComponent implements OnInit {
+  jokes;
+
+  currentJoke = '';
 
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
-  members: Member[];
+  members: Member[] ;
   isValid = true;
   control = new FormControl();
   filteredOptions: Observable<Array<Member>>;
-  constructor(private purchaseService: PurchaseService, private authService: AuthService ) {  }
+  constructor(private purchaseService: PurchaseService, private authService: AuthService) {  }
 
   ngOnInit(): void {
 
@@ -31,6 +36,7 @@ export class PurchaseComponent implements OnInit {
       (result: any) => {
       if (result) {
      this.purchase = result;
+     console.log('Purchase', this.purchase)
     }});
     // tslint:disable-next-line: deprecation
     this.authService.getMembers().subscribe(
@@ -81,6 +87,7 @@ export class PurchaseComponent implements OnInit {
   OnDeletePurchseItem(purchItemId: number, i: number) {
 
   }
+  // tslint:disable-next-line: typedef
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
     console.log(this.control); // This has the correct data
@@ -91,4 +98,8 @@ export class PurchaseComponent implements OnInit {
   // tslint:disable-next-line: typedef
   OnSubmit(form: NgForm) {}
 
+
+
 }
+
+

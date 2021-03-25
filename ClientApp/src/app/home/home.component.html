@@ -1,1 +1,15 @@
 <p>home works!</p>
+<pre>Form Values: {{f.value | json}}</pre>
+
+<form #f="ngForm">
+	<mat-form-field>
+		<input matInput placeholder="Customer" [matAutocomplete]="auto" name="joke" #joke="ngModel" [(ngModel)]="currentJoke" (ngModelChange)="doFilter()" >
+	</mat-form-field>
+
+	<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+		<mat-option *ngFor="let joke of jokes | async" [value]="joke.userId">
+			{{joke.displayName}}
+		</mat-option>
+	</mat-autocomplete>
+
+</form>

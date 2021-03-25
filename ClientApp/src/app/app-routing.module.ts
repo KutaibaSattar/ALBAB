@@ -10,6 +10,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductsComponent } from './products/products.component';
 import { PurchaseComponent } from './Purchases/purchase.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -19,14 +20,14 @@ const routes: Routes = [
   {path: '', component: DashboardComponent },
   {path: 'members', component: MemberListComponent },
   {path: 'memberdetails', component: MemberDetailsComponent },
-  {path: 'dashboard', component: DashboardComponent },
+  {path: 'dashboard', component: HomeComponent },
   {path: 'login', component: LoginComponent },
   {path: 'product', component: ProductsComponent },
   {path: 'purchases', component: PurchaseComponent },
     {path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
   { path: 'server-error', component: ServerErrorComponent, },
-  {path: '**' ,component: DashboardComponent, pathMatch:'full' },
+  {path: '**' , component: DashboardComponent, pathMatch: 'full' },
 
 
 ];

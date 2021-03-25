@@ -1,5 +1,6 @@
 <div *ngIf="purchase" class="container">
-  <form #form="ngForm" autocomplete="off" (ngSubmit)="OnSubmit(form)">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="OnSubmit(f)">
+
 
   <div class="row">
 
@@ -22,12 +23,15 @@
       <div class="form-group">
         <label>Supplier</label>
         <div class="input-group">
+
           <input type="text" class="form-control" matInput [formControl]="control" [matAutocomplete]="auto" placeholder="Customer">
-          <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn" >
+
+          <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
               {{option.displayName}} -  {{option.userId}}
             </mat-option>
           </mat-autocomplete>
+
         </div>
       </div>
     </div>
@@ -105,11 +109,11 @@
   </table>
   <p>
 
-    {{form.value | json}}
+    {{f.value | json}}
 
   </p>
   <div class="form-group">
-    <button type="submit" [disabled]="!form.valid" class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
+    <button type="submit" [disabled]="!f.valid" class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
     </button>
   </div>
 

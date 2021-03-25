@@ -11,6 +11,9 @@ import { DashboardComponent } from './account/dashboard/dashboard.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './account/login/login.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -55,6 +58,9 @@ import { PurchaseComponent } from './Purchases/purchase.component';
     BrowserAnimationsModule,
     MatDialogModule,
     MatAutocompleteModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
 
