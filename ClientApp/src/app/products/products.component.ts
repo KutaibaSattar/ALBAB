@@ -31,7 +31,7 @@ export class ProductsComponent implements OnInit {
           this.product = res/* .map(a =>a.name) */;
           console.log(this.product);
         }));
-      this.getUser();
+      this.getUser(); // initializing 
       }
 
 

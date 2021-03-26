@@ -24,10 +24,10 @@
         <label>Supplier</label>
         <div class="input-group">
 
-          <input type="text" class="form-control" matInput [formControl]="control" [matAutocomplete]="auto" placeholder="Customer">
+          <input type="text" class="form-control" matInput [formControl] ="supplier" [matAutocomplete]="auto" placeholder="Customer">
 
           <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
+            <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
               {{option.displayName}} -  {{option.userId}}
             </mat-option>
           </mat-autocomplete>

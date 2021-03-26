@@ -17,15 +17,12 @@ import { PurchaseService } from '../services/purchase.service';
   styleUrls: ['./purchase.component.scss']
 })
 export class PurchaseComponent implements OnInit {
-  jokes;
-
-  currentJoke = '';
-
+ 
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
   isValid = true;
-  control = new FormControl();
+  supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
   constructor(private purchaseService: PurchaseService, private authService: AuthService) {  }
 
@@ -44,13 +41,16 @@ export class PurchaseComponent implements OnInit {
       if (result) {
      this.members = result;
      console.log(result);
+     this.supplier.setValue({id:1})
     }});
     this.getUser();
+   
+    
 
 
   }
   getUser(): any{
-    this.filteredOptions = this.control.valueChanges
+    this.filteredOptions = this.supplier.valueChanges
     .pipe(
       startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
@@ -90,8 +90,8 @@ export class PurchaseComponent implements OnInit {
   // tslint:disable-next-line: typedef
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
-    console.log(this.control); // This has the correct data
-    console.log(this.control.value); // Why is this different than the above result?
+    console.log(this.supplier); // This has the correct data
+    console.log(this.supplier.value); // Why is this different than the above result?
     console.log(this.members); // I want this to log the Selected Human Object
    }
 

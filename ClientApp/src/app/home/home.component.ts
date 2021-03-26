@@ -31,7 +31,7 @@ export class Service {
 export class HomeComponent implements OnInit {
   jokes;
 
-  currentJoke = '';
+  currentJoke=1 ;
   constructor(private service: Service) { }
 
   ngOnInit(): void {
@@ -51,10 +51,11 @@ displayFn(user: any): any {
     console.log(user);
 
     // return user && user.userId ? user.displayName + ' - ' + user.userId : '';
-    if (user){
+   /*  if (user){
    let name =  this.jokes.find(x => x.userId === user).displayName
    return name;
-  }
+  // return 'Hello';
+  } */
 
     // return user ? this.jokes.find(x => x.userId === user).displayName : undefined;
 
