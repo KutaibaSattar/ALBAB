@@ -34,12 +34,12 @@ export class AuthService {
 
    currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
-  getMembers()  {
+  getMembers(): Observable<Member[]>  {
    return this.http.get<Member[]>(this.baseUrl + 'users');
   }
 
-  getMember(Id: number)  {
-   return this.http.get<Member>(this.baseUrl + 'users/' + Id);
+  getMember(Id: number): Observable<Member>  {
+   return this.http.get<Member>(this.baseUrl + 'users/getuser/' + Id);
   }
 
   registor(model: any) {

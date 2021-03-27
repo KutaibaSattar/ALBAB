@@ -37,18 +37,10 @@ namespace ALBAB.Controllers
        
         {
             
-          
-         
-            
-
-
-            if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");
+           if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
-
-  
            
-          
            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
           var roleResult = await _userManager.AddToRoleAsync(user, "Member");
@@ -83,7 +75,7 @@ namespace ALBAB.Controllers
 
         }  
    
-       [HttpGet("{id}")]
+       [HttpGet("getuser/{id}")]
 
       public async Task<ActionResult<AppUser>> GetUser(int id)
         {

@@ -4,7 +4,7 @@ import { FormControl, NgForm } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { Member } from 'app/models/member';
 import { AuthService } from 'app/services/auth.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Purchase } from '../models/purchase';
 import { PurchaseItem } from '../models/purchase-item';
@@ -17,13 +17,18 @@ import { PurchaseService } from '../services/purchase.service';
   styleUrls: ['./purchase.component.scss']
 })
 export class PurchaseComponent implements OnInit {
- 
+
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
+  member: Member;
   isValid = true;
   supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
+  private currentUserSource = new ReplaySubject<Member>(1); // buffer for only one user object
+
+  currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
+
   constructor(private purchaseService: PurchaseService, private authService: AuthService) {  }
 
   ngOnInit(): void {
@@ -33,7 +38,7 @@ export class PurchaseComponent implements OnInit {
       (result: any) => {
       if (result) {
      this.purchase = result;
-     console.log('Purchase', this.purchase)
+     console.log('Purchase', this.purchase);
     }});
     // tslint:disable-next-line: deprecation
     this.authService.getMembers().subscribe(
@@ -41,11 +46,24 @@ export class PurchaseComponent implements OnInit {
       if (result) {
      this.members = result;
      console.log(result);
-     this.supplier.setValue({id:1})
+     this.supplier.setValue({id: 1});
+     this.currentUserSource.next(result); // store user in current user source
     }});
+    /* this.authService.getMember(1).subscribe(
+
+      (result: any) => {
+       if (result){
+        (this.member = result);
+        return this.members ? this.members.find(x => x.id === 1 ).displayName : undefined;
+       }
+
+      }
+
+    ); */
+
     this.getUser();
-   
-    
+
+
 
 
   }
@@ -59,10 +77,23 @@ export class PurchaseComponent implements OnInit {
 
     );
   }
-  displayFn(user: Member): any {
-    console.log(user);
+  displayFn(user: number): any {
 
-    return user && user.userId ? user.displayName + ' - ' + user.userId : '';
+    let member : Member;
+    if (user){
+     /*  this.authService.membersSource$.subscribe(res => member = res ); */
+      let x =   this.currentUserSource ;
+      if (member && x){
+
+
+      }
+
+    }
+
+
+
+
+    // return user && user.userId ? user.displayName + ' - ' + user.userId : '';
     // return user ? this.options.find(x => x.id === user).name : undefined;
 
      // return 'Hello';
