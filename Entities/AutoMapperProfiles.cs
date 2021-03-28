@@ -6,6 +6,8 @@ using AutoMapper;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.Purchases;
+using System.Linq;
+using System;
 
 namespace ALBAB.Entities
 {
@@ -30,8 +32,34 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
              CreateMap<PurchHDRDto,PurchHDR>()
+             .ForMember(dst => dst.Id , opt => opt.Ignore())
              .ForMember(dst => dst.purchDTL, opt => opt.MapFrom(src => src.purchDTLDtos))
+             /* .AfterMap((Pdto,p) =>{
+                 // update new date
+                 foreach (var pd in Pdto.purchDTLDtos)
+                 {
+                     if (!p.purchDTL.Any(p => p.Id == pd.Id))
+                        Pdto.purDate = DateTime.Now;
+
+                 }})    */
+
              .ReverseMap() ;
+             
+            /*  CreateMap<PurchHDRDto,PurchHDR>()
+             .ForMember(dst => dst.Id , opt => opt.Ignore())
+             .ForMember(dst => dst.Id , opt => opt.MapFrom(src => src.purchDTLDtos))
+             .AfterMap((Pdto,p) =>{
+                 // update new date
+                 foreach (var pd in Pdto.purchDTLDtos)
+                 {
+                     if (!p.purchDTL.Any(p => p.Id == pd.Id))
+                        Pdto.purDate = DateTime.Now;
+
+                 }   
+
+
+             })
+             .ReverseMap() ; */
 
             
              CreateMap<PurchDTLDto,PurchDTL>().ReverseMap();

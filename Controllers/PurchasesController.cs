@@ -69,5 +69,29 @@ namespace ALBAB.Controllers
           return  Ok(result);
 
          }
+          [HttpPut("{id}")] // api/purchases/id
+         public async  Task<ActionResult<PurchHDRDto>> UpdatePurchase(int id,PurchHDRDto purchHDRDto)
+         {
+         if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+         
+         var purch = await _context.PurchHDRs.FindAsync(id);
+
+          purch.LastUpdate = DateTime.Now;
+
+          _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto,purch);
+
+          /*  foreach (var item in purch.purchDTL)
+            {
+                item.LastUpdate = DateTime.Now;
+            } */
+
+          await _context.SaveChangesAsync();
+
+          var result = _mapper.Map<PurchHDR,PurchHDRDto>(purch);
+
+          return  Ok(result);
+
+         }
     }
 }
