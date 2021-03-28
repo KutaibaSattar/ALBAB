@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
@@ -45,9 +46,27 @@ namespace ALBAB.Controllers
          }  
 
           [HttpPost]
-         public ActionResult CreatePurchase(PurchHDRDto purchHDR)
+         public async  Task<ActionResult<PurchHDRDto>> CreatePurchase(PurchHDRDto purchHDRDto)
          {
-            return  Ok(purchHDR);
+         if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+         
+         var purch = _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto);
+
+          purch.LastUpdate = DateTime.Now;
+
+           foreach (var item in purch.purchDTL)
+            {
+                item.LastUpdate = DateTime.Now;
+            }
+
+         _context.PurchHDRs.Add(purch);
+
+         await _context.SaveChangesAsync();
+
+          var result = _mapper.Map<PurchHDR,PurchHDRDto>(purch);
+
+          return  Ok(result);
 
          }
     }

@@ -27,7 +27,7 @@
           <input type="text" class="form-control" matInput [formControl] ="supplier" [matAutocomplete]="auto" placeholder="Customer">
 
           <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
+            <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
               {{option.displayName}} -  {{option.userId}}
             </mat-option>
           </mat-autocomplete>

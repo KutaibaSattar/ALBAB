@@ -25,9 +25,6 @@ export class PurchaseComponent implements OnInit {
   isValid = true;
   supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
-  private currentUserSource = new ReplaySubject<Member>(1); // buffer for only one user object
-
-  currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
   constructor(private purchaseService: PurchaseService, private authService: AuthService) {  }
 
@@ -47,7 +44,7 @@ export class PurchaseComponent implements OnInit {
      this.members = result;
      console.log(result);
      this.supplier.setValue({id: 1});
-     this.currentUserSource.next(result); // store user in current user source
+
     }});
     /* this.authService.getMember(1).subscribe(
 
@@ -77,16 +74,13 @@ export class PurchaseComponent implements OnInit {
 
     );
   }
-  displayFn(user: number): any {
+  displayFn(user: Member): any {
 
-    let member : Member;
-    if (user){
+
+    if (user ){
      /*  this.authService.membersSource$.subscribe(res => member = res ); */
-      let x =   this.currentUserSource ;
-      if (member && x){
+    return  user.displayName;
 
-
-      }
 
     }
 
