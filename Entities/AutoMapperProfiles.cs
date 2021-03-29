@@ -33,6 +33,7 @@ namespace ALBAB.Entities
 
              CreateMap<PurchHDRDto,PurchHDR>()
              .ForMember(dst => dst.Id , opt => opt.Ignore())
+             .ForMember(dst => dst.LastUpdate , opt => opt.Ignore())
              .ForMember(dst => dst.purchDTL, opt => opt.MapFrom(src => src.purchDTLDtos))
              /* .AfterMap((Pdto,p) =>{
                  // update new date
@@ -55,6 +56,7 @@ namespace ALBAB.Entities
                      if (!p.purchDTL.Any(p => p.Id == pd.Id))
                         Pdto.purDate = DateTime.Now;
 
+
                  }   
 
 
@@ -63,7 +65,8 @@ namespace ALBAB.Entities
 
             
              CreateMap<PurchDTLDto,PurchDTL>().ReverseMap();
-             /*   .ForMember(dst => dst.ProductName, opt => opt.MapFrom(src => src.Product.Name)); */
+             //.ForMember(dst => dst.LastUpdate , opt => opt.Ignore());
+                     /*   .ForMember(dst => dst.ProductName, opt => opt.MapFrom(src => src.Product.Name)); */
 
  
 

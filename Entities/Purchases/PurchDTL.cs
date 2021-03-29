@@ -11,7 +11,7 @@ namespace ALBAB.Entities.Purchases
         public decimal  Price { get; set; }
         public DateTime LastUpdate { get; set; }
         public int PurchHDRId { get; set;}
-        public PurchHDR  purchHDR { get; set; }
+        public PurchHDR  PurchHDR { get; set; }
         public int ProductId { get; set;}
         public Product Product { get; set; }
 
