@@ -12,7 +12,7 @@ namespace ALBAB.Entities.Purchases
         public string purNo { get; set; }
         public DateTime purDate { get; set; }
         public string purComment { get; set; }
-       
+             
         [Required]
         public int AppUserId { get; set; }
        

@@ -31,6 +31,11 @@ namespace ALBAB.Controllers
            var purchases = await _context.PurchHDRs.Include(d => d.purchDTL).ThenInclude(p =>p.Product).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<PurchHDRDto>>(purchases);
+
+           _mapper.Map<IEnumerable<PurchHDRDto>,IEnumerable<PurchHDR>>(result,purchases);
+          
+          
+           var result2 = _mapper.Map<IEnumerable<PurchHDR>>(result);
            
            return Ok(result);  
 
@@ -42,8 +47,13 @@ namespace ALBAB.Controllers
            var purchdetails = await _context.PurchDTLs.Include(p =>p.Product).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<PurchDTLDto>>(purchdetails);
+
+            var purch = _mapper.Map<IEnumerable<PurchDTL>>(result);
            
-           return Ok(result);  
+            var newpurchase = _mapper.Map<IEnumerable<PurchDTLDto>,IEnumerable<PurchDTL>>(result,purchdetails);
+
+           
+           return Ok(purch);  
 
          }  
 
@@ -87,8 +97,11 @@ namespace ALBAB.Controllers
          
           purch.LastUpdate = DateTime.Now; */
 
-      var newpurchase = _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto,purch);
-                         _mapper.Map<PurchDTLDto,PurchDTL>(purchHDRDto.purchDTLDtos,purch.purchDTL);
+
+
+
+       _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto,purch);
+                     
            /* foreach (var item in purch.purchDTL)
             {
                   item.LastUpdate = DateTime.Now;
@@ -102,12 +115,12 @@ namespace ALBAB.Controllers
         }); */
 
 
-        var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
+       /*  var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 
         EditedEntities.ForEach(E =>
         {
             E.Property("LastUpdate").CurrentValue = DateTime.Now;
-        });
+        }); */
 
      
                 
@@ -132,6 +145,7 @@ namespace ALBAB.Controllers
                     }
           } */
 
+         
          
         
           await _context.SaveChangesAsync();
