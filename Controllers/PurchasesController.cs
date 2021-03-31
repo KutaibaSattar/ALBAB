@@ -89,62 +89,21 @@ namespace ALBAB.Controllers
         
 
          var purch = await _context.PurchHDRs.Include(pd => pd.purchDTL).SingleOrDefaultAsync(p => p.Id == id);
-           //var purch = await _context.PurchHDRs.Include(pd => pd.purchDTL).ProjectTo<PurchHDRDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(p => p.Id == id);
-        /*  foreach (var item in purch.purchDTL)
-            {
-                item.LastUpdate = DateTime.Now;
-            }
-         
-          purch.LastUpdate = DateTime.Now; */
-
-
-
+          
 
        _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto,purch);
                      
-           /* foreach (var item in purch.purchDTL)
-            {
-                  item.LastUpdate = DateTime.Now;
-            } */
-        
-       /*  var AddedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Added).ToList();
-
-        AddedEntities.ForEach(E =>
-        {
-            E.Property("LastUpdate").CurrentValue = DateTime.Now;
-        }); */
-
-
-       /*  var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
+                 
+       
+        var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 
         EditedEntities.ForEach(E =>
         {
             E.Property("LastUpdate").CurrentValue = DateTime.Now;
-        }); */
+        });
 
-     
-                
          
-         /*  var modifiedEntries =  _context.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
-          
-          foreach (var entity in modifiedEntries)
-          {
-                  
-                  if (entity.State == EntityState.Modified)
-                  {
-                    
-                  }
-                  
-                    foreach (var propName in entity.Properties)
-                    {
-                        if (propName.IsModified){
-                         var current = entity.CurrentValues[propName.ToString()];
-                        var original = entity.OriginalValues[propName.ToString()];
-                        }
-                       
-                    }
-          } */
-
+         
          
          
         
