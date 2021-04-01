@@ -13,7 +13,7 @@
             <div class="input-group-text">#</div>
 
           </div>
-          <input name="purchNo" #purchNo="ngModel" [(ngModel)]="purchase.purNo" class="form-control" required
+          <input name="purchNo" #purchNo="ngModel" [class.is.invalid] [(ngModel)]="purchase.purNo" class="form-control" required
             minlength="4" />
 
         </div>
@@ -75,7 +75,7 @@
         <th>Quantity</th>
         <th>Total</th>
         <th>
-          <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(null,purchase.id)"><i
+          <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchase.id)"><i
               class="fa fa-plus"></i>Add Item</a>
         </th>
 
@@ -97,7 +97,7 @@
         <td>{{item.quantity}}</td>
         <td>{{item.total}}</td>
         <td>
-          <a class="btn btn-sm btn-info txt-white" (click)="AddOrEditPurchseItem(i,purchase.id)"><i
+          <a class="btn btn-sm btn-info txt-white" (click)="AddOrEditPurchseItem(purchase.id)"><i
               class="fa fa-pencil"></i></a>
           <a class="btn btn-sm btn-danger txt-white ml-1" (click)="OnDeletePurchseItem(item.id,i)"><i
               class="fa fa-trash"></i></a>

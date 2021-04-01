@@ -20,7 +20,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { ProductsComponent } from './products/products.component';
-import { PurchaseComponent } from './Purchases/purchase.component';
+import { PurchaseComponent } from './purchases/purchase.component';
+import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 
 
 
@@ -43,7 +44,8 @@ import { PurchaseComponent } from './Purchases/purchase.component';
     HomeComponent,
     LoginComponent,
     ProductsComponent,
-    PurchaseComponent
+    PurchaseComponent,
+   invoiceitemComponent,
 
 
 

@@ -9,7 +9,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductsComponent } from './products/products.component';
-import { PurchaseComponent } from './Purchases/purchase.component';
+import { PurchaseComponent } from './purchases/purchase.component';
 import { HomeComponent } from './home/home.component';
 
 

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { AuthService } from 'app/services/auth.service';
 import { Observable, of, ReplaySubject } from 'rxjs';
@@ -26,7 +28,7 @@ export class PurchaseComponent implements OnInit {
   supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
 
-  constructor(private purchaseService: PurchaseService, private authService: AuthService) {  }
+  constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) {  }
 
   ngOnInit(): void {
 
@@ -106,7 +108,7 @@ export class PurchaseComponent implements OnInit {
     }
    }
   // tslint:disable-next-line: typedef
-  AddOrEditPurchseItem(OrderItemIndex, OrderID) {}
+
 
   // tslint:disable-next-line: typedef
   OnDeletePurchseItem(purchItemId: number, i: number) {
@@ -122,6 +124,17 @@ export class PurchaseComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   OnSubmit(form: NgForm) {}
+
+  AddOrEditPurchseItem(OrderID) {
+
+    const dialogConfig = new MatDialogConfig;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "50%";
+    dialogConfig.data = { OrderID };
+
+    this.dialog.open(invoiceitemComponent, dialogConfig).afterClosed().subscribe();
+
+  }
 
 
 
