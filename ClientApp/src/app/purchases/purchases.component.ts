@@ -1,24 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Injectable, OnInit } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
+import { Purchase } from 'app/models/purchase';
+import { PurchaseItem } from 'app/models/purchase-item';
 import { AuthService } from 'app/services/auth.service';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { PurchaseService } from 'app/services/purchase.service';
+import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Purchase } from '../models/purchase';
-import { PurchaseItem } from '../models/purchase-item';
-import { PurchaseService } from '../services/purchase.service';
-
 
 @Component({
-  selector: 'app-purchase',
-  templateUrl: './purchase.component.html',
-  styleUrls: ['./purchase.component.scss']
+  selector: 'app-purchases',
+  templateUrl: './purchases.component.html',
+  styleUrls: ['./purchases.component.scss']
 })
-export class PurchaseComponent implements OnInit {
+export class PurchasesComponent implements OnInit {
 
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
@@ -28,7 +26,19 @@ export class PurchaseComponent implements OnInit {
   supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
 
-  constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) {  }
+  formGroup = new FormGroup({
+
+    goods : new FormControl(null),
+    quantity: new FormControl(null),
+    price: new FormControl(null)
+
+  });
+
+  records = new FormArray([]);
+
+
+
+  constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -136,8 +146,18 @@ export class PurchaseComponent implements OnInit {
 
   }
 
+  addRecord() {
+    //this.skills.push(new FormControl(''));
+    (this.formGroup.get('records') as FormArray).push(this.form));
+  }
+
+  get recordProp(){
+    return (this.formG.get('records') as FormArray).controls
+
+  }
+
+
+
 
 
 }
-
-

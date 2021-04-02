@@ -9,9 +9,8 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductsComponent } from './products/products.component';
-import { PurchaseComponent } from './purchases/purchase.component';
 import { HomeComponent } from './home/home.component';
-
+import { PurchasesComponent } from './purchases/purchases.component';
 
 
 
@@ -23,7 +22,7 @@ const routes: Routes = [
   {path: 'dashboard', component: HomeComponent },
   {path: 'login', component: LoginComponent },
   {path: 'product', component: ProductsComponent },
-  {path: 'purchases', component: PurchaseComponent },
+  {path: 'purchases', component: PurchasesComponent },
     {path: 'errors', component: TestErrorsComponent },
   { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
   { path: 'server-error', component: ServerErrorComponent, },

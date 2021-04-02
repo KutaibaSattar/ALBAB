@@ -1,0 +1,130 @@
+
+
+<div *ngIf="purchase" class="container">
+
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="OnSubmit(f)">
+
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Purch No</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+
+              <div class="input-group-text">#</div>
+
+            </div>
+            <input name="purchNo" #purchNo="ngModel" [class.is.invalid] [(ngModel)]="purchase.purNo" class="form-control" required
+              minlength="4" />
+
+          </div>
+          <!--<div *ngIf="purchNo.invalid && (purchNo.dirty || purchNo.touched)" class="alert alert-danger">Requierd</div>-->
+        </div>
+
+        <div class="form-group">
+          <label>Supplier</label>
+          <div class="input-group">
+
+            <input type="text" class="form-control" matInput [formControl] ="supplier" [matAutocomplete]="auto" placeholder="Customer">
+
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
+                {{option.displayName}} -  {{option.userId}}
+              </mat-option>
+            </mat-autocomplete>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select name="pMethod" pMethod="ngModel" class="form-control">
+            <option value="">-Select-</option>
+            <option value="Cash">Cash</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Card">Card</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Grand Total</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+
+              <div class="input-group-text">AED</div>
+
+            </div>
+            <input name="gtotal" #gTotal="ngModel" [(ngModel)]="purchase.gtotal" class="form-control" readonly />
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- purchase items table-->
+
+    <table class="table table-borderless">
+      <thead class="thead-light">
+
+        <tr>
+
+
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>
+            <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchase.id)"><i
+                class="fa fa-plus"></i>Add Item</a>
+                <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
+                  class="fa fa-plus"></i>Add Record</a>
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+        <tr [class.is.invalid]="!isValid && purchaseItems.length==0">
+          <td class="font-italic text-center" colspan="5">
+            No item selected for this order
+          </td>
+
+        </tr>
+
+       <tr *ngFor="let item of recordProp">
+
+       </tr>
+
+        <tr *ngFor="let item of purchaseItems; let i=index;">
+          <td>{{item.itemName}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.total}}</td>
+          <td>
+            <a class="btn btn-sm btn-info txt-white" (click)="AddOrEditPurchseItem(purchase.id)"><i
+                class="fa fa-pencil"></i></a>
+            <a class="btn btn-sm btn-danger txt-white ml-1" (click)="OnDeletePurchseItem(item.id,i)"><i
+                class="fa fa-trash"></i></a>
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <p>
+
+      {{f.value | json}}
+
+    </p>
+    <div class="form-group">
+      <button type="submit" [disabled]="!f.valid" class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
+      </button>
+    </div>
+
+  </form>
+</div>
