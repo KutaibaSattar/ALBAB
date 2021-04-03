@@ -65,6 +65,10 @@
       </div>
 
     </div>
+
+    <form >
+
+
     <!-- purchase items table-->
 
     <table class="table table-borderless">
@@ -85,7 +89,9 @@
           </th>
 
         </tr>
-
+        <tr *ngFor="let item of recordProp; let i = index" >
+           <input type="text" name="goods" formControlName="goods" class ="form-control">
+        </tr>
       </thead>
 
       <tbody>
@@ -125,6 +131,6 @@
       <button type="submit" [disabled]="!f.valid" class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
       </button>
     </div>
-
+  </form>
   </form>
 </div>

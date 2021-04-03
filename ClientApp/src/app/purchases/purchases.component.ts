@@ -26,15 +26,18 @@ export class PurchasesComponent implements OnInit {
   supplier = new FormControl();
   filteredOptions: Observable<Array<Member>>;
 
+  records= new FormArray([]);
+
   formGroup = new FormGroup({
 
     goods : new FormControl(null),
     quantity: new FormControl(null),
-    price: new FormControl(null)
+    price: new FormControl(null),
+
 
   });
 
-  records = new FormArray([]);
+
 
 
 
@@ -147,12 +150,17 @@ export class PurchasesComponent implements OnInit {
   }
 
   addRecord() {
+    var formgroup = new FormGroup({
+      skill : new FormControl()
+
+    });
+
     //this.skills.push(new FormControl(''));
-    (this.formGroup.get('records') as FormArray).push(this.form));
+    (this.records as FormArray).push(this.formGroup);
   }
 
   get recordProp(){
-    return (this.formG.get('records') as FormArray).controls
+    return (this.records as FormArray).controls;
 
   }
 
