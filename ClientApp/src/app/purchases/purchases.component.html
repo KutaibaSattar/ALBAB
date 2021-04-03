@@ -2,7 +2,7 @@
 
 <div *ngIf="purchase" class="container">
 
-  <form #f="ngForm" autocomplete="off" (ngSubmit)="OnSubmit(f)">
+  <form [formGroup] = "formMain">
 
 
     <div class="row">
@@ -16,7 +16,7 @@
               <div class="input-group-text">#</div>
 
             </div>
-            <input name="purchNo" #purchNo="ngModel" [class.is.invalid] [(ngModel)]="purchase.purNo" class="form-control" required
+            <input name="purchNo" class="form-control" required
               minlength="4" />
 
           </div>
@@ -41,7 +41,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Payment Method</label>
-          <select name="pMethod" pMethod="ngModel" class="form-control">
+          <select name="pMethod" class="form-control">
             <option value="">-Select-</option>
             <option value="Cash">Cash</option>
             <option value="Cheque">Cheque</option>
@@ -57,7 +57,7 @@
               <div class="input-group-text">AED</div>
 
             </div>
-            <input name="gtotal" #gTotal="ngModel" [(ngModel)]="purchase.gtotal" class="form-control" readonly />
+            <input name="gtotal" class="form-control" readonly />
 
           </div>
         </div>
@@ -66,9 +66,14 @@
 
     </div>
 
-    <form >
+    <ng-container formArrayName ="formChilds">
 
-
+      <div *ngFor="let item of formChilds.controls; index as i">
+        <ng-container [formGroupName]="i">
+          <input formControlName="quantity" class ="form-control" />
+        </ng-container>
+      </div>
+    </ng-container>
     <!-- purchase items table-->
 
     <table class="table table-borderless">
@@ -81,6 +86,9 @@
           <th>Price</th>
           <th>Quantity</th>
           <th>Total</th>
+
+
+
           <th>
             <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchase.id)"><i
                 class="fa fa-plus"></i>Add Item</a>
@@ -124,13 +132,12 @@
     </table>
     <p>
 
-      {{f.value | json}}
 
     </p>
     <div class="form-group">
-      <button type="submit" [disabled]="!f.valid" class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
+      <button type="submit"  class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
       </button>
     </div>
   </form>
-  </form>
+
 </div>

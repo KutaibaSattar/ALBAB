@@ -37,6 +37,24 @@ export class PurchasesComponent implements OnInit {
 
   });
 
+  formMain = new FormGroup({
+
+
+    purNo: new FormControl(''),
+    appUserId : new FormControl(''),
+
+    formChilds: new FormArray([
+      new FormGroup({
+        quantity: new FormControl('')
+      
+      })
+    ])
+
+
+  });
+
+  formChilds = this.formMain.get('formChilds') as FormArray
+
 
 
 
@@ -150,17 +168,21 @@ export class PurchasesComponent implements OnInit {
   }
 
   addRecord() {
-    var formgroup = new FormGroup({
-      skill : new FormControl()
 
-    });
 
     //this.skills.push(new FormControl(''));
     (this.records as FormArray).push(this.formGroup);
+    (this.formChilds as FormArray).push(new FormControl(''))
   }
 
   get recordProp(){
     return (this.records as FormArray).controls;
+
+  }
+  get formChildsProp(){
+
+    return (this.formMain.get('fomrChilds') as FormArray).controls;
+
 
   }
 
