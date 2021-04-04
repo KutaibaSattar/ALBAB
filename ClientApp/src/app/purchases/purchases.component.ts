@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
@@ -18,6 +18,11 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class PurchasesComponent implements OnInit {
 
+
+
+
+
+  control = new FormControl();
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
@@ -37,26 +42,45 @@ export class PurchasesComponent implements OnInit {
 
   });
 
-  formMain = new FormGroup({
-
+  Invoice = new FormGroup({
 
     purNo: new FormControl(''),
     appUserId : new FormControl(''),
 
-    formChilds: new FormArray([
-      new FormGroup({
-        quantity: new FormControl('')
-      
-      })
-    ])
+   //InvItems: new FormArray([])
 
 
   });
 
-  formChilds = this.formMain.get('formChilds') as FormArray
+  appUserId= this.Invoice.get('appUserId') as FormControl;
+
+
+   frm = new FormGroup({
+    quantity: new FormControl('')});
+
+  get InvItems (){
+   return this.Invoice.get('InvItems') as FormArray
+  }
 
 
 
+
+  /* user = new FormGroup({
+    name: new FormControl(''),
+    skills: new FormArray([
+      new FormGroup({
+        name: new FormControl(''),
+        level: new FormControl('')
+      })
+    ])
+  });
+
+
+  get skills() {
+    let x = this.user.get('skills')[0]
+    return this.user.get('skills') as FormArray;
+  }
+ */
 
 
   constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) { }
@@ -68,16 +92,25 @@ export class PurchasesComponent implements OnInit {
       (result: any) => {
       if (result) {
      this.purchase = result;
+    this.purchaseItems = result.purchDTLDtos;
+     const controls = this.purchaseItems.map(items => {
+      console.log(items);
+      return new FormControl(items, Validators.required);
+
+    });
+
+    this.Invoice.registerControl('InvItems',new FormArray(controls))
+
      console.log('Purchase', this.purchase);
+     console.log('Invoice', this.Invoice);
     }});
     // tslint:disable-next-line: deprecation
     this.authService.getMembers().subscribe(
       (result: any) => {
       if (result) {
      this.members = result;
-     console.log(result);
-     this.supplier.setValue({id: 1});
-
+     console.log('members', this.members);
+     this.getUser();
     }});
     /* this.authService.getMember(1).subscribe(
 
@@ -91,7 +124,7 @@ export class PurchasesComponent implements OnInit {
 
     ); */
 
-    this.getUser();
+
 
 
 
@@ -169,22 +202,16 @@ export class PurchasesComponent implements OnInit {
 
   addRecord() {
 
+      this.frm.registerControl('quantity',new FormControl(''))
+      this.InvItems.push(this.frm);
 
     //this.skills.push(new FormControl(''));
-    (this.records as FormArray).push(this.formGroup);
-    (this.formChilds as FormArray).push(new FormControl(''))
+    //(this.records as FormArray).push(this.formGroup);
+   // (this.formChilds as FormArray).push(new FormControl(''))
   }
 
-  get recordProp(){
-    return (this.records as FormArray).controls;
-
-  }
-  get formChildsProp(){
-
-    return (this.formMain.get('fomrChilds') as FormArray).controls;
 
 
-  }
 
 
 
