@@ -9,7 +9,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">#</div>
             </div>
-            <input name="purchNo" formControlName="purNo" class="form-control" requiredminlength="4" />
+            <input name="purchNo" formControlName="purNo" class="form-control" />
 
           </div>
 
@@ -19,10 +19,10 @@
           <label>Supplier</label>
           <div class="input-group">
 
-            <input type="text" class="form-control" matInput [formControl]="control" [matAutocomplete]="auto" placeholder="Customer">
+            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="auto" placeholder="Customer">
 
             <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
+              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
             </mat-autocomplete>
@@ -78,9 +78,9 @@
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let detail of InvItems.controls; index as i">
+          <tbody *ngFor="let detail of InvItems.controls ; index as i">
                 <tr [formGroupName]="i">
-                  <th>{{detail.value.productId}}</th>
+                  <th> <input name="purchNo" formControlName="[i].value.productId" class="form-control" />{{detail.value.productId}}</th>
                   <th>{{detail.value.price}}</th>
                   <th>{{detail.value.quantity}} </th>
                   <th>Total</th>

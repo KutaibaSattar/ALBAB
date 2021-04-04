@@ -22,32 +22,23 @@ export class PurchasesComponent implements OnInit {
 
 
 
-  control = new FormControl();
+
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
   member: Member;
   isValid = true;
-  supplier = new FormControl();
+
   filteredOptions: Observable<Array<Member>>;
 
-  records= new FormArray([]);
 
-  formGroup = new FormGroup({
-
-    goods : new FormControl(null),
-    quantity: new FormControl(null),
-    price: new FormControl(null),
-
-
-  });
 
   Invoice = new FormGroup({
 
     purNo: new FormControl(''),
     appUserId : new FormControl(''),
 
-   //InvItems: new FormArray([])
+    //InvItems: new FormArray([])
 
 
   });
@@ -65,24 +56,6 @@ export class PurchasesComponent implements OnInit {
 
 
 
-  /* user = new FormGroup({
-    name: new FormControl(''),
-    skills: new FormArray([
-      new FormGroup({
-        name: new FormControl(''),
-        level: new FormControl('')
-      })
-    ])
-  });
-
-
-  get skills() {
-    let x = this.user.get('skills')[0]
-    return this.user.get('skills') as FormArray;
-  }
- */
-
-
   constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -98,6 +71,14 @@ export class PurchasesComponent implements OnInit {
       return new FormControl(items, Validators.required);
 
     });
+
+    controls.forEach( (element) => {
+      let x = Object.keys(element.value);
+      console.log(x[0]);
+  });
+
+
+
 
     this.Invoice.registerControl('InvItems',new FormArray(controls))
 
@@ -131,7 +112,7 @@ export class PurchasesComponent implements OnInit {
 
   }
   getUser(): any{
-    this.filteredOptions = this.supplier.valueChanges
+    this.filteredOptions = this.appUserId.valueChanges
     .pipe(
       startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
@@ -181,8 +162,8 @@ export class PurchasesComponent implements OnInit {
   // tslint:disable-next-line: typedef
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
-    console.log(this.supplier); // This has the correct data
-    console.log(this.supplier.value); // Why is this different than the above result?
+    console.log(this.appUserId); // This has the correct data
+    console.log(this.appUserId.value); // Why is this different than the above result?
     console.log(this.members); // I want this to log the Selected Human Object
    }
 
