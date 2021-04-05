@@ -23,13 +23,28 @@ export class PurchasesComponent implements OnInit {
 
 
 
+  initSection() {
+    return new FormGroup({
+      productId: new FormControl(''),
+      price: new FormControl(''),
+      quantity: new FormControl('')
+    });}
+
+
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
-  member: Member;
+  member : string;
+
   isValid = true;
 
   filteredOptions: Observable<Array<Member>>;
+
+  form = new FormGroup({
+    purNo: new FormControl(''),
+    appUserId : new FormControl(''),
+    InvItems : new FormArray([])
+  })
 
 
 
@@ -43,7 +58,9 @@ export class PurchasesComponent implements OnInit {
 
   });
 
-  appUserId= this.Invoice.get('appUserId') as FormControl;
+  appUserId= this.form.get('appUserId') as FormControl;
+
+
 
 
    frm = new FormGroup({
@@ -60,39 +77,33 @@ export class PurchasesComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
     // tslint:disable-next-line: deprecation
-    this.purchaseService.getPurchase().subscribe(
-      (result: any) => {
-      if (result) {
-     this.purchase = result;
-    this.purchaseItems = result.purchDTLDtos;
-     const controls = this.purchaseItems.map(items => {
-      console.log(items);
-      return new FormControl(items, Validators.required);
 
-    });
-
-    controls.forEach( (element) => {
-      let x = Object.keys(element.value);
-      console.log(x[0]);
-  });
-
-
-
-
-    this.Invoice.registerControl('InvItems',new FormArray(controls))
-
-     console.log('Purchase', this.purchase);
-     console.log('Invoice', this.Invoice);
-    }});
     // tslint:disable-next-line: deprecation
     this.authService.getMembers().subscribe(
-      (result: any) => {
-      if (result) {
-     this.members = result;
-     console.log('members', this.members);
-     this.getUser();
-    }});
+     members => {
+     this.members = members;
+     this.purchaseService.getPurchase().subscribe((result: any) => {
+       if (result) {
+         this.purchase = result;
+         this.form.patchValue({
+           purNo: this.purchase.purNo,
+           appUserId: this.purchase.appUserId,
+         });
+         this.purchaseItems = result.purchDTLDtos;
+         this.purchaseItems.map((item) => {
+           const group = this.initSection();
+           group.patchValue(item);
+           (this.form.get('InvItems') as FormArray).push(group);
+           console.log('New form', this.form);
+           return group;
+         });
+       }
+     });
+
+    });
     /* this.authService.getMember(1).subscribe(
 
       (result: any) => {
@@ -105,7 +116,7 @@ export class PurchasesComponent implements OnInit {
 
     ); */
 
-
+    this.getUser();
 
 
 
@@ -121,24 +132,39 @@ export class PurchasesComponent implements OnInit {
 
     );
   }
-  displayFn(user: Member): any {
+
+  someMethod(id: number){
+   return this.members.find( e => e.id = id).displayName;
+
+  }
+
+  displayFn(id, _this) {
+    let x = this.someMethod(_this.members[0].id) ;
+    return x
+  }
+  /* displayFn = value => {
+    // now you have access to 'this'
+    this.someMethod(value.id);
+    return this.member;
+  }
+ */
+ /*  displayFn(_this): any {
+
+    if (1 ){
+       this.authService.membersSource$.subscribe(res => member = res );
+    return _this.members.find(element => element.id = this.appUserId.value).displayName;
 
 
-    if (user ){
-     /*  this.authService.membersSource$.subscribe(res => member = res ); */
-    return  user.displayName;
-
-
+    //return userId.displayName
     }
-
-
-
-
     // return user && user.userId ? user.displayName + ' - ' + user.userId : '';
     // return user ? this.options.find(x => x.id === user).name : undefined;
 
      // return 'Hello';
    }
+ */
+
+
   filter(val: any): any {
     if (this.members !== undefined) {
      return this.members.filter((item: Member) => {
@@ -189,6 +215,11 @@ export class PurchasesComponent implements OnInit {
     //this.skills.push(new FormControl(''));
     //(this.records as FormArray).push(this.formGroup);
    // (this.formChilds as FormArray).push(new FormControl(''))
+  }
+
+  getSections(form) {
+   if( (form.controls.InvItems as FormArray).controls.length > 0)
+    return form.controls.InvItems.controls;
   }
 
 

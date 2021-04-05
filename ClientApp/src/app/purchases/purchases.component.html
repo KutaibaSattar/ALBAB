@@ -1,5 +1,5 @@
 <div *ngIf="purchase" class="container">
-  <form [formGroup]="Invoice">
+  <form [formGroup]="form">
     <div class="row">
       <!--  -->
       <div class="col-md-6">
@@ -21,8 +21,8 @@
 
             <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="auto" placeholder="Customer">
 
-            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option">
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="displayFn(appUserId, this)">
+              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
             </mat-autocomplete>
@@ -78,16 +78,22 @@
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let detail of InvItems.controls ; index as i">
+          <tbody *ngFor="let section of getSections(form); let i = index" >
                 <tr [formGroupName]="i">
-                  <th> <input name="purchNo" formControlName="[i].value.productId" class="form-control" />{{detail.value.productId}}</th>
-                  <th>{{detail.value.price}}</th>
-                  <th>{{detail.value.quantity}} </th>
+                  <th><input type="text" class="form-control" autocomplete="off" placeholder="Package Name" formControlName="productId"  ></th>
+                   <th> <input type="text" class="form-control" autocomplete="off" placeholder="Package Name" formControlName="productId"  ></th>
+                  <th> <input type="number" class="form-control" formControlName="quantity" autocomplete="off" ></th>
                   <th>Total</th>
                 </tr>
           </tbody>
       </table>
     </ng-container>
+
+    <pre>{{form.value | json}}</pre>
+
+
+
+
     <div class="form-group">
       <button type="submit"  class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
       </button>
