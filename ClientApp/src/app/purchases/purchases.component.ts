@@ -138,9 +138,16 @@ export class PurchasesComponent implements OnInit {
 
   }
 
-  displayFn(id, _this) {
+  /* displayFn(id, _this) {
     let x = this.someMethod(_this.members[0].id) ;
     return x
+  } */
+
+  displayFn(this,user: number): string {
+
+    let x = this.members.find(element => element.id === user).displayName;
+    return x
+    //return user && user.displayName ? user.displayName : '';
   }
   /* displayFn = value => {
     // now you have access to 'this'
