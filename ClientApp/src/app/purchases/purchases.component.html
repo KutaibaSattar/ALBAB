@@ -86,8 +86,8 @@
                     <input type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="goods" placeholder="Items">
 
                     <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #goods="matAutocomplete"  >
-                      <mat-option *ngFor="let option of goodsOptions | async"  [value]="option.id">
-                        {{option.displayName}} -  {{option.userId}}
+                      <mat-option *ngFor="let option of filteredOptions[i] | async"  [value]="option.id">
+                        {{option.name}}
                       </mat-option>
                     </mat-autocomplete> </th>
                    <th> <input type="text" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>

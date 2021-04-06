@@ -61,7 +61,7 @@ export class PurchasesComponent implements OnInit {
 
 
 
-  Invoice = new FormGroup({
+ /*  Invoice = new FormGroup({
 
     purNo: new FormControl(''),
     appUserId : new FormControl(''),
@@ -69,10 +69,10 @@ export class PurchasesComponent implements OnInit {
     //InvItems: new FormArray([])
 
 
-  });
+  }); */
 
   appUserId= this.form.get('appUserId') as FormControl;
-  InvItems =this.Invoice.get('InvItems') as FormArray;
+  InvItems =this.form.get('InvItems') as FormArray;
   productId: FormControl;
 
 
@@ -115,22 +115,10 @@ export class PurchasesComponent implements OnInit {
    });
 
   this.getUser();
-  this.getProducts();
-
 
 
   }
-  getProducts(): any{
-    this.goodsOptions = this.InvItems.get('productId').valueChanges
-    .pipe(
-      startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-      map((val) => this.filter(val))
 
-    );
-
-  }
 
   getUser(): any{
     this.customeOptions = this.form.get('appUserId').valueChanges
@@ -228,14 +216,50 @@ export class PurchasesComponent implements OnInit {
 
   addRecord() {
 
-    const control = <FormArray>this.form.get('InvItems');
-    control.push(this.initSection());
+    const controls = <FormArray>this.form.get('InvItems');
+    controls.push(this.initSection());
+    console.log('Array', controls)
+     // Build the account Auto Complete values
+     this.ManageNameControl(controls.length - 1);
 
   }
 
   getSections(form) {
    if( (form.controls.InvItems as FormArray).controls.length > 0)
     return form.controls.InvItems.controls;
+  }
+
+  filteredOptions: Observable<Product[]>[] = [];
+  myForm: FormGroup;
+
+  ManageNameControl(index: number) {
+    var arrayControl = this.form.get('InvItems') as FormArray;
+    this.filteredOptions[index] = arrayControl.at(index).get('productId').valueChanges
+    .pipe(
+      startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.users.slice()),*/
+      map((val) => this._filter(val))
+
+    );
+
+
+
+  }
+  private _filter(val: any): Product[] {
+    if (this.products !== undefined) {
+      return this.products.filter((item: Product) => {
+        // If the user selects an option, the value becomes a Human object,
+        // therefore we need to reset the val for the filter because an
+        // object cannot be used in this toLowerCase filter
+       let x =typeof val;
+        if (typeof val === 'string'){
+         const TempString = item.name //+ ' - ' + item.userId;
+        return TempString.toLowerCase().includes(val.toLowerCase());}
+
+
+      });
+     }
   }
 
 
