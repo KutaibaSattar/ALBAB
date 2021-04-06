@@ -4,12 +4,15 @@ import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
+import { Product } from 'app/models/product';
 import { Purchase } from 'app/models/purchase';
 import { PurchaseItem } from 'app/models/purchase-item';
 import { AuthService } from 'app/services/auth.service';
+import { GoodsService } from 'app/services/goods.service';
 import { PurchaseService } from 'app/services/purchase.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { forkJoin, observable, Observable } from 'rxjs';
+import { map, observeOn, startWith } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-purchases',
@@ -28,22 +31,32 @@ export class PurchasesComponent implements OnInit {
       productId: new FormControl(''),
       price: new FormControl(''),
       quantity: new FormControl('')
-    });}
+    }
+
+    );
+
+
+  }
 
 
   purchase: Purchase;
   purchaseItems: PurchaseItem[];
   members: Member[] ;
   member : string;
+  products : Product[];
 
   isValid = true;
 
-  filteredOptions: Observable<Array<Member>>;
+  customeOptions: Observable<Array<Member>>;
+
+  goodsOptions: Observable<Array<Member>>;
+
 
   form = new FormGroup({
     purNo: new FormControl(''),
     appUserId : new FormControl(''),
     InvItems : new FormArray([])
+
   })
 
 
@@ -59,71 +72,68 @@ export class PurchasesComponent implements OnInit {
   });
 
   appUserId= this.form.get('appUserId') as FormControl;
+  InvItems =this.Invoice.get('InvItems') as FormArray;
+  productId: FormControl;
 
 
 
 
-   frm = new FormGroup({
-    quantity: new FormControl('')});
-
-  get InvItems (){
-   return this.Invoice.get('InvItems') as FormArray
-  }
 
 
 
 
-  constructor(private purchaseService: PurchaseService, private authService: AuthService,private dialog: MatDialog) { }
+  constructor(private purchaseService: PurchaseService,private goodsService: GoodsService, private authService: AuthService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
+   var sources = [
+     this.authService.getMembers(),
+     this.purchaseService.getPurchase(),
+     this.goodsService.getProducts(),
+   ];
+
+   forkJoin(sources).subscribe(data => {
+
+      this.members = data[0];
+
+      this.purchase = data[1];
+      this.form.patchValue({
+        purNo: this.purchase.purNo,
+        appUserId: this.purchase.appUserId,
+      });
+      this.purchaseItems = data[1].purchDTLDtos;
+        this.purchaseItems.map((item) => {
+          const group = this.initSection();
+          group.patchValue(item);
+          (this.form.get('InvItems') as FormArray).push(group);
+
+
+          //return group;
+        });
 
 
 
-    // tslint:disable-next-line: deprecation
+   });
 
-    // tslint:disable-next-line: deprecation
-    this.authService.getMembers().subscribe(
-     members => {
-     this.members = members;
-     this.purchaseService.getPurchase().subscribe((result: any) => {
-       if (result) {
-         this.purchase = result;
-         this.form.patchValue({
-           purNo: this.purchase.purNo,
-           appUserId: this.purchase.appUserId,
-         });
-         this.purchaseItems = result.purchDTLDtos;
-         this.purchaseItems.map((item) => {
-           const group = this.initSection();
-           group.patchValue(item);
-           (this.form.get('InvItems') as FormArray).push(group);
-           console.log('New form', this.form);
-           return group;
-         });
-       }
-     });
-
-    });
-    /* this.authService.getMember(1).subscribe(
-
-      (result: any) => {
-       if (result){
-        (this.member = result);
-        return this.members ? this.members.find(x => x.id === 1 ).displayName : undefined;
-       }
-
-      }
-
-    ); */
-
-    this.getUser();
-
+  this.getUser();
+  this.getProducts();
 
 
 
   }
+  getProducts(): any{
+    this.goodsOptions = this.InvItems.get('productId').valueChanges
+    .pipe(
+      startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.users.slice()),*/
+      map((val) => this.filter(val))
+
+    );
+
+  }
+
   getUser(): any{
-    this.filteredOptions = this.appUserId.valueChanges
+    this.customeOptions = this.form.get('appUserId').valueChanges
     .pipe(
       startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
@@ -178,9 +188,11 @@ export class PurchasesComponent implements OnInit {
        // If the user selects an option, the value becomes a Human object,
        // therefore we need to reset the val for the filter because an
        // object cannot be used in this toLowerCase filter
-       if (typeof val === 'object') { val = ''; }
-       const TempString = item.displayName + ' - ' + item.userId;
-       return TempString.toLowerCase().includes(val.toLowerCase());
+      let x =typeof val;
+       if (typeof val === 'string'){
+        const TempString = item.displayName + ' - ' + item.userId;
+       return TempString.toLowerCase().includes(val.toLowerCase());}
+
 
      });
     }
@@ -216,12 +228,9 @@ export class PurchasesComponent implements OnInit {
 
   addRecord() {
 
-      this.frm.registerControl('quantity',new FormControl(''))
-      this.InvItems.push(this.frm);
+    const control = <FormArray>this.form.get('InvItems');
+    control.push(this.initSection());
 
-    //this.skills.push(new FormControl(''));
-    //(this.records as FormArray).push(this.formGroup);
-   // (this.formChilds as FormArray).push(new FormControl(''))
   }
 
   getSections(form) {

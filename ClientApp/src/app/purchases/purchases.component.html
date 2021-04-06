@@ -19,10 +19,10 @@
           <label>Supplier</label>
           <div class="input-group">
 
-            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="auto" placeholder="Customer">
+            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="customers" placeholder="Customer">
 
-            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" >
-              <mat-option *ngFor="let option of filteredOptions | async"  [value]="option.id">
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" >
+              <mat-option *ngFor="let option of customeOptions | async"  [value]="option.id">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
             </mat-autocomplete>
@@ -61,13 +61,14 @@
     <ng-container formArrayName="InvItems">
 
       <!-- Table Header -->
-      <table class="table table-borderless">
+      <table class="table table-bordered table-dark table-hover table-sm">
+        <caption>Items</caption>
         <thead class="thead-light">
           <tr>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
+            <th style="width: 30%">Item</th>
+            <th style="width: 10%">Price</th>
+            <th style="width: 10%">Quantity</th>
+            <th >Total</th>
             <th>
               <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchase)"><i
                   class="fa fa-plus"></i>Add Item</a>
@@ -80,9 +81,17 @@
         <!-- Table Body -->
           <tbody *ngFor="let section of getSections(form); let i = index" >
                 <tr [formGroupName]="i">
-                  <th><input type="text" class="form-control" autocomplete="off" placeholder="Package Name" formControlName="productId"  ></th>
-                   <th> <input type="text" class="form-control" autocomplete="off" placeholder="Package Name" formControlName="productId"  ></th>
-                  <th> <input type="number" class="form-control" formControlName="quantity" autocomplete="off" ></th>
+                  <th><input type="text" class="form-control" autocomplete="off" placeholder="Product" formControlName="productId"  >
+
+                    <input type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="goods" placeholder="Items">
+
+                    <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #goods="matAutocomplete"  >
+                      <mat-option *ngFor="let option of goodsOptions | async"  [value]="option.id">
+                        {{option.displayName}} -  {{option.userId}}
+                      </mat-option>
+                    </mat-autocomplete> </th>
+                   <th> <input type="text" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>
+                  <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" autocomplete="off" ></th>
                   <th>Total</th>
                 </tr>
           </tbody>
