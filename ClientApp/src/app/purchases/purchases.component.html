@@ -81,15 +81,16 @@
         <!-- Table Body -->
           <tbody *ngFor="let section of getSections(form); let i = index" >
                 <tr [formGroupName]="i">
-                  <th><input type="text" class="form-control" autocomplete="off" placeholder="Product" formControlName="productId"  >
+                  <th>
+                    <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="goods"
+                      placeholder="Items">
 
-                    <input type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="goods" placeholder="Items">
-
-                    <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #goods="matAutocomplete"  >
-                      <mat-option *ngFor="let option of filteredOptions[i] | async"  [value]="option.id">
+                    <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #goods="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
+                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option.id">
                         {{option.name}}
                       </mat-option>
-                    </mat-autocomplete> </th>
+                    </mat-autocomplete>
+                  </th>
                    <th> <input type="text" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>
                   <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" autocomplete="off" ></th>
                   <th>Total</th>

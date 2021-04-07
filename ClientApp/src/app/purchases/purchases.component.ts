@@ -10,8 +10,9 @@ import { PurchaseItem } from 'app/models/purchase-item';
 import { AuthService } from 'app/services/auth.service';
 import { GoodsService } from 'app/services/goods.service';
 import { PurchaseService } from 'app/services/purchase.service';
-import { forkJoin, observable, Observable } from 'rxjs';
-import { map, observeOn, startWith } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 
 
 @Component({
@@ -105,10 +106,13 @@ export class PurchasesComponent implements OnInit {
           const group = this.initSection();
           group.patchValue(item);
           (this.form.get('InvItems') as FormArray).push(group);
+          this.ManageNameControl((this.form.get('InvItems') as FormArray).controls.length - 1);
+
 
 
           //return group;
         });
+        this.products = data[2];
 
 
 
@@ -144,6 +148,12 @@ export class PurchasesComponent implements OnInit {
   displayFn(this,user: number): string {
 
     let x = this.members.find(element => element.id === user).displayName;
+    return x
+    //return user && user.displayName ? user.displayName : '';
+  }
+  ProductNameFn(this,product: number): string {
+
+    let x = this.products.find(element => element.id === product).name;
     return x
     //return user && user.displayName ? user.displayName : '';
   }
@@ -230,10 +240,13 @@ export class PurchasesComponent implements OnInit {
   }
 
   filteredOptions: Observable<Product[]>[] = [];
+
   myForm: FormGroup;
 
   ManageNameControl(index: number) {
+
     var arrayControl = this.form.get('InvItems') as FormArray;
+
     this.filteredOptions[index] = arrayControl.at(index).get('productId').valueChanges
     .pipe(
       startWith(''),
