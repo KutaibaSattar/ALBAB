@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ALBAB.Controllers
 {
-    public class GoodsController : BaseController
+    public class ProductsController : BaseController
     {
        private readonly DataContext _context;
        private readonly IMapper _mapper;
       
       
 
-        public GoodsController(DataContext context, IMapper mapper)
+        public ProductsController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;

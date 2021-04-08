@@ -25,19 +25,34 @@ namespace ALBAB.Controllers
          
         }
 
-          [HttpGet("purchinv")]
-         public async Task<ActionResult<IEnumerable<PurchHDRDto>>> Getpurchases()
+          [HttpGet("purchases")]
+         public async Task<ActionResult<IEnumerable<SavePurchHDRDto>>> Getpurchases()
          {
            var purchases = await _context.PurchHDRs.Include(d => d.purchDTL).ThenInclude(p =>p.Product).ToListAsync();
 
-           var result = _mapper.Map<IEnumerable<PurchHDRDto>>(purchases);
+           var result = _mapper.Map<IEnumerable<SavePurchHDRDto>>(purchases);
 
-           _mapper.Map<IEnumerable<PurchHDRDto>,IEnumerable<PurchHDR>>(result,purchases);
+           _mapper.Map<IEnumerable<SavePurchHDRDto>,IEnumerable<PurchHDR>>(result,purchases);
           
           
            var result2 = _mapper.Map<IEnumerable<PurchHDR>>(result);
            
            return Ok(result);  
+
+         }  
+        
+          [HttpGet("purchinv/{id}")]
+         public async Task<ActionResult<IEnumerable<SavePurchHDRDto>>> GetpurchaseInv(int id)
+         {
+           var purchases = await _context.PurchHDRs.Include(d => d.purchDTL)
+           .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.Id == id);
+
+          
+
+         var result =  _mapper.Map<PurchHDR,SavePurchHDRDto>(purchases);
+          
+                         
+          return Ok(result);  
 
          }  
 
@@ -58,12 +73,12 @@ namespace ALBAB.Controllers
          }  
 
           [HttpPost]
-         public async  Task<ActionResult<PurchHDRDto>> CreatePurchase(PurchHDRDto purchHDRDto)
+         public async  Task<ActionResult<SavePurchHDRDto>> CreatePurchase(SavePurchHDRDto purchHDRDto)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
          
-         var purch = _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto);
+         var purch = _mapper.Map<SavePurchHDRDto,PurchHDR>(purchHDRDto);
 
           purch.LastUpdate = DateTime.Now;
 
@@ -76,13 +91,13 @@ namespace ALBAB.Controllers
 
          await _context.SaveChangesAsync();
 
-          var result = _mapper.Map<PurchHDR,PurchHDRDto>(purch);
+          var result = _mapper.Map<PurchHDR,SavePurchHDRDto>(purch);
 
           return  Ok(result);
 
          }
           [HttpPut("{id}")] // api/purchases/id
-         public async  Task<ActionResult<PurchHDRDto>> UpdatePurchase(int id,PurchHDRDto purchHDRDto)
+         public async  Task<ActionResult<SavePurchHDRDto>> UpdatePurchase(int id,SavePurchHDRDto purchHDRDto)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -91,7 +106,7 @@ namespace ALBAB.Controllers
          var purch = await _context.PurchHDRs.Include(pd => pd.purchDTL).SingleOrDefaultAsync(p => p.Id == id);
           
 
-       _mapper.Map<PurchHDRDto,PurchHDR>(purchHDRDto,purch);
+       _mapper.Map<SavePurchHDRDto,PurchHDR>(purchHDRDto,purch);
                      
                  
        
@@ -109,7 +124,7 @@ namespace ALBAB.Controllers
         
           await _context.SaveChangesAsync();
 
-          var result = _mapper.Map<PurchHDR,PurchHDRDto>(purch);
+          var result = _mapper.Map<PurchHDR,SavePurchHDRDto>(purch);
 
           return  Ok(result);
 

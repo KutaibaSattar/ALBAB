@@ -33,11 +33,11 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Brand, opt => opt.MapFrom(src => src.Model.Brand.Name))
             .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
-             CreateMap<PurchHDR,PurchHDRDto>()
+             CreateMap<PurchHDR,SavePurchHDRDto>()
              /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
              .ForMember(dst => dst.purchDTLDtos, opt => opt.MapFrom(src => src.purchDTL));
 
-             CreateMap<PurchHDRDto,PurchHDR>()
+             CreateMap<SavePurchHDRDto,PurchHDR>()
               .ForMember(dst => dst.Id , opt => opt.Ignore())
                .ForMember(dst => dst.purchDTL, opt => opt.Ignore())
                .AfterMap((phd,ph)=> {

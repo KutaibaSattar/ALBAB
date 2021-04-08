@@ -8,7 +8,7 @@ import { Product } from 'app/models/product';
 import { Purchase } from 'app/models/purchase';
 import { PurchaseItem } from 'app/models/purchase-item';
 import { AuthService } from 'app/services/auth.service';
-import { GoodsService } from 'app/services/goods.service';
+import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
 import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -50,7 +50,6 @@ export class PurchasesComponent implements OnInit {
 
   customeOptions: Observable<Array<Member>>;
 
-  goodsOptions: Observable<Array<Member>>;
 
 
   form = new FormGroup({
@@ -83,13 +82,16 @@ export class PurchasesComponent implements OnInit {
 
 
 
-  constructor(private purchaseService: PurchaseService,private goodsService: GoodsService, private authService: AuthService,private dialog: MatDialog) { }
+  constructor(public purchaseService: PurchaseService,private productService: ProductService, private authService: AuthService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
-   var sources = [
+
+    //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
+
+    var sources = [
      this.authService.getMembers(),
-     this.purchaseService.getPurchase(),
-     this.goodsService.getProducts(),
+     this.purchaseService.getPurchInv(1),
+     this.productService.getProducts(),
    ];
 
    forkJoin(sources).subscribe(data => {
@@ -97,6 +99,7 @@ export class PurchasesComponent implements OnInit {
       this.members = data[0];
 
       this.purchase = data[1];
+
       this.form.patchValue({
         purNo: this.purchase.purNo,
         appUserId: this.purchase.appUserId,
@@ -107,11 +110,9 @@ export class PurchasesComponent implements OnInit {
           group.patchValue(item);
           (this.form.get('InvItems') as FormArray).push(group);
           this.ManageNameControl((this.form.get('InvItems') as FormArray).controls.length - 1);
-
-
-
           //return group;
         });
+
         this.products = data[2];
 
 
@@ -273,6 +274,11 @@ export class PurchasesComponent implements OnInit {
 
       });
      }
+  }
+
+  Save(){
+    this.purchaseService.UpdaePurchInv(1,this.form.value);
+
   }
 
 

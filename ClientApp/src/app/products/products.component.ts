@@ -4,7 +4,7 @@ import { MatOption } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Product } from '../models/product';
-import { GoodsService } from '../services/goods.service';
+import { ProductService } from '../services/product.service';
 export interface User {
   name: string;
   id: number;
@@ -20,18 +20,18 @@ export class ProductsComponent implements OnInit {
   control = new FormControl();
   filteredOptions: Observable<Array<any>>;
 
-  constructor(private goodsService: GoodsService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     // this.getProduct();
 
       // tslint:disable-next-line: deprecation
-      this.goodsService.getProducts().subscribe(
+      this.productService.getProducts().subscribe(
         (res => {
           this.product = res/* .map(a =>a.name) */;
           console.log(this.product);
         }));
-      this.getUser(); // initializing 
+      this.getUser(); // initializing
       }
 
 

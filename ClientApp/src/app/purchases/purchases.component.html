@@ -74,6 +74,8 @@
                   class="fa fa-plus"></i>Add Item</a>
               <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
                     class="fa fa-plus"></i>Add Record</a>
+              <a class="btn btn-sm btn-success txt-white" (click)="Save()"><i
+                    class="fa fa-plus"></i>Save</a>
             </th>
 
           </tr>
@@ -82,10 +84,10 @@
           <tbody *ngFor="let section of getSections(form); let i = index" >
                 <tr [formGroupName]="i">
                   <th>
-                    <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="goods"
+                    <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
                       placeholder="Items">
 
-                    <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #goods="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
+                    <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #products="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
                       <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option.id">
                         {{option.name}}
                       </mat-option>
@@ -105,8 +107,7 @@
 
 
     <div class="form-group">
-      <button type="submit"  class="btn-primary btn-dark"><i class="fa fa-database"></i> Submit
-      </button>
+
     </div>
   </form>
 </div>

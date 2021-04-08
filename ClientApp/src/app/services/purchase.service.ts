@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Purchase } from 'app/models/purchase';
 import { environment } from 'environments/environment';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
 
@@ -15,21 +15,18 @@ export class PurchaseService extends DataService {
 
   constructor(http: HttpClient) {
 
-    super (environment.apiUrl + 'Purchases/purchinv', http);
+    super (environment.apiUrl + 'Purchases/', http);
 
    }
 
-   private currentUserSource = new ReplaySubject<Purchase>(1); // buffer for only one user object
 
-   currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
 // tslint:disable-next-line: typedef
-getPurchase(){
+getPurchases(){
 
- return this.getAll().pipe(
+ return this.getAll('purchases').pipe(
     map((purch: Purchase) => {
        if (purch){
-        this.currentUserSource.next(purch);
         const purchase = purch[0];
         return purchase;
        }
@@ -39,8 +36,23 @@ getPurchase(){
 
   );
 
+ }
 
-}
+ getPurchInv(id:number){
+
+  return this.getById(id,'purchinv/');
+
+ }
+
+ UpdaePurchInv(id:number, purchase: any){
+
+  console.log(purchase);
+
+ //return this.http.put<Purchase>('environment.apiUrl',purchase);
+
+ }
+
+
 
 
 }
