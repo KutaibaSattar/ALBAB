@@ -5,8 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { Purchase } from 'app/models/purchase';
-import { PurchaseItem } from 'app/models/purchase-item';
+import { PurchInv } from 'app/models/purchinv';
 import { AuthService } from 'app/services/auth.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
@@ -40,11 +39,13 @@ export class PurchasesComponent implements OnInit {
   }
 
 
-  purchase: Purchase;
-  purchaseItems: PurchaseItem[];
+  //purchase: Purchase;
+  //purchaseItems: PurchDetail[];
   members: Member[] ;
   member : string;
   products : Product[];
+  purchInv : PurchInv
+
 
   isValid = true;
 
@@ -90,22 +91,26 @@ export class PurchasesComponent implements OnInit {
 
     var sources = [
      this.authService.getMembers(),
-     this.purchaseService.getPurchInv(1),
+
+     this.purchaseService.getPurchInv(3),
      this.productService.getProducts(),
    ];
 
    forkJoin(sources).subscribe(data => {
 
-      this.members = data[0];
+   this.members = data[0];
 
-      this.purchase = data[1];
+   this.purchInv = data[1];
 
-      this.form.patchValue({
-        purNo: this.purchase.purNo,
-        appUserId: this.purchase.appUserId,
+   this.form.patchValue({
+        purNo: this.purchInv.purNo,
+        appUserId: this.purchInv.appUserId,
       });
-      this.purchaseItems = data[1].purchDTLDtos;
-        this.purchaseItems.map((item) => {
+
+
+      //this.purchInv.purchDtl = data[1].purchDTLDtos;
+
+      this.purchInv.purchDtlDtos.map((item) => {
           const group = this.initSection();
           group.patchValue(item);
           (this.form.get('InvItems') as FormArray).push(group);
@@ -154,8 +159,11 @@ export class PurchasesComponent implements OnInit {
   }
   ProductNameFn(this,product: number): string {
 
-    let x = this.products.find(element => element.id === product).name;
-    return x
+    if(product){
+      let x = this.products.find(element => element.id === product).name;
+      return x
+    }
+
     //return user && user.displayName ? user.displayName : '';
   }
   /* displayFn = value => {
@@ -276,9 +284,9 @@ export class PurchasesComponent implements OnInit {
      }
   }
 
-  Save(){
-    this.purchaseService.UpdaePurchInv(1,this.form.value);
-
+  Save(purchinv : PurchInv){
+    this.purchaseService.UpdaePurchInv(1,this.purchInv);
+    console.log('Form', this.form.value)
   }
 
 

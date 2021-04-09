@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Purchase } from 'app/models/purchase';
+import { PurchInv } from 'app/models/purchinv';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class PurchaseService extends DataService {
 getPurchases(){
 
  return this.getAll('purchases').pipe(
-    map((purch: Purchase) => {
+    map((purch: PurchInv) => {
        if (purch){
         const purchase = purch[0];
         return purchase;

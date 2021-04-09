@@ -31,8 +31,8 @@ namespace ALBAB.Entities.DB
         }
 
         public DbSet<AppUser> AppUser { get; set; }
-        public DbSet<PurchDTL> PurchDTLs { get; set; }
-        public DbSet<PurchHDR> PurchHDRs { get; set; }
+        public DbSet<PurchDtl> PurchDTLs { get; set; }
+        public DbSet<PurchHdr> PurchHDRs { get; set; }
 
          public DbSet<dbAccounts> dbAccounts {get;set;}
          public DbSet<Product> products {get;set;}  

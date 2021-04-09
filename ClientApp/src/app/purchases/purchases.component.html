@@ -1,4 +1,4 @@
-<div *ngIf="purchase" class="container">
+<div *ngIf="purchInv" class="container">
   <form [formGroup]="form">
     <div class="row">
       <!--  -->
@@ -70,11 +70,11 @@
             <th style="width: 10%">Quantity</th>
             <th >Total</th>
             <th>
-              <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchase)"><i
+              <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchInv.purNo)"><i
                   class="fa fa-plus"></i>Add Item</a>
               <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
                     class="fa fa-plus"></i>Add Record</a>
-              <a class="btn btn-sm btn-success txt-white" (click)="Save()"><i
+              <a class="btn btn-sm btn-success txt-white" (click)="Save(form.value)"><i
                     class="fa fa-plus"></i>Save</a>
             </th>
 

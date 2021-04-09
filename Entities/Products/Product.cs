@@ -14,7 +14,7 @@ namespace ALBAB.Entities.Products
         /* public DateTime LastUpdate { get; set; } */
         public int ModelId { get; set; }
         public Model Model { get; set; }
-         public ICollection<PurchDTL> PurchDTLs {get;set;}
+         public ICollection<PurchDtl> PurchDTLs {get;set;}
               
        
     }

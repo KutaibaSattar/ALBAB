@@ -5,7 +5,7 @@ using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class PurchHDR : BaseEntity
+    public class PurchHdr : BaseEntity
     {
        
         public string purNo { get; set; }
@@ -14,10 +14,10 @@ namespace ALBAB.Entities.Purchases
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
          public int AppUserId { get; set; }
-        public ICollection <PurchDTL> purchDTL { get; set; }
-         public PurchHDR()
+        public ICollection <PurchDtl> purchDtl { get; set; }
+         public PurchHdr()
         {
-               purchDTL = new Collection<PurchDTL>();
+               purchDtl = new Collection<PurchDtl>();
         }
 
        

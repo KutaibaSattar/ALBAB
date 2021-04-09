@@ -33,21 +33,21 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Brand, opt => opt.MapFrom(src => src.Model.Brand.Name))
             .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
-             CreateMap<PurchHDR,SavePurchHDRDto>()
+             CreateMap<PurchHdr,SavePurchHdrDto>()
              /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
-             .ForMember(dst => dst.purchDTLDtos, opt => opt.MapFrom(src => src.purchDTL));
+             .ForMember(dst => dst.purchDtlDtos, opt => opt.MapFrom(src => src.purchDtl));
 
-             CreateMap<SavePurchHDRDto,PurchHDR>()
+             CreateMap<SavePurchHdrDto,PurchHdr>()
               .ForMember(dst => dst.Id , opt => opt.Ignore())
-               .ForMember(dst => dst.purchDTL, opt => opt.Ignore())
+               .ForMember(dst => dst.purchDtl, opt => opt.Ignore())
                .AfterMap((phd,ph)=> {
 
                    // updated changing
-                foreach (var pdd in phd.purchDTLDtos)
+                foreach (var pdd in phd.purchDtlDtos)
                    {
                        if (!(pdd.Id > 0)) //New <0
                        {
-                             ph.purchDTL.Add( new PurchDTL
+                             ph.purchDtl.Add( new PurchDtl
                             {Price = pdd.Price,
                              Quantity = pdd.Quantity ,
                              ProductId = pdd.ProductId,
@@ -56,7 +56,7 @@ namespace ALBAB.Entities
                               );
                        }
                        else{
-                            var pd = ph.purchDTL.SingleOrDefault(p => p.Id == pdd.Id);
+                            var pd = ph.purchDtl.SingleOrDefault(p => p.Id == pdd.Id);
                         if (pd != null){
                           if (pd.Price  != pdd.Price) pd.Price = pdd.Price ; 
                           if (pd.Quantity  != pdd.Quantity) pd.Quantity = pdd.Quantity ;
@@ -72,9 +72,9 @@ namespace ALBAB.Entities
                          
            
             
-             CreateMap<PurchDTL,PurchDTLDto>();
+             CreateMap<PurchDtl,PurchDtlDto>();
              
-             CreateMap<PurchDTLDto,PurchDTL>();
+             CreateMap<PurchDtlDto,PurchDtl>();
            
 
  

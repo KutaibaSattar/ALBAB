@@ -1,4 +1,4 @@
-export class PurchaseItem {
+export class PurchDtl {
     id:number;
     productId:number;
     purchId:number;
@@ -6,8 +6,4 @@ export class PurchaseItem {
     price: number;
     total: number;
     itemName: string;
-
-
-
-
 }

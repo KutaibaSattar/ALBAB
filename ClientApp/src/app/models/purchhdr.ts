@@ -1,8 +1,8 @@
-export interface Purchase {
+export interface PurchHdr {
     id:number
     purNo:string
     purDate? :Date
-    gtotal:number
+    gtotal?:number
     appUserId:number
 
 
