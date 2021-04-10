@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { PurchInv } from 'app/models/purchinv';
+import { Purchase } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
 import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+
 
 
 
@@ -28,6 +30,7 @@ export class PurchasesComponent implements OnInit {
 
   initSection() {
     return new FormGroup({
+      id:new FormControl(''),
       productId: new FormControl(''),
       price: new FormControl(''),
       quantity: new FormControl('')
@@ -44,7 +47,8 @@ export class PurchasesComponent implements OnInit {
   members: Member[] ;
   member : string;
   products : Product[];
-  purchInv : PurchInv
+
+  purchInv = {}
 
 
   isValid = true;
@@ -53,56 +57,59 @@ export class PurchasesComponent implements OnInit {
 
 
 
+
+
+
   form = new FormGroup({
+
+    id: new FormControl(''),
     purNo: new FormControl(''),
     appUserId : new FormControl(''),
-    InvItems : new FormArray([])
+    purchDtl : new FormArray([])
 
   })
 
 
 
- /*  Invoice = new FormGroup({
-
-    purNo: new FormControl(''),
-    appUserId : new FormControl(''),
-
-    //InvItems: new FormArray([])
-
-
-  }); */
-
   appUserId= this.form.get('appUserId') as FormControl;
-  InvItems =this.form.get('InvItems') as FormArray;
+  purchDtl =this.form.get('purchDtl') as FormArray;
   productId: FormControl;
 
 
-
-
-
-
-
-
   constructor(public purchaseService: PurchaseService,private productService: ProductService, private authService: AuthService,private dialog: MatDialog) { }
+
+
+
 
   ngOnInit(): void {
 
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
 
+    this.purchInv = 0
+
+    this.form.patchValue({
+      id: null,
+      purNo: '',
+      appUserId: null,
+    });
+
+
+
     var sources = [
      this.authService.getMembers(),
 
-     this.purchaseService.getPurchInv(3),
+     this.purchaseService.getPurchInv('Arwa'),
      this.productService.getProducts(),
    ];
 
    forkJoin(sources).subscribe(data => {
 
-   this.members = data[0];
+   /* this.members = data[0];
 
    this.purchInv = data[1];
 
    this.form.patchValue({
+        id: this.purchInv.id,
         purNo: this.purchInv.purNo,
         appUserId: this.purchInv.appUserId,
       });
@@ -110,17 +117,17 @@ export class PurchasesComponent implements OnInit {
 
       //this.purchInv.purchDtl = data[1].purchDTLDtos;
 
-      this.purchInv.purchDtlDtos.map((item) => {
+      this.purchInv.purchDtl.map((item) => {
           const group = this.initSection();
           group.patchValue(item);
-          (this.form.get('InvItems') as FormArray).push(group);
-          this.ManageNameControl((this.form.get('InvItems') as FormArray).controls.length - 1);
+          (this.form.get('purchDtl') as FormArray).push(group);
+          this.ManageNameControl((this.form.get('purchDtl') as FormArray).controls.length - 1);
           //return group;
         });
 
         this.products = data[2];
 
-
+ */
 
    });
 
@@ -220,7 +227,10 @@ export class PurchasesComponent implements OnInit {
    }
 
   // tslint:disable-next-line: typedef
-  OnSubmit(form: NgForm) {}
+  OnSubmit(frmpurchase :Purchase) {
+    this.purchaseService.UpdaePurchInv(frmpurchase).subscribe(res => console.log('close',res));
+
+  }
 
   AddOrEditPurchseItem(OrderID) {
 
@@ -235,7 +245,7 @@ export class PurchasesComponent implements OnInit {
 
   addRecord() {
 
-    const controls = <FormArray>this.form.get('InvItems');
+    const controls = <FormArray>this.form.get('purchDtl');
     controls.push(this.initSection());
     console.log('Array', controls)
      // Build the account Auto Complete values
@@ -244,8 +254,8 @@ export class PurchasesComponent implements OnInit {
   }
 
   getSections(form) {
-   if( (form.controls.InvItems as FormArray).controls.length > 0)
-    return form.controls.InvItems.controls;
+   if( (form.controls.purchDtl as FormArray).controls.length > 0)
+    return form.controls.purchDtl.controls;
   }
 
   filteredOptions: Observable<Product[]>[] = [];
@@ -254,7 +264,7 @@ export class PurchasesComponent implements OnInit {
 
   ManageNameControl(index: number) {
 
-    var arrayControl = this.form.get('InvItems') as FormArray;
+    var arrayControl = this.form.get('purchDtl') as FormArray;
 
     this.filteredOptions[index] = arrayControl.at(index).get('productId').valueChanges
     .pipe(
@@ -284,10 +294,6 @@ export class PurchasesComponent implements OnInit {
      }
   }
 
-  Save(purchinv : PurchInv){
-    this.purchaseService.UpdaePurchInv(1,this.purchInv);
-    console.log('Form', this.form.value)
-  }
 
 
 

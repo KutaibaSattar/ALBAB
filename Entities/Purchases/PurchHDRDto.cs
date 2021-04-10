@@ -14,10 +14,10 @@ namespace ALBAB.Entities.Purchases
         public string purComment { get; set; }
        [Required]
         public int AppUserId { get; set; }
-         public ICollection <PurchDtlDto> purchDtlDtos { get; set; }
+         public ICollection <PurchDtlDto> purchDtl { get; set; }
          public SavePurchHdrDto()
         {
-               purchDtlDtos = new Collection<PurchDtlDto>();
+               purchDtl = new Collection<PurchDtlDto>();
         }
         
     }

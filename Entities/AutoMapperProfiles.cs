@@ -35,7 +35,7 @@ namespace ALBAB.Entities
 
              CreateMap<PurchHdr,SavePurchHdrDto>()
              /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
-             .ForMember(dst => dst.purchDtlDtos, opt => opt.MapFrom(src => src.purchDtl));
+             .ForMember(dst => dst.purchDtl, opt => opt.MapFrom(src => src.purchDtl));
 
              CreateMap<SavePurchHdrDto,PurchHdr>()
               .ForMember(dst => dst.Id , opt => opt.Ignore())
@@ -43,7 +43,7 @@ namespace ALBAB.Entities
                .AfterMap((phd,ph)=> {
 
                    // updated changing
-                foreach (var pdd in phd.purchDtlDtos)
+                foreach (var pdd in phd.purchDtl)
                    {
                        if (!(pdd.Id > 0)) //New <0
                        {

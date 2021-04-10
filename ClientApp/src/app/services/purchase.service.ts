@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PurchInv } from 'app/models/purchinv';
+import { Purchase } from 'app/models/purchase';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class PurchaseService extends DataService {
 getPurchases(){
 
  return this.getAll('purchases').pipe(
-    map((purch: PurchInv) => {
+    map((purch: Purchase) => {
        if (purch){
         const purchase = purch[0];
         return purchase;
@@ -38,17 +38,17 @@ getPurchases(){
 
  }
 
- getPurchInv(id:number){
+ getPurchInv(InvNo:string){
 
-  return this.getById(id,'purchinv/');
+  return this.getById(InvNo,'purchinv/');
 
  }
 
- UpdaePurchInv(id:number, purchase: any){
+ UpdaePurchInv( purchase: Purchase){
 
-  console.log(purchase);
 
- //return this.http.put<Purchase>('environment.apiUrl',purchase);
+ //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
+ return this.http.put<Purchase>('https://localhost:5001/api/Purchases',purchase);
 
  }
 

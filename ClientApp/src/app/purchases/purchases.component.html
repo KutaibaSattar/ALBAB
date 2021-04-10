@@ -1,5 +1,32 @@
+<!-- HEADER -->
+<header id="main-header" class="bg-secondary text-white ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fa fa-shopping-basket"></i> Purchases</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SEARCH -->
+<section id="search" class="py-1 mb-2 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Invoice...">
+          <div class="input-group-append">
+            <button class="btn btn-success">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <div *ngIf="purchInv" class="container">
-  <form [formGroup]="form">
+  <form [formGroup]="form" >
     <div class="row">
       <!--  -->
       <div class="col-md-6">
@@ -58,7 +85,7 @@
 
     </div>
 
-    <ng-container formArrayName="InvItems">
+    <ng-container formArrayName="purchDtl">
 
       <!-- Table Header -->
       <table class="table table-bordered table-dark table-hover table-sm">
@@ -70,13 +97,13 @@
             <th style="width: 10%">Quantity</th>
             <th >Total</th>
             <th>
-              <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchInv.purNo)"><i
+              <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchInv)"><i
                   class="fa fa-plus"></i>Add Item</a>
               <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
                     class="fa fa-plus"></i>Add Record</a>
-              <a class="btn btn-sm btn-success txt-white" (click)="Save(form.value)"><i
+              <a class="btn btn-sm btn-success txt-white" (click)="OnSubmit(form.value)"><i
                     class="fa fa-plus"></i>Save</a>
-            </th>
+              </th>
 
           </tr>
         </thead>
@@ -93,7 +120,7 @@
                       </mat-option>
                     </mat-autocomplete>
                   </th>
-                   <th> <input type="text" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>
+                   <th> <input type="number" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>
                   <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" autocomplete="off" ></th>
                   <th>Total</th>
                 </tr>
@@ -109,7 +136,9 @@
     <div class="form-group">
 
     </div>
+
   </form>
+
 </div>
 
 
