@@ -1,23 +1,21 @@
-
-export interface Purchase{
+export interface IPurchase{
   id: number
   purNo:string
-  purDate? :Date
+  purDate :Date
   gtotal?:number
   appUserId:number
-  purchDtl : PurchDtl[];
-
+  purchDtl : IPurchDtl[];
 }
-export interface PurchHdr {
+
+export interface IPurchHdr {
   id:number
   purNo:string
   purDate? :Date
   gtotal?:number
   appUserId:number
-
-
 }
-export class PurchDtl {
+
+export interface IPurchDtl {
   id:number;
   productId:number;
   purchId:number;
@@ -27,7 +25,7 @@ export class PurchDtl {
   itemName: string;
 }
 
-function emptyArticle(): Purchase {
+/* export function emptyArticle(): Purchase {
   return {
     id: 0,
     purNo:'',
@@ -41,16 +39,16 @@ function emptyArticle(): Purchase {
         price: 0,
         total: 0,
         itemName:'',
-
       }
-
     ]
-
-
     }
+  } */
 
+export class IPurchase implements IPurchase{
+  id = 0;
+  purNo ='';
+  appUserId = 0;
+  purDate = new Date();
+  purchDtl : IPurchDtl[];
 
-  }
-
-
-
+}

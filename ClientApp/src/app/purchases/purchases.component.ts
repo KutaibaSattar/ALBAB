@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { Purchase } from 'app/models/purchase';
+import { IPurchase } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
@@ -47,8 +47,9 @@ export class PurchasesComponent implements OnInit {
   members: Member[] ;
   member : string;
   products : Product[];
+  searchInv : string;
 
-  purchInv = {}
+  purchInv : IPurchase =  new IPurchase()
 
 
   isValid = true;
@@ -85,28 +86,25 @@ export class PurchasesComponent implements OnInit {
 
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
 
-    this.purchInv = 0
-
-    this.form.patchValue({
-      id: null,
-      purNo: '',
-      appUserId: null,
-    });
 
 
 
     var sources = [
      this.authService.getMembers(),
-
-     this.purchaseService.getPurchInv('Arwa'),
      this.productService.getProducts(),
+
    ];
+
+   if (this.purchInv.id)
+    sources.push(this.purchaseService.getPurchInv(this.searchInv));
+
 
    forkJoin(sources).subscribe(data => {
 
-   /* this.members = data[0];
+   (<any>this.members) = data[0];
 
-   this.purchInv = data[1];
+   if (this.purchInv.id)
+   (<any>this.purchInv) = data[2];
 
    this.form.patchValue({
         id: this.purchInv.id,
@@ -115,9 +113,10 @@ export class PurchasesComponent implements OnInit {
       });
 
 
-      //this.purchInv.purchDtl = data[1].purchDTLDtos;
 
-      this.purchInv.purchDtl.map((item) => {
+        if (this.purchInv.id)
+
+        this.purchInv.purchDtl.map((item) => {
           const group = this.initSection();
           group.patchValue(item);
           (this.form.get('purchDtl') as FormArray).push(group);
@@ -125,9 +124,8 @@ export class PurchasesComponent implements OnInit {
           //return group;
         });
 
-        this.products = data[2];
+        (<any>this.products) = data[1];
 
- */
 
    });
 
@@ -159,9 +157,15 @@ export class PurchasesComponent implements OnInit {
   } */
 
   displayFn(this,user: number): string {
-
-    let x = this.members.find(element => element.id === user).displayName;
+    if(user){
+      let x = this.members.find(element => element.id === user).displayName;
     return x
+    }
+
+    setTimeout(() => {
+      this.form.get('appUserId').setValue(null);
+  }, 300);
+
     //return user && user.displayName ? user.displayName : '';
   }
   ProductNameFn(this,product: number): string {
@@ -227,7 +231,7 @@ export class PurchasesComponent implements OnInit {
    }
 
   // tslint:disable-next-line: typedef
-  OnSubmit(frmpurchase :Purchase) {
+  OnSubmit(frmpurchase :IPurchase) {
     this.purchaseService.UpdaePurchInv(frmpurchase).subscribe(res => console.log('close',res));
 
   }
@@ -293,6 +297,20 @@ export class PurchasesComponent implements OnInit {
       });
      }
   }
+
+
+  InputControl(event) {
+    /* setTimeout(() => {
+        let isValueTrue = this.members.filter(myAlias =>
+            myAlias  === event.target.value);
+        if (isValueTrue.length === 0) {
+            this.form.get('appUserId').setValue(null);
+        }
+    }, 300); */
+}
+countryClick(event: any) {
+  //this.selectedCountry = event.option.value;
+}
 
 
 

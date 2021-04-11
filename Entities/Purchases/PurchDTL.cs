@@ -15,6 +15,7 @@ namespace ALBAB.Entities.Purchases
         public int ProductId { get; set;}
         public Product Product { get; set; }
 
+       
 
     }
 }

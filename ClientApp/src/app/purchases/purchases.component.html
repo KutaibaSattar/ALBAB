@@ -46,9 +46,9 @@
           <label>Supplier</label>
           <div class="input-group">
 
-            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="customers" placeholder="Customer">
+            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="customers" placeholder="Customer" (blur)="InputControl($event)" >
 
-            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" >
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)="countryClick($event)" >
               <mat-option *ngFor="let option of customeOptions | async"  [value]="option.id">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
