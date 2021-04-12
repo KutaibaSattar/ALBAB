@@ -19,268 +19,206 @@ import { map, startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-purchases',
   templateUrl: './purchases.component.html',
-  styleUrls: ['./purchases.component.scss']
+  styleUrls: ['./purchases.component.scss'],
 })
 export class PurchasesComponent implements OnInit {
 
+  constructor(
+    public purchaseService: PurchaseService,
+    private productService: ProductService,
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private formBuilder : FormBuilder
+  ) {}
+
+  members: Member[];
+  member: string;
+  products: Product[];
+  searchInv: string;
+  purchInv: IPurchase = new IPurchase();
+  filteredUsersOptions: Observable<Array<Member>>;
+  filteredItemsOptions: Observable<Product[]>[] = [];
 
 
 
+  purchHdr = this.formBuilder.group({
+    id:null,
+    purNo: [null,Validators.required],
+    appUserId: [null,Validators.required],
+    purchDtl:this.formBuilder.array([]),
+  });
 
 
   initSection() {
-    return new FormGroup({
-      id:new FormControl(''),
-      productId: new FormControl(''),
-      price: new FormControl(''),
-      quantity: new FormControl('')
-    }
-
-    );
-
-
+    return this.formBuilder.group({
+      id: null,
+      productId:[null,Validators.required],
+      price: [null,Validators.required],
+      quantity: [null,Validators.required],
+    });
   }
 
 
-  //purchase: Purchase;
-  //purchaseItems: PurchDetail[];
-  members: Member[] ;
-  member : string;
-  products : Product[];
-  searchInv : string;
+  appUserId =this.purchHdr.get('appUserId') as FormControl;
+  purNo =this.purchHdr.get('purNo') as FormControl;
 
-  purchInv : IPurchase =  new IPurchase()
-
-
-  isValid = true;
-
-  customeOptions: Observable<Array<Member>>;
-
-
-
-
-
-
-  form = new FormGroup({
-
-    id: new FormControl(''),
-    purNo: new FormControl(''),
-    appUserId : new FormControl(''),
-    purchDtl : new FormArray([])
-
-  })
-
-
-
-  appUserId= this.form.get('appUserId') as FormControl;
-  purchDtl =this.form.get('purchDtl') as FormArray;
-  productId: FormControl;
-
-
-  constructor(public purchaseService: PurchaseService,private productService: ProductService, private authService: AuthService,private dialog: MatDialog) { }
-
-
+  purchDtl = this.purchHdr.get('purchDtl') as FormArray;
 
 
   ngOnInit(): void {
-
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
 
 
 
+    this.attachedUserFilter();
 
     var sources = [
-     this.authService.getMembers(),
-     this.productService.getProducts(),
+      this.authService.getMembers(),
+      this.productService.getProducts(),
+    ];
 
-   ];
+    if (this.purchInv.id)
+      sources.push(this.purchaseService.getPurchInv(this.searchInv));
 
-   if (this.purchInv.id)
-    sources.push(this.purchaseService.getPurchInv(this.searchInv));
+    forkJoin(sources).subscribe((data) => {
 
+      (<any>this.members) = data[0];
 
-   forkJoin(sources).subscribe(data => {
+      (<any>this.products) = data[1];
 
-   (<any>this.members) = data[0];
+      if (this.purchInv.id) {
+        (<any>this.purchInv) = data[2];
 
-   if (this.purchInv.id)
-   (<any>this.purchInv) = data[2];
-
-   this.form.patchValue({
-        id: this.purchInv.id,
-        purNo: this.purchInv.purNo,
-        appUserId: this.purchInv.appUserId,
-      });
-
-
-
-        if (this.purchInv.id)
+        this.purchHdr.patchValue({
+          id: this.purchInv.id,
+          purNo: this.purchInv.purNo,
+          appUserId: this.purchInv.appUserId,
+        });
 
         this.purchInv.purchDtl.map((item) => {
           const group = this.initSection();
           group.patchValue(item);
-          (this.form.get('purchDtl') as FormArray).push(group);
-          this.ManageNameControl((this.form.get('purchDtl') as FormArray).controls.length - 1);
+          (this.purchHdr.get('purchDtl') as FormArray).push(group);
+          this.ManageNameControl(
+            (this.purchHdr.get('purchDtl') as FormArray).controls.length - 1
+          );
           //return group;
         });
-
-        (<any>this.products) = data[1];
-
-
-   });
-
-  this.getUser();
+      }
+    });
 
 
   }
 
-
-  getUser(): any{
-    this.customeOptions = this.form.get('appUserId').valueChanges
-    .pipe(
+  attachedUserFilter(): any {
+    this.filteredUsersOptions = this.purchHdr.get('appUserId').valueChanges.pipe(
       startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
       map((val) => this.filter(val))
-
     );
   }
 
-  someMethod(id: number){
-   return this.members.find( e => e.id = id).displayName;
-
+  someMethod(id: number) {
+    return this.members.find((e) => (e.id = id)).displayName;
   }
 
-  /* displayFn(id, _this) {
-    let x = this.someMethod(_this.members[0].id) ;
-    return x
-  } */
 
-  displayFn(this,user: number): string {
-    if(user){
-      let x = this.members.find(element => element.id === user).displayName;
-    return x
+
+  displayFn(this, user: number): string {
+    if (user) {
+      let x = this.members.find((element) => element.id === user).displayName;
+      return x;
     }
 
-    setTimeout(() => {
-      this.form.get('appUserId').setValue(null);
-  }, 300);
 
-    //return user && user.displayName ? user.displayName : '';
   }
-  ProductNameFn(this,product: number): string {
-
-    if(product){
-      let x = this.products.find(element => element.id === product).name;
-      return x
+  ProductNameFn(this, product: number): string {
+    if (product) {
+      let x = this.products.find((element) => element.id === product).name;
+      return x;
     }
 
-    //return user && user.displayName ? user.displayName : '';
+
   }
-  /* displayFn = value => {
-    // now you have access to 'this'
-    this.someMethod(value.id);
-    return this.member;
-  }
- */
- /*  displayFn(_this): any {
-
-    if (1 ){
-       this.authService.membersSource$.subscribe(res => member = res );
-    return _this.members.find(element => element.id = this.appUserId.value).displayName;
-
-
-    //return userId.displayName
-    }
-    // return user && user.userId ? user.displayName + ' - ' + user.userId : '';
-    // return user ? this.options.find(x => x.id === user).name : undefined;
-
-     // return 'Hello';
-   }
- */
 
 
   filter(val: any): any {
     if (this.members !== undefined) {
-     return this.members.filter((item: Member) => {
-       // If the user selects an option, the value becomes a Human object,
-       // therefore we need to reset the val for the filter because an
-       // object cannot be used in this toLowerCase filter
-      let x =typeof val;
-       if (typeof val === 'string'){
-        const TempString = item.displayName + ' - ' + item.userId;
-       return TempString.toLowerCase().includes(val.toLowerCase());}
-
-
-     });
+      return this.members.filter((item: Member) => {
+        // If the user selects an option, the value becomes a Human object,
+        // therefore we need to reset the val for the filter because an
+        // object cannot be used in this toLowerCase filter
+        let x = typeof val;
+        if (typeof val === 'string') {
+          const TempString = item.displayName + ' - ' + item.userId;
+          return TempString.toLowerCase().includes(val.toLowerCase());
+        }
+      });
     }
-   }
-  // tslint:disable-next-line: typedef
-
-
-  // tslint:disable-next-line: typedef
-  OnDeletePurchseItem(purchItemId: number, i: number) {
-
   }
+  // tslint:disable-next-line: typedef
+
+  // tslint:disable-next-line: typedef
+  OnDeletePurchseItem(purchItemId: number, i: number) {}
   // tslint:disable-next-line: typedef
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
     console.log(this.appUserId); // This has the correct data
     console.log(this.appUserId.value); // Why is this different than the above result?
     console.log(this.members); // I want this to log the Selected Human Object
-   }
+  }
 
   // tslint:disable-next-line: typedef
-  OnSubmit(frmpurchase :IPurchase) {
-    this.purchaseService.UpdaePurchInv(frmpurchase).subscribe(res => console.log('close',res));
+  OnSave(frmpurchase: IPurchase) {
 
+
+    console.log(this.purchHdr)
+   /*  this.purchaseService
+      .UpdaePurchInv(frmpurchase)
+      .subscribe((res) => console.log('close', res)); */
   }
 
   AddOrEditPurchseItem(OrderID) {
-
-    const dialogConfig = new MatDialogConfig;
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "50%";
+    dialogConfig.width = '50%';
     dialogConfig.data = { OrderID };
 
-    this.dialog.open(invoiceitemComponent, dialogConfig).afterClosed().subscribe();
-
+    this.dialog
+      .open(invoiceitemComponent, dialogConfig)
+      .afterClosed()
+      .subscribe();
   }
 
   addRecord() {
-
-    const controls = <FormArray>this.form.get('purchDtl');
+    const controls = <FormArray>this.purchHdr.get('purchDtl');
     controls.push(this.initSection());
-    console.log('Array', controls)
-     // Build the account Auto Complete values
-     this.ManageNameControl(controls.length - 1);
-
+    console.log('Array', controls);
+    // Build the account Auto Complete values
+    this.ManageNameControl(controls.length - 1);
   }
 
   getSections(form) {
-   if( (form.controls.purchDtl as FormArray).controls.length > 0)
-    return form.controls.purchDtl.controls;
+    if ((form.controls.purchDtl as FormArray).controls.length > 0)
+      return form.controls.purchDtl.controls;
   }
 
-  filteredOptions: Observable<Product[]>[] = [];
 
-  myForm: FormGroup;
+
 
   ManageNameControl(index: number) {
+    var arrayControl = this.purchHdr.get('purchDtl') as FormArray;
 
-    var arrayControl = this.form.get('purchDtl') as FormArray;
-
-    this.filteredOptions[index] = arrayControl.at(index).get('productId').valueChanges
-    .pipe(
-      startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
+    this.filteredItemsOptions[index] = arrayControl
+      .at(index)
+      .get('productId')
+      .valueChanges.pipe(
+        startWith(''),
+        /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
-      map((val) => this._filter(val))
-
-    );
-
-
-
+        map((val) => this._filter(val))
+      );
   }
   private _filter(val: any): Product[] {
     if (this.products !== undefined) {
@@ -288,36 +226,17 @@ export class PurchasesComponent implements OnInit {
         // If the user selects an option, the value becomes a Human object,
         // therefore we need to reset the val for the filter because an
         // object cannot be used in this toLowerCase filter
-       let x =typeof val;
-        if (typeof val === 'string'){
-         const TempString = item.name //+ ' - ' + item.userId;
-        return TempString.toLowerCase().includes(val.toLowerCase());}
-
-
+        let x = typeof val;
+        if (typeof val === 'string') {
+          const TempString = item.name; //+ ' - ' + item.userId;
+          return TempString.toLowerCase().includes(val.toLowerCase());
+        }
       });
-     }
+    }
   }
 
-
-  InputControl(event) {
-    /* setTimeout(() => {
-        let isValueTrue = this.members.filter(myAlias =>
-            myAlias  === event.target.value);
-        if (isValueTrue.length === 0) {
-            this.form.get('appUserId').setValue(null);
-        }
-    }, 300); */
-}
-countryClick(event: any) {
-  //this.selectedCountry = event.option.value;
-}
-
-
-
-
-
-
-
-
-
+  OnSubmit(){
+    this.['submitted'] = true;
+    console.log(this.purchHdr)
+  }
 }

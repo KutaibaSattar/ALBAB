@@ -25,8 +25,8 @@
     </div>
   </div>
 </section>
-<div *ngIf="purchInv" class="container">
-  <form [formGroup]="form" >
+<div *ngIf="purchInv"  class="container">
+  <form [formGroup]="purchHdr" #formInv="ngForm" (ngSubmit)="OnSubmit()" >
     <div class="row">
       <!--  -->
       <div class="col-md-6">
@@ -36,8 +36,14 @@
             <div class="input-group-prepend">
               <div class="input-group-text">#</div>
             </div>
-            <input name="purchNo" formControlName="purNo" class="form-control" />
-
+            <input name="purNo"
+             formControlName="purNo"
+             class="form-control"
+             [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched && 'aaa' }"
+             >
+             <span class="text-danger" *ngIf="purNo.invalid &&  purNo.touched && formInv.submitted">
+              Invoice #No required
+            </span>
           </div>
 
         </div>
@@ -46,10 +52,16 @@
           <label>Supplier</label>
           <div class="input-group">
 
-            <input type="text" class="form-control" matInput [formControl]="appUserId" [matAutocomplete]="customers" placeholder="Customer" (blur)="InputControl($event)" >
+            <input
+            type="text"
+             class="form-control"
+              matInput formControlName="appUserId"
+              [matAutocomplete]="customers"
+               placeholder="Customer"
+               [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
 
-            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)="countryClick($event)" >
-              <mat-option *ngFor="let option of customeOptions | async"  [value]="option.id">
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" >
+              <mat-option *ngFor="let option of filteredUsersOptions | async"  [value]="option.id">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
             </mat-autocomplete>
@@ -101,21 +113,21 @@
                   class="fa fa-plus"></i>Add Item</a>
               <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
                     class="fa fa-plus"></i>Add Record</a>
-              <a class="btn btn-sm btn-success txt-white" (click)="OnSubmit(form.value)"><i
+              <a class="btn btn-sm btn-success txt-white" (click)="OnSave(purchHdr.value)"><i
                     class="fa fa-plus"></i>Save</a>
               </th>
 
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let section of getSections(form); let i = index" >
+          <tbody *ngFor="let section of getSections(purchHdr); let i = index" >
                 <tr [formGroupName]="i">
                   <th>
                     <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
                       placeholder="Items">
 
                     <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #products="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
-                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option.id">
+                      <mat-option *ngFor="let option of filteredItemsOptions[i] | async" [value]="option.id">
                         {{option.name}}
                       </mat-option>
                     </mat-autocomplete>
@@ -127,8 +139,8 @@
           </tbody>
       </table>
     </ng-container>
-
-    <pre>{{form.value | json}}</pre>
+    <button class="btn btn-success float-right">Create Account</button>
+    <pre>{{purchHdr.value | json}}</pre>
 
 
 
