@@ -18,7 +18,7 @@
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search Invoice...">
           <div class="input-group-append">
-            <button class="btn btn-success">Search</button>
+            <button class="ml-1 btn btn-success">Search</button>
           </div>
         </div>
       </div>
@@ -26,32 +26,27 @@
   </div>
 </section>
 <div *ngIf="purchInv"  class="container">
-  <form [formGroup]="purchHdr" #formInv="ngForm" (ngSubmit)="OnSubmit()" >
+  <form [formGroup]="purchHdr" (ngSubmit)="OnSubmit()" >
     <div class="row">
       <!--  -->
       <div class="col-md-6">
-        <div class="form-group">
-          <label>Purch No</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text">#</div>
-            </div>
-            <input name="purNo"
-             formControlName="purNo"
-             class="form-control"
-             [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched && 'aaa' }"
-             >
-             <span class="text-danger" *ngIf="purNo.invalid &&  purNo.touched && formInv.submitted">
-              Invoice #No required
-            </span>
+
+          <div class="form-group">
+            <label class="font-weight-bold">Purch No</label>
+            <div class="input-group">
+              <span class="input-group-append input-group-text">#</span>
+              <input name="purNo" formControlName="purNo" class="form-control"
+                [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched }">
+                <span *ngIf="purNo.invalid &&  purNo.touched && purNo.errors.required" class="ml-0 input-group-append alert alert-danger">Please enter invoice No</span>
+              </div>
+
           </div>
 
-        </div>
+
 
         <div class="form-group">
-          <label>Supplier</label>
+          <label class="font-weight-bold">Supplier</label>
           <div class="input-group">
-
             <input
             type="text"
              class="form-control"
@@ -59,14 +54,14 @@
               [matAutocomplete]="customers"
                placeholder="Customer"
                [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
-
             <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" >
               <mat-option *ngFor="let option of filteredUsersOptions | async"  [value]="option.id">
                 {{option.displayName}} -  {{option.userId}}
               </mat-option>
             </mat-autocomplete>
-
+            <span *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) " class="ml-0 input-group-append alert alert-danger">Please enter a valid product</span>
           </div>
+
         </div>
       </div>
       <div class="col-md-6">
@@ -81,7 +76,7 @@
         </div>
 
         <div class="form-group">
-          <label>Grand Total</label>
+          <label class="font-weight-bold">Grand Total</label>
           <div class="input-group">
             <div class="input-group-prepend">
 

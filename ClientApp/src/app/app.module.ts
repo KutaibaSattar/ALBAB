@@ -25,15 +25,6 @@ import { PurchasesComponent } from './purchases/purchases.component';
 
 
 
-
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,11 +37,8 @@ import { PurchasesComponent } from './purchases/purchases.component';
     ProductsComponent,
     invoiceitemComponent,
    PurchasesComponent,
-
-
-
-
     ],
+    
   imports: [
     BrowserModule,
     AppRoutingModule,

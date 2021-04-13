@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
@@ -44,7 +45,7 @@ export class PurchasesComponent implements OnInit {
   purchHdr = this.formBuilder.group({
     id:null,
     purNo: [null,Validators.required],
-    appUserId: [null,Validators.required],
+    appUserId: [null,[Validators.required,DropDownValidators.shouldLimited]],
     purchDtl:this.formBuilder.array([]),
   });
 
@@ -52,7 +53,7 @@ export class PurchasesComponent implements OnInit {
   initSection() {
     return this.formBuilder.group({
       id: null,
-      productId:[null,Validators.required],
+      productId:[null,Validators.required,],
       price: [null,Validators.required],
       quantity: [null,Validators.required],
     });
@@ -236,7 +237,9 @@ export class PurchasesComponent implements OnInit {
   }
 
   OnSubmit(){
-    this.['submitted'] = true;
+    this.purchHdr.markAllAsTouched()
+    this.purchHdr["submitted"] = true;
     console.log(this.purchHdr)
+
   }
 }

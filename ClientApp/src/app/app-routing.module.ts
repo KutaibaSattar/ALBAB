@@ -16,19 +16,17 @@ import { PurchasesComponent } from './purchases/purchases.component';
 
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent },
-  {path: 'members', component: MemberListComponent },
-  {path: 'memberdetails', component: MemberDetailsComponent },
-  {path: 'dashboard', component: HomeComponent },
-  {path: 'login', component: LoginComponent },
-  {path: 'product', component: ProductsComponent },
-  {path: 'purchases', component: PurchasesComponent },
-    {path: 'errors', component: TestErrorsComponent },
-  { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
-  { path: 'server-error', component: ServerErrorComponent, },
-  {path: '**' , component: DashboardComponent, pathMatch: 'full' },
-
-
+  { path: '', component: DashboardComponent },
+  { path: 'members', component: MemberListComponent },
+  { path: 'memberdetails', component: MemberDetailsComponent },
+  { path: 'dashboard', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'product', component: ProductsComponent },
+  { path: 'purchases', component: PurchasesComponent },
+  { path: 'errors', component: TestErrorsComponent },
+  { path: 'not-found',component: NotFoundComponent},
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: '**', component: DashboardComponent, pathMatch: 'full' },
 ];
 
 
