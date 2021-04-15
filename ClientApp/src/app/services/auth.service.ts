@@ -10,8 +10,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   baseUrl = environment.apiUrl;
+
 
  /*  In order to prevent the execution of interceptor for the particular request,
    you have to create object of the HttpClient in a different way;
@@ -83,7 +85,10 @@ export class AuthService {
   }
 
 setCurrentUser(user: User){
-  this.currentUserSource.next(user);  // store user in current user source
+ this.currentUserSource.next(user);  // store user in current user source
+ this.currentUser$.subscribe(
+   res => console.log('subject',res)
+ )
   this.LoggedIn();
 
 }
@@ -109,6 +114,7 @@ setCurrentUser(user: User){
   const token = localStorage.getItem('token');
   if (!token) { return false; }
   const jwtHelper = new JwtHelperService();
+
   const expDate = jwtHelper.getTokenExpirationDate(token);
   if (jwtHelper.isTokenExpired(token))
   {

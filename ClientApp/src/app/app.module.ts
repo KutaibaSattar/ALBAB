@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MemberListComponent } from './account/member-list/member-list.component';
-import { MemberDetailsComponent } from './account/member-details/member-details.component';
+import { MembersComponent } from './account/members/members.component';
+import { NewMemberComponent } from './account/newmember/newmember.component';
 import { DashboardComponent } from './account/dashboard/dashboard.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -22,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProductsComponent } from './products/products.component';
 import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 import { PurchasesComponent } from './purchases/purchases.component';
+import { ProfileComponent } from './account/profile/profile.component';
 
 
 
@@ -29,16 +30,17 @@ import { PurchasesComponent } from './purchases/purchases.component';
   declarations: [
     AppComponent,
     NavComponent,
-    MemberListComponent,
-    MemberDetailsComponent,
+    MembersComponent,
+    NewMemberComponent,
     DashboardComponent,
     HomeComponent,
     LoginComponent,
     ProductsComponent,
     invoiceitemComponent,
    PurchasesComponent,
+   ProfileComponent,
     ],
-    
+
   imports: [
     BrowserModule,
     AppRoutingModule,

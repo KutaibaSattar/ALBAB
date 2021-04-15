@@ -7,14 +7,14 @@ import { AuthService } from 'app/services/auth.service';
 
 
 @Component({
-  selector: 'app-member-details',
-  templateUrl: './member-details.component.html',
-  styleUrls: ['./member-details.component.scss']
+  selector: 'app-newmember',
+  templateUrl: './newmember.component.html',
+  styleUrls: ['./newmember.component.scss']
 })
-export class MemberDetailsComponent implements OnInit {
+export class NewMemberComponent implements OnInit {
   formData: Member;
 
-  constructor(public dialogRef: MatDialogRef<MemberDetailsComponent>,
+  constructor(public dialogRef: MatDialogRef<NewMemberComponent>,
               private accountService: AuthService  ) { }
 
 

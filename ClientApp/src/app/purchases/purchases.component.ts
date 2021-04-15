@@ -14,9 +14,6 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 
-
-
-
 @Component({
   selector: 'app-purchases',
   templateUrl: './purchases.component.html',
@@ -73,9 +70,10 @@ export class PurchasesComponent implements OnInit {
 
     this.attachedUserFilter();
 
-    var sources = [
+    let sources = [
       this.authService.getMembers(),
       this.productService.getProducts(),
+
     ];
 
     if (this.purchInv.id)
