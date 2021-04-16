@@ -4,8 +4,10 @@ import { Observable , ReplaySubject } from 'rxjs';
 import { environment } from 'environments/environment';
 import { Member } from '../models/member';
 import {map} from 'rxjs/operators';
-import { User } from '../models/user';
+import { IUser } from '../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Itoken } from 'app/models/token';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +29,12 @@ export class AuthService {
   If you don't want to send the Authorization token by using an interceptor use HttpXhrBackend.
   If you want to send Authorization token by using interceptor, use HttpClient in a regular way.
  */
-  constructor(private http: HttpClient, private httpBackend: HttpBackend) {}
+  constructor(private http: HttpClient, private httpBackend: HttpBackend,private router: Router) {}
 
 
   /*how many previous values do we want it to store?
   Now, we're only interested in one value here, so we're just going to add the value of one.*/
-  private currentUserSource = new ReplaySubject<User>(1); // buffer for only one user object
+  private currentUserSource = new ReplaySubject<Itoken>(1); // buffer for only one user object
 
    currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
@@ -68,12 +70,12 @@ export class AuthService {
     const httpWithoutIntercep = this.http;
 
     return httpWithoutIntercep.post(this.baseUrl + 'account/login', credential).pipe(
-      map((response: User) => {
+      map((response: IUser) => {
        const user = response;
 
        if (user){
           localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user); // store user in current user source
+          //this.currentUserSource.next(user); // store user in current user source
           return true;
        }
        return false;
@@ -84,7 +86,7 @@ export class AuthService {
 
   }
 
-setCurrentUser(user: User){
+setCurrentUser(user: Itoken){
  this.currentUserSource.next(user);  // store user in current user source
  this.currentUser$.subscribe(
    res => console.log('subject',res)
@@ -93,7 +95,7 @@ setCurrentUser(user: User){
 
 }
 
-  getCurrentUser(user: User) {
+  getCurrentUser(user: IUser) {
   const token = localStorage.getItem('token');
   if (!token) { return null; }
 
@@ -106,6 +108,7 @@ setCurrentUser(user: User){
  logOut(){
   localStorage.removeItem('token');
   this.currentUserSource.next(null);
+  this.router.navigate(['/login']);
 
 
  }

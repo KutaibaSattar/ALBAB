@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './models/user';
+import { Itoken } from './models/token';
+import { IUser } from './models/user';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   title = 'BaB ALSaray';
   currentYear: any;
+  currentUser: Itoken
   constructor (private authService : AuthService, private router: Router){}
 
   ngOnInit(){
@@ -23,12 +25,12 @@ export class AppComponent implements OnInit {
 
   getCurrentUser() {
    //When loading take info from local storage and send to auth service
-   var currentUser = new User()
+
    const token = localStorage.getItem('token');
     if (token) {
-      const user = JSON.parse(atob(token.split('.')[1]));
-      currentUser.displayName = user.given_name
-      this.authService.setCurrentUser(currentUser);
+      const userToken : Itoken = JSON.parse(atob(token.split('.')[1]));
+      //this.currentUser.displayName = userToken.given_name
+      this.authService.setCurrentUser(userToken);
 
     } else {
       this.router.navigate(['/login']);
