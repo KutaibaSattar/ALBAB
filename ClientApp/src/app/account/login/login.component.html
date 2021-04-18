@@ -24,6 +24,7 @@
                 <label for="textpassword">Password</label>
                 <input type="password" id="textpassword" name="password" class="form-control" ngModel>
               </div>
+              <span *ngIf="invalidLogin" class="ml-0 input-group-append alert alert-danger">Please enter a valid User name and Password</span>
               <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                <p class="mt-5 mb-3 text-muted text-center">BaB ALSaray © 2021</p>
             </form>

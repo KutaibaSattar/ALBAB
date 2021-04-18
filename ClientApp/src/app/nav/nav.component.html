@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-    <div class="container">
-      <a href="" class="navbar-brand">Bab AL Saray</a>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav">
+  <div class="container">
+    <a href="" class="navbar-brand">Bab AL Saray</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul *ngIf="(authService.currentUser$| async)" class="navbar-nav mr-auto">
+        <ng-container>
           <li class="nav-item px-2">
             <a routerLink='/dashboard' class="nav-link" routerLinkActive='active current'>Dashboard</a>
           </li>
@@ -18,42 +20,51 @@
           <li class="nav-item px-2">
             <a routerLink='/members' class="nav-link" routerLinkActive='active current'>Users</a>
           </li>
-          <li *ngIf="!(currentUser$ | async)" class="nav-item px-2">
-            <a routerLink='/login' class="nav-link" routerLinkActive='active current'>Login</a>
-          </li>
           <li class="nav-item px-2">
             <a routerLink='/errors' class="nav-link" routerLinkActive='active current'>Errors</a>
           </li>
 
+        </ng-container>
+
+      </ul>
 
 
-        </ul>
+      <ul *ngIf="!(authService.currentUser$| async)" class="navbar-nav ml-auto">
+        <li  class="nav-item dropdown mr-5">
+          <a routerLink='/login' class="nav-link" routerLinkActive='active current'>Login</a>
+        </li>
+      </ul>
 
 
-          <ul *ngIf="(currentUser$ | async) as user " class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3">
-              <a routerLink='' class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i> Welcome {{user.given_name}}
-              </a>
-              <div class="dropdown-menu">
-                <a  class="dropdown-item">
-                  <i class="fa fa-user-circle"></i> Profile
-                </a>
-                <a  class="dropdown-item">
-                  <i class="fa fa-cog"></i> Settings
-                </a>
-              </div>
-            </li>
-            <li  class="nav-item">
-              <a routerLink='' (click)="logOut()" class="nav-link">
-                <i  class="fa fa-user-times"></i> Logout
-              </a>
-            </li>
-          </ul>
+      <ul *ngIf="(authService.currentUser$| async) as user " class="navbar-nav ml-auto">
+        <li class="nav-item dropdown mr-3">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user"></i> <strong> Welcome {{user.given_name}} </strong>
+          </a>
+          <div class="dropdown-menu">
+            <a routerLink='' class="dropdown-item">
+              <i class="fa fa-user-circle"></i> Profile
+            </a>
+            <a routerLink='' class="dropdown-item">
+              <i class="fa fa-cog"></i> Settings
+            </a>
+            <div class="divider dropdown-divider"></div>
+            <a routerLink='' class="dropdown-item d-flex align-items-center py-2" (click)="logOut()">
+              <i class="fa fa-sign-out mr-3"></i> Logout
+            </a>
+          </div>
 
-      </div>
+        </li>
+      </ul>
     </div>
-  </nav>
+
+
+
+
+
+  </div>
+
+</nav>
 
 
 

@@ -12,21 +12,30 @@ import { ProductsComponent } from './products/products.component';
 import { HomeComponent } from './home/home.component';
 import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
+import { Authguard } from './guards/auth.guard';
+import { UnsavedchangesGuard } from './guards/unsavedchanges.guard';
 
 
 
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'members/:userId', component: ProfileComponent },
-  { path: 'members', component: MembersComponent },
-  { path: 'dashboard', component: HomeComponent },
+  {
+    path:'',
+    runGuardsAndResolvers:'always',
+    canActivate:[Authguard],
+    children:[
+      { path: 'members/:userId', component: ProfileComponent },
+      { path: 'members', component: MembersComponent },
+      { path: 'dashboard', component: HomeComponent },
+      { path: 'product', component: ProductsComponent},
+      { path: 'purchases', component: PurchasesComponent, canDeactivate:[UnsavedchangesGuard]},
+      { path: 'errors', component: TestErrorsComponent },
+      { path: 'not-found',component: NotFoundComponent},
+      { path: 'server-error', component: ServerErrorComponent },
+    ]
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'product', component: ProductsComponent },
-  { path: 'purchases', component: PurchasesComponent },
-  { path: 'errors', component: TestErrorsComponent },
-  { path: 'not-found',component: NotFoundComponent},
-  { path: 'server-error', component: ServerErrorComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

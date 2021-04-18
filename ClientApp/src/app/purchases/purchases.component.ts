@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { IPurchase } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -20,14 +21,21 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./purchases.component.scss'],
 })
 export class PurchasesComponent implements OnInit {
-
   constructor(
     public purchaseService: PurchaseService,
     private productService: ProductService,
     private authService: AuthService,
     private dialog: MatDialog,
-    private formBuilder : FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {}
+  @HostListener('window:beforeunload', ['$event']) uloadNotification(
+    $event: any
+  ) {
+    if (this.purchHdr.dirty) {
+      $event.returnValue = true;
+    }
+  }
 
   members: Member[];
   member: string;
@@ -37,50 +45,41 @@ export class PurchasesComponent implements OnInit {
   filteredUsersOptions: Observable<Array<Member>>;
   filteredItemsOptions: Observable<Product[]>[] = [];
 
-
-
   purchHdr = this.formBuilder.group({
-    id:null,
-    purNo: [null,Validators.required],
-    appUserId: [null,[Validators.required,DropDownValidators.shouldLimited]],
-    purchDtl:this.formBuilder.array([]),
+    id: null,
+    purNo: [null, Validators.required],
+    appUserId: [null, [Validators.required, DropDownValidators.shouldLimited]],
+    purchDtl: this.formBuilder.array([]),
   });
-
 
   initSection() {
     return this.formBuilder.group({
       id: null,
-      productId:[null,Validators.required,],
-      price: [null,Validators.required],
-      quantity: [null,Validators.required],
+      productId: [null, Validators.required],
+      price: [null, Validators.required],
+      quantity: [null, Validators.required],
     });
   }
 
-
-  appUserId =this.purchHdr.get('appUserId') as FormControl;
-  purNo =this.purchHdr.get('purNo') as FormControl;
+  appUserId = this.purchHdr.get('appUserId') as FormControl;
+  purNo = this.purchHdr.get('purNo') as FormControl;
 
   purchDtl = this.purchHdr.get('purchDtl') as FormArray;
 
-
   ngOnInit(): void {
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
-
-
 
     this.attachedUserFilter();
 
     let sources = [
       this.authService.getMembers(),
       this.productService.getProducts(),
-
     ];
 
     if (this.purchInv.id)
       sources.push(this.purchaseService.getPurchInv(this.searchInv));
 
     forkJoin(sources).subscribe((data) => {
-
       (<any>this.members) = data[0];
 
       (<any>this.products) = data[1];
@@ -105,42 +104,35 @@ export class PurchasesComponent implements OnInit {
         });
       }
     });
-
-
   }
 
   attachedUserFilter(): any {
-    this.filteredUsersOptions = this.purchHdr.get('appUserId').valueChanges.pipe(
-      startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
+    this.filteredUsersOptions = this.purchHdr
+      .get('appUserId')
+      .valueChanges.pipe(
+        startWith(''),
+        /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
-      map((val) => this.filter(val))
-    );
+        map((val) => this.filter(val))
+      );
   }
 
   someMethod(id: number) {
     return this.members.find((e) => (e.id = id)).displayName;
   }
 
-
-
   displayFn(this, user: number): string {
     if (user) {
       let x = this.members.find((element) => element.id === user).displayName;
       return x;
     }
-
-
   }
   ProductNameFn(this, product: number): string {
     if (product) {
       let x = this.products.find((element) => element.id === product).name;
       return x;
     }
-
-
   }
-
 
   filter(val: any): any {
     if (this.members !== undefined) {
@@ -168,16 +160,6 @@ export class PurchasesComponent implements OnInit {
     console.log(this.members); // I want this to log the Selected Human Object
   }
 
-  // tslint:disable-next-line: typedef
-  OnSave(frmpurchase: IPurchase) {
-
-
-    console.log(this.purchHdr)
-   /*  this.purchaseService
-      .UpdaePurchInv(frmpurchase)
-      .subscribe((res) => console.log('close', res)); */
-  }
-
   AddOrEditPurchseItem(OrderID) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -202,9 +184,6 @@ export class PurchasesComponent implements OnInit {
     if ((form.controls.purchDtl as FormArray).controls.length > 0)
       return form.controls.purchDtl.controls;
   }
-
-
-
 
   ManageNameControl(index: number) {
     var arrayControl = this.purchHdr.get('purchDtl') as FormArray;
@@ -234,10 +213,15 @@ export class PurchasesComponent implements OnInit {
     }
   }
 
-  OnSubmit(){
-    this.purchHdr.markAllAsTouched()
-    this.purchHdr["submitted"] = true;
-    console.log(this.purchHdr)
+  OnSubmit() {
+    this.purchHdr.markAllAsTouched();
+    this.purchHdr['submitted'] = true;
+    console.log(this.purchHdr);
 
+    this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
+      console.log('close');
+      this.toastr.success('Invoice updated successfully')
+      this.purchHdr.reset(this.purchInv)
+    });
   }
 }

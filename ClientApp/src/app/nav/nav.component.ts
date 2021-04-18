@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Itoken } from 'app/models/token';
 import { Observable } from 'rxjs';
-import { IUser } from '../models/user';
+import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
 
@@ -14,10 +14,10 @@ import { AuthService } from '../services/auth.service';
 export class NavComponent implements OnInit {
 
   constructor(public authService : AuthService) { }
-  currentUser$ : Observable<Itoken>;
+
 
   ngOnInit(): void {
-   this.currentUser$ = this.authService.currentUser$;
+  
 
   }
 

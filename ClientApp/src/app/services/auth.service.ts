@@ -4,10 +4,12 @@ import { Observable , ReplaySubject } from 'rxjs';
 import { environment } from 'environments/environment';
 import { Member } from '../models/member';
 import {map} from 'rxjs/operators';
-import { IUser } from '../models/user';
+import { User } from '../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Itoken } from 'app/models/token';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +31,13 @@ export class AuthService {
   If you don't want to send the Authorization token by using an interceptor use HttpXhrBackend.
   If you want to send Authorization token by using interceptor, use HttpClient in a regular way.
  */
-  constructor(private http: HttpClient, private httpBackend: HttpBackend,private router: Router) {}
+  constructor(private http: HttpClient, private httpBackend: HttpBackend,private router: Router, private toastr: ToastrService) {}
 
 
   /*how many previous values do we want it to store?
   Now, we're only interested in one value here, so we're just going to add the value of one.*/
-  private currentUserSource = new ReplaySubject<Itoken>(1); // buffer for only one user object
-
-   currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
+  private currentUserSource = new ReplaySubject<User>(1); // buffer for only one user object
+  currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
   getMembers(): Observable<Member[]>  {
    return this.http.get<Member[]>(this.baseUrl + 'users');
@@ -51,16 +52,6 @@ export class AuthService {
     return this.http.post<Member>(this.baseUrl + 'account/register', model).pipe(
       map((response: Member) => {console.log('mapMember', response); }));
 
-    /* .pipe(
-      map(( user: User) => {
-        if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUserSource.next(user);
-        }
-      })
-
-    ); */
-
   }
 
   login(credential: any): Observable<boolean> {
@@ -69,13 +60,12 @@ export class AuthService {
     // let httpWithoutIntercep = new HttpClient(this.httpBackend)
     const httpWithoutIntercep = this.http;
 
-    return httpWithoutIntercep.post(this.baseUrl + 'account/login', credential).pipe(
-      map((response: IUser) => {
-       const user = response;
-
-       if (user){
+    return this.http.post(this.baseUrl + 'account/login', credential).pipe(
+      map((user: User) => {
+       if (user && user.token){
           localStorage.setItem('token', user.token);
-          //this.currentUserSource.next(user); // store user in current user source
+          user.given_name = user.displayName
+          this.currentUserSource.next(user); // store user in current user source
           return true;
        }
        return false;
@@ -86,16 +76,19 @@ export class AuthService {
 
   }
 
-setCurrentUser(user: Itoken){
+setCurrentUser(user: User){
+ user.roles = [];
+ const roles = this.getDecodeToken(user.token).role
+ Array.isArray(roles) ? user.roles = roles : user.roles.push(roles)
  this.currentUserSource.next(user);  // store user in current user source
  this.currentUser$.subscribe(
    res => console.log('subject',res)
  )
-  this.LoggedIn();
+  this.tokenExpired();
 
 }
 
-  getCurrentUser(user: IUser) {
+  getCurrentUser(user: User) {
   const token = localStorage.getItem('token');
   if (!token) { return null; }
 
@@ -113,29 +106,34 @@ setCurrentUser(user: Itoken){
 
  }
 
- LoggedIn(){
-  const token = localStorage.getItem('token');
-  if (!token) { return false; }
-  const jwtHelper = new JwtHelperService();
+ tokenExpired(){
 
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+     return false;
+    }
+
+  const jwtHelper = new JwtHelperService();
   const expDate = jwtHelper.getTokenExpirationDate(token);
+  let x = jwtHelper.decodeToken(token)
+
   if (jwtHelper.isTokenExpired(token))
   {
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
+    this.toastr.error('Session expired')
+    return false;
+
   }
 
+  return true;
+
 }
 
-getDecodedToken(token){
-  const x = JSON.parse(atob(token.split('.')[1]));
-  console.log('atob', x);
-  console.log(Date.now(), x.exp * 1000);
+getDecodeToken (token)  {
   return JSON.parse(atob(token.split('.')[1]));
-}
-
-
-
+  }
 
 }
 

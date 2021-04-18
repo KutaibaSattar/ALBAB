@@ -10,7 +10,7 @@ import { AuthService } from 'app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private authService: AuthService, private router: Router,private route: ActivatedRoute) {}
 
   returnUrl: string;
   invalidLogin: boolean;
@@ -25,18 +25,19 @@ export class LoginComponent implements OnInit {
     this.authService.login(credential).subscribe((result: boolean) => {
 
       if (result) {
-      this.router.navigate(['/']);
+
+      let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      this.router.navigate([returnUrl || '/']);
       }
-      /* else
-      this.invalidLogin = true;
-      this.authService.LoggedIn(); */
-      });
+         },(result) => {
+          console.log(result);
+          this.invalidLogin=true;
+
+         }
+     );
 
     }
 
-     /*  }, error => { console.log(error);
-      });
 
-  } */
 
 }
