@@ -2,7 +2,6 @@ export interface IPurchase{
   id: number
   purNo:string
   purDate :Date
-  gtotal?:number
   appUserId:number
   purchDtl : IPurchDtl[];
 }
@@ -11,7 +10,6 @@ export interface IPurchHdr {
   id:number
   purNo:string
   purDate? :Date
-  gtotal?:number
   appUserId:number
 }
 

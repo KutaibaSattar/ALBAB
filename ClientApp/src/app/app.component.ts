@@ -27,12 +27,13 @@ export class AppComponent implements OnInit {
   getCurrentUser() {
    //When loading take info from local storage and send to auth service
 
-   const token = localStorage.getItem('token');
+   const token: string = localStorage.getItem('token');
 
     if (token) {
       let currentUser = new User()
       const userToken : Itoken = JSON.parse(atob(token.split('.')[1]));
       currentUser.given_name = userToken.given_name
+      currentUser.token = token
       this.authService.setCurrentUser(currentUser);
 
     }

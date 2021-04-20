@@ -46,9 +46,10 @@ getPurchases(){
 
  UpdaePurchInv( purchase: IPurchase){
 
-
+  if (purchase.id) return this.http.put<IPurchase>('https://localhost:5001/api/Purchases',purchase);
+  return this.http.post<IPurchase>('https://localhost:5001/api/Purchases',purchase);
  //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
- return this.http.put<IPurchase>('https://localhost:5001/api/Purchases',purchase);
+
 
  }
 

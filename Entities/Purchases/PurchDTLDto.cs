@@ -4,8 +4,9 @@ using ALBAB.Entities.Products;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class PurchDtlDto : BaseEntity
+    public class PurchDtlDto 
     {
+        public int? Id { get; set; }
         public decimal Quantity { get; set; }
         public decimal  Price { get; set; }
         public int PurchHdrId { get; set;}

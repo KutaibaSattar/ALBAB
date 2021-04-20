@@ -18,7 +18,7 @@
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search Invoice...">
           <div class="input-group-append">
-            <button class="ml-1 btn btn-success">Search</button>
+            <button class="fa fa-search ml-1 btn btn-success"> Search</button>
           </div>
         </div>
       </div>
@@ -26,43 +26,41 @@
   </div>
 </section>
 <div *ngIf="purchInv"  class="container">
-  <form [formGroup]="purchHdr" (ngSubmit)="OnSubmit()" >
+  <form [formGroup]="formPurchHdr" (ngSubmit)="OnSubmit()" >
     <div class="row">
       <!--  -->
-      <div class="col-md-6">
+      <div class="col-md-4">
 
-          <div class="form-group">
-            <label class="font-weight-bold">Purch No</label>
-            <div class="input-group">
-              <span class="input-group-append input-group-text">#</span>
-              <input name="purNo" formControlName="purNo" class="form-control"
-                [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched }">
-                <span *ngIf="purNo.invalid &&  purNo.touched && purNo.errors.required" class="ml-0 input-group-append alert alert-danger">Please enter invoice No</span>
-              </div>
-
+        <div class="form-group">
+          <label class="font-weight-bold">Purch No</label>
+          <div class="input-group">
+            <span class="input-group-append input-group-text">#</span>
+            <input name="purNo" formControlName="purNo" class="form-control"
+              [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched }">
+            <span *ngIf="purNo.invalid &&  purNo.touched && purNo.errors.required"
+              class="ml-0 input-group-append alert alert-danger">Please enter invoice No</span>
           </div>
-
-
-
+        </div>
         <div class="form-group">
           <label class="font-weight-bold">Supplier</label>
           <div class="input-group">
-            <input
-            type="text"
-             class="form-control"
-              matInput formControlName="appUserId"
-              [matAutocomplete]="customers"
-               placeholder="Customer"
-               [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
-            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete" [displayWith]="displayFn.bind(this)" >
-              <mat-option *ngFor="let option of filteredUsersOptions | async"  [value]="option.id">
-                {{option.displayName}} -  {{option.userId}}
+            <input type="text" class="form-control" matInput formControlName="appUserId" [matAutocomplete]="customers"
+              placeholder="Customer" [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
+            <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete"
+              [displayWith]="displayFn.bind(this)">
+              <mat-option *ngFor="let option of filteredUsers$ | async" [value]="option.id">
+                {{option.displayName}} - {{option.userId}}
               </mat-option>
             </mat-autocomplete>
-            <span *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) " class="ml-0 input-group-append alert alert-danger">Please enter a valid product</span>
+            <span
+              *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
+              class="ml-0 input-group-append alert alert-danger">Please enter a valid product</span>
           </div>
 
         </div>
+      </div>
+      <div class="col-md-2">
+        
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -83,7 +81,8 @@
               <div class="input-group-text">AED</div>
 
             </div>
-            <input name="gtotal" class="form-control" readonly />
+
+            <input name="gtotal" [formControl] = 'grdTotal'   class="form-control" readonly>
 
           </div>
         </div>
@@ -92,50 +91,55 @@
 
     </div>
 
-    <ng-container formArrayName="purchDtl">
+    <ng-container formArrayName="subFormPurchDtl">
 
       <!-- Table Header -->
       <table class="table table-bordered table-dark table-hover table-sm">
-        <caption>Items</caption>
-        <thead class="thead-light">
+           <thead class="thead-light">
           <tr>
             <th style="width: 30%">Item</th>
             <th style="width: 10%">Price</th>
             <th style="width: 10%">Quantity</th>
-            <th >Total</th>
+            <th style="width: 10%">Total</th>
+            <th style="width: 10%">Action</th>
+
+
             <th>
-              <a class="btn btn-sm btn-success txt-white" (click)="AddOrEditPurchseItem(purchInv)"><i
-                  class="fa fa-plus"></i>Add Item</a>
-              <a class="btn btn-sm btn-success txt-white" (click)="addRecord()"><i
-                    class="fa fa-plus"></i>Add Record</a>
-              <a class="btn btn-sm btn-success txt-white" (click)="OnSave(purchHdr.value)"><i
-                    class="fa fa-plus"></i>Save</a>
+
+                    <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
+                    <button class="fa fa-save btn btn-success ml-2 float-left" type="submit"> Save</button>
+                    <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
+
+
               </th>
 
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let section of getSections(purchHdr); let i = index" >
+          <tbody *ngFor="let section of getSections(formPurchHdr); let i = index" >
                 <tr [formGroupName]="i">
                   <th>
                     <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
-                      placeholder="Items">
+                      placeholder="New item">
 
                     <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #products="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
-                      <mat-option *ngFor="let option of filteredItemsOptions[i] | async" [value]="option.id">
+                      <mat-option *ngFor="let option of filteredItems$[i] | async" [value]="option.id">
                         {{option.name}}
                       </mat-option>
                     </mat-autocomplete>
                   </th>
-                   <th> <input type="number" class="form-control" autocomplete="off" placeholder="Price" formControlName="price"  ></th>
-                  <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" autocomplete="off" ></th>
-                  <th>Total</th>
+                   <th> <input type="number" class="form-control" placeholder="Price" formControlName="price"  > </th>
+                  <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" ></th>
+                  <th> <input type="number" class="form-control" placeholder="UnitTotal"  formControlName="unitTotalPrice" ></th>
+                  <th>  <button class="fa fa-save btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Delete</button></th>
+
+
+
                 </tr>
           </tbody>
       </table>
     </ng-container>
-    <button class="btn btn-success float-right">Create Account</button>
-    <pre>{{purchHdr.value | json}}</pre>
+       <!-- <pre>{{purchHdr.value | json}}</pre> -->
 
 
 

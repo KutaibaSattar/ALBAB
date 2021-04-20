@@ -7,12 +7,14 @@ using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class SavePurchHdrDto : BaseEntity 
+    public class SavePurchHdrDto 
     {
+         public int? Id { get; set; }
         public string purNo { get; set; }
         public DateTime purDate { get; set; }
         public string purComment { get; set; }
-       [Required]
+       
+        [Required]
         public int AppUserId { get; set; }
          public ICollection <PurchDtlDto> purchDtl { get; set; }
          public SavePurchHdrDto()

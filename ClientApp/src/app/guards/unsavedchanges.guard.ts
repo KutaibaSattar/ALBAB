@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class UnsavedchangesGuard implements CanDeactivate<unknown> {
   canDeactivate(
     component: PurchasesComponent):boolean  {
-      if (component.purchHdr.dirty) {
+      if (component.formPurchHdr.dirty) {
         return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
 
       }

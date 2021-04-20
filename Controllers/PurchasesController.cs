@@ -86,6 +86,7 @@ namespace ALBAB.Controllers
             {
                 item.LastUpdate = DateTime.Now;
             }
+            
 
          _context.PurchHDRs.Add(purch);
 
