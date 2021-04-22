@@ -25,7 +25,7 @@ namespace ALBAB.Controllers
          
         }
 
-          [HttpGet("purchases")]
+          [HttpGet("purchlist")]
          public async Task<ActionResult<IEnumerable<SavePurchHdrDto>>> Getpurchases()
          {
            var purchases = await _context.PurchHDRs.Include(d => d.purchDtl).ThenInclude(p =>p.Product).ToListAsync();
@@ -41,6 +41,16 @@ namespace ALBAB.Controllers
 
          }  
         
+          [HttpGet("purchnos")]
+         public async Task<ActionResult> GetpurchaseInves()
+         {
+          
+          var listId = await  _context.PurchHDRs.Select(pur => new {Id =pur.Id, purNo = pur.purNo}).ToListAsync();
+
+                                   
+          return Ok(listId);  
+
+         }  
           [HttpGet("purchinv/{invNo}")]
          public async Task<ActionResult<IEnumerable<SavePurchHdrDto>>> GetpurchaseInv(string invNo)
          {

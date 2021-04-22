@@ -15,10 +15,18 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 ml-auto">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Invoice...">
+        <div class="input-group ">
+          <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
+                 name="joke" #joke="ngModel" [(ngModel)]="searchInv" (ngModelChange)="doFilter()">
+          <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="PurchNameFn.bind(this)">
+            <mat-option *ngFor="let purch of this.filteredPurchNos$| async" [value]="purch.id">
+              {{purch.purNo}}
+            </mat-option>
+          </mat-autocomplete>
+
+
           <div class="input-group-append">
-            <button class="fa fa-search ml-1 btn btn-success"> Search</button>
+            <button class="fa fa-search ml-1 btn btn-success" (click)="getPurch()" > Search</button>
           </div>
         </div>
       </div>
@@ -26,10 +34,10 @@
   </div>
 </section>
 <div *ngIf="purchInv"  class="container">
-  <form [formGroup]="formPurchHdr" (ngSubmit)="OnSubmit()" >
+  <form [formGroup]="formPurchHdr" (ngSubmit)="OnSubmit()" (keydown.enter)="$event.preventDefault()">
     <div class="row">
       <!--  -->
-      <div class="col-md-4">
+      <div class="col-md-3">
 
         <div class="form-group">
           <label class="font-weight-bold">Purch No</label>
@@ -39,8 +47,20 @@
               [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched }">
             <span *ngIf="purNo.invalid &&  purNo.touched && purNo.errors.required"
               class="ml-0 input-group-append alert alert-danger">Please enter invoice No</span>
+
+
           </div>
         </div>
+      </div>
+      <div class="col-md-3">
+        <label class="font-weight-bold">Date</label>
+        <input type="date" name="purNo" formControlName="purDate" class="form-control"
+        [ngClass]="{'is-invalid': purDate.invalid &&  purDate.touched }">
+
+          <span *ngIf="purDate.invalid && purDate.touched && purDate.errors.required"
+          class="ml-0 input-group-append alert alert-danger">Please enter a valid date</span>
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
           <label class="font-weight-bold">Supplier</label>
           <div class="input-group">
@@ -59,9 +79,8 @@
 
         </div>
       </div>
-      <div class="col-md-2">
-        
-      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label>Payment Method</label>
@@ -72,24 +91,29 @@
             <option value="Card">Card</option>
           </select>
         </div>
+      </div>
+          <div class="col-md-6">
+            <label class="font-weight-bold">Grand Total</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
 
-        <div class="form-group">
-          <label class="font-weight-bold">Grand Total</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
+                <div class="input-group-text">AED</div>
 
-              <div class="input-group-text">AED</div>
+              </div>
+
+              <input name="gtotal" [formControl] = 'grdTotal'   class="form-control" readonly>
 
             </div>
+            </div>
 
-            <input name="gtotal" [formControl] = 'grdTotal'   class="form-control" readonly>
 
-          </div>
-        </div>
 
-      </div>
 
     </div>
+
+
+
+
 
     <ng-container formArrayName="subFormPurchDtl">
 

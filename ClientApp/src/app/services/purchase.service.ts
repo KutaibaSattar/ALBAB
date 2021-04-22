@@ -13,9 +13,9 @@ export class PurchaseService extends DataService {
 
 
 
-  constructor(http: HttpClient) {
+  constructor(private httpClient: HttpClient) {
 
-    super (environment.apiUrl + 'Purchases/', http);
+    super (environment.apiUrl + 'Purchases/', httpClient);
 
    }
 
@@ -24,7 +24,7 @@ export class PurchaseService extends DataService {
 // tslint:disable-next-line: typedef
 getPurchases(){
 
- return this.getAll('purchases').pipe(
+ return this.getAll('purchlist').pipe(
     map((purch: IPurchase) => {
        if (purch){
         const purchase = purch[0];
@@ -36,6 +36,10 @@ getPurchases(){
 
   );
 
+ }
+getPurchNos(){
+
+ return this.httpClient.get<Observable<any>>(environment.apiUrl +'purchases/purchnos')
  }
 
  getPurchInv(InvNo:string){

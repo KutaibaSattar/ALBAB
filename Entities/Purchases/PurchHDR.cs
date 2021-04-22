@@ -19,8 +19,7 @@ namespace ALBAB.Entities.Purchases
         {
                purchDtl = new Collection<PurchDtl>();
         }
-
-       
+         
 
     }
 }

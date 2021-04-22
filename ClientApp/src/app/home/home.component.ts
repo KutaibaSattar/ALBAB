@@ -8,18 +8,9 @@ import { HttpClient } from '@angular/common/http';
 export class Service {
   constructor(private httpClient: HttpClient) { }
 
-  jokes = [];
 
   getData() {
-    return this.jokes.length ? of(this.jokes)
-      : this.httpClient.get<any>('https://localhost:5001/api/users').pipe(
-        map((data) => {
-          this.jokes = data;
-          console.log(this.jokes);
-          return this.jokes;
-
-        })
-      )
+    return  this.httpClient.get<Observable<any>>('https://localhost:5001/api/users')
   }
 }
 @Component({
@@ -29,7 +20,7 @@ export class Service {
 })
 
 export class HomeComponent implements OnInit {
-  jokes;
+  jokes : Observable<any>;
 
   currentJoke=1 ;
   constructor(private service: Service) { }
@@ -50,15 +41,5 @@ export class HomeComponent implements OnInit {
 displayFn(user: any): any {
     console.log(user);
 
-    // return user && user.userId ? user.displayName + ' - ' + user.userId : '';
-   /*  if (user){
-   let name =  this.jokes.find(x => x.userId === user).displayName
-   return name;
-  // return 'Hello';
-  } */
-
-    // return user ? this.jokes.find(x => x.userId === user).displayName : undefined;
-
-     // return 'Hello';
    }
 }

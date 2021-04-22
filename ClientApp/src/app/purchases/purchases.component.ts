@@ -44,16 +44,22 @@ export class PurchasesComponent implements OnInit {
   products: Product[];
   searchInv: string;
   purchInv: IPurchase = new IPurchase();
+  purchNos : [{id:number,purchNo:string}];
+
   filteredUsers$: Observable<Array<Member>>;
   filteredItems$: Observable<Array<Product>>[] = [];
+  filteredPurchNos$: Observable<any>;
+
   totalSum:number[] =[] ;
   priceChanges$ = [];
   grdTotal = new FormControl('');
+
 
   formPurchHdr = this.formBuilder.group({
     id: null,
     purNo: [null, Validators.required],
     appUserId: [null, [Validators.required, DropDownValidators.shouldLimited]],
+    purDate:[null, Validators.required],
     subFormPurchDtl: this.formBuilder.array([
       this.initSection()
 
@@ -75,6 +81,8 @@ export class PurchasesComponent implements OnInit {
 
   appUserId = this.formPurchHdr.get('appUserId') as FormControl;
   purNo = this.formPurchHdr.get('purNo') as FormControl;
+  purDate = this.formPurchHdr.get('purDate') as FormControl;
+
 
   purchDtl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
 
@@ -171,7 +179,7 @@ export class PurchasesComponent implements OnInit {
 
 
   OnHumanSelected(option: MatOption) {
-   // console.log(option.value);
+    console.log(option.value);
  }
 
   AddOrEditPurchseItem(OrderID) {
@@ -243,16 +251,18 @@ export class PurchasesComponent implements OnInit {
   OnSubmit() {
     this.formPurchHdr.markAllAsTouched();
 
-    console.log(this.formPurchHdr.value);
+    if (this.formPurchHdr.valid){
+      this.purchInv = this.formPurchHdr.value
+      this.purchInv.id = 0;
 
-    this.purchInv = this.formPurchHdr.value
-    this.purchInv.id = 0;
+      this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
+        console.log('close');
+        this.toastr.success('Invoice updated successfully')
+        this.formPurchHdr.reset(this.purchInv)
+      });
+    }
 
-    this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
-      console.log('close');
-      this.toastr.success('Invoice updated successfully')
-      this.formPurchHdr.reset(this.purchInv)
-    });
+
   }
 
   private updateTotalUnitPrice(units: any, index: number) {
@@ -267,41 +277,49 @@ export class PurchasesComponent implements OnInit {
       console.log( this.purchDtl.getRawValue().reduce((sum,current) => sum + current.unitTotalPrice,0))
     this.grdTotal.setValue(this.purchDtl.getRawValue().reduce((sum,current) => sum + current.unitTotalPrice,0))
 
-    /* if (this.totalSum.length <= index){
-      total.push(index,index,this.purchDtl.at(index).get('unitTotalPrice').value)
-    }
-    else{
-      total[index] = index,index,this.purchDtl.at(index).get('unitTotalPrice').value
-    } */
 
-
-    /* // get our units group controll
-    const control = <FormArray>this.formPurchHdr.controls["units"];
-    // before recount total price need to be reset.
-    this.totalSum = 0;
-    for (let i in units) {
-      let totalUnitPrice = units[i].qty * units[i].unitPrice;
-      // now format total price with angular currency pipe
-      let totalUnitPriceFormatted = this.currencyPipe.transform(
-        totalUnitPrice,
-        "USD",
-        "symbol-narrow",
-        "1.2-2"
-      );
-      // update total sum field on unit and do not emit event myFormValueChanges$ in this case on units
-      control
-        .at(+i)
-        .get("unitTotalPrice")
-        .setValue(totalUnitPriceFormatted, {
-          onlySelf: true,
-          emitEvent: false
-        });
-      // update total price for all units
-      this.totalSum += totalUnitPrice;
-    } */
   }
   removeUnit(i: number) {
 
    this.purchDtl.removeAt(i);
   }
+
+  getPurch(){
+ /*  this.filteredPurchNos$ =  this.purchaseService.getPurchNos().subscribe(
+      (res : any) => {this.purchNos = res
+        console.log(this.purchNos)
+      }
+
+    ); */
+
+  }
+  doFilter() {
+    this.filteredPurchNos$ = this.purchaseService.getPurchNos()
+    .pipe(map(jokes => this.filterPurchase(jokes)
+
+    )
+    )
+
+  }
+  filterPurchase(values) {
+    console.log(values)
+    return values.filter(joke => joke.purNo.toLowerCase().includes(this.searchInv))
+  }
+  PurchNameFn(this,option: MatOption): any {
+    console.log(option)
+
+ /*    this.filteredPurchNos$.subscribe(
+      res => {
+
+        console.log(res)
+        return res
+      }
+    ) */
+    /* if (purch) {
+      this.
+      let x = this..find((element) => element.id === product).name;
+      return x;
+    } */
+  }
+
 }
