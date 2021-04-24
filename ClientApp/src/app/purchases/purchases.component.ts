@@ -42,9 +42,12 @@ export class PurchasesComponent implements OnInit {
   members: Member[];
   member: string;
   products: Product[];
-  searchInv: string;
+  txtSearchInv: string;
+  purchNos : [{id:number,purNo:string}];
+
   purchInv: IPurchase = new IPurchase();
-  purchNos : [{id:number,purchNo:string}];
+
+
 
   filteredUsers$: Observable<Array<Member>>;
   filteredItems$: Observable<Array<Product>>[] = [];
@@ -98,33 +101,14 @@ export class PurchasesComponent implements OnInit {
       this.productService.getProducts(),
     ];
 
-    if (this.purchInv.id)
-      sources.push(this.purchaseService.getPurchInv(this.searchInv));
+
 
     forkJoin(sources).subscribe((data) => {
       (<any>this.members) = data[0];
 
       (<any>this.products) = data[1];
 
-      if (this.purchInv.id) {
-        (<any>this.purchInv) = data[2];
 
-        this.formPurchHdr.patchValue({
-          id: this.purchInv.id,
-          purNo: this.purchInv.purNo,
-          appUserId: this.purchInv.appUserId,
-        });
-
-        this.purchInv.purchDtl.map((item) => {
-          const group = this.initSection();
-          group.patchValue(item);
-          (this.formPurchHdr.get('subFormPurchDtl') as FormArray).push(group);
-          this.attachItemFilter(
-            (this.formPurchHdr.get('subFormPurchDtl') as FormArray).controls.length - 1
-          );
-          //return group;
-        });
-      }
     });
 
 
@@ -152,8 +136,8 @@ export class PurchasesComponent implements OnInit {
   }
   ProductNameFn(this, product: number): string {
     if (product) {
-      let x = this.products.find((element) => element.id === product).name;
-      return x;
+      return this.products.find((element) => element.id === product).name;
+
     }
   }
 
@@ -285,12 +269,38 @@ export class PurchasesComponent implements OnInit {
   }
 
   getPurch(){
- /*  this.filteredPurchNos$ =  this.purchaseService.getPurchNos().subscribe(
-      (res : any) => {this.purchNos = res
-        console.log(this.purchNos)
-      }
+    if (this.txtSearchInv){
+      this.purchaseService.getPurchInv(this.txtSearchInv).subscribe(
 
-    ); */
+
+        result =>{ this.purchInv = result;
+          this.formPurchHdr.patchValue({
+            id: this.purchInv.id,
+            purNo: this.purchInv.purNo,
+            appUserId: this.purchInv.appUserId,
+            //purDate:  (<any>this.purchInv.purDate).split(' ')[0]
+          });
+
+          this.purchInv.purchDtl.map((item) => {
+            const group = this.initSection();
+            group.patchValue(item);
+            (this.formPurchHdr.get('subFormPurchDtl') as FormArray).push(group);
+            this.attachItemFilter(
+              (this.formPurchHdr.get('subFormPurchDtl') as FormArray).controls.length - 1
+            );
+            //return group;
+          });
+
+        }
+      )
+
+
+    }
+
+
+
+
+
 
   }
   doFilter() {
@@ -303,10 +313,17 @@ export class PurchasesComponent implements OnInit {
   }
   filterPurchase(values) {
     console.log(values)
-    return values.filter(joke => joke.purNo.toLowerCase().includes(this.searchInv))
+  return  this.purchNos =  values.filter(joke => joke.purNo.toLowerCase().includes(this.txtSearchInv));
+
+
   }
-  PurchNameFn(this,option: MatOption): any {
-    console.log(option)
+  PurchNameFn(option): any {
+    console.log(option, this.purchNos)
+    if (this.purchNos){
+      return this.purchNos.find((element) => element.id === option).purNo
+     //return this.purchNos.
+    }
+
 
  /*    this.filteredPurchNos$.subscribe(
       res => {

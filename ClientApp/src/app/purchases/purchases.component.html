@@ -17,7 +17,7 @@
       <div class="col-md-6 ml-auto">
         <div class="input-group ">
           <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
-                 name="joke" #joke="ngModel" [(ngModel)]="searchInv" (ngModelChange)="doFilter()">
+                 name="joke" #joke="ngModel" [(ngModel)]="txtSearchInv" (ngModelChange)="doFilter()">
           <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="PurchNameFn.bind(this)">
             <mat-option *ngFor="let purch of this.filteredPurchNos$| async" [value]="purch.id">
               {{purch.purNo}}

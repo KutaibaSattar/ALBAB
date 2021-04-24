@@ -51,11 +51,11 @@ namespace ALBAB.Controllers
           return Ok(listId);  
 
          }  
-          [HttpGet("purchinv/{invNo}")]
-         public async Task<ActionResult<IEnumerable<SavePurchHdrDto>>> GetpurchaseInv(string invNo)
+          [HttpGet("purchinv/{id}")]
+         public async Task<ActionResult<IEnumerable<SavePurchHdrDto>>> GetpurchaseInv(int id)
          {
            var purchases = await _context.PurchHDRs.Include(d => d.purchDtl)
-           .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.purNo == invNo);
+           .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.Id == id);
 
           
 
