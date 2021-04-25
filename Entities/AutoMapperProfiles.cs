@@ -40,10 +40,21 @@ namespace ALBAB.Entities
              CreateMap<SavePurchHdrDto,PurchHdr>()
               .ForMember(dst => dst.Id , opt => opt.Ignore())
                .ForMember(dst => dst.purchDtl, opt => opt.Ignore())
-               .AfterMap((phd,ph)=> {
+               .AfterMap((phr,ph)=> {
+
+                   // removing deleting items
+
+                   foreach (var pd in ph.purchDtl){
+                       if (phr.purchDtl.FirstOrDefault(p => p.Id == pd.Id) == null){
+                           
+                           ph.purchDtl.Remove(pd);
+
+                       }
+
+                   }
 
                    // updated changing
-                foreach (var pdd in phd.purchDtl)
+                foreach (var pdd in phr.purchDtl)
                    {
                        if (!(pdd.Id > 0)) //New <0
                        {
@@ -61,6 +72,10 @@ namespace ALBAB.Entities
                           if (pd.Price  != pdd.Price) pd.Price = pdd.Price ; 
                           if (pd.Quantity  != pdd.Quantity) pd.Quantity = pdd.Quantity ;
                           if (pd.ProductId != pdd.ProductId) pd.ProductId = pdd.ProductId ;
+                       } else{
+
+                          ph.purchDtl.Remove
+
                        }
 
                        }       

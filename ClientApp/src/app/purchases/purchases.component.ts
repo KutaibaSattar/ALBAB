@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
@@ -29,6 +29,7 @@ export class PurchasesComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
+    private datePipe : DatePipe,
 
   ) {}
  /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
@@ -208,10 +209,10 @@ export class PurchasesComponent implements OnInit {
  listenToChanging(index: number) {
 
       this.purchDtl.at(index).get('price')
-      .valueChanges.subscribe(units => this.updateTotalUnitPrice(units,index));
+      .valueChanges.subscribe(units => this.updateTotalUnitPrice(index));
 
       this.purchDtl.at(index).get('quantity')
-      .valueChanges.subscribe(units => this.updateTotalUnitPrice(units,index));
+      .valueChanges.subscribe(units => this.updateTotalUnitPrice(index));
 
 
   }
@@ -237,19 +238,19 @@ export class PurchasesComponent implements OnInit {
 
     if (this.formPurchHdr.valid){
       this.purchInv = this.formPurchHdr.value
-      this.purchInv.id = 0;
+      if(!this.purchInv.id) this.purchInv.id = 0;
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
         console.log('close');
         this.toastr.success('Invoice updated successfully')
-        this.formPurchHdr.reset(this.purchInv)
+        this.formPurchHdr.markAsPristine();
       });
     }
 
 
   }
 
-  private updateTotalUnitPrice(units: any, index: number) {
+  private updateTotalUnitPrice(index: number) {
 
     this.purchDtl.at(index).get('unitTotalPrice').setValue
       (this.purchDtl.at(index).get('price').value * this.purchDtl.at(index).get('quantity').value)
@@ -278,16 +279,30 @@ export class PurchasesComponent implements OnInit {
             id: this.purchInv.id,
             purNo: this.purchInv.purNo,
             appUserId: this.purchInv.appUserId,
-            //purDate:  (<any>this.purchInv.purDate).split(' ')[0]
+            purDate:  this.datePipe.transform(this.purchInv.purDate,'yyyy-MM-dd')
           });
+
+          if (this.formPurchHdr.dirty){
+            return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
+
+          }
+
+          if (this.purchDtl.length> 0 ){
+           this.purchDtl.controls = []
+          }
 
           this.purchInv.purchDtl.map((item) => {
             const group = this.initSection();
             group.patchValue(item);
+
+            let arrayLength  = (this.formPurchHdr.get('subFormPurchDtl') as FormArray).controls.length ;
+
             (this.formPurchHdr.get('subFormPurchDtl') as FormArray).push(group);
-            this.attachItemFilter(
-              (this.formPurchHdr.get('subFormPurchDtl') as FormArray).controls.length - 1
-            );
+
+            this.listenToChanging(arrayLength);
+            this.updateTotalUnitPrice(arrayLength);
+
+            this.attachItemFilter(arrayLength);
             //return group;
           });
 

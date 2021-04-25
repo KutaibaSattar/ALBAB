@@ -23,6 +23,7 @@ import { ProductsComponent } from './products/products.component';
 import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -67,6 +68,7 @@ import { ProfileComponent } from './account/profile/profile.component';
      // multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
      {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
      {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
+     DatePipe,
   ],
   bootstrap: [AppComponent]
 })
