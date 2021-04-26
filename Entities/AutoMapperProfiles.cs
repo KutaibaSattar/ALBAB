@@ -10,6 +10,7 @@ using ALBAB.Entities.Products;
 using ALBAB.Entities.Purchases;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace ALBAB.Entities
 {
@@ -43,16 +44,15 @@ namespace ALBAB.Entities
                .AfterMap((phr,ph)=> {
 
                    // removing deleting items
-
-                   foreach (var pd in ph.purchDtl){
-                       if (phr.purchDtl.FirstOrDefault(p => p.Id == pd.Id) == null){
-                           
-                           ph.purchDtl.Remove(pd);
-
-                       }
-
-                   }
-
+               
+               var removedItems = new List<PurchDtl>();
+                foreach (var item in ph.purchDtl)
+                   if( phr.purchDtl.SingleOrDefault(pd => pd.Id == item.Id) == null)
+                    removedItems.Add(item);
+                foreach (var item in removedItems)
+                    ph.purchDtl.Remove(item);
+            
+                   
                    // updated changing
                 foreach (var pdd in phr.purchDtl)
                    {
@@ -66,20 +66,18 @@ namespace ALBAB.Entities
                               }
                               );
                        }
-                       else{
-                            var pd = ph.purchDtl.SingleOrDefault(p => p.Id == pdd.Id);
-                        if (pd != null){
-                          if (pd.Price  != pdd.Price) pd.Price = pdd.Price ; 
-                          if (pd.Quantity  != pdd.Quantity) pd.Quantity = pdd.Quantity ;
-                          if (pd.ProductId != pdd.ProductId) pd.ProductId = pdd.ProductId ;
-                       } else{
-
-                          ph.purchDtl.Remove
+                       else
+                       {
+                           var pd = ph.purchDtl.SingleOrDefault(p => p.Id == pdd.Id);
+                           if (pd != null)
+                           {
+                               if (pd.Price != pdd.Price) pd.Price = pdd.Price;
+                               if (pd.Quantity != pdd.Quantity) pd.Quantity = pdd.Quantity;
+                               if (pd.ProductId != pdd.ProductId) pd.ProductId = pdd.ProductId;
+                           }
 
                        }
-
-                       }       
-                  }                     
+                   }                     
                });   
 
                

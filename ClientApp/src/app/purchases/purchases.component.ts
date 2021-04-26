@@ -60,7 +60,7 @@ export class PurchasesComponent implements OnInit {
 
 
   formPurchHdr = this.formBuilder.group({
-    id: null,
+    id: 0,
     purNo: [null, Validators.required],
     appUserId: [null, [Validators.required, DropDownValidators.shouldLimited]],
     purDate:[null, Validators.required],
@@ -75,7 +75,7 @@ export class PurchasesComponent implements OnInit {
 
   initSection() : FormGroup {
     return this.formBuilder.group({
-      id: null,
+      id: 0,
       productId: [null, Validators.required],
       price: [null, Validators.required],
       quantity: [null, Validators.required],
@@ -237,16 +237,26 @@ export class PurchasesComponent implements OnInit {
     this.formPurchHdr.markAllAsTouched();
 
     if (this.formPurchHdr.valid){
-      this.purchInv = this.formPurchHdr.value
-      if(!this.purchInv.id) this.purchInv.id = 0;
+      this.purchInv = this.formPurchHdr.value;
+      this.purchInv.purchDtl = this.purchDtl.value;
+
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
-        console.log('close');
         this.toastr.success('Invoice updated successfully')
         this.formPurchHdr.markAsPristine();
       });
     }
 
+
+  }
+
+  NewInv(){
+    if (this.formPurchHdr.dirty){
+      //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
+
+    }
+
+   this.formPurchHdr.reset();
 
   }
 
@@ -283,7 +293,7 @@ export class PurchasesComponent implements OnInit {
           });
 
           if (this.formPurchHdr.dirty){
-            return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
+            //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
 
           }
 

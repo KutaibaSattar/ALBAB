@@ -24,6 +24,10 @@ import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { DatePipe } from '@angular/common';
+import { ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
+
 
 
 
@@ -40,6 +44,7 @@ import { DatePipe } from '@angular/common';
     invoiceitemComponent,
    PurchasesComponent,
    ProfileComponent,
+   ConfirmDialogComponent,
     ],
 
   imports: [
@@ -58,7 +63,7 @@ import { DatePipe } from '@angular/common';
       positionClass: 'toast-bottom-right'
 
     }),
-
+    ModalModule.forRoot()
 
 
 
@@ -69,6 +74,8 @@ import { DatePipe } from '@angular/common';
      {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
      {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
      DatePipe,
+
+
   ],
   bootstrap: [AppComponent]
 })

@@ -113,13 +113,26 @@
 
 
 
-
+    <header id="main-header" class="bg-secondary text-white ">
+      <div class="container">
+        <div class="row pb-2 pt-1">
+          <div class="col-md-12">
+            <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
+                    <button class="fa fa-save btn btn-success ml-2 float-left" type="submit"> Save</button>
+                    <button class="fa fa-edit btn btn-success ml-2 float-left" type="button" (click)="NewInv()"> New</button>
+                    <button class="fa fa-edit btn btn-danger ml-2 float-left" type="button" > New</button>
+                    <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <ng-container formArrayName="subFormPurchDtl">
 
       <!-- Table Header -->
-      <table class="table table-bordered table-dark table-hover table-sm">
+      <table class="table table-bordered table-dark table-hover table-sm table-condensed">
            <thead class="thead-light">
+
           <tr>
             <th style="width: 30%">Item</th>
             <th style="width: 10%">Price</th>
@@ -128,14 +141,6 @@
             <th style="width: 10%">Action</th>
 
 
-            <th>
-
-                    <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
-                    <button class="fa fa-save btn btn-success ml-2 float-left" type="submit"> Save</button>
-                    <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
-
-
-              </th>
 
           </tr>
         </thead>
