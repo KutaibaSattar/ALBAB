@@ -9,6 +9,7 @@ import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
 import { IPurchase } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
+import { ConfirmService } from 'app/services/confirm.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
 import { ToastrService } from 'ngx-toastr';
@@ -30,6 +31,7 @@ export class PurchasesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private datePipe : DatePipe,
+    private confirmService : ConfirmService,
 
   ) {}
  /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
@@ -348,20 +350,20 @@ export class PurchasesComponent implements OnInit {
       return this.purchNos.find((element) => element.id === option).purNo
      //return this.purchNos.
     }
+  }
 
+  deleteInv(){
+    this.confirmService.confirm('Confirm delete all invocie','This cannot be undone','Yes','No').subscribe( result =>{
+      if (result){
+        if (result){
+          this.purchaseService.
 
- /*    this.filteredPurchNos$.subscribe(
-      res => {
+        }
 
-        console.log(res)
-        return res
-      }
-    ) */
-    /* if (purch) {
-      this.
-      let x = this..find((element) => element.id === product).name;
-      return x;
-    } */
+      } }
+
+      )
+
   }
 
 }

@@ -26,6 +26,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
 
 
 
@@ -63,7 +64,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       positionClass: 'toast-bottom-right'
 
     }),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
 
 
 

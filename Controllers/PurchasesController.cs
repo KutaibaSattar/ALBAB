@@ -140,5 +140,20 @@ namespace ALBAB.Controllers
           return  Ok(result);
 
          }
+
+         [HttpDelete("{id}")]
+         public async Task<ActionResult> DeletePurchase(int id)
+         {
+           var invoice = await _context.PurchHDRs.FindAsync(id);
+
+           if (invoice == null)
+              return BadRequest("No invoice found");
+
+             _context.Remove(invoice);
+             await _context.SaveChangesAsync();
+
+              return Ok(id);
+  
+         }
     }
 }

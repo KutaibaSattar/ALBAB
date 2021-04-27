@@ -64,8 +64,7 @@ namespace ALBAB.Controllers
                
 
         }
-       
-       
+         
        
         [HttpPost("register")]
 
@@ -74,8 +73,6 @@ namespace ALBAB.Controllers
         {
             
         
-            
-            
             if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
@@ -118,7 +115,7 @@ namespace ALBAB.Controllers
           
            return await _userManager.FindByNameAsync(email) != null;
 
-           
+        
 
            
         }

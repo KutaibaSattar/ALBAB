@@ -7,57 +7,52 @@ import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PurchaseService extends DataService {
-
-
-
   constructor(private httpClient: HttpClient) {
+    super(environment.apiUrl + 'Purchases/', httpClient);
+  }
 
-    super (environment.apiUrl + 'Purchases/', httpClient);
+  // tslint:disable-next-line: typedef
+  getPurchases() {
+    return this.getAll('purchlist').pipe(
+      map((purch: IPurchase) => {
+        if (purch) {
+          const purchase = purch[0];
+          return purchase;
+        }
 
-   }
+        /*  (purchase).filter(item => item.idex === 0); */
+      })
+    );
+  }
+  getPurchNos() {
+    return this.httpClient.get<Observable<any>>(
+      environment.apiUrl + 'purchases/purchnos'
+    );
+  }
 
+  getPurchInv(InvNo: string) {
+    return this.getById(InvNo, 'purchinv/');
+  }
 
+  UpdaePurchInv(purchase: IPurchase) {
+    if (purchase.id)
+      return this.http.put<IPurchase>(
+        'https://localhost:5001/api/Purchases',
+        purchase
+      );
+    return this.http.post<IPurchase>(
+      'https://localhost:5001/api/Purchases',
+      purchase
+    );
+    //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
+  }
 
-// tslint:disable-next-line: typedef
-getPurchases(){
+  deletePurchase() {
 
- return this.getAll('purchlist').pipe(
-    map((purch: IPurchase) => {
-       if (purch){
-        const purchase = purch[0];
-        return purchase;
-       }
+    this.http.delete()
 
-       /*  (purchase).filter(item => item.idex === 0); */
-    })
-
-  );
-
- }
-getPurchNos(){
-
- return this.httpClient.get<Observable<any>>(environment.apiUrl +'purchases/purchnos')
- }
-
- getPurchInv(InvNo:string){
-
-  return this.getById(InvNo,'purchinv/');
-
- }
-
- UpdaePurchInv( purchase: IPurchase){
-
-  if (purchase.id) return this.http.put<IPurchase>('https://localhost:5001/api/Purchases',purchase);
-  return this.http.post<IPurchase>('https://localhost:5001/api/Purchases',purchase);
- //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
-
-
- }
-
-
-
-
+  }
 }
