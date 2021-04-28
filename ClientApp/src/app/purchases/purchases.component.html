@@ -46,7 +46,7 @@
             <input name="purNo" formControlName="purNo" class="form-control"
               [ngClass]="{'is-invalid': purNo.invalid &&  purNo.touched }">
             <span *ngIf="purNo.invalid &&  purNo.touched && purNo.errors.required"
-              class="ml-0 input-group-append alert alert-danger">Please enter invoice No</span>
+              class="ml-0 input-group-append invalid-feedback">Please enter invoice No</span>
 
 
           </div>
@@ -58,7 +58,7 @@
         [ngClass]="{'is-invalid': purDate.invalid &&  purDate.touched }">
 
           <span *ngIf="purDate.invalid && purDate.touched && purDate.errors.required"
-          class="ml-0 input-group-append alert alert-danger">Please enter a valid date</span>
+          class="ml-0 input-group-append invalid-feedback">Please enter a valid date</span>
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -74,7 +74,7 @@
             </mat-autocomplete>
             <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
-              class="ml-0 input-group-append alert alert-danger">Please enter a valid product</span>
+              class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span>
           </div>
 
         </div>
@@ -180,12 +180,4 @@
   </form>
 
 </div>
-
-
-
-
-
-
-
-
 

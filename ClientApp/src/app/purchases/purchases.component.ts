@@ -1,6 +1,13 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DropDownValidators } from 'app/errors/dropdown.validators';
@@ -16,7 +23,6 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-purchases',
   templateUrl: './purchases.component.html',
@@ -30,11 +36,10 @@ export class PurchasesComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private datePipe : DatePipe,
-    private confirmService : ConfirmService,
-
+    private datePipe: DatePipe,
+    private confirmService: ConfirmService
   ) {}
- /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
+  /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
     $event: any
   ) {
     if (this.purchHdr.dirty) {
@@ -46,55 +51,30 @@ export class PurchasesComponent implements OnInit {
   member: string;
   products: Product[];
   txtSearchInv: string;
-  purchNos : [{id:number,purNo:string}];
+  purchNos: [{ id: number; purNo: string }];
+  formPurchHdr: FormGroup;
+  appUserId: FormControl;
+  purNo: FormControl;
+  purDate: FormControl;
+  invoiceId: FormControl;
+  purchDtl: FormArray;
 
   purchInv: IPurchase = new IPurchase();
-
-
 
   filteredUsers$: Observable<Array<Member>>;
   filteredItems$: Observable<Array<Product>>[] = [];
   filteredPurchNos$: Observable<any>;
 
-  totalSum:number[] =[] ;
+  totalSum: number[] = [];
   priceChanges$ = [];
   grdTotal = new FormControl('');
 
 
-  formPurchHdr = this.formBuilder.group({
-    id: 0,
-    purNo: [null, Validators.required],
-    appUserId: [null, [Validators.required, DropDownValidators.shouldLimited]],
-    purDate:[null, Validators.required],
-    subFormPurchDtl: this.formBuilder.array([
-      this.initSection()
-
-
-    ]),
-  });
-
-
-
-  initSection() : FormGroup {
-    return this.formBuilder.group({
-      id: 0,
-      productId: [null, Validators.required],
-      price: [null, Validators.required],
-      quantity: [null, Validators.required],
-      unitTotalPrice: [{ value: "", disabled: true }]
-    });
-  }
-
-  appUserId = this.formPurchHdr.get('appUserId') as FormControl;
-  purNo = this.formPurchHdr.get('purNo') as FormControl;
-  purDate = this.formPurchHdr.get('purDate') as FormControl;
-
-
-  purchDtl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
 
   ngOnInit(): void {
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
 
+    this.initializeForm();
     this.attachedUserFilter();
     this.attachItemFilter(0);
     this.listenToChanging(0);
@@ -104,44 +84,39 @@ export class PurchasesComponent implements OnInit {
       this.productService.getProducts(),
     ];
 
-
-
     forkJoin(sources).subscribe((data) => {
       (<any>this.members) = data[0];
 
       (<any>this.products) = data[1];
+    });
+  }
 
-
+  initializeForm() {
+    this.formPurchHdr = this.formBuilder.group({
+      id: 0,
+      purNo: [null, Validators.required],
+      appUserId: [
+        null,
+        [Validators.required, DropDownValidators.shouldLimited],
+      ],
+      purDate: [null, Validators.required],
+      subFormPurchDtl: this.formBuilder.array([this.initSection()]),
     });
 
-
-
+    this.appUserId = this.formPurchHdr.get('appUserId') as FormControl;
+    this.purNo = this.formPurchHdr.get('purNo') as FormControl;
+    this.purDate = this.formPurchHdr.get('purDate') as FormControl;
+    this.invoiceId = this.formPurchHdr.get('id') as FormControl;
+    this.purchDtl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
   }
 
   attachedUserFilter(): any {
-    this.filteredUsers$ = this.formPurchHdr
-      .get('appUserId')
-      .valueChanges.pipe(
-        startWith(''),
-        /*map(value => typeof value === 'string' ? value : value.name),
+    this.filteredUsers$ = this.formPurchHdr.get('appUserId').valueChanges.pipe(
+      startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
-        map((val) => this.filter(val))
-      );
-  }
-
-
-
-  displayFn(this, user: number): string {
-    if (user) {
-      let x = this.members.find((element) => element.id === user).displayName;
-      return x;
-    }
-  }
-  ProductNameFn(this, product: number): string {
-    if (product) {
-      return this.products.find((element) => element.id === product).name;
-
-    }
+      map((val) => this.filter(val))
+    );
   }
 
   filter(val: any): any {
@@ -158,16 +133,10 @@ export class PurchasesComponent implements OnInit {
       });
     }
   }
-  // tslint:disable-next-line: typedef
-
-  // tslint:disable-next-line: typedef
-  OnDeletePurchseItem(purchItemId: number, i: number) {}
-  // tslint:disable-next-line: typedef
-
 
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
- }
+  }
 
   AddOrEditPurchseItem(OrderID) {
     const dialogConfig = new MatDialogConfig();
@@ -186,7 +155,17 @@ export class PurchasesComponent implements OnInit {
     controls.push(this.initSection());
     // Build the account Auto Complete values
     this.attachItemFilter(controls.length - 1);
-    this.listenToChanging(controls.length - 1)
+    this.listenToChanging(controls.length - 1);
+  }
+
+  initSection(): FormGroup {
+    return this.formBuilder.group({
+      id: 0,
+      productId: [null, Validators.required],
+      price: [null, Validators.required],
+      quantity: [null, Validators.required],
+      unitTotalPrice: [{ value: '', disabled: true }],
+    });
   }
 
   getSections(form: FormGroup) {
@@ -208,17 +187,45 @@ export class PurchasesComponent implements OnInit {
       );
   }
 
- listenToChanging(index: number) {
+  listenToChanging(index: number) {
+    this.purchDtl
+      .at(index)
+      .get('price')
+      .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
 
-      this.purchDtl.at(index).get('price')
-      .valueChanges.subscribe(units => this.updateTotalUnitPrice(index));
-
-      this.purchDtl.at(index).get('quantity')
-      .valueChanges.subscribe(units => this.updateTotalUnitPrice(index));
-
-
+    this.purchDtl
+      .at(index)
+      .get('quantity')
+      .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
   }
 
+  private updateTotalUnitPrice(index: number) {
+    this.purchDtl
+      .at(index)
+      .get('unitTotalPrice')
+      .setValue(
+        this.purchDtl.at(index).get('price').value *
+          this.purchDtl.at(index).get('quantity').value
+      );
+
+    this.totalSum.splice(
+      index,
+      1,
+      this.purchDtl.at(index).get('unitTotalPrice').value
+    );
+    console.log(this.totalSum.reduce((sum, current) => sum + current));
+
+    console.log(
+      this.purchDtl
+        .getRawValue()
+        .reduce((sum, current) => sum + current.unitTotalPrice, 0)
+    );
+    this.grdTotal.setValue(
+      this.purchDtl
+        .getRawValue()
+        .reduce((sum, current) => sum + current.unitTotalPrice, 0)
+    );
+  }
 
   private _filter(val: any): Product[] {
     if (this.products !== undefined) {
@@ -235,79 +242,68 @@ export class PurchasesComponent implements OnInit {
     }
   }
 
-  OnSubmit() {
-    this.formPurchHdr.markAllAsTouched();
+  doFilter() {
+    this.filteredPurchNos$ = this.purchaseService
+      .getPurchNos()
+      .pipe(map((jokes) => this.filterPurchase(jokes)));
+  }
+  filterPurchase(values) {
+    console.log(values);
+    return (this.purchNos = values.filter((joke) =>
+      joke.purNo.toLowerCase().includes(this.txtSearchInv)
+    ));
+  }
 
-    if (this.formPurchHdr.valid){
-      this.purchInv = this.formPurchHdr.value;
-      this.purchInv.purchDtl = this.purchDtl.value;
-
-
-      this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
-        this.toastr.success('Invoice updated successfully')
-        this.formPurchHdr.markAsPristine();
-      });
+  displayFn(this, user: number): string {
+    if (user) {
+      let x = this.members.find((element) => element.id === user).displayName;
+      return x;
     }
-
-
   }
-
-  NewInv(){
-    if (this.formPurchHdr.dirty){
-      //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
-
+  ProductNameFn(this, product: number): string {
+    if (product) {
+      return this.products.find((element) => element.id === product).name;
     }
-
-   this.formPurchHdr.reset();
-
   }
 
-  private updateTotalUnitPrice(index: number) {
-
-    this.purchDtl.at(index).get('unitTotalPrice').setValue
-      (this.purchDtl.at(index).get('price').value * this.purchDtl.at(index).get('quantity').value)
-
-
-      this.totalSum.splice(index,1, this.purchDtl.at(index).get('unitTotalPrice').value)
-      console.log( this.totalSum.reduce((sum,current) => sum + current))
-
-      console.log( this.purchDtl.getRawValue().reduce((sum,current) => sum + current.unitTotalPrice,0))
-    this.grdTotal.setValue(this.purchDtl.getRawValue().reduce((sum,current) => sum + current.unitTotalPrice,0))
-
-
-  }
-  removeUnit(i: number) {
-
-   this.purchDtl.removeAt(i);
+  PurchNameFn(option): any {
+    if (this.purchNos) {
+      return this.purchNos.find((element) => element.id === option).purNo;
+      //return this.purchNos.
+    }
   }
 
-  getPurch(){
-    if (this.txtSearchInv){
-      this.purchaseService.getPurchInv(this.txtSearchInv).subscribe(
-
-
-        result =>{ this.purchInv = result;
+  getPurch() {
+    if (this.txtSearchInv) {
+      this.purchaseService
+        .getPurchInv(this.txtSearchInv)
+        .subscribe((result) => {
+          this.purchInv = result;
           this.formPurchHdr.patchValue({
             id: this.purchInv.id,
             purNo: this.purchInv.purNo,
             appUserId: this.purchInv.appUserId,
-            purDate:  this.datePipe.transform(this.purchInv.purDate,'yyyy-MM-dd')
+            purDate: this.datePipe.transform(
+              this.purchInv.purDate,
+              'yyyy-MM-dd'
+            ),
           });
 
-          if (this.formPurchHdr.dirty){
+          if (this.formPurchHdr.dirty) {
             //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
-
           }
 
-          if (this.purchDtl.length> 0 ){
-           this.purchDtl.controls = []
+          if (this.purchDtl.length > 0) {
+            this.purchDtl.controls = []; // delete balnck one
           }
 
           this.purchInv.purchDtl.map((item) => {
             const group = this.initSection();
             group.patchValue(item);
 
-            let arrayLength  = (this.formPurchHdr.get('subFormPurchDtl') as FormArray).controls.length ;
+            let arrayLength = (this.formPurchHdr.get(
+              'subFormPurchDtl'
+            ) as FormArray).controls.length;
 
             (this.formPurchHdr.get('subFormPurchDtl') as FormArray).push(group);
 
@@ -317,53 +313,57 @@ export class PurchasesComponent implements OnInit {
             this.attachItemFilter(arrayLength);
             //return group;
           });
-
-        }
-      )
-
-
-    }
-
-
-
-
-
-
-  }
-  doFilter() {
-    this.filteredPurchNos$ = this.purchaseService.getPurchNos()
-    .pipe(map(jokes => this.filterPurchase(jokes)
-
-    )
-    )
-
-  }
-  filterPurchase(values) {
-    console.log(values)
-  return  this.purchNos =  values.filter(joke => joke.purNo.toLowerCase().includes(this.txtSearchInv));
-
-
-  }
-  PurchNameFn(option): any {
-    console.log(option, this.purchNos)
-    if (this.purchNos){
-      return this.purchNos.find((element) => element.id === option).purNo
-     //return this.purchNos.
+        });
     }
   }
 
-  deleteInv(){
-    this.confirmService.confirm('Confirm delete all invocie','This cannot be undone','Yes','No').subscribe( result =>{
-      if (result){
-        if (result){
-          this.purchaseService.
+  OnSubmit() {
+    this.formPurchHdr.markAllAsTouched();
 
-        }
+    if (this.formPurchHdr.valid) {
+      this.purchInv = this.formPurchHdr.value;
+      this.purchInv.purchDtl = this.purchDtl.value;
 
-      } }
-
-      )
-
+      this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
+        this.toastr.success('Invoice updated successfully');
+        this.formPurchHdr.markAsPristine();
+      });
+    }
   }
 
+  removeUnit(i: number) {
+    this.purchDtl.removeAt(i);
+  }
+
+  NewInv() {
+    if (this.formPurchHdr.dirty) {
+      //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
+    }
+
+    this.formPurchHdr.reset();
+  }
+
+  deleteInv() {
+    this.confirmService
+      .confirm(
+        'Confirm delete all invocie',
+        'This cannot be undone',
+        'Yes',
+        'No'
+      )
+      .subscribe((result) => {
+        if (result) {
+          if (result) {
+            this.purchaseService
+              .deletePurchase(this.invoiceId.value)
+              .subscribe((resp) => {
+                this.toastr.success('Invoice deleted successfully');
+                this.formPurchHdr.reset();
+                this.purchDtl.controls = [];
+                this.addRecord();
+              });
+          }
+        }
+      });
+  }
 }

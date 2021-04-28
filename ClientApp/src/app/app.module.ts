@@ -26,7 +26,8 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { TextInputComponent } from './templates/text-input/text-input.component'
 
 
 
@@ -46,6 +47,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
    PurchasesComponent,
    ProfileComponent,
    ConfirmDialogComponent,
+   TextInputComponent,
     ],
 
   imports: [

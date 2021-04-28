@@ -10,8 +10,11 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class PurchaseService extends DataService {
+
   constructor(private httpClient: HttpClient) {
+
     super(environment.apiUrl + 'Purchases/', httpClient);
+
   }
 
   // tslint:disable-next-line: typedef
@@ -50,9 +53,9 @@ export class PurchaseService extends DataService {
     //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
   }
 
-  deletePurchase() {
+  deletePurchase(id: number) {
 
-    this.http.delete()
+   return this.delete(id);
 
   }
 }

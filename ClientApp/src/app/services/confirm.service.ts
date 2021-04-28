@@ -30,6 +30,7 @@ export class ConfirmService {
 
          return new Observable<boolean>(this.getResult());
   }
+
   private getResult(){
     return (observer)=>{
 
