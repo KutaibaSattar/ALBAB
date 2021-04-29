@@ -8,6 +8,7 @@ using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.OrderAggregate;
 using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Journal;
 
 namespace ALBAB.Entities.DB
 {
@@ -41,6 +42,11 @@ namespace ALBAB.Entities.DB
          public DbSet<Model> models {get;set;} 
          public DbSet<Order> orders { get; set; }
          public DbSet<OrderItem> orderItems { get; set; }
+
+         public DbSet<JournalEntryAccount> journalEntryAccounts { get; set; }
+         public DbSet<JournalEntry> journalEntry { get; set; }
+
+
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,7 +57,6 @@ namespace ALBAB.Entities.DB
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnabled);
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
-       
        
         
         foreach(var entity in builder.Model.GetEntityTypes())

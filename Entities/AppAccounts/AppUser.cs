@@ -10,7 +10,7 @@ namespace ALBAB.Entities.AppAccounts
 {
     public class AppUser : IdentityUser<int>
     {
-
+           
       [Required] 
       [MaxLength(50)]
       public string DisplayName {get;set;} 

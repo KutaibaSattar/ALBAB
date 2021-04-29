@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class PostgreSQL : Migration
+    public partial class MySQL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,10 @@ namespace ALBaB.Migrations
                 name: "aspnetroles",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    normalizedname = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    normalizedname = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     concurrencystamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -27,11 +27,11 @@ namespace ALBaB.Migrations
                 name: "aspnetusers",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    displayname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    lastactive = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    displayname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    lastactive = table.Column<DateTime>(type: "datetime", nullable: false),
                     introduction = table.Column<string>(type: "text", nullable: true),
                     lookingfor = table.Column<string>(type: "text", nullable: true),
                     interests = table.Column<string>(type: "text", nullable: true),
@@ -40,11 +40,11 @@ namespace ALBaB.Migrations
                     region = table.Column<string>(type: "text", nullable: true),
                     city = table.Column<string>(type: "text", nullable: true),
                     country = table.Column<string>(type: "text", nullable: true),
-                    Address_appuserid = table.Column<int>(type: "integer", nullable: true),
-                    username = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    normalizedusername = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    normalizedemail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Address_appuserid = table.Column<int>(type: "int", nullable: true),
+                    username = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    normalizedusername = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    normalizedemail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     passwordhash = table.Column<string>(type: "text", nullable: true),
                     securitystamp = table.Column<string>(type: "text", nullable: true),
                     concurrencystamp = table.Column<string>(type: "text", nullable: true),
@@ -59,8 +59,8 @@ namespace ALBaB.Migrations
                 name: "brands",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -72,13 +72,13 @@ namespace ALBaB.Migrations
                 name: "dbaccounts",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     keyid = table.Column<string>(type: "text", nullable: true),
                     name = table.Column<string>(type: "text", nullable: true),
-                    lvl = table.Column<int>(type: "integer", nullable: false),
-                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    parentid = table.Column<int>(type: "integer", nullable: true)
+                    lvl = table.Column<int>(type: "int", nullable: false),
+                    created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    parentid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,15 +92,32 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "journalentry",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    entryid = table.Column<int>(type: "int", nullable: false),
+                    entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    note = table.Column<string>(type: "text", nullable: true),
+                    created = table.Column<DateTime>(type: "datetime", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.ComputedColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_journalentry", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ordermethod",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     shortname = table.Column<string>(type: "text", nullable: true),
                     ordertime = table.Column<string>(type: "text", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
-                    price = table.Column<decimal>(type: "numeric", nullable: false)
+                    price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,9 +128,9 @@ namespace ALBaB.Migrations
                 name: "aspnetroleclaims",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    roleid = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    roleid = table.Column<int>(type: "int", nullable: false),
                     claimtype = table.Column<string>(type: "text", nullable: true),
                     claimvalue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -132,9 +149,9 @@ namespace ALBaB.Migrations
                 name: "aspnetuserclaims",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    userid = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    userid = table.Column<int>(type: "int", nullable: false),
                     claimtype = table.Column<string>(type: "text", nullable: true),
                     claimvalue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -153,10 +170,10 @@ namespace ALBaB.Migrations
                 name: "aspnetuserlogins",
                 columns: table => new
                 {
-                    loginprovider = table.Column<string>(type: "text", nullable: false),
-                    providerkey = table.Column<string>(type: "text", nullable: false),
+                    loginprovider = table.Column<string>(type: "varchar(36)", nullable: false),
+                    providerkey = table.Column<string>(type: "varchar(36)", nullable: false),
                     providerdisplayname = table.Column<string>(type: "text", nullable: true),
-                    userid = table.Column<int>(type: "integer", nullable: false)
+                    userid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,8 +190,8 @@ namespace ALBaB.Migrations
                 name: "aspnetuserroles",
                 columns: table => new
                 {
-                    userid = table.Column<int>(type: "integer", nullable: false),
-                    roleid = table.Column<int>(type: "integer", nullable: false)
+                    userid = table.Column<int>(type: "int", nullable: false),
+                    roleid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,9 +214,9 @@ namespace ALBaB.Migrations
                 name: "aspnetusertokens",
                 columns: table => new
                 {
-                    userid = table.Column<int>(type: "integer", nullable: false),
-                    loginprovider = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
+                    userid = table.Column<int>(type: "int", nullable: false),
+                    loginprovider = table.Column<string>(type: "varchar(36)", nullable: false),
+                    name = table.Column<string>(type: "varchar(36)", nullable: false),
                     value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -214,13 +231,36 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "purchhdrs",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    purno = table.Column<string>(type: "text", nullable: true),
+                    purdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    purcomment = table.Column<string>(type: "text", nullable: true),
+                    lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    appuserid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_purchhdrs", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_purchhdrs_aspnetusers_appuserid",
+                        column: x => x.appuserid,
+                        principalTable: "aspnetusers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "models",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "text", nullable: true),
-                    brandid = table.Column<int>(type: "integer", nullable: false)
+                    brandid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,22 +274,52 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "journalentryaccounts",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    journalentryid = table.Column<int>(type: "int", nullable: false),
+                    duedate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    issuedate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    accountid = table.Column<int>(type: "int", nullable: false),
+                    amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    created = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_journalentryaccounts", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_journalentryaccounts_dbaccounts_accountid",
+                        column: x => x.accountid,
+                        principalTable: "dbaccounts",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_journalentryaccounts_journalentry_journalentryid",
+                        column: x => x.journalentryid,
+                        principalTable: "journalentry",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "orders",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    orderdate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    orderdate = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
                     line1 = table.Column<string>(type: "text", nullable: true),
                     line2 = table.Column<string>(type: "text", nullable: true),
                     region = table.Column<string>(type: "text", nullable: true),
                     city = table.Column<string>(type: "text", nullable: true),
                     country = table.Column<string>(type: "text", nullable: true),
-                    ordermethodid = table.Column<int>(type: "integer", nullable: true),
-                    subtotal = table.Column<decimal>(type: "numeric", nullable: false),
-                    status = table.Column<int>(type: "integer", maxLength: 5, nullable: false),
+                    ordermethodid = table.Column<int>(type: "int", nullable: true),
+                    subtotal = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    status = table.Column<int>(type: "int", maxLength: 5, nullable: false),
                     paymentintentid = table.Column<string>(type: "text", nullable: true),
-                    appuserid = table.Column<int>(type: "integer", nullable: false)
+                    appuserid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -272,13 +342,13 @@ namespace ALBaB.Migrations
                 name: "products",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "text", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
-                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     pictureurl = table.Column<string>(type: "text", nullable: true),
-                    modelid = table.Column<int>(type: "integer", nullable: false)
+                    modelid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,11 +365,11 @@ namespace ALBaB.Migrations
                 name: "orderitems",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    orderid = table.Column<int>(type: "integer", nullable: false),
-                    price = table.Column<decimal>(type: "numeric", nullable: false),
-                    quantity = table.Column<decimal>(type: "numeric", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    orderid = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    quantity = table.Column<decimal>(type: "decimal(18, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -308,6 +378,35 @@ namespace ALBaB.Migrations
                         name: "fk_orderitems_orders_orderid",
                         column: x => x.orderid,
                         principalTable: "orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "purchdtls",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    quantity = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    purchhdrid = table.Column<int>(type: "int", nullable: false),
+                    productid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_purchdtls", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_purchdtls_products_productid",
+                        column: x => x.productid,
+                        principalTable: "products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_purchdtls_purchhdrs_purchhdrid",
+                        column: x => x.purchhdrid,
+                        principalTable: "purchhdrs",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -355,6 +454,16 @@ namespace ALBaB.Migrations
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
+                name: "ix_journalentryaccounts_accountid",
+                table: "journalentryaccounts",
+                column: "accountid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_journalentryaccounts_journalentryid",
+                table: "journalentryaccounts",
+                column: "journalentryid");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_models_brandid",
                 table: "models",
                 column: "brandid");
@@ -378,6 +487,21 @@ namespace ALBaB.Migrations
                 name: "ix_products_modelid",
                 table: "products",
                 column: "modelid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_purchdtls_productid",
+                table: "purchdtls",
+                column: "productid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_purchdtls_purchhdrid",
+                table: "purchdtls",
+                column: "purchhdrid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_purchhdrs_appuserid",
+                table: "purchhdrs",
+                column: "appuserid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -398,28 +522,40 @@ namespace ALBaB.Migrations
                 name: "aspnetusertokens");
 
             migrationBuilder.DropTable(
-                name: "dbaccounts");
+                name: "journalentryaccounts");
 
             migrationBuilder.DropTable(
                 name: "orderitems");
 
             migrationBuilder.DropTable(
-                name: "products");
+                name: "purchdtls");
 
             migrationBuilder.DropTable(
                 name: "aspnetroles");
 
             migrationBuilder.DropTable(
+                name: "dbaccounts");
+
+            migrationBuilder.DropTable(
+                name: "journalentry");
+
+            migrationBuilder.DropTable(
                 name: "orders");
+
+            migrationBuilder.DropTable(
+                name: "products");
+
+            migrationBuilder.DropTable(
+                name: "purchhdrs");
+
+            migrationBuilder.DropTable(
+                name: "ordermethod");
 
             migrationBuilder.DropTable(
                 name: "models");
 
             migrationBuilder.DropTable(
                 name: "aspnetusers");
-
-            migrationBuilder.DropTable(
-                name: "ordermethod");
 
             migrationBuilder.DropTable(
                 name: "brands");

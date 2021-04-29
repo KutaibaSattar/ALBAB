@@ -4,7 +4,6 @@ using ALBAB.Entities.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ALBaB.Migrations
 {
@@ -15,17 +14,15 @@ namespace ALBaB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.3");
 
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -34,12 +31,12 @@ namespace ALBaB.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("normalizedname");
 
                     b.HasKey("Id")
@@ -56,9 +53,8 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -66,18 +62,18 @@ namespace ALBaB.Migrations
                         .HasColumnName("concurrencystamp");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("created");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("displayname");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("email");
 
                     b.Property<string>("Interests")
@@ -89,7 +85,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("introduction");
 
                     b.Property<DateTime>("LastActive")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("lastactive");
 
                     b.Property<string>("LookingFor")
@@ -98,12 +94,12 @@ namespace ALBaB.Migrations
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("normalizedemail");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("normalizedusername");
 
                     b.Property<string>("PasswordHash")
@@ -120,7 +116,7 @@ namespace ALBaB.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("username");
 
                     b.HasKey("Id")
@@ -139,11 +135,11 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("userid");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("roleid");
 
                     b.HasKey("UserId", "RoleId")
@@ -159,12 +155,11 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("created");
 
                     b.Property<string>("KeyId")
@@ -176,11 +171,11 @@ namespace ALBaB.Migrations
                         .HasColumnName("name");
 
                     b.Property<int?>("ParentId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("parentid");
 
                     b.Property<int>("lvl")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("lvl");
 
                     b.HasKey("Id")
@@ -192,24 +187,96 @@ namespace ALBaB.Migrations
                     b.ToTable("dbaccounts");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime")
+                        .HasColumnName("created");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("entrydate");
+
+                    b.Property<int>("EntryId")
+                        .HasColumnType("int")
+                        .HasColumnName("entryid");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text")
+                        .HasColumnName("note");
+
+                    b.HasKey("Id")
+                        .HasName("pk_journalentry");
+
+                    b.ToTable("journalentry");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntryAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("accountid");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("duedate");
+
+                    b.Property<DateTime>("IssueDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("issuedate");
+
+                    b.Property<int>("JournalEntryId")
+                        .HasColumnType("int")
+                        .HasColumnName("journalentryid");
+
+                    b.HasKey("Id")
+                        .HasName("pk_journalentryaccounts");
+
+                    b.HasIndex("AccountId")
+                        .HasDatabaseName("ix_journalentryaccounts_accountid");
+
+                    b.HasIndex("JournalEntryId")
+                        .HasDatabaseName("ix_journalentryaccounts_journalentryid");
+
+                    b.ToTable("journalentryaccounts");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<int>("AppUserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("appuserid");
 
                     b.Property<DateTimeOffset>("OrderDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp")
                         .HasColumnName("orderdate");
 
                     b.Property<int?>("OrderMethodId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("ordermethodid");
 
                     b.Property<string>("PaymentIntentId")
@@ -218,11 +285,11 @@ namespace ALBaB.Migrations
 
                     b.Property<int>("Status")
                         .HasMaxLength(5)
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.Property<decimal>("Subtotal")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("subtotal");
 
                     b.HasKey("Id")
@@ -241,20 +308,19 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<int>("OrderId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("orderid");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
@@ -270,9 +336,8 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -283,7 +348,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("ordertime");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
                     b.Property<string>("ShortName")
@@ -300,9 +365,8 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("Name")
                         .HasColumnType("text")
@@ -318,12 +382,11 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<int>("BrandId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("brandid");
 
                     b.Property<string>("Name")
@@ -343,16 +406,15 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<int>("ModelId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("modelid");
 
                     b.Property<string>("Name")
@@ -364,7 +426,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("pictureurl");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
                     b.HasKey("Id")
@@ -376,32 +438,31 @@ namespace ALBaB.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDTL", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDtl", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("lastupdate");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("productid");
 
-                    b.Property<int>("PurchHDRId")
-                        .HasColumnType("integer")
+                    b.Property<int>("PurchHdrId")
+                        .HasColumnType("int")
                         .HasColumnName("purchhdrid");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("numeric")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
@@ -410,26 +471,25 @@ namespace ALBaB.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_purchdtls_productid");
 
-                    b.HasIndex("PurchHDRId")
+                    b.HasIndex("PurchHdrId")
                         .HasDatabaseName("ix_purchdtls_purchhdrid");
 
                     b.ToTable("purchdtls");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHDR", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<int>("AppUserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("appuserid");
 
                     b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("lastupdate");
 
                     b.Property<string>("purComment")
@@ -437,7 +497,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("purcomment");
 
                     b.Property<DateTime>("purDate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("datetime")
                         .HasColumnName("purdate");
 
                     b.Property<string>("purNo")
@@ -457,9 +517,8 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text")
@@ -470,7 +529,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("claimvalue");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("roleid");
 
                     b.HasKey("Id")
@@ -486,9 +545,8 @@ namespace ALBaB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text")
@@ -499,7 +557,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("claimvalue");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("userid");
 
                     b.HasKey("Id")
@@ -514,11 +572,11 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("providerkey");
 
                     b.Property<string>("ProviderDisplayName")
@@ -526,7 +584,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("providerdisplayname");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("userid");
 
                     b.HasKey("LoginProvider", "ProviderKey")
@@ -541,15 +599,15 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("userid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("name");
 
                     b.Property<string>("Value")
@@ -567,9 +625,7 @@ namespace ALBaB.Migrations
                     b.OwnsOne("ALBAB.Entities.DB.Address", "Address", b1 =>
                         {
                             b1.Property<int>("id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .UseIdentityByDefaultColumn();
+                                .HasColumnType("int");
 
                             b1.Property<string>("City")
                                 .HasColumnType("text")
@@ -592,7 +648,7 @@ namespace ALBaB.Migrations
                                 .HasColumnName("region");
 
                             b1.Property<int>("appuserid")
-                                .HasColumnType("integer");
+                                .HasColumnType("int");
 
                             b1.HasKey("id");
 
@@ -637,6 +693,27 @@ namespace ALBaB.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntryAccount", b =>
+                {
+                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccounts", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .HasConstraintName("fk_journalentryaccounts_dbaccounts_accountid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ALBAB.Entities.Journal.JournalEntry", "JournalEntry")
+                        .WithMany("Accounts")
+                        .HasForeignKey("JournalEntryId")
+                        .HasConstraintName("fk_journalentryaccounts_journalentry_journalentryid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("JournalEntry");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
                 {
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
@@ -654,9 +731,7 @@ namespace ALBaB.Migrations
                     b.OwnsOne("ALBAB.Entities.DB.Address", "Address", b1 =>
                         {
                             b1.Property<int>("id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .UseIdentityByDefaultColumn();
+                                .HasColumnType("int");
 
                             b1.Property<string>("City")
                                 .HasColumnType("text")
@@ -730,28 +805,28 @@ namespace ALBaB.Migrations
                     b.Navigation("Model");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDTL", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDtl", b =>
                 {
                     b.HasOne("ALBAB.Entities.Products.Product", "Product")
-                        .WithMany()
+                        .WithMany("PurchDTLs")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("fk_purchdtls_products_productid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ALBAB.Entities.Purchases.PurchHDR", "purchHDR")
-                        .WithMany("purchDTL")
-                        .HasForeignKey("PurchHDRId")
+                    b.HasOne("ALBAB.Entities.Purchases.PurchHdr", "PurchHdr")
+                        .WithMany("purchDtl")
+                        .HasForeignKey("PurchHdrId")
                         .HasConstraintName("fk_purchdtls_purchhdrs_purchhdrid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("purchHDR");
+                    b.Navigation("PurchHdr");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHDR", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
                 {
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
                         .WithMany()
@@ -820,6 +895,11 @@ namespace ALBaB.Migrations
                     b.Navigation("Children");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -830,9 +910,14 @@ namespace ALBaB.Migrations
                     b.Navigation("models");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHDR", b =>
+            modelBuilder.Entity("ALBAB.Entities.Products.Product", b =>
                 {
-                    b.Navigation("purchDTL");
+                    b.Navigation("PurchDTLs");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
+                {
+                    b.Navigation("purchDtl");
                 });
 #pragma warning restore 612, 618
         }

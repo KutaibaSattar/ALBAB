@@ -27,9 +27,13 @@ namespace ALBAB.Extensions
            
             services.AddDbContext<DataContext>(opt =>
             {
-               /* opt.UseSqlite(config.GetConnectionString("SQLiteConnection")); */
-               /*  opt.UseMySql(config.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21))); */
-                opt.UseNpgsql(config.GetConnectionString("postgresConnection"));
+               /*  opt.UseSqlite(config.GetConnectionString("SQLiteConnection")); 
+                
+                opt.UseNpgsql(config.GetConnectionString("postgresConnection")); 
+ */
+                //opt.UseMySql(config.GetConnectionString("MySqlConnection"), new MySqlServerVersion(new Version(8, 0, 21)));
+                
+                opt.UseMySQL(config.GetConnectionString("MySqlConnection"));
             }
             );
 
