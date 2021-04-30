@@ -1,0 +1,198 @@
+          
+ ,
+  {
+    "KeyId": "Balance Sheet",
+    "Name": "Balance Sheet",
+    "ParentId": 1,
+    "Lvl": 1,
+    "Created": "2021-01-01T00:00:00.000000"
+  }         ,
+  {
+    "KeyId": "Assets",
+    "Name": "Assets",
+    "ParentId": 2,
+    "Lvl": 2,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Fixed Assets",
+    "Name": "Fixed Assets",
+    "ParentId": 3,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Current Assets",
+    "Name": "Current Assets",
+    "ParentId": 3,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Inventory",
+    "Name": "Inventory",
+    "ParentId": 5,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Cashs",
+    "Name": "Cashs",
+    "ParentId": 5,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Banks",
+    "Name": "Banks",
+    "ParentId": 5,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Accounts Receivables",
+    "Name": "Accounts Receivables",
+    "ParentId": 5,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Liabilities",
+    "Name": "Liabilities",
+    "ParentId": 2,
+    "Lvl": 2,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Fixed Liabilities",
+    "Name": "Fixed Liabilities",
+    "ParentId": 10,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Capital",
+    "Name": "Capital",
+    "ParentId": 11,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Current Liabilities",
+    "Name": "Current Liabilities",
+    "ParentId": 10,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Accounts Payable",
+    "Name": "Accounts Payable",
+    "ParentId": 13,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Accumulated Profit",
+    "Name": "Accumulated Profit",
+    "ParentId": 13,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Income statement",
+    "Name": "Income statement",
+    "ParentId": 1,
+    "Lvl": 1,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Expenses",
+    "Name": "Expenses",
+    "ParentId": 16,
+    "Lvl": 2,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Trading Expenses",
+    "Name": "Trading Expenses",
+    "ParentId": 17,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Selling Cost",
+    "Name": "Selling Cost",
+    "ParentId": 18,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Cost Goods Sold",
+    "Name": "Cost Goods Sold",
+    "ParentId": 18,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Other Expenses",
+    "Name": "Other Expenses",
+    "ParentId": 17,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Incomes",
+    "Name": "Incomes",
+    "ParentId": 16,
+    "Lvl": 2,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Operating Revenues",
+    "Name": "Operating Revenues",
+    "ParentId": 22,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Revenue",
+    "Name": "Revenue",
+    "ParentId": 23,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Sales Revenue",
+    "Name": "Sales Revenue",
+    "ParentId": 23,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Service revenue",
+    "Name": "Service revenue",
+    "ParentId": 23,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Discount Given",
+    "Name": "Discount Given",
+    "ParentId": 23,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Other Income",
+    "Name": "Other Income",
+    "ParentId": 22,
+    "Lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
+  },
+  {
+    "KeyId": "Miscellaneous revenues",
+    "Name": "Miscellaneous revenues",
+    "ParentId": 28,
+    "Lvl": 4,
+    "Created": "2021-01-01T00:00:00.000000"
+  }

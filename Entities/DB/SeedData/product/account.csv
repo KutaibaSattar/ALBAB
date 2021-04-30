@@ -1,0 +1,30 @@
+﻿KeyId,Name,ParentId,Lvl,Created
+All Accounts,All Accounts,NULL,0,1/1/2021
+Balance Sheet,Balance Sheet,1,1,1/1/2021
+Assets,Assets,2,2,1/1/2021
+Fixed Assets,Fixed Assets,3,3,1/1/2021
+Current Assets,Current Assets,3,3,1/1/2021
+Inventory,Inventory,5,3,1/1/2021
+Cashs,Cashs,5,3,1/1/2021
+Banks,Banks,5,3,1/1/2021
+Accounts Receivables,Accounts Receivables,5,3,1/1/2021
+Liabilities,Liabilities,2,2,1/1/2021
+Fixed Liabilities,Fixed Liabilities,10,3,1/1/2021
+Capital,Capital,11,4,1/1/2021
+Current Liabilities,Current Liabilities,10,3,1/1/2021
+Accounts Payable,Accounts Payable,13,4,1/1/2021
+Accumulated Profit,Accumulated Profit,13,4,1/1/2021
+Income statement,Income statement,1,1,1/1/2021
+Expenses,Expenses,16,2,1/1/2021
+Trading Expenses,Trading Expenses,17,3,1/1/2021
+Selling Cost,Selling Cost,18,4,1/1/2021
+Cost Goods Sold,Cost Goods Sold,18,4,1/1/2021
+Other Expenses,Other Expenses,17,3,1/1/2021
+Incomes,Incomes,16,2,1/1/2021
+Operating Revenues,Operating Revenues,22,3,1/1/2021
+Revenue,Revenue,23,4,1/1/2021
+Sales Revenue,Sales Revenue,23,4,1/1/2021
+Service revenue,Service revenue,23,4,1/1/2021
+Discount Given,Discount Given,23,4,1/1/2021
+Other Income,Other Income,22,3,1/1/2021
+Miscellaneous revenues,Miscellaneous revenues,28,4,1/1/2021

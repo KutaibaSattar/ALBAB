@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210429110935_MySQL")]
-    partial class MySQL
+    [Migration("20210430090754_MySql")]
+    partial class MySql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -574,11 +574,13 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("providerkey");
 
                     b.Property<string>("ProviderDisplayName")
@@ -605,11 +607,13 @@ namespace ALBaB.Migrations
                         .HasColumnName("userid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("name");
 
                     b.Property<string>("Value")

@@ -572,11 +572,13 @@ namespace ALBaB.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("providerkey");
 
                     b.Property<string>("ProviderDisplayName")
@@ -603,11 +605,13 @@ namespace ALBaB.Migrations
                         .HasColumnName("userid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("loginprovider");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
                         .HasColumnName("name");
 
                     b.Property<string>("Value")

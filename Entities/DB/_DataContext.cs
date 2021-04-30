@@ -51,13 +51,27 @@ namespace ALBAB.Entities.DB
         protected override void OnModelCreating(ModelBuilder builder)
         {
         base.OnModelCreating(builder);
+       
         builder.Entity<AppUser>().Ignore(e => e.EmailConfirmed);
         builder.Entity<AppUser>().Ignore(e => e.PhoneNumberConfirmed);
         builder.Entity<AppUser>().Ignore(e => e.TwoFactorEnabled);
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnabled);
         builder.Entity<AppUser>().Ignore(e => e.LockoutEnd);
         builder.Entity<AppUser>().Ignore(e => e.AccessFailedCount);
-       
+
+      
+        //builder.Entity<AppUser>(x => x.Property(m => m.NormalizedUserName).HasMaxLength(256));
+
+        // We are using int here because of the change on the PK
+        builder.Entity<IdentityUserLogin<int>>(x => x.Property(m => m.LoginProvider).HasMaxLength(256));
+        builder.Entity<IdentityUserLogin<int>>(x => x.Property(m => m.ProviderKey).HasMaxLength(256));
+
+        // We are using int here because of the change on the PK
+        builder.Entity<IdentityUserToken<int>>(x => x.Property(m => m.LoginProvider).HasMaxLength(256));
+        builder.Entity<IdentityUserToken<int>>(x => x.Property(m => m.Name).HasMaxLength(256));
+   
+        
+      
         
         foreach(var entity in builder.Model.GetEntityTypes())
         {

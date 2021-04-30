@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class MySQL : Migration
+    public partial class MySql : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -170,8 +170,8 @@ namespace ALBaB.Migrations
                 name: "aspnetuserlogins",
                 columns: table => new
                 {
-                    loginprovider = table.Column<string>(type: "varchar(36)", nullable: false),
-                    providerkey = table.Column<string>(type: "varchar(36)", nullable: false),
+                    loginprovider = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    providerkey = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     providerdisplayname = table.Column<string>(type: "text", nullable: true),
                     userid = table.Column<int>(type: "int", nullable: false)
                 },
@@ -215,8 +215,8 @@ namespace ALBaB.Migrations
                 columns: table => new
                 {
                     userid = table.Column<int>(type: "int", nullable: false),
-                    loginprovider = table.Column<string>(type: "varchar(36)", nullable: false),
-                    name = table.Column<string>(type: "varchar(36)", nullable: false),
+                    loginprovider = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

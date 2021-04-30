@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +14,17 @@ namespace ALBAB.Entities.DB.SeedData
         public static async Task SeedAsync(DataContext context, ILoggerFactory loggerFactory){
               try
         {
+             if (!context.dbAccounts.Any())
+            {
+                var accountData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/account.json");
+                var accounts = JsonSerializer.Deserialize<List<dbAccounts>>(accountData);
+               foreach (var item in accounts)
+               {
+                   context.dbAccounts.Add(item);
+               }
+
+            }
+            
             if (!context.brands.Any())
             {
                 var brandsData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/brand.json");
@@ -23,7 +35,7 @@ namespace ALBAB.Entities.DB.SeedData
                }
 
             }
-             if (!context.models.Any())
+            /*  if (!context.models.Any())
             {
                 var typesData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/type.json");
                 var types = JsonSerializer.Deserialize<List<Model>>(typesData);
@@ -42,7 +54,7 @@ namespace ALBAB.Entities.DB.SeedData
                    context.products.Add(item);
                }
 
-            }  
+            }   */
             await context.SaveChangesAsync();
         }
         catch (System.Exception ex)
