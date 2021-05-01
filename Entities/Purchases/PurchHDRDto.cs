@@ -9,7 +9,7 @@ namespace ALBAB.Entities.Purchases
 {
     public class SavePurchHdrDto 
     {
-         public int? Id { get; set; }
+        public int? Id { get; set; }
         public string purNo { get; set; }
         public DateTime purDate { get; set; }
         public string purComment { get; set; }

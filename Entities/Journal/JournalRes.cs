@@ -1,15 +1,14 @@
-using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace ALBAB.Entities.Journal
 {
-    public class JournalEntry
+    public class JournalRes
     {
-        public int Id { get; private set; }
+         public int Id { get; private set; }
        
         [Required]
         public int EntryId { get; set; }
@@ -18,13 +17,14 @@ namespace ALBAB.Entities.Journal
         public DateTime EntryDate { get; set; }
         public string Note { get; set; }
        
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; set; }
 
-        public ICollection<JournalEntryAccount> Accounts { get; set; } = new Collection<JournalEntryAccount>();
+        public ICollection<JournalAccountRes> Accounts  { get; set; } 
+            = new Collection<JournalAccountRes>(); 
+       
 
-        
+
+
         
     }
 }

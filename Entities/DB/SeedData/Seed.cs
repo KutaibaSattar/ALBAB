@@ -50,7 +50,7 @@ namespace ALBAB.Entities.DB.SeedData
                var user2 = new AppUser
                {
                   UserName =  "971551234562",
-                  DisplayName="Husa Hussain",
+                  DisplayName="Huda Hussain",
                   Email = "info@seraime.com",
                   PhoneNumber ="+971 55 1234562"
                   

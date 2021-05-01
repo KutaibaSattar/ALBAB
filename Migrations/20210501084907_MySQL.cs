@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class MySql : Migration
+    public partial class MySQL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,20 +92,18 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "journalentry",
+                name: "journals",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    entryid = table.Column<int>(type: "int", nullable: false),
-                    entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    journalno = table.Column<int>(type: "int", nullable: false),
                     note = table.Column<string>(type: "text", nullable: true),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.ComputedColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_journalentry", x => x.id);
+                    table.PrimaryKey("pk_journals", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,31 +272,30 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "journalentryaccounts",
+                name: "journalaccounts",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    journalentryid = table.Column<int>(type: "int", nullable: false),
+                    journalid = table.Column<int>(type: "int", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    issuedate = table.Column<DateTime>(type: "datetime", nullable: false),
                     accountid = table.Column<int>(type: "int", nullable: false),
                     amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_journalentryaccounts", x => x.id);
+                    table.PrimaryKey("pk_journalaccounts", x => x.id);
                     table.ForeignKey(
-                        name: "fk_journalentryaccounts_dbaccounts_accountid",
+                        name: "fk_journalaccounts_dbaccounts_accountid",
                         column: x => x.accountid,
                         principalTable: "dbaccounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_journalentryaccounts_journalentry_journalentryid",
-                        column: x => x.journalentryid,
-                        principalTable: "journalentry",
+                        name: "fk_journalaccounts_journals_journalid",
+                        column: x => x.journalid,
+                        principalTable: "journals",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -454,14 +451,14 @@ namespace ALBaB.Migrations
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
-                name: "ix_journalentryaccounts_accountid",
-                table: "journalentryaccounts",
+                name: "ix_journalaccounts_accountid",
+                table: "journalaccounts",
                 column: "accountid");
 
             migrationBuilder.CreateIndex(
-                name: "ix_journalentryaccounts_journalentryid",
-                table: "journalentryaccounts",
-                column: "journalentryid");
+                name: "ix_journalaccounts_journalid",
+                table: "journalaccounts",
+                column: "journalid");
 
             migrationBuilder.CreateIndex(
                 name: "ix_models_brandid",
@@ -522,7 +519,7 @@ namespace ALBaB.Migrations
                 name: "aspnetusertokens");
 
             migrationBuilder.DropTable(
-                name: "journalentryaccounts");
+                name: "journalaccounts");
 
             migrationBuilder.DropTable(
                 name: "orderitems");
@@ -537,7 +534,7 @@ namespace ALBaB.Migrations
                 name: "dbaccounts");
 
             migrationBuilder.DropTable(
-                name: "journalentry");
+                name: "journals");
 
             migrationBuilder.DropTable(
                 name: "orders");

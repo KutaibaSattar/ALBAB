@@ -25,6 +25,7 @@ namespace ALBAB.Entities.DB.SeedData
 
             }
             
+             
             if (!context.brands.Any())
             {
                 var brandsData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/brand.json");
@@ -35,7 +36,7 @@ namespace ALBAB.Entities.DB.SeedData
                }
 
             }
-            /*  if (!context.models.Any())
+            if (!context.models.Any())
             {
                 var typesData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/type.json");
                 var types = JsonSerializer.Deserialize<List<Model>>(typesData);
@@ -54,7 +55,7 @@ namespace ALBAB.Entities.DB.SeedData
                    context.products.Add(item);
                }
 
-            }   */
+            }  
             await context.SaveChangesAsync();
         }
         catch (System.Exception ex)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities.Purchases
@@ -13,7 +14,9 @@ namespace ALBAB.Entities.Purchases
         public string purComment { get; set; }
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
-         public int AppUserId { get; set; }
+        
+        [Required]
+        public int AppUserId { get; set; }
         public ICollection <PurchDtl> purchDtl { get; set; }
          public PurchHdr()
         {
