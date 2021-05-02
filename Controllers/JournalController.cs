@@ -23,11 +23,13 @@ namespace ALBAB.Controllers
         }
 
         [HttpPost]
-         public async Task<ActionResult<IEnumerable<JournalRes>>> getJournals(Journal journal)
+         public async Task<ActionResult<IEnumerable<JournalEntryRes>>> getJournals(JournalEntry journalEntryRes)
          {
+                    
           
-
-           _context.journals.Add(journal);
+           //var journal = _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes);
+           
+           _context.journals.Add(journalEntryRes);
           
            await _context.SaveChangesAsync();
 

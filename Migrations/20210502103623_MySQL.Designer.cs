@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210501084907_MySQL")]
+    [Migration("20210502103623_MySQL")]
     partial class MySQL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,31 +189,6 @@ namespace ALBaB.Migrations
                     b.ToTable("dbaccounts");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Journal.Journal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created");
-
-                    b.Property<int>("JournalNo")
-                        .HasColumnType("int")
-                        .HasColumnName("journalno");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.HasKey("Id")
-                        .HasName("pk_journals");
-
-                    b.ToTable("journals");
-                });
-
             modelBuilder.Entity("ALBAB.Entities.Journal.JournalAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -229,6 +204,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("decimal(18, 2)")
                         .HasColumnName("amount");
 
+                    b.Property<int>("AmountType")
+                        .HasColumnType("int")
+                        .HasColumnName("amounttype");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime")
                         .HasColumnName("created");
@@ -241,6 +220,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("journalid");
 
+                    b.Property<int>("JournalType")
+                        .HasColumnType("int")
+                        .HasColumnName("journaltype");
+
                     b.HasKey("Id")
                         .HasName("pk_journalaccounts");
 
@@ -251,6 +234,35 @@ namespace ALBaB.Migrations
                         .HasDatabaseName("ix_journalaccounts_journalid");
 
                     b.ToTable("journalaccounts");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created");
+
+                    b.Property<int>("JournalNo")
+                        .HasColumnType("int")
+                        .HasColumnName("journalno");
+
+                    b.Property<int>("JournalType")
+                        .HasColumnType("int")
+                        .HasColumnName("journaltype");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text")
+                        .HasColumnName("note");
+
+                    b.HasKey("Id")
+                        .HasName("pk_journals");
+
+                    b.ToTable("journals");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
@@ -699,7 +711,7 @@ namespace ALBaB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ALBAB.Entities.Journal.Journal", "Journal")
+                    b.HasOne("ALBAB.Entities.Journal.JournalEntry", "Journal")
                         .WithMany("journalAccounts")
                         .HasForeignKey("JournalId")
                         .HasConstraintName("fk_journalaccounts_journals_journalid")
@@ -892,7 +904,7 @@ namespace ALBaB.Migrations
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Journal.Journal", b =>
+            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
                 {
                     b.Navigation("journalAccounts");
                 });

@@ -11,6 +11,7 @@ using ALBAB.Entities.Purchases;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using ALBAB.Entities.Journal;
 
 namespace ALBAB.Entities
 {
@@ -80,17 +81,16 @@ namespace ALBAB.Entities
                    }                     
                });   
 
-               
-
-                         
-           
-            
+              
              CreateMap<PurchDtl,PurchDtlDto>();
              
              CreateMap<PurchDtlDto,PurchDtl>();
-           
 
- 
+             CreateMap<JournalEntry,JournalEntryRes>();
+             CreateMap<JournalEntryRes,JournalEntry>();   
+
+            CreateMap<JournalAccount,JournalAccountRes>();
+            CreateMap<JournalAccountRes,JournalAccount>();
 
 
         }

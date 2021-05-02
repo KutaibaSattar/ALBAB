@@ -11,6 +11,8 @@ namespace ALBAB.Entities.Journal
   
         [Required]
         public DateTime DueDate { get; set; }
+
+         public JournalType JournalType { get; set; } = JournalType.JRV;
         
         [Required]
         public DateTime IssueDate { get; set; }
@@ -21,7 +23,7 @@ namespace ALBAB.Entities.Journal
         
         public decimal Amount { get; set; }
 
-        public AmountType AmountType = AmountType.Credit;
+        public AmountType AmountType { get; set; } = AmountType.Credit;
         
         [Required]
         public DateTime Created { get; set; }

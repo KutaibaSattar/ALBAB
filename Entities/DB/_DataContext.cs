@@ -44,7 +44,7 @@ namespace ALBAB.Entities.DB
          public DbSet<OrderItem> orderItems { get; set; }
 
          public DbSet<JournalAccount> journalAccounts { get; set; }
-         public DbSet<Journal.Journal> journals { get; set; }
+         public DbSet<Journal.JournalEntry> journals { get; set; }
 
 
       
