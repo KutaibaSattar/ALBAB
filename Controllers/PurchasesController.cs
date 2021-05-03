@@ -31,12 +31,7 @@ namespace ALBAB.Controllers
            var purchases = await _context.PurchHDRs.Include(d => d.purchDtl).ThenInclude(p =>p.Product).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<SavePurchHdrDto>>(purchases);
-
-           _mapper.Map<IEnumerable<SavePurchHdrDto>,IEnumerable<PurchHdr>>(result,purchases);
-          
-          
-           var result2 = _mapper.Map<IEnumerable<PurchHdr>>(result);
-           
+                   
            return Ok(result);  
 
          }  
@@ -75,7 +70,7 @@ namespace ALBAB.Controllers
 
             var purch = _mapper.Map<IEnumerable<PurchDtl>>(result);
            
-            var newpurchase = _mapper.Map<IEnumerable<PurchDtlDto>,IEnumerable<PurchDtl>>(result,purchdetails);
+            //var newpurchase = _mapper.Map<IEnumerable<PurchDtlDto>,IEnumerable<PurchDtl>>(result,purchdetails);
 
            
            return Ok(purch);  
@@ -102,7 +97,7 @@ namespace ALBAB.Controllers
 
          await _context.SaveChangesAsync();
 
-          var result = _mapper.Map<PurchHdr,SavePurchHdrDto>(purch);
+          var result = _mapper.Map<SavePurchHdrDto>(purch);
 
           return  Ok(result);
 
@@ -128,8 +123,7 @@ namespace ALBAB.Controllers
             E.Property("LastUpdate").CurrentValue = DateTime.Now;
         });
 
-         
-         
+               
          
          
         

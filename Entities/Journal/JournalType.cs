@@ -2,18 +2,14 @@ using System.Runtime.Serialization;
 
 namespace ALBAB.Entities.Journal
 {
-   public enum JournalType 
+   public static class JournalType 
     {
 
-        [EnumMember(Value="Receipt Voucher")]
-        RTV,
+        public static string Receipt { get { return "RT";} } 
+        public static string Payment { get { return "PT";} } 
+        public static string Journal { get { return "JL";} } 
         
-        [EnumMember(Value="Payment Voucher")]
-        PYV,
-       
-        [EnumMember(Value="Journal Voucher")]
-        JRV,
-       
+             
            
       
 

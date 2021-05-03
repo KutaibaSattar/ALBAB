@@ -98,8 +98,9 @@ namespace ALBaB.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     journalno = table.Column<int>(type: "int", nullable: false),
-                    journaltype = table.Column<int>(type: "int", nullable: false),
+                    seriesno = table.Column<string>(type: "text", nullable: true),
                     note = table.Column<string>(type: "text", nullable: true),
+                    entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
@@ -235,6 +236,7 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    seriesno = table.Column<string>(type: "text", nullable: false),
                     purno = table.Column<string>(type: "text", nullable: true),
                     purdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     purcomment = table.Column<string>(type: "text", nullable: true),
@@ -280,7 +282,7 @@ namespace ALBaB.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     journalid = table.Column<int>(type: "int", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    journaltype = table.Column<int>(type: "int", nullable: false),
+                    refno = table.Column<string>(type: "text", nullable: true),
                     accountid = table.Column<int>(type: "int", nullable: false),
                     amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     amounttype = table.Column<int>(type: "int", nullable: false),

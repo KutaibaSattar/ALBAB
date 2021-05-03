@@ -11,11 +11,12 @@ namespace ALBAB.Entities.Journal
     {
        public int Id { get; private set; }
        public int JournalNo { get; set; }
-       public int JournalType { get; set; }
+       public string SeriesNo { get; set; } = JournalType.Journal;
+       
        public string Note { get; set; }
        public DateTime Created { get; set; }
 
-        public ICollection<JournalAccountRes> JournalAccount { get; set; } 
+        public ICollection<JournalAccountRes> journalAccounts { get; set; } 
             = new Collection<JournalAccountRes>();
         
        

@@ -11,7 +11,7 @@ namespace ALBAB.Entities.Purchases
     {
         public int? Id { get; set; }
         public string purNo { get; set; }
-        public DateTime purDate { get; set; }
+        public DateTime purDate { get; set; } =  DateTime.Now;
         public string purComment { get; set; }
        
         [Required]

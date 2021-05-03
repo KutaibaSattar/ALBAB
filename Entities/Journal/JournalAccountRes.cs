@@ -12,8 +12,7 @@ namespace ALBAB.Entities.Journal
         [Required]
         public DateTime DueDate { get; set; }
 
-         public JournalType JournalType { get; set; } = JournalType.JRV;
-        
+        public string RefNo { get; set; }  
         [Required]
         public DateTime IssueDate { get; set; }
 

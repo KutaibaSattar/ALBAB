@@ -82,15 +82,21 @@ namespace ALBAB.Entities
                });   
 
               
-             CreateMap<PurchDtl,PurchDtlDto>();
-             
-             CreateMap<PurchDtlDto,PurchDtl>();
+            CreateMap<PurchDtl,PurchDtlDto>();
+            CreateMap<PurchDtlDto,PurchDtl>();
 
-             CreateMap<JournalEntry,JournalEntryRes>();
-             CreateMap<JournalEntryRes,JournalEntry>();   
-
+            CreateMap<JournalEntry,JournalEntryRes>()
+                 //.ForMember(dst => dst.Id , opt => opt.Ignore()) 
+                .ForMember(dst => dst.journalAccounts, opt => opt.MapFrom(src => src.journalAccounts));
+            
+            CreateMap<JournalEntryRes,JournalEntry>(); 
+                    //.ForMember(dst => dst.Id , opt => opt.Ignore());
+            
             CreateMap<JournalAccount,JournalAccountRes>();
             CreateMap<JournalAccountRes,JournalAccount>();
+           
+             
+           
 
 
         }

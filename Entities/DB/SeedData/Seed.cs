@@ -83,14 +83,8 @@ namespace ALBAB.Entities.DB.SeedData
                   } */
 
                };
-               await userManager.CreateAsync(user3, "Pa$$w0rd");
-
-                
-
-
-           
-
-         
+         await userManager.CreateAsync(user3, "Pa$$w0rd");
+     
           var users = await userManager.Users.ToListAsync();
           
            if (!await userManager.Users.AnyAsync()) return;

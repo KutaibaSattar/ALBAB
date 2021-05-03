@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210502103623_MySQL")]
+    [Migration("20210503080028_MySQL")]
     partial class MySQL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -220,9 +220,9 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("journalid");
 
-                    b.Property<int>("JournalType")
-                        .HasColumnType("int")
-                        .HasColumnName("journaltype");
+                    b.Property<string>("RefNo")
+                        .HasColumnType("text")
+                        .HasColumnName("refno");
 
                     b.HasKey("Id")
                         .HasName("pk_journalaccounts");
@@ -251,13 +251,17 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("journalno");
 
-                    b.Property<int>("JournalType")
-                        .HasColumnType("int")
-                        .HasColumnName("journaltype");
-
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
+
+                    b.Property<string>("SeriesNo")
+                        .HasColumnType("text")
+                        .HasColumnName("seriesno");
+
+                    b.Property<DateTime>("entryDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("entrydate");
 
                     b.HasKey("Id")
                         .HasName("pk_journals");
@@ -496,6 +500,11 @@ namespace ALBaB.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime")
                         .HasColumnName("lastupdate");
+
+                    b.Property<string>("SeriesNo")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("seriesno");
 
                     b.Property<string>("purComment")
                         .HasColumnType("text")
