@@ -17,7 +17,7 @@ export class PurchaseService extends DataService {
 
   }
 
-  // tslint:disable-next-line: typedef
+
   getPurchases() {
     return this.getAll('purchlist').pipe(
       map((purch: IPurchase) => {
@@ -26,10 +26,11 @@ export class PurchaseService extends DataService {
           return purchase;
         }
 
-        /*  (purchase).filter(item => item.idex === 0); */
       })
     );
   }
+
+
   getPurchNos() {
     return this.httpClient.get<Observable<any>>(
       environment.apiUrl + 'purchases/purchnos'

@@ -198,17 +198,17 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("accountid");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("amount");
-
-                    b.Property<int>("AmountType")
-                        .HasColumnType("int")
-                        .HasColumnName("amounttype");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime")
                         .HasColumnName("created");
+
+                    b.Property<decimal?>("Credit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("credit");
+
+                    b.Property<decimal?>("Debit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("debit");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime")

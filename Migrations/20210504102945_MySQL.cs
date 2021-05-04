@@ -281,12 +281,12 @@ namespace ALBaB.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     journalid = table.Column<int>(type: "int", nullable: false),
+                    created = table.Column<DateTime>(type: "datetime", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    refno = table.Column<string>(type: "text", nullable: true),
                     accountid = table.Column<int>(type: "int", nullable: false),
-                    amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    amounttype = table.Column<int>(type: "int", nullable: false),
-                    created = table.Column<DateTime>(type: "datetime", nullable: false)
+                    credit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
+                    debit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
+                    refno = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

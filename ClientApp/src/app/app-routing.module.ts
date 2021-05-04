@@ -14,6 +14,7 @@ import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { Authguard } from './guards/auth.guard';
 import { UnsavedchangesGuard } from './guards/unsavedchanges.guard';
+import { JournalentryComponent } from './journalentry/journalentry.component';
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'journalentry', component: JournalentryComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

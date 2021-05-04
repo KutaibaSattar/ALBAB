@@ -13,8 +13,8 @@ namespace ALBAB.Entities.Journal
         public DateTime DueDate { get; set; } = DateTime.Now;
         public int AccountId { get; set; }
         public dbAccounts Account { get; set; }
-        public decimal Amount { get; set; }
-        public AmountType AmountType { get; set; } = AmountType.Credit;
+        public decimal? Credit { get; set; }
+        public decimal? Debit { get; set; }
         public string RefNo { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210503080028_MySQL")]
+    [Migration("20210504102945_MySQL")]
     partial class MySQL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,17 +200,17 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("accountid");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("amount");
-
-                    b.Property<int>("AmountType")
-                        .HasColumnType("int")
-                        .HasColumnName("amounttype");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime")
                         .HasColumnName("created");
+
+                    b.Property<decimal?>("Credit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("credit");
+
+                    b.Property<decimal?>("Debit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("debit");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime")

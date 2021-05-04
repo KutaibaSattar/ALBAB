@@ -1,0 +1,107 @@
+<!-- HEADER -->
+<header id="main-header" class="bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-credit-card-alt"></i> Journal</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SEARCH -->
+<section id="search" class="py-1 mb-2 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto">
+        <div class="input-group">
+          <div class="input-group-append">
+            <button class="fa fa-search ml-1 btn btn-success">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <form [formGroup]="" (keydown.enter)="$event.preventDefault()">
+    <div class="row">
+      <!--  -->
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="font-weight-bold">No</label>
+          <div class="input-group">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="font-weight-bold">Date</label>
+        <input type="date" name="purNo" class="form-control" />
+
+        <span></span>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font-weight-bold">Account</label>
+          <div class="input-group">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select name="pMethod" class="form-control">
+            <option value="">-Select-</option>
+            <option value="Cash">Cash</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Card">Card</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>Grand Total</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">AED</div>
+          </div>
+
+          <input class="form-control" readonly />
+        </div>
+      </div>
+    </div>
+
+    <header id="main-header" class="bg-secondary text-white">
+      <div class="container">
+        <div class="row pb-2 pt-1">
+          <div class="col-md-12"></div>
+        </div>
+      </div>
+    </header>
+
+    <ng-container>
+      <!-- Table Header -->
+      <table
+        class="table table-bordered table-dark table-hover table-sm table-condensed"
+      >
+        <thead class="thead-light">
+          <tr>
+            <th style="width: 30%">Account</th>
+            <th style="width: 10%">Price</th>
+            <th style="width: 10%">Quantity</th>
+            <th style="width: 10%">Total</th>
+            <th style="width: 10%">Action</th>
+          </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody></tbody>
+      </table>
+    </ng-container>
+    <!-- <pre>{{purchHdr.value | json}}</pre> -->
+
+    <div class="form-group"></div>
+  </form>
+</div>
