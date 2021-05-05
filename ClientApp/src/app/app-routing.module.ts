@@ -15,6 +15,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { Authguard } from './guards/auth.guard';
 import { UnsavedchangesGuard } from './guards/unsavedchanges.guard';
 import { JournalentryComponent } from './journalentry/journalentry.component';
+import { DbaccountComponent } from './dbaccount/dbaccount.component';
 
 
 
@@ -38,6 +39,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'journalentry', component: JournalentryComponent },
+  { path: 'dbAccount', component: DbaccountComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

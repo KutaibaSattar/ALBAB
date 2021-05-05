@@ -10,7 +10,7 @@ namespace ALBAB.Entities.AppAccounts
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is Required")]
-        public string Key { get; set; }
+        public string KeyId { get; set; }
 
         public string Name { get; set; }
 
@@ -23,7 +23,7 @@ namespace ALBAB.Entities.AppAccounts
 
         public int? ParentId { get; set; }
 
-        //public ICollection<dbAccountsDto> Children { get; set; }
+       public ICollection<dbAccountsDto> Children { get; set; }
         /*  public dbAccountsDto(){
 
              Children = new Collection<dbAccountsDto>();

@@ -14,11 +14,11 @@ namespace ALBAB.Controllers
         private readonly DataContext _context;
 
         private readonly IMapper _mapper;
-       
+
 
         public dbAccountsController(IMapper mapper, DataContext context)
         {
-          
+
             _context = context;
 
             _mapper = mapper;
@@ -34,16 +34,18 @@ namespace ALBAB.Controllers
 
             var dbaccounts = await _context.dbAccounts.ToListAsync();
 
-           /*  var dbaccounts = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
-            .AsQueryable(); //.ToListAsync(); */
+           var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
+            .AsQueryable(); //.ToListAsync();
 
-            //var dbaccountsTree = await Task.FromResult(dbaccounts.ToList());
-           
-            var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
-     
+           var dbaccountsTreeResults = await Task.FromResult(dbaccountsTree.ToList());
+
+            var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccountsTreeResults);
+
+           // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
+
 
             return Ok(result);
-          
+
 
 
         }

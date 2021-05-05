@@ -28,7 +28,9 @@ import { ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.c
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { TextInputComponent } from './templates/text-input/text-input.component';
-import { JournalentryComponent } from './journalentry/journalentry.component'
+import { JournalentryComponent } from './journalentry/journalentry.component';
+import { DbaccountComponent } from './dbaccount/dbaccount.component'
+import {MatTreeModule} from '@angular/material/tree';
 
 
 
@@ -50,6 +52,7 @@ import { JournalentryComponent } from './journalentry/journalentry.component'
    ConfirmDialogComponent,
    TextInputComponent,
    JournalentryComponent,
+   DbaccountComponent,
     ],
 
   imports: [
@@ -70,6 +73,7 @@ import { JournalentryComponent } from './journalentry/journalentry.component'
     }),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    MatTreeModule,
 
 
 

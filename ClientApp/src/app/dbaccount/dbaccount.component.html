@@ -1,0 +1,19 @@
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button type="button" class="btn btn-secondary" ></button>
+   <a [routerLink]=""  class="nav-link badge badge-light"> {{node.name}}</a>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+    <div  mat-icon-button matTreeNodeToggle>
+            <i *ngIf= "!treeControl.isExpanded(node)" class="fa fa-arrow-circle-right btn btn-primary btn-sm"></i>
+            <i *ngIf= "treeControl.isExpanded(node)" class="fa fa-arrow-circle-down btn btn-secondary btn-sm"></i>
+
+
+    </div>
+   <a [routerLink]="">{{node.name}}</a>
+  </mat-tree-node>
+</mat-tree>
