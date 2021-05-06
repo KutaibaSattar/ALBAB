@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DbaccountService } from 'app/services/dbaccount.service';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { SelectionModel } from '@angular/cdk/collections';
 
 /**
  * Food data with nested structure.
@@ -72,6 +73,26 @@ export class DbaccountComponent implements OnInit {
 
     )
 
+  }
+  checklistSelection = new SelectionModel<ExampleFlatNode>(true /* multiple */);
+
+  descendantsAllSelected(node: ExampleFlatNode): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    return descendants.every(child => this.checklistSelection.isSelected(child));
+  }
+
+  descendantsPartiallySelected(node: ExampleFlatNode): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    const result = descendants.some(child => this.checklistSelection.isSelected(child));
+    return result && !this.descendantsAllSelected(node);
+  }
+
+  todoItemSelectionToggle(node: ExampleFlatNode): void {
+    this.checklistSelection.toggle(node);
+    const descendants = this.treeControl.getDescendants(node);
+    this.checklistSelection.isSelected(node)
+      ? this.checklistSelection.select(...descendants)
+      : this.checklistSelection.deselect(...descendants);
   }
 
 }

@@ -31,7 +31,10 @@ import { TextInputComponent } from './templates/text-input/text-input.component'
 import { JournalentryComponent } from './journalentry/journalentry.component';
 import { DbaccountComponent } from './dbaccount/dbaccount.component'
 import {MatTreeModule} from '@angular/material/tree';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
 
+import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component'
 
 
 
@@ -53,6 +56,7 @@ import {MatTreeModule} from '@angular/material/tree';
    TextInputComponent,
    JournalentryComponent,
    DbaccountComponent,
+   TreeChecklistExampleComponent,
     ],
 
   imports: [
@@ -74,7 +78,8 @@ import {MatTreeModule} from '@angular/material/tree';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     MatTreeModule,
-
+    MatCheckboxModule,
+    MatIconModule,
 
 
 
