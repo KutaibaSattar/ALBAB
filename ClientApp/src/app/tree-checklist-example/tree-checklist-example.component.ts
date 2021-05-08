@@ -121,7 +121,7 @@ export class TreeChecklistExampleComponent {
  dataSource: MatTreeFlatDataSource<dbAccounts, dbAccountFlatNode>;
 
  /** The selection for checklist */
- checklistSelection = new SelectionModel<dbAccountFlatNode>(true /* multiple */);
+ checklistSelection = new SelectionModel<dbAccountFlatNode>(false /* single selection */);
 
  constructor(private _database: ChecklistDatabase) {
    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,this.isExpandable, this.getChildren);

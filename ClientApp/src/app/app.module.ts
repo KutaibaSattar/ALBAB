@@ -33,8 +33,11 @@ import { DbaccountComponent } from './dbaccount/dbaccount.component'
 import {MatTreeModule} from '@angular/material/tree';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
-import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component'
+
+import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
+import { MaterialTreeFlatComponent } from './material-tree-flat/material-tree-flat.component'
 
 
 
@@ -57,6 +60,7 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
    JournalentryComponent,
    DbaccountComponent,
    TreeChecklistExampleComponent,
+   MaterialTreeFlatComponent,
     ],
 
   imports: [
@@ -80,6 +84,7 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
     MatTreeModule,
     MatCheckboxModule,
     MatIconModule,
+    MatCardModule,
 
 
 

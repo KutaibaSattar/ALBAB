@@ -1,5 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+
+<!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding [matTreeNodePaddingIndent]="40">
 
     <mat-checkbox class="checklist-leaf-node"
                   [checked]="checklistSelection.isSelected(node)"
@@ -17,15 +19,16 @@
 
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <div matTreeNodeToggle>
-      <i *ngIf= "!treeControl.isExpanded(node)" class="fa fa-angle-double-right btn btn-primary mb-2  mr-2"></i>
-      <i *ngIf= "treeControl.isExpanded(node)" class="fa fa-angle-right btn btn-secondary mb-2 mr-2"></i>
+      <i *ngIf="!treeControl.isExpanded(node)" class="fa fa-angle-double-right btn btn-primary mb-2  mr-2"></i>
+      <i *ngIf="treeControl.isExpanded(node)" class="fa fa-angle-right btn btn-secondary mb-2 mr-2"></i>
 
 
-</div>
+    </div>
 
-<mat-checkbox [checked]="descendantsAllSelected(node)"
-                  [indeterminate]="descendantsPartiallySelected(node)"
-                  (change)="todoItemSelectionToggle(node)">{{node.name}} </mat-checkbox>
-    <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button> 
+    <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
+      (change)="todoItemSelectionToggle(node)">{{node.name}} </mat-checkbox>
+    <button mat-icon-button (click)="addNewItem(node)">
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-tree-node>
 </mat-tree>
