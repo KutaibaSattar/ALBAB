@@ -1,30 +1,30 @@
-﻿Id,KeyId,Name,ParentId,Lvl,Created
-1,All Accounts,All Accounts,NULL,0,1/1/2021
-2,Balance Sheet,Balance Sheet,1,1,1/1/2021
-3,Assets,Assets,2,2,1/1/2021
-4,Fixed Assets,Fixed Assets,3,3,1/1/2021
-5,Current Assets,Current Assets,3,3,1/1/2021
-6,Inventory,Inventory,5,3,1/1/2021
-7,Cashs,Cashs,5,3,1/1/2021
-8,Banks,Banks,5,3,1/1/2021
-9,Accounts Receivables,Accounts Receivables,5,3,1/1/2021
-10,Liabilities,Liabilities,2,2,1/1/2021
-11,Fixed Liabilities,Fixed Liabilities,10,3,1/1/2021
-12,Capital,Capital,11,4,1/1/2021
-13,Current Liabilities,Current Liabilities,10,3,1/1/2021
-14,Accounts Payable,Accounts Payable,13,4,1/1/2021
-15,Accumulated Profit,Accumulated Profit,13,4,1/1/2021
-16,Income statement,Income statement,1,1,1/1/2021
-17,Expenses,Expenses,16,2,1/1/2021
-18,Trading Expenses,Trading Expenses,17,3,1/1/2021
-19,Selling Cost,Selling Cost,18,4,1/1/2021
-20,Cost Goods Sold,Cost Goods Sold,18,4,1/1/2021
-21,Other Expenses,Other Expenses,17,3,1/1/2021
-22,Incomes,Incomes,16,2,1/1/2021
-23,Operating Revenues,Operating Revenues,22,3,1/1/2021
-24,Revenue,Revenue,23,4,1/1/2021
-25,Sales Revenue,Sales Revenue,23,4,1/1/2021
-26,Service revenue,Service revenue,23,4,1/1/2021
-27,Discount Given,Discount Given,23,4,1/1/2021
-28,Other Income,Other Income,22,3,1/1/2021
-29,Miscellaneous revenues,Miscellaneous revenues,28,4,1/1/2021
+﻿Id,KeyId,Name,ParentId,Lvl,Created,IsExpandable
+1,All Accounts,All Accounts,NULL,0,2021/01/01,TRUE
+2,Balance Sheet,Balance Sheet,1,1,2021/01/01,TRUE
+3,Assets,Assets,2,2,2021/01/01,TRUE
+4,Fixed Assets,Fixed Assets,3,3,2021/01/01,TRUE
+5,Current Assets,Current Assets,3,3,2021/01/01,TRUE
+6,Inventory,Inventory,5,4,2021/01/01,TRUE
+7,Cashs,Cashs,5,4,2021/01/01,TRUE
+8,Banks,Banks,5,4,2021/01/01,TRUE
+9,Accounts Receivables,Accounts Receivables,5,4,2021/01/01,TRUE
+10,Liabilities,Liabilities,2,2,2021/01/01,TRUE
+11,Fixed Liabilities,Fixed Liabilities,10,3,2021/01/01,TRUE
+12,Capital,Capital,11,4,2021/01/01,TRUE
+13,Current Liabilities,Current Liabilities,10,3,2021/01/01,TRUE
+14,Accounts Payable,Accounts Payable,13,4,2021/01/01,TRUE
+15,Accumulated Profit,Accumulated Profit,13,4,2021/01/01,TRUE
+16,Income statement,Income statement,1,1,2021/01/01,TRUE
+17,Expenses,Expenses,16,2,2021/01/01,TRUE
+18,Trading Expenses,Trading Expenses,17,3,2021/01/01,TRUE
+19,Selling Cost,Selling Cost,18,4,2021/01/01,TRUE
+20,Cost Goods Sold,Cost Goods Sold,18,4,2021/01/01,TRUE
+21,Other Expenses,Other Expenses,17,3,2021/01/01,TRUE
+22,Incomes,Incomes,16,2,2021/01/01,TRUE
+23,Operating Revenues,Operating Revenues,22,3,2021/01/01,TRUE
+24,Revenue,Revenue,23,4,2021/01/01,TRUE
+25,Sales Revenue,Sales Revenue,23,4,2021/01/01,TRUE
+26,Service revenue,Service revenue,23,4,2021/01/01,TRUE
+27,Discount Given,Discount Given,23,4,2021/01/01,TRUE
+28,Other Income,Other Income,22,3,2021/01/01,TRUE
+29,Miscellaneous revenues,Miscellaneous revenues,28,4,2021/01/01,TRUE

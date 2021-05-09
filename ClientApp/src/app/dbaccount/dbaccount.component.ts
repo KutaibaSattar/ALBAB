@@ -4,27 +4,16 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { SelectionModel } from '@angular/cdk/collections';
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
- interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
+export class dbAccounts {
+  children: dbAccounts[];
+  name:string;
+  keyId : string;
+  id : number;
+  lvl:number;
+  selected?: boolean;
 
+ }
 
-
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-interface dbAccount {
-  name: string;
-  lvl  : number;
-}
 
 @Component({
   selector: 'app-dbaccount',
@@ -32,67 +21,134 @@ interface dbAccount {
   styleUrls: ['./dbaccount.component.scss']
 })
 export class DbaccountComponent implements OnInit {
-  private _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };}
 
-    dbaccounts: dbAccount[];
+  constructor(private dbAccountService: DbaccountService) {}
 
-    treeControl = new FlatTreeControl<ExampleFlatNode>(
-      node => node.level, node => node.expandable);
+
+
+  treeControl: FlatTreeControl<dbAccounts>;
+
+  treeFlattener: MatTreeFlattener<dbAccounts,dbAccounts>;
+
+  dataSource: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
+  dataSourceAccount: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
+
+  ngOnInit(): void {
+
+      this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,this.isExpandable, this.getChildren);
+
+      this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
+
+
+
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+      this.getData();
+
+
+
+  }
+  getData(){
+
+    this.dbAccountService.getAccounts().subscribe(
+
+      (res: dbAccounts[]) => {
+
+
+
+
+
+
+        //this.dataSource.data = TREE_DATA;
+        // Notify the change.
+
+
+        this.dataSource.data = res;
+
+        Object.keys(this.dataSource.data).forEach(x => {
+          this.setParent(this.dataSource.data[x], null);
+        });
+
+
+
+
+        //this.dataSource.data = res;}
+      })
+
+  }
+
+
+
+
+
 
 
  /* treeControl = new NestedTreeControl<FoodNode>(node => node.children); */
 
-  treeFlattener = new MatTreeFlattener(
-      this._transformer, node => node.level, node => node.expandable, node => node.children);
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-
-  constructor(private dbAccountService: DbaccountService) { }
-
-  ngOnInit(): void {
 
 
-    this.dbAccountService.getAccounts().subscribe(
+  getLevel = (node: dbAccounts): number => {
+    //return node.lvl
+    return node.lvl;
+  };
 
-      (res: any) => {
+  isExpandable = (node: dbAccounts): boolean => {
+    return node.children.length > 0; // second calling for seting isexpandable property to node
+  };
 
-        this.dbaccounts = res[0];
-        console.log(this.dbaccounts);
+  getChildren = (node: dbAccounts) => {
+    return node.children;
+  };
 
-        console.log(res);
-
-        this.dataSource.data = res;}
-
-    )
-
-  }
-  checklistSelection = new SelectionModel<ExampleFlatNode>(true /* multiple */);
-
-  descendantsAllSelected(node: ExampleFlatNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    return descendants.every(child => this.checklistSelection.isSelected(child));
+  transformer = (node: dbAccounts, level: number) => { // first calling to map (node level with key) and return node
+    //this.levels.set(node, level);
+    node["selected"] = false;
+    return node;
   }
 
-  descendantsPartiallySelected(node: ExampleFlatNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child));
-    return result && !this.descendantsAllSelected(node);
+  hasChildren = (index: number, node: dbAccounts): boolean => {
+    return node.children.length > 0;
+  };
+
+  isOdd(node: dbAccounts) {
+    return node.children.length > 0
+    //return this.getLevel(node) % 2 === 1;
   }
 
-  todoItemSelectionToggle(node: ExampleFlatNode): void {
-    this.checklistSelection.toggle(node);
-    const descendants = this.treeControl.getDescendants(node);
-    this.checklistSelection.isSelected(node)
-      ? this.checklistSelection.select(...descendants)
-      : this.checklistSelection.deselect(...descendants);
+  todoItemSelectionToggle(checked, node) {
+    node.selected = checked;
+    if (node.children) {
+      node.children.forEach(x => {
+        this.todoItemSelectionToggle(checked, x);
+      });
+    }
+    this.checkAllParents(node);
+  }
+  checkAllParents(node) {
+    if (node.parent) {
+      const descendants = this.treeControl.getDescendants(node.parent);
+      node.parent.selected = descendants.every(child => child.selected);
+      node.parent.indeterminate = descendants.some(child => child.selected);
+      this.checkAllParents(node.parent);
+    }
+
+  }
+
+  setParent(data, parent) {
+    data.parent = parent;
+
+    if (data.lvl < 1){
+      data.expand();
+
+    }
+
+    if (data.children) {
+      data.children.forEach(x => {
+        this.setParent(x, data);
+      });
+    }
   }
 
 }

@@ -17,7 +17,6 @@ import { UnsavedchangesGuard } from './guards/unsavedchanges.guard';
 import { JournalentryComponent } from './journalentry/journalentry.component';
 import { DbaccountComponent } from './dbaccount/dbaccount.component';
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
-import { MaterialTreeFlatComponent } from './material-tree-flat/material-tree-flat.component';
 
 
 
@@ -41,7 +40,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'journalentry', component: JournalentryComponent },
-  { path: 'dbAccount', component: MaterialTreeFlatComponent},
+  { path: 'dbAccount', component: DbaccountComponent},
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

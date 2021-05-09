@@ -1,20 +1,31 @@
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
-  <!-- This is the tree node template for leaf nodes -->
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-    <!-- use a disabled button to provide padding for tree leaf -->
-    <button type="button" class="btn btn-secondary" ></button>
-   <a [routerLink]=""  class="nav-link badge badge-light"> {{node.name}}</a>
-  </mat-tree-node>
-  <!-- This is the tree node template for expandable nodes -->
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    <div matTreeNodeToggle>
-            <i *ngIf= "!treeControl.isExpanded(node)" class="fa fa-arrow-circle-right btn btn-primary btn-sm"></i>
-            <i *ngIf= "treeControl.isExpanded(node)" class="fa fa-arrow-circle-down btn btn-secondary btn-sm"></i>
+<mat-toolbar color="primary">
+	Angular Material 2 App
+</mat-toolbar>
 
+<mat-card>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
+                  [class.example-tree-node-odd]="isOdd(node)">
 
-    </div>
-   <a [routerLink]="">{{node.name}}</a>
+      <mat-checkbox color="primary" class="checklist-leaf-node" (change)="todoItemSelectionToggle($event.checked,node)" [checked]="node.selected"
+      ></mat-checkbox>
 
-  </mat-tree-node>
-</mat-tree>
+                  <a [routerLink]=""  class="ml-1 mb-2"> {{node.keyId}}</a>
+
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChildren" matTreeNodePadding
+                  [class.example-tree-node-odd]="isOdd(node)">
+                  <div matTreeNodeToggle>
+
+                    <i  [ngClass] = "treeControl.isExpanded(node) ? 'fa fa-arrow-circle-down btn-success btn btn-sm mb-2 mr-1'
+                                                                    :'fa fa-arrow-circle-right btn btn-success btn-sm mb-2 mr-1'"></i>
+
+            </div>
+          <mat-checkbox color="primary" [checked]="node.selected"
+                  [indeterminate]="node.indeterminate && !node.selected"
+                  (change)="todoItemSelectionToggle($event.checked,node)">{{node.name}}</mat-checkbox>
+    </mat-tree-node>
+  </mat-tree>
+</mat-card>
+

@@ -5,8 +5,7 @@
     "Name": "All Accounts",
     "ParentId": null,
     "lvl": 0,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 2,
@@ -14,8 +13,7 @@
     "Name": "Balance Sheet",
     "ParentId": 1,
     "lvl": 1,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 3,
@@ -23,8 +21,7 @@
     "Name": "Assets",
     "ParentId": 2,
     "lvl": 2,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 4,
@@ -32,8 +29,7 @@
     "Name": "Fixed Assets",
     "ParentId": 3,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 5,
@@ -41,44 +37,39 @@
     "Name": "Current Assets",
     "ParentId": 3,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 6,
     "KeyId": "Inventory",
     "Name": "Inventory",
     "ParentId": 5,
-    "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 7,
     "KeyId": "Cashs",
     "Name": "Cashs",
     "ParentId": 5,
-    "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 8,
     "KeyId": "Banks",
     "Name": "Banks",
     "ParentId": 5,
-    "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 9,
     "KeyId": "Accounts Receivables",
     "Name": "Accounts Receivables",
     "ParentId": 5,
-    "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "lvl": 3,
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 10,
@@ -86,8 +77,7 @@
     "Name": "Liabilities",
     "ParentId": 2,
     "lvl": 2,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 11,
@@ -95,8 +85,7 @@
     "Name": "Fixed Liabilities",
     "ParentId": 10,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 12,
@@ -104,8 +93,7 @@
     "Name": "Capital",
     "ParentId": 11,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 13,
@@ -113,8 +101,7 @@
     "Name": "Current Liabilities",
     "ParentId": 10,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 14,
@@ -122,8 +109,7 @@
     "Name": "Accounts Payable",
     "ParentId": 13,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 15,
@@ -131,8 +117,7 @@
     "Name": "Accumulated Profit",
     "ParentId": 13,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 16,
@@ -140,8 +125,7 @@
     "Name": "Income statement",
     "ParentId": 1,
     "lvl": 1,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 17,
@@ -149,8 +133,7 @@
     "Name": "Expenses",
     "ParentId": 16,
     "lvl": 2,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 18,
@@ -158,8 +141,7 @@
     "Name": "Trading Expenses",
     "ParentId": 17,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 19,
@@ -167,8 +149,7 @@
     "Name": "Selling Cost",
     "ParentId": 18,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 20,
@@ -176,8 +157,7 @@
     "Name": "Cost Goods Sold",
     "ParentId": 18,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 21,
@@ -185,8 +165,7 @@
     "Name": "Other Expenses",
     "ParentId": 17,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 22,
@@ -194,8 +173,7 @@
     "Name": "Incomes",
     "ParentId": 16,
     "lvl": 2,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 23,
@@ -203,8 +181,7 @@
     "Name": "Operating Revenues",
     "ParentId": 22,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 24,
@@ -212,8 +189,7 @@
     "Name": "Revenue",
     "ParentId": 23,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 25,
@@ -221,8 +197,7 @@
     "Name": "Sales Revenue",
     "ParentId": 23,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 26,
@@ -230,8 +205,7 @@
     "Name": "Service revenue",
     "ParentId": 23,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 27,
@@ -239,8 +213,7 @@
     "Name": "Discount Given",
     "ParentId": 23,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 28,
@@ -248,8 +221,7 @@
     "Name": "Other Income",
     "ParentId": 22,
     "lvl": 3,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   },
   {
     "Id": 29,
@@ -257,7 +229,6 @@
     "Name": "Miscellaneous revenues",
     "ParentId": 28,
     "lvl": 4,
-    "Created": "2021-01-01T00:00:00.000000",
-   "IsExpandable": true
+    "Created": "2021-01-01T00:00:00.000000"
   }
 ]

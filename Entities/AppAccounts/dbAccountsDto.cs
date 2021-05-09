@@ -23,6 +23,8 @@ namespace ALBAB.Entities.AppAccounts
 
         public int? ParentId { get; set; }
 
+        public bool IsExpandable {get;set;} = false;
+
        public ICollection<dbAccountsDto> Children { get; set; }
         /*  public dbAccountsDto(){
 
