@@ -1,31 +1,74 @@
 
 <mat-toolbar color="primary">
-	Angular Material 2 App
+  Accounts Tree
 </mat-toolbar>
+<div class="container ml-3 mt-1">
 
-<mat-card>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
-                  [class.example-tree-node-odd]="isOdd(node)">
 
-      <mat-checkbox color="primary" class="checklist-leaf-node" (change)="todoItemSelectionToggle($event.checked,node)" [checked]="node.selected"
-      ></mat-checkbox>
+<div class="row">
+  <div class="col-4">
+    <div class="card-deck">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
-                  <a [routerLink]=""  class="ml-1 mb-2"> {{node.keyId}}</a>
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [class.example-tree-node-odd]="isOdd(node)">
+          <mat-checkbox color="primary" class="checklist-leaf-node"
+            (change)="todoItemSelectionToggle($event.checked,node)" [checked]="node.selected"></mat-checkbox>
+            <button type="button" (click)="onClick(node)" class="btn btn-link btn-sm">{{node.keyId}}</button>
 
-    </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChildren" matTreeNodePadding
-                  [class.example-tree-node-odd]="isOdd(node)">
-                  <div matTreeNodeToggle>
+        </mat-tree-node>
 
-                    <i  [ngClass] = "treeControl.isExpanded(node) ? 'fa fa-arrow-circle-down btn-success btn btn-sm mb-2 mr-1'
-                                                                    :'fa fa-arrow-circle-right btn btn-success btn-sm mb-2 mr-1'"></i>
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChildren" matTreeNodePadding
+          [class.example-tree-node-odd]="isOdd(node)">
 
+          <div matTreeNodeToggle>
+            <i
+              [ngClass]="treeControl.isExpanded(node) ? 'fa fa-arrow-circle-down btn-success btn btn-sm mb-2 mr-1'
+                                                                        :'fa fa-arrow-circle-right btn btn-success btn-sm mb-2 mr-1'"></i>
+          </div>
+
+          <mat-checkbox color="primary" [checked]="node.selected" [indeterminate]="node.indeterminate && !node.selected"
+            (change)="todoItemSelectionToggle($event.checked,node)"></mat-checkbox>
+            <button type="button" (click)="onClick(node)" class="btn btn-link btn-sm">{{node.keyId}}</button>
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+
+
+  </div>
+  <div class="col-8">
+    <tabset  *ngIf="selectedNode" class="member-tabset">
+
+        <tab  heading= '{{selectedNode.keyId}}'>
+                  <h2> Description </h2>
+
+                  <h4>KeyId:<span class="label label-default">{{selectedNode.name}}</span></h4>
+                  <h4>Level:<span class="label label-default">{{selectedNode.lvl}}</span></h4>
+
+
+
+        </tab>
+        <tab heading= 'Adding child'>
+          <header class="py-2 bg-light mb-2 text-white">
+            <button type="button" class="btn btn-primary btn-sm">New Child</button>
+          </header>
+          <div class="form-group row">
+            <div class="form-group">
+
+              <label for="keyid" class="col-form-label">Key Id</label>
+              <input type="text" class="form-control" id="keyid" placeholder="KeyId">
             </div>
-          <mat-checkbox color="primary" [checked]="node.selected"
-                  [indeterminate]="node.indeterminate && !node.selected"
-                  (change)="todoItemSelectionToggle($event.checked,node)">{{node.name}}</mat-checkbox>
-    </mat-tree-node>
-  </mat-tree>
-</mat-card>
+            <label for=""> Account Name</label> <input type="text" class="form-control">
 
+          </div>
+          <div class="input-group">
+
+          </div>
+
+        </tab>
+
+    </tabset>
+
+  </div>
+
+</div>
+</div>

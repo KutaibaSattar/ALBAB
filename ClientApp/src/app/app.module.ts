@@ -35,6 +35,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {TabsModule} from 'ngx-bootstrap/tabs';
+
 
 
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
@@ -61,7 +63,7 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
    JournalentryComponent,
    DbaccountComponent,
    TreeChecklistExampleComponent,
-   
+
     ],
 
   imports: [
@@ -87,8 +89,7 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
-
-
+    TabsModule.forRoot()
 
   ],
   providers: [

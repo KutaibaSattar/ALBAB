@@ -25,22 +25,20 @@ export class DbaccountComponent implements OnInit {
   constructor(private dbAccountService: DbaccountService) {}
 
 
-
+  selectedNode : dbAccounts ;
   treeControl: FlatTreeControl<dbAccounts>;
 
   treeFlattener: MatTreeFlattener<dbAccounts,dbAccounts>;
 
   dataSource: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
   dataSourceAccount: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
+  flatNodeMap = new Map<dbAccounts, dbAccounts>();
 
   ngOnInit(): void {
 
+
       this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,this.isExpandable, this.getChildren);
-
       this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
-
-
-
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
       this.getData();
@@ -119,7 +117,7 @@ export class DbaccountComponent implements OnInit {
 
   todoItemSelectionToggle(checked, node) {
     node.selected = checked;
-    if (node.children) {
+   if (node.children) {
       node.children.forEach(x => {
         this.todoItemSelectionToggle(checked, x);
       });
@@ -139,16 +137,18 @@ export class DbaccountComponent implements OnInit {
   setParent(data, parent) {
     data.parent = parent;
 
-    if (data.lvl < 1){
-      data.expand();
 
-    }
 
     if (data.children) {
       data.children.forEach(x => {
         this.setParent(x, data);
       });
     }
+  }
+
+  onClick(node){
+    console.log('Testing')
+    this.selectedNode = node
   }
 
 }

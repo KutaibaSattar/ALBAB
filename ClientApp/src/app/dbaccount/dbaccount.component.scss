@@ -1,0 +1,9 @@
+.mat-tree-node { min-height: 30px }
+p {
+  font-family: Lato;
+}
+
+::ng-deep .customClass > a {
+  background-color:rgb(174, 183, 192) !important;
+
+}
