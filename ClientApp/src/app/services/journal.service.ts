@@ -15,7 +15,7 @@ export class JournalService extends DataService {
   }
 
   getJournal() : Observable<Journal>  {
-    return this.getAll('journallist').pipe(
+    return this.getTableRecords('journallist').pipe(
       map((j: any) =>{
         return j.find(txn => txn.id === 1);
 

@@ -1,6 +1,13 @@
-.mat-tree-node { min-height: 30px }
+
+.mat-tree-node {
+
+  min-height: 30px;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: bolder
+}
 p {
-  font-family: Lato;
+  font-family:'Times New Roman', Times, serif;
+
 }
 
 ::ng-deep .customClass > a {

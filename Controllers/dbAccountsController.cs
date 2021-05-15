@@ -25,12 +25,12 @@ namespace ALBAB.Controllers
 
         }
 
-        //[Authorize]
+       
+               //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<dbAccountsDto>>> GetdbAccounts()
 
         {
-
 
             var dbaccounts = await _context.dbAccounts.ToListAsync();
 
@@ -49,6 +49,28 @@ namespace ALBAB.Controllers
 
 
         }
+       
+       [HttpPost]
+         public async Task<ActionResult<dbAccountsDto>> createDbAccounts(dbAccountsDto dbAccount)
+         {
+
+          
+           var dbaccount = _mapper.Map<dbAccountsDto,dbAccounts>(dbAccount);
+           
+
+           
+          _context.dbAccounts.Add(dbaccount);
+          
+           await _context.SaveChangesAsync();
+
+           //var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
+
+           var result = _mapper.Map<dbAccountsDto>(dbaccount);
+           
+           return Ok(result);  
+
+         }  
+
         //[Authorize]
         // api/dbAccounts/3
         [HttpGet("{id}")]

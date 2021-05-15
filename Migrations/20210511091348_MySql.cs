@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class MySQL : Migration
+    public partial class MySql : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,7 +78,8 @@ namespace ALBaB.Migrations
                     name = table.Column<string>(type: "text", nullable: true),
                     lvl = table.Column<int>(type: "int", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
-                    parentid = table.Column<int>(type: "int", nullable: true)
+                    parentid = table.Column<int>(type: "int", nullable: true),
+                    isexpandable = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {

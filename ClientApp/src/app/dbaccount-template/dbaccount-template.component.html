@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+
+  <div *ngIf="!isChild" class="form-inline">
+    <label  class="col-3 justify-content-start">Account Id</label>
+    <input  formControlName="Id" class="form-control col-5 " type="text"
+      placeholder="Key Id" readonly>
+  </div>
+ <br>
+  <div *ngIf="!isChild" class="form-inline">
+    <label  class="col-3 justify-content-start">Account Level</label>
+    <input  formControlName="lvl" class="form-control col-5 " type="text"
+      placeholder="Key Id" readonly>
+  </div>
+  <br>
+  <div class="form-inline">
+    <label class="col-3 justify-content-start">Account Key</label>
+    <input formControlName="Key" class="form-control col-5 " type="text"
+      placeholder="Key Id">
+
+  </div>
+ <br>
+  <div class="form-inline">
+    <label  class="col-3 justify-content-start">Account Name</label>
+    <input formControlName="Name" class="form-control col-5" type="text"
+      placeholder="Key Id">
+  </div>
+
+
+    <br>
+    <div class="form-inline justify-content-start">
+      <label class="form-check-label ml-2">
+        <input type="checkbox" class="form-check-input"  formControlName="isExpandable"
+        placeholder="Is Expandable"> Is Expandable
+    </label>
+
+
+      </div>
+
+
+
+</form>

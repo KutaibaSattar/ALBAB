@@ -19,7 +19,7 @@ export class PurchaseService extends DataService {
 
 
   getPurchases() {
-    return this.getAll('purchlist').pipe(
+    return this.getTableRecords('purchlist').pipe(
       map((purch: IPurchase) => {
         if (purch) {
           const purchase = purch[0];
@@ -38,7 +38,7 @@ export class PurchaseService extends DataService {
   }
 
   getPurchInv(InvNo: string) {
-    return this.getById(InvNo, 'purchinv/');
+    return this.getTableRecordId(InvNo, 'purchinv/');
   }
 
   UpdaePurchInv(purchase: IPurchase) {
@@ -56,7 +56,7 @@ export class PurchaseService extends DataService {
 
   deletePurchase(id: number) {
 
-   return this.delete(id);
+   return this.deleteTableRecord(id);
 
   }
 }

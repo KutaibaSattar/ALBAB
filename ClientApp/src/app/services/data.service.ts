@@ -12,27 +12,35 @@ export class DataService {
   constructor(private baseUrl: string, protected http: HttpClient) { }
 
   // tslint:disable-next-line: typedef
- protected getAll(extraLocation: string ='') {
+ protected getTableRecords(extraLocation: string ='') {
     return this.http.get(this.baseUrl + extraLocation);
 
   }
 
   // tslint:disable-next-line: typedef
-  protected create(resource){
-    return this.http.post(this.baseUrl , resource );
+  protected createTableRecords(resource,extraLocation: string =''){
+    return this.http.post(this.baseUrl+ extraLocation , resource );
 
   }
 
   // tslint:disable-next-line: typedef
-  protected delete(id){
+  protected deleteTableRecord(id){
       return this.http.delete(this.baseUrl + id);
   }
 
-  protected getById(id,extraLocation: string ='') : Observable<any>{
+  protected getTableRecordId(id,extraLocation: string ='') : Observable<any>{
 
    return this.http.get(this.baseUrl + extraLocation + id);
 
   }
+
+  protected UpdateTable(id,extraLocation: string ='') : Observable<any>{
+
+   return this.http.get(this.baseUrl + extraLocation + id);
+
+  }
+
+
 
 
 }

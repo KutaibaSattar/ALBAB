@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DbaccountService } from 'app/services/dbaccount.service';
+import { DbAccountService } from 'app/services/dbaccount.service';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { SelectionModel } from '@angular/cdk/collections';
+import { FormControl, FormGroup } from '@angular/forms';
+import { dbAccounts, dbAccountsNewChild, dbAccountsNode } from 'app/models/dbaccounts';
 
-export class dbAccounts {
+/* export class dbAccounts {
   children: dbAccounts[];
   name:string;
   keyId : string;
@@ -12,7 +14,7 @@ export class dbAccounts {
   lvl:number;
   selected?: boolean;
 
- }
+ } */
 
 
 @Component({
@@ -22,17 +24,31 @@ export class dbAccounts {
 })
 export class DbaccountComponent implements OnInit {
 
-  constructor(private dbAccountService: DbaccountService) {}
+  constructor(private dbAccountService: DbAccountService) {}
 
+  mainDbAccountForm = new FormGroup({
+    Id : new FormControl(),
+    Key : new FormControl(),
+    Name : new FormControl(),
+    lvl :new FormControl(),
+    isExpandable : new FormControl(false)
+
+  })
+  childDbAccountForm = new FormGroup({
+    Key : new FormControl(),
+    Name : new FormControl(),
+    isExpandable : new FormControl(false)
+
+  })
 
   selectedNode : dbAccounts ;
-  treeControl: FlatTreeControl<dbAccounts>;
+  treeControl: FlatTreeControl<dbAccountsNode>;
 
-  treeFlattener: MatTreeFlattener<dbAccounts,dbAccounts>;
+  treeFlattener: MatTreeFlattener<dbAccountsNode,dbAccountsNode>;
 
-  dataSource: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
-  dataSourceAccount: MatTreeFlatDataSource<dbAccounts, dbAccounts>;
-  flatNodeMap = new Map<dbAccounts, dbAccounts>();
+  dataSource: MatTreeFlatDataSource<dbAccountsNode, dbAccountsNode>;
+  dataSourceAccount: MatTreeFlatDataSource<dbAccountsNode, dbAccountsNode>;
+  flatNodeMap = new Map<dbAccountsNode, dbAccountsNode>();
 
   ngOnInit(): void {
 
@@ -46,16 +62,13 @@ export class DbaccountComponent implements OnInit {
 
 
   }
+
+
   getData(){
 
-    this.dbAccountService.getAccounts().subscribe(
+    this.dbAccountService.getDbAccounts().subscribe(
 
-      (res: dbAccounts[]) => {
-
-
-
-
-
+      (res: dbAccountsNode[]) => {
 
         //this.dataSource.data = TREE_DATA;
         // Notify the change.
@@ -87,30 +100,30 @@ export class DbaccountComponent implements OnInit {
 
 
 
-  getLevel = (node: dbAccounts): number => {
+  getLevel = (node: dbAccountsNode): number => {
     //return node.lvl
     return node.lvl;
   };
 
-  isExpandable = (node: dbAccounts): boolean => {
+  isExpandable = (node: dbAccountsNode): boolean => {
     return node.children.length > 0; // second calling for seting isexpandable property to node
   };
 
-  getChildren = (node: dbAccounts) => {
+  getChildren = (node: dbAccountsNode) => {
     return node.children;
   };
 
-  transformer = (node: dbAccounts, level: number) => { // first calling to map (node level with key) and return node
+  transformer = (node: dbAccountsNode, level: number) => { // first calling to map (node level with key) and return node
     //this.levels.set(node, level);
     node["selected"] = false;
     return node;
   }
 
-  hasChildren = (index: number, node: dbAccounts): boolean => {
+  hasChildren = (index: number, node: dbAccountsNode): boolean => {
     return node.children.length > 0;
   };
 
-  isOdd(node: dbAccounts) {
+  isOdd(node: dbAccountsNode) {
     return node.children.length > 0
     //return this.getLevel(node) % 2 === 1;
   }
@@ -146,9 +159,33 @@ export class DbaccountComponent implements OnInit {
     }
   }
 
-  onClick(node){
-    console.log('Testing')
-    this.selectedNode = node
+  onSelect(node : dbAccounts){
+     this.selectedNode = node
+     this.mainDbAccountForm.patchValue({
+      Key: node.keyId,
+      Name: node.name,
+      isExpandable: node.isExpandable,
+      Id: node.id,
+      lvl:node.lvl
+    })
+  }
+
+  onCreate(){
+
+    const dbaccountNewChild : dbAccountsNewChild = {
+      id:0,
+      keyId : this.childDbAccountForm.controls.Key.value,
+      name : this.childDbAccountForm.controls.Name.value,
+      lvl : this.selectedNode.lvl +1,
+      parentId : this.selectedNode.id,
+      isExpandable : this.childDbAccountForm.controls.isExpandable.value
+
+    };
+    this.dbAccountService.createDbAccount(dbaccountNewChild).subscribe(
+      res => console.log(res)
+
+    )
+
   }
 
 }

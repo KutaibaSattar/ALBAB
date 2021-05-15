@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210509062354_IsExpandableDbAccount1")]
-    partial class IsExpandableDbAccount1
+    [Migration("20210511091348_MySql")]
+    partial class MySql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

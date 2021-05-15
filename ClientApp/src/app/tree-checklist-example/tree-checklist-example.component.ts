@@ -3,7 +3,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component, Injectable,OnInit} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import { DbaccountService } from 'app/services/dbaccount.service';
+import { DbAccountService } from 'app/services/dbaccount.service';
 import {BehaviorSubject} from 'rxjs';
 
 /**
@@ -41,7 +41,7 @@ export class ChecklistDatabase {
   get data(): dbAccounts[] { return this.dataChange.value; }
 
 
-  constructor(private dbAccountService: DbaccountService) {
+  constructor(private dbAccountService: DbAccountService) {
     this.initialize();
   }
 
@@ -51,7 +51,7 @@ export class ChecklistDatabase {
     // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
     //     file node as children.
 
-    this.dbAccountService.getAccounts().subscribe(
+    this.dbAccountService.getDbAccounts().subscribe(
 
       (res: any) => {
 

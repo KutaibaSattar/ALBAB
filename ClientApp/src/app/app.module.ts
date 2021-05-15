@@ -40,6 +40,8 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
 
 
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
+import { DbaccountTemplateComponent } from './dbaccount-template/dbaccount-template.component';
+
 
 
 
@@ -63,6 +65,8 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
    JournalentryComponent,
    DbaccountComponent,
    TreeChecklistExampleComponent,
+   DbaccountTemplateComponent,
+ 
 
     ],
 
