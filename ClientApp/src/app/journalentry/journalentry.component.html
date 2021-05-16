@@ -23,85 +23,91 @@
     </div>
   </div>
 </section>
+
 <div class="container">
   <form [formGroup]="" (keydown.enter)="$event.preventDefault()">
     <div class="row">
-      <!--  -->
-      <div class="col-md-3">
-        <div class="form-group">
-          <label class="font-weight-bold">No</label>
-          <div class="input-group">
-            <input type="text" class="form-control" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <label class="font-weight-bold">Date</label>
-        <input type="date" name="purNo" class="form-control" />
 
-        <span></span>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="font-weight-bold">Account</label>
-          <div class="input-group">
-            <input type="text" class="form-control" />
+        <div class="card col-6">
+          <div class="card-header bg-primary font-weight-bold mt-1"> Journal Details </div>
+          <div class="row">
+            <!--  -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">No</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="font-weight-bold">Date</label>
+              <input type="date" name="purNo" class="form-control" />
+
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Note</label>
+              <div class="input-group">
+                <input class="form-control" />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="card col-6">
+          <div class="card-header bg-primary font-weight-bold mt-1"> Credit </div>
+          <div class="row">
+            <!--  -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Account</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="font-weight-bold">Date</label>
+              <input type="date" name="purNo" class="form-control" />
+
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Note</label>
+              <div class="input-group">
+                <input class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
     </div>
+
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Payment Method</label>
-          <select name="pMethod" class="form-control">
-            <option value="">-Select-</option>
-            <option value="Cash">Cash</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Card">Card</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label>Grand Total</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">AED</div>
-          </div>
 
-          <input class="form-control" readonly />
-        </div>
+      <div class="bg-info py-2 col-12">
+        Debit Account
       </div>
+      <ng-container>
+        <!-- Table Header -->
+        <table class="table table-bordered table-dark table-hover table-sm table-condensed">
+          <thead class="thead-light">
+            <tr>
+              <th style="width: 30%">Account</th>
+              <th style="width: 10%">Debit</th>
+              <th style="width: 10%">Date</th>
+            </tr>
+          </thead>
+          <!-- Table Body -->
+          <tbody></tbody>
+        </table>
+      </ng-container>
     </div>
-
-    <header id="main-header" class="bg-secondary text-white">
-      <div class="container">
-        <div class="row pb-2 pt-1">
-          <div class="col-md-12"></div>
-        </div>
-      </div>
-    </header>
-
-    <ng-container>
-      <!-- Table Header -->
-      <table
-        class="table table-bordered table-dark table-hover table-sm table-condensed"
-      >
-        <thead class="thead-light">
-          <tr>
-            <th style="width: 30%">Account</th>
-            <th style="width: 10%">Price</th>
-            <th style="width: 10%">Quantity</th>
-            <th style="width: 10%">Total</th>
-            <th style="width: 10%">Action</th>
-          </tr>
-        </thead>
-        <!-- Table Body -->
-        <tbody></tbody>
-      </table>
-    </ng-container>
     <!-- <pre>{{purchHdr.value | json}}</pre> -->
-
-    <div class="form-group"></div>
   </form>
 </div>

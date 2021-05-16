@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210511091348_MySql")]
-    partial class MySql
+    [Migration("20210516070021_CreatingDB")]
+    partial class CreatingDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -255,13 +255,13 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("journalno");
 
+                    b.Property<string>("JournalType")
+                        .HasColumnType("text")
+                        .HasColumnName("journaltype");
+
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
-
-                    b.Property<string>("SeriesNo")
-                        .HasColumnType("text")
-                        .HasColumnName("seriesno");
 
                     b.Property<DateTime>("entryDate")
                         .HasColumnType("datetime")

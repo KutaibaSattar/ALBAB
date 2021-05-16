@@ -95,20 +95,27 @@ export class PurchasesComponent implements OnInit {
     this.formPurchHdr = this.formBuilder.group({
       id: 0,
       purNo: [null, Validators.required],
-      appUserId: [
-        null,
-        [Validators.required, DropDownValidators.shouldLimited],
-      ],
+      appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
       purDate: [null, Validators.required],
       subFormPurchDtl: this.formBuilder.array([this.initSection()]),
     });
-
     this.appUserId = this.formPurchHdr.get('appUserId') as FormControl;
     this.purNo = this.formPurchHdr.get('purNo') as FormControl;
     this.purDate = this.formPurchHdr.get('purDate') as FormControl;
     this.invoiceId = this.formPurchHdr.get('id') as FormControl;
     this.purchDtl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
   }
+
+  initSection(): FormGroup {
+    return this.formBuilder.group({
+      id: 0,
+      productId: [null, Validators.required],
+      price: [null, Validators.required],
+      quantity: [null, Validators.required],
+      unitTotalPrice: [{ value: '', disabled: true }],
+    });
+  }
+
 
   attachedUserFilter(): any {
     this.filteredUsers$ = this.formPurchHdr.get('appUserId').valueChanges.pipe(
@@ -158,15 +165,7 @@ export class PurchasesComponent implements OnInit {
     this.listenToChanging(controls.length - 1);
   }
 
-  initSection(): FormGroup {
-    return this.formBuilder.group({
-      id: 0,
-      productId: [null, Validators.required],
-      price: [null, Validators.required],
-      quantity: [null, Validators.required],
-      unitTotalPrice: [{ value: '', disabled: true }],
-    });
-  }
+
 
   getSections(form: FormGroup) {
     if ((form.controls.subFormPurchDtl as FormArray).controls.length > 0)

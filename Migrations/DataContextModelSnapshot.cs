@@ -253,13 +253,13 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("journalno");
 
+                    b.Property<string>("JournalType")
+                        .HasColumnType("text")
+                        .HasColumnName("journaltype");
+
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
-
-                    b.Property<string>("SeriesNo")
-                        .HasColumnType("text")
-                        .HasColumnName("seriesno");
 
                     b.Property<DateTime>("entryDate")
                         .HasColumnType("datetime")

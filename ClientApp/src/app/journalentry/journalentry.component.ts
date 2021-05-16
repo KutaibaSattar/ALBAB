@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Journal } from 'app/models/journal';
 import { JournalService } from 'app/services/journal.service';
 
@@ -9,7 +10,28 @@ import { JournalService } from 'app/services/journal.service';
 })
 export class JournalentryComponent implements OnInit {
 
-  constructor(private JournalService : JournalService) { }
+  constructor(private JournalService : JournalService,private fb: FormBuilder) { }
+
+  frmJournal = this.fb.group({
+  journalNo : [null],
+  note : new FormControl(),
+  entryDate : new FormControl(),
+
+  frmRelatedAccount : this.fb.group({
+    relatedAccount : new FormControl(),
+    note : new FormControl(),
+    amount : new FormControl(),
+  }),
+
+  frmAccounts : this.fb.array([
+    account : new FormGroup({
+
+
+    })
+
+  ])
+
+  })
 
   ngOnInit(): void {
 

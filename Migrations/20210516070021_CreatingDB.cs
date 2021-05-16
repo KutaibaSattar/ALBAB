@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class MySql : Migration
+    public partial class CreatingDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,7 +99,7 @@ namespace ALBaB.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     journalno = table.Column<int>(type: "int", nullable: false),
-                    seriesno = table.Column<string>(type: "text", nullable: true),
+                    journaltype = table.Column<string>(type: "text", nullable: true),
                     note = table.Column<string>(type: "text", nullable: true),
                     entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)

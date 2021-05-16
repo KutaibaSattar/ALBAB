@@ -1,7 +1,7 @@
 export interface Journal{
   id: number;
   journalNo: number;
-  seriesNo: string;
+  JournalType: string;
   note: string;
   entryDate: string;
   created: string;
@@ -16,7 +16,7 @@ export interface Journal{
 export interface JournalEntry {
   id: number;
   journalNo: number;
-  seriesNo: string;
+  JournalType: string;
   note: string;
   entryDate: string;
   created: string;
@@ -32,5 +32,3 @@ export interface JournalAccount {
   debit: number;
   refNo: string;
 }
-
-
