@@ -147,7 +147,7 @@
         <!-- Table Body -->
           <tbody *ngFor="let section of getSections(formPurchHdr); let i = index" >
                 <tr [formGroupName]="i">
-                  <th>
+                  <td>
                     <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
                       placeholder="New item">
 
@@ -156,11 +156,11 @@
                         {{option.name}}
                       </mat-option>
                     </mat-autocomplete>
-                  </th>
-                   <th> <input type="number" class="form-control" placeholder="Price" formControlName="price"  > </th>
-                  <th> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" ></th>
-                  <th> <input type="number" class="form-control" placeholder="UnitTotal"  formControlName="unitTotalPrice" ></th>
-                  <th>  <button class="fa fa-save btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Delete</button></th>
+                  </td>
+                   <td> <input type="number" class="form-control" placeholder="Price" formControlName="price"  > </td>
+                  <td> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" ></td>
+                  <td> <input type="number" class="form-control" placeholder="UnitTotal"  formControlName="unitTotalPrice" ></td>
+                  <td>  <button class="fa fa-save btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Delete</button></td>
 
 
 
@@ -180,4 +180,3 @@
   </form>
 
 </div>
-

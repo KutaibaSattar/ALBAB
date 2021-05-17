@@ -1,18 +1,3 @@
-export interface Journal{
-  id: number;
-  journalNo: number;
-  JournalType: string;
-  note: string;
-  entryDate: string;
-  created: string;
-  journalAccount: JournalAccount[];
-
-
-}
-
-
-
-
 export interface JournalEntry {
   id: number;
   journalNo: number;
@@ -20,7 +5,6 @@ export interface JournalEntry {
   note: string;
   entryDate: string;
   created: string;
-
 }
 export interface JournalAccount {
   id: number;
@@ -31,4 +15,21 @@ export interface JournalAccount {
   credit: number;
   debit: number;
   refNo: string;
+}
+
+export class Journal{
+  id: number;
+  journalNo: number;
+  JournalType: string;
+  note: string;
+  entryDate: string;
+  created: string;
+  journalAccounts: JournalAccount[];
+
+}
+export interface JournalSingle{
+  entry : JournalEntry;
+  singleAccount: JournalAccount;
+  journalAccounts: JournalAccount[];
+
 }

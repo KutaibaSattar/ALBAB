@@ -16,7 +16,7 @@
       <div class="col-md-6 ml-auto">
         <div class="input-group">
           <div class="input-group-append">
-            <button class="fa fa-search ml-1 btn btn-success">Search</button>
+            <button (click)="addItem(frmJournal.value)" class="fa fa-search ml-1 btn btn-success">Search</button>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
 </section>
 
 <div class="container">
-  <form [formGroup]="" (keydown.enter)="$event.preventDefault()">
+  <form [formGroup]="frmJournal" (keydown.enter)="$event.preventDefault()">
     <div class="row">
 
         <div class="card col-6">
@@ -36,13 +36,13 @@
               <div class="form-group">
                 <label class="font-weight-bold">No</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" />
+                  <input formControlName="journalNo" type="text" class="form-control" />
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <label class="font-weight-bold">Date</label>
-              <input type="date" name="purNo" class="form-control" />
+              <input formControlName="entryDate" type="date" name="purNo" class="form-control" />
 
             </div>
 
@@ -51,12 +51,12 @@
             <div class="col-md-12">
               <label>Note</label>
               <div class="input-group">
-                <input class="form-control" />
+                <input formControlName="note" class="form-control" />
               </div>
             </div>
           </div>
         </div>
-        <div class="card col-6">
+        <div  formGroupName ="singleAccount" class="card col-6">
           <div class="card-header bg-primary font-weight-bold mt-1"> Credit </div>
           <div class="row">
             <!--  -->
@@ -64,13 +64,13 @@
               <div class="form-group">
                 <label class="font-weight-bold">Account</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" />
+                  <input formControlName="account" type="text" class="form-control" />
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <label class="font-weight-bold">Date</label>
-              <input type="date" name="purNo" class="form-control" />
+              <input type="date" formControlName="dueDate" class="form-control" />
 
             </div>
 
@@ -79,7 +79,7 @@
             <div class="col-md-12">
               <label>Note</label>
               <div class="input-group">
-                <input class="form-control" />
+                <input formControlName="note" class="form-control" />
               </div>
             </div>
           </div>
@@ -90,24 +90,53 @@
 
     <div class="row">
 
-      <div class="bg-info py-2 col-12">
-        Debit Account
-      </div>
-      <ng-container>
+
+
+
+        <div class="bg-info py-1 col-12 form-inline">
+         Debit Accounts
+         <div class="input-group ml-auto">
+          <div class="input-group-prepend">
+            <div class="input-group-text">AED</div>
+          </div>
+          <input name="gtotal" [formControl] = ''class="form-control " readonly>
+        </div>
+        </div>
+
+
+      <ng-container formArrayName="journalAccounts">
         <!-- Table Header -->
         <table class="table table-bordered table-dark table-hover table-sm table-condensed">
           <thead class="thead-light">
             <tr>
               <th style="width: 30%">Account</th>
+              <th style="width: 10%">Note</th>
               <th style="width: 10%">Debit</th>
               <th style="width: 10%">Date</th>
             </tr>
           </thead>
           <!-- Table Body -->
-          <tbody></tbody>
+          <tbody>
+            <tr [formGroupName]="0">
+              <td>
+                <input formControlName="account" class="form-control" />
+              </td>
+              <td>
+                <input formControlName="note" class="form-control" />
+              </td>
+              <td>
+                <input formControlName="debit" class="form-control" />
+              </td>
+              <td>
+                <input formControlName="dueDate" class="form-control" />
+              </td>
+
+            </tr>
+
+          </tbody>
         </table>
       </ng-container>
     </div>
-    <!-- <pre>{{purchHdr.value | json}}</pre> -->
+    <pre>{{frmJournal.value | json}}</pre>
   </form>
 </div>
