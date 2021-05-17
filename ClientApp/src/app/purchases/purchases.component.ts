@@ -52,6 +52,8 @@ export class PurchasesComponent implements OnInit {
   invoiceId: FormControl;
   purchDtl: FormArray;
 
+  grdTotal = new FormControl(''); // sepearated
+
   purchInv: IPurchase = new IPurchase();
 
   filteredUsers$: Observable<Array<Member>>;
@@ -60,7 +62,7 @@ export class PurchasesComponent implements OnInit {
 
   totalSum: number[] = [];
   priceChanges$ = [];
-  grdTotal = new FormControl('');
+
 
 
 
