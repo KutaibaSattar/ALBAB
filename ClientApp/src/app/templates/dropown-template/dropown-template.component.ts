@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 export class DropownTemplateComponent implements OnInit {
 
   @Input() filtered$: Observable<Array<any>>;
+  @Input() controlName : FormControl
 
   constructor() { }
 

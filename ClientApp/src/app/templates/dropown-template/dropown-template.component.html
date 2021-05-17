@@ -1,4 +1,4 @@
-<input type="text" class="form-control" matInput formControlName="appUserId" [matAutocomplete]="textinput"
+<input type="text" class="form-control" matInput [formControl]= controlName [matAutocomplete]="textinput"
               placeholder="Customer">
             <mat-autocomplete  #textinput="matAutocomplete">
               <mat-option *ngFor="let option of filtered$ | async" [value]="option.id">
