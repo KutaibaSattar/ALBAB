@@ -64,14 +64,15 @@
         <div class="form-group">
           <label >Supplier</label>
           <div class="input-group">
-            <input type="text" class="form-control" matInput formControlName="appUserId" [matAutocomplete]="customers"
+            <!-- <input type="text" class="form-control" matInput formControlName="appUserId" [matAutocomplete]="customers"
               placeholder="Customer" [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
             <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete"
               [displayWith]="displayFn.bind(this)">
               <mat-option *ngFor="let option of filteredUsers$ | async" [value]="option.id">
                 {{option.displayName}} - {{option.userId}}
               </mat-option>
-            </mat-autocomplete>
+            </mat-autocomplete> -->
+            <app-dropown-template [filtered$]= filteredUsers$  ></app-dropown-template>
             <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
               class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span>
