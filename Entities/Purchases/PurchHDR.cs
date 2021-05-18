@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities;
 
 namespace ALBAB.Entities.Purchases
 {
@@ -19,7 +20,16 @@ namespace ALBAB.Entities.Purchases
         [Required]
         public int? AppUserId { get; set; }
         public dbAccounts Account { get; set; }
-        public int AccountId { get; set; }
+       
+        //public int AccountId { get; set; }
+        ReservedAccountsType.Clients
+         public int AccountId 
+           { // not allowed more than 50
+            get => AccountId;
+
+            set => AccountId = (value == 0) ? 30 : value;
+
+           }
         public ICollection <InvDetail> InvDetail { get; set; }
          public Invoice()
         {

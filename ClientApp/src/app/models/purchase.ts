@@ -3,6 +3,8 @@ export interface IInvoice{
   purNo:string
   purDate :Date
   appUserId:number
+  comment : string,
+  accountId: number
   purchDtl : IInvDetail[];
 }
 

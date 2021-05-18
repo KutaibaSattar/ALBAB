@@ -16,8 +16,8 @@ export class MembersComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     $key: new FormControl(null),
-    userId: new FormControl(''),
-    dispalyName: new FormControl(''),
+    keyId: new FormControl(''),
+    name: new FormControl(''),
   });
 
   ngOnInit(): void {

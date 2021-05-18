@@ -308,7 +308,7 @@ export class PurchasesComponent implements OnInit {
 
     if (this.formInvoice.valid) {
       this.purchInv = this.formInvoice.value;
-      this.purchInv.purchDtl = this.invDetail.value;
+      //this.purchInv.purchDtl = this.invDetail.value;
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
         this.toastr.success('Invoice updated successfully');

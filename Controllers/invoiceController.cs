@@ -83,6 +83,8 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+
+
          var invoice = _mapper.Map<InvoiceRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;

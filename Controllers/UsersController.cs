@@ -104,9 +104,9 @@ namespace ALBAB.Controllers
             return Ok(userToReturn);
         }
 
-          private async Task<bool> UserExists(string userId)
+          private async Task<bool> UserExists(string keyId)
         {
-          return await _userManager.FindByNameAsync(userId)  != null;
+          return await _userManager.FindByNameAsync(keyId)  != null;
 
 
         }

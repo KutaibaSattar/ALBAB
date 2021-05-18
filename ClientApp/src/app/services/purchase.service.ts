@@ -42,9 +42,11 @@ export class PurchaseService extends DataService {
   }
 
   UpdaePurchInv(purchase: IInvoice) {
-    if (purchase.id) return this.http.put<IInvoice>('https://localhost:5001/api/invoices',purchase);
+    if (purchase.id)
+    return this.UpdateTable(purchase);
+    //return this.http.put<IInvoice>('https://localhost:5001/api/invoices',purchase);
 
-    return this.http.post<IInvoice>('https://localhost:5001/api/invoices',purchase);
+    return this.createTableRecords(purchase);
     //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
   }
 
