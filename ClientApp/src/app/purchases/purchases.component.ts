@@ -7,7 +7,7 @@ import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { IPurchase } from 'app/models/purchase';
+import { IInvoice } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
 import { ProductService } from 'app/services/product.service';
@@ -45,16 +45,16 @@ export class PurchasesComponent implements OnInit {
   products: Product[];
   txtSearchInv: string;
   purchNos: [{ id: number; purNo: string }];
-  formPurchHdr: FormGroup;
+  formInvoice: FormGroup;
   appUserId: FormControl;
   purNo: FormControl;
   purDate: FormControl;
   invoiceId: FormControl;
-  purchDtl: FormArray;
+  invDetail: FormArray;
 
   grdTotal = new FormControl(''); // sepearated
 
-  purchInv: IPurchase = new IPurchase();
+  purchInv: IInvoice = new IInvoice();
 
   //filteredUsers$: Observable<Array<Member>>;
   filteredItems$: Observable<Array<Product>>[] = [];
@@ -100,18 +100,18 @@ export class PurchasesComponent implements OnInit {
   }
 
   initializeForm() {
-    this.formPurchHdr = this.formBuilder.group({
+    this.formInvoice = this.formBuilder.group({
       id: 0,
       purNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
       purDate: [null, Validators.required],
-      subFormPurchDtl: this.formBuilder.array([this.initSection()]),
+      invDetails: this.formBuilder.array([this.initSection()]),
     });
-    this.appUserId = this.formPurchHdr.get('appUserId') as FormControl;
-    this.purNo = this.formPurchHdr.get('purNo') as FormControl;
-    this.purDate = this.formPurchHdr.get('purDate') as FormControl;
-    this.invoiceId = this.formPurchHdr.get('id') as FormControl;
-    this.purchDtl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
+    this.appUserId = this.formInvoice.get('appUserId') as FormControl;
+    this.purNo = this.formInvoice.get('purNo') as FormControl;
+    this.purDate = this.formInvoice.get('purDate') as FormControl;
+    this.invoiceId = this.formInvoice.get('id') as FormControl;
+    this.invDetail = this.formInvoice.get('invDetails') as FormArray;
   }
 
   initSection(): FormGroup {
@@ -128,17 +128,12 @@ export class PurchasesComponent implements OnInit {
 
 
   attachItemFilter(index: number) {
-    var arrayControl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
+    var arrayControl = this.formInvoice.get('invDetails') as FormArray;
 
     this.filteredItems$[index] = arrayControl
       .at(index)
       .get('productId')
-      .valueChanges.pipe(
-        startWith(''),
-        /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-        map((val) => this._filter(val))
-      );
+      .valueChanges.pipe(startWith(''),map((val) => this._filter(val)));
   }
 
   private _filter(val: any): Product[] {
@@ -175,7 +170,7 @@ export class PurchasesComponent implements OnInit {
 
 
   addRecord() {
-    const controls = <FormArray>this.formPurchHdr.get('subFormPurchDtl');
+    const controls = <FormArray>this.formInvoice.get('invDetails');
     controls.push(this.initSection());
     // Build the account Auto Complete values
     this.attachItemFilter(controls.length - 1);
@@ -185,47 +180,47 @@ export class PurchasesComponent implements OnInit {
 
 
   getSections(form: FormGroup) {
-    if ((form.controls.subFormPurchDtl as FormArray).controls.length > 0)
-      return (<FormArray>form.controls.subFormPurchDtl).controls;
+    if ((form.controls.invDetails as FormArray).controls.length > 0)
+      return (<FormArray>form.controls.invDetails).controls;
   }
 
 
 
   listenToChanging(index: number) {
-    this.purchDtl
+    this.invDetail
       .at(index)
       .get('price')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
 
-    this.purchDtl
+    this.invDetail
       .at(index)
       .get('quantity')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
   }
 
   private updateTotalUnitPrice(index: number) {
-    this.purchDtl
+    this.invDetail
       .at(index)
       .get('unitTotalPrice')
       .setValue(
-        this.purchDtl.at(index).get('price').value *
-          this.purchDtl.at(index).get('quantity').value
+        this.invDetail.at(index).get('price').value *
+          this.invDetail.at(index).get('quantity').value
       );
 
     this.totalSum.splice(
       index,
       1,
-      this.purchDtl.at(index).get('unitTotalPrice').value
+      this.invDetail.at(index).get('unitTotalPrice').value
     );
     console.log(this.totalSum.reduce((sum, current) => sum + current));
 
     console.log(
-      this.purchDtl
+      this.invDetail
         .getRawValue()
         .reduce((sum, current) => sum + current.unitTotalPrice, 0)
     );
     this.grdTotal.setValue(
-      this.purchDtl
+      this.invDetail
         .getRawValue()
         .reduce((sum, current) => sum + current.unitTotalPrice, 0)
     );
@@ -270,7 +265,7 @@ export class PurchasesComponent implements OnInit {
         .getPurchInv(this.txtSearchInv)
         .subscribe((result) => {
           this.purchInv = result;
-          this.formPurchHdr.patchValue({
+          this.formInvoice.patchValue({
             id: this.purchInv.id,
             purNo: this.purchInv.purNo,
             appUserId: this.purchInv.appUserId,
@@ -280,23 +275,23 @@ export class PurchasesComponent implements OnInit {
             ),
           });
 
-          if (this.formPurchHdr.dirty) {
+          if (this.formInvoice.dirty) {
             //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
           }
 
-          if (this.purchDtl.length > 0) {
-            this.purchDtl.controls = []; // delete balnck one
+          if (this.invDetail.length > 0) {
+            this.invDetail.controls = []; // delete balnck one
           }
 
           this.purchInv.purchDtl.map((item) => {
             const group = this.initSection();
             group.patchValue(item);
 
-            let arrayLength = (this.formPurchHdr.get(
-              'subFormPurchDtl'
+            let arrayLength = (this.formInvoice.get(
+              'invDetails'
             ) as FormArray).controls.length;
 
-            (this.formPurchHdr.get('subFormPurchDtl') as FormArray).push(group);
+            (this.formInvoice.get('invDetails') as FormArray).push(group);
 
             this.listenToChanging(arrayLength);
             this.updateTotalUnitPrice(arrayLength);
@@ -309,29 +304,29 @@ export class PurchasesComponent implements OnInit {
   }
 
   OnSubmit() {
-    this.formPurchHdr.markAllAsTouched();
+    this.formInvoice.markAllAsTouched();
 
-    if (this.formPurchHdr.valid) {
-      this.purchInv = this.formPurchHdr.value;
-      this.purchInv.purchDtl = this.purchDtl.value;
+    if (this.formInvoice.valid) {
+      this.purchInv = this.formInvoice.value;
+      this.purchInv.purchDtl = this.invDetail.value;
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {
         this.toastr.success('Invoice updated successfully');
-        this.formPurchHdr.markAsPristine();
+        this.formInvoice.markAsPristine();
       });
     }
   }
 
   removeUnit(i: number) {
-    this.purchDtl.removeAt(i);
+    this.invDetail.removeAt(i);
   }
 
   NewInv() {
-    if (this.formPurchHdr.dirty) {
+    if (this.formInvoice.dirty) {
       //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
     }
 
-    this.formPurchHdr.reset();
+    this.formInvoice.reset();
   }
 
   deleteInv() {
@@ -349,8 +344,8 @@ export class PurchasesComponent implements OnInit {
               .deletePurchase(this.invoiceId.value)
               .subscribe((resp) => {
                 this.toastr.success('Invoice deleted successfully');
-                this.formPurchHdr.reset();
-                this.purchDtl.controls = [];
+                this.formInvoice.reset();
+                this.invDetail.controls = [];
                 this.addRecord();
               });
           }

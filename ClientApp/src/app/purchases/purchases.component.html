@@ -34,7 +34,7 @@
   </div>
 </section>
 <div *ngIf="purchInv"  class="container">
-  <form [formGroup]="formPurchHdr" (ngSubmit)="OnSubmit()" (keydown.enter)="$event.preventDefault()">
+  <form [formGroup]="formInvoice" (ngSubmit)="OnSubmit()" (keydown.enter)="$event.preventDefault()">
     <div class="row">
       <!--  -->
       <div class="col-md-3">
@@ -128,7 +128,7 @@
       </div>
     </header>
 
-    <ng-container formArrayName="subFormPurchDtl">
+    <ng-container formArrayName="InvDetails">
 
       <!-- Table Header -->
       <table class="table table-bordered table-dark table-hover table-sm table-condensed">
@@ -146,7 +146,7 @@
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let section of getSections(formPurchHdr); let i = index" >
+          <tbody *ngFor="let section of getSections(formInvoice); let i = index" >
                 <tr [formGroupName]="i">
                   <td>
                     <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
@@ -168,7 +168,7 @@
           </tbody>
       </table>
     </ng-container>
-        <pre>{{formPurchHdr.value | json}}</pre>
+        <pre>{{formInvoice.value | json}}</pre>
 
 
 

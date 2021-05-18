@@ -35,31 +35,31 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Brand, opt => opt.MapFrom(src => src.Model.Brand.Name))
             .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
-             CreateMap<PurchHdr,SavePurchHdrDto>()
+             CreateMap<Invoice,InvoiceRes>()
              /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
-             .ForMember(dst => dst.purchDtl, opt => opt.MapFrom(src => src.purchDtl));
+             .ForMember(dst => dst.invDetails, opt => opt.MapFrom(src => src.InvDetail));
 
-             CreateMap<SavePurchHdrDto,PurchHdr>()
+             CreateMap<InvoiceRes,Invoice>()
               .ForMember(dst => dst.Id , opt => opt.Ignore())
-               .ForMember(dst => dst.purchDtl, opt => opt.Ignore())
+               .ForMember(dst => dst.InvDetail, opt => opt.Ignore())
                .AfterMap((phr,ph)=> {
 
                    // removing deleting items
 
-               var removedItems = new List<PurchDtl>();
-                foreach (var item in ph.purchDtl)
-                   if( phr.purchDtl.SingleOrDefault(pd => pd.Id == item.Id) == null)
+               var removedItems = new List<InvDetail>();
+                foreach (var item in ph.InvDetail)
+                   if( phr.invDetails.SingleOrDefault(pd => pd.Id == item.Id) == null)
                     removedItems.Add(item);
                 foreach (var item in removedItems)
-                    ph.purchDtl.Remove(item);
+                    ph.InvDetail.Remove(item);
 
 
                    // updated changing
-                foreach (var pdd in phr.purchDtl)
+                foreach (var pdd in phr.invDetails)
                    {
                        if (!(pdd.Id > 0)) //New <0
                        {
-                             ph.purchDtl.Add( new PurchDtl
+                             ph.InvDetail.Add( new InvDetail
                             {Price = pdd.Price,
                              Quantity = pdd.Quantity ,
                              ProductId = pdd.ProductId,
@@ -69,7 +69,7 @@ namespace ALBAB.Entities
                        }
                        else
                        {
-                           var pd = ph.purchDtl.SingleOrDefault(p => p.Id == pdd.Id);
+                           var pd = ph.InvDetail.SingleOrDefault(p => p.Id == pdd.Id);
                            if (pd != null)
                            {
                                if (pd.Price != pdd.Price) pd.Price = pdd.Price;
@@ -82,8 +82,8 @@ namespace ALBAB.Entities
                });
 
 
-            CreateMap<PurchDtl,PurchDtlDto>();
-            CreateMap<PurchDtlDto,PurchDtl>();
+            CreateMap<InvDetail,InvDetailsRes>();
+            CreateMap<InvDetailsRes,InvDetail>();
 
             CreateMap<JournalEntry,JournalEntryRes>()
                  //.ForMember(dst => dst.Id , opt => opt.Ignore())

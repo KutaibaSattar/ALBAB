@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IPurchase } from 'app/models/purchase';
+import { IInvoice } from 'app/models/purchase';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,14 +13,14 @@ export class PurchaseService extends DataService {
 
   constructor(private httpClient: HttpClient) {
 
-    super(environment.apiUrl + 'Purchases/', httpClient);
+    super(environment.apiUrl + 'Invoices/', httpClient);
 
   }
 
 
   getPurchases() {
     return this.getTableRecords('purchlist').pipe(
-      map((purch: IPurchase) => {
+      map((purch: IInvoice) => {
         if (purch) {
           const purchase = purch[0];
           return purchase;
@@ -33,7 +33,7 @@ export class PurchaseService extends DataService {
 
   getPurchNos() {
     return this.httpClient.get<Observable<any>>(
-      environment.apiUrl + 'purchases/purchnos'
+      environment.apiUrl + 'invoices/purchnos'
     );
   }
 
@@ -41,16 +41,10 @@ export class PurchaseService extends DataService {
     return this.getTableRecordId(InvNo, 'purchinv/');
   }
 
-  UpdaePurchInv(purchase: IPurchase) {
-    if (purchase.id)
-      return this.http.put<IPurchase>(
-        'https://localhost:5001/api/Purchases',
-        purchase
-      );
-    return this.http.post<IPurchase>(
-      'https://localhost:5001/api/Purchases',
-      purchase
-    );
+  UpdaePurchInv(purchase: IInvoice) {
+    if (purchase.id) return this.http.put<IInvoice>('https://localhost:5001/api/invoices',purchase);
+
+    return this.http.post<IInvoice>('https://localhost:5001/api/invoices',purchase);
     //return this.http.put<Purchase>(environment.apiUrl + 'Purchases',purchase);
   }
 

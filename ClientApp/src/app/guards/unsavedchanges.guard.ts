@@ -12,7 +12,7 @@ export class UnsavedchangesGuard implements CanDeactivate<unknown> {
   constructor (private confirmService: ConfirmService){}
   canDeactivate(
     component: PurchasesComponent):Observable<boolean> | boolean  {
-      if (component.formPurchHdr.dirty) {
+      if (component.formInvoice.dirty) {
        return this.confirmService.confirm();
 
       }

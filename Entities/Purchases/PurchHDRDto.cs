@@ -7,22 +7,23 @@ using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class SavePurchHdrDto 
+    public class InvoiceRes
     {
         public int? Id { get; set; }
-        public string purNo { get; set; }
-        public DateTime purDate { get; set; } =  DateTime.Now;
-        public string purComment { get; set; }
-       
+        public string InvNo { get; set; }
+        public DateTime Date { get; set; } =  DateTime.Now;
+        public string Comment { get; set; }
+
         [Required]
         public int AppUserId { get; set; }
-         public ICollection <PurchDtlDto> purchDtl { get; set; }
-         public SavePurchHdrDto()
+        public int AccountId { get; set; }
+         public ICollection <InvDetailsRes> invDetails { get; set; }
+         public InvoiceRes()
         {
-               purchDtl = new Collection<PurchDtlDto>();
+               invDetails = new Collection<InvDetailsRes>();
         }
 
-     
-        
+
+
     }
 }

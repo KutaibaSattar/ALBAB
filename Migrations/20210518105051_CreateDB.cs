@@ -232,30 +232,6 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "purchhdrs",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    seriesno = table.Column<string>(type: "text", nullable: false),
-                    purno = table.Column<string>(type: "text", nullable: true),
-                    purdate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    purcomment = table.Column<string>(type: "text", nullable: true),
-                    lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    appuserid = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_purchhdrs", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_purchhdrs_aspnetusers_appuserid",
-                        column: x => x.appuserid,
-                        principalTable: "aspnetusers",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "models",
                 columns: table => new
                 {
@@ -271,6 +247,37 @@ namespace ALBaB.Migrations
                         name: "fk_models_brands_brandid",
                         column: x => x.brandid,
                         principalTable: "brands",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "invoices",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    type = table.Column<string>(type: "text", nullable: false),
+                    invno = table.Column<string>(type: "text", nullable: true),
+                    date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    comment = table.Column<string>(type: "text", nullable: true),
+                    lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    appuserid = table.Column<int>(type: "int", nullable: false),
+                    accountid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_invoices", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_invoices_aspnetusers_appuserid",
+                        column: x => x.appuserid,
+                        principalTable: "aspnetusers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_invoices_dbaccounts_accountid",
+                        column: x => x.accountid,
+                        principalTable: "dbaccounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -393,7 +400,7 @@ namespace ALBaB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "purchdtls",
+                name: "invdetails",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -401,22 +408,22 @@ namespace ALBaB.Migrations
                     quantity = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    purchhdrid = table.Column<int>(type: "int", nullable: false),
+                    invoiceid = table.Column<int>(type: "int", nullable: false),
                     productid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_purchdtls", x => x.id);
+                    table.PrimaryKey("pk_invdetails", x => x.id);
                     table.ForeignKey(
-                        name: "fk_purchdtls_products_productid",
-                        column: x => x.productid,
-                        principalTable: "products",
+                        name: "fk_invdetails_invoices_invoiceid",
+                        column: x => x.invoiceid,
+                        principalTable: "invoices",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_purchdtls_purchhdrs_purchhdrid",
-                        column: x => x.purchhdrid,
-                        principalTable: "purchhdrs",
+                        name: "fk_invdetails_products_productid",
+                        column: x => x.productid,
+                        principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -464,6 +471,26 @@ namespace ALBaB.Migrations
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
+                name: "ix_invdetails_invoiceid",
+                table: "invdetails",
+                column: "invoiceid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_invdetails_productid",
+                table: "invdetails",
+                column: "productid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_invoices_accountid",
+                table: "invoices",
+                column: "accountid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_invoices_appuserid",
+                table: "invoices",
+                column: "appuserid");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_journalaccounts_accountid",
                 table: "journalaccounts",
                 column: "accountid");
@@ -502,21 +529,6 @@ namespace ALBaB.Migrations
                 name: "ix_products_modelid",
                 table: "products",
                 column: "modelid");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_purchdtls_productid",
-                table: "purchdtls",
-                column: "productid");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_purchdtls_purchhdrid",
-                table: "purchdtls",
-                column: "purchhdrid");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_purchhdrs_appuserid",
-                table: "purchhdrs",
-                column: "appuserid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -537,19 +549,22 @@ namespace ALBaB.Migrations
                 name: "aspnetusertokens");
 
             migrationBuilder.DropTable(
+                name: "invdetails");
+
+            migrationBuilder.DropTable(
                 name: "journalaccounts");
 
             migrationBuilder.DropTable(
                 name: "orderitems");
 
             migrationBuilder.DropTable(
-                name: "purchdtls");
-
-            migrationBuilder.DropTable(
                 name: "aspnetroles");
 
             migrationBuilder.DropTable(
-                name: "dbaccounts");
+                name: "invoices");
+
+            migrationBuilder.DropTable(
+                name: "products");
 
             migrationBuilder.DropTable(
                 name: "journals");
@@ -558,19 +573,16 @@ namespace ALBaB.Migrations
                 name: "orders");
 
             migrationBuilder.DropTable(
-                name: "products");
-
-            migrationBuilder.DropTable(
-                name: "purchhdrs");
-
-            migrationBuilder.DropTable(
-                name: "ordermethod");
+                name: "dbaccounts");
 
             migrationBuilder.DropTable(
                 name: "models");
 
             migrationBuilder.DropTable(
                 name: "aspnetusers");
+
+            migrationBuilder.DropTable(
+                name: "ordermethod");
 
             migrationBuilder.DropTable(
                 name: "brands");

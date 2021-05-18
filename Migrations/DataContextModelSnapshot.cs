@@ -456,12 +456,16 @@ namespace ALBaB.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDtl", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.InvDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int")
+                        .HasColumnName("invoiceid");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime")
@@ -475,65 +479,69 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("productid");
 
-                    b.Property<int>("PurchHdrId")
-                        .HasColumnType("int")
-                        .HasColumnName("purchhdrid");
-
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18, 2)")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
-                        .HasName("pk_purchdtls");
+                        .HasName("pk_invdetails");
+
+                    b.HasIndex("InvoiceId")
+                        .HasDatabaseName("ix_invdetails_invoiceid");
 
                     b.HasIndex("ProductId")
-                        .HasDatabaseName("ix_purchdtls_productid");
+                        .HasDatabaseName("ix_invdetails_productid");
 
-                    b.HasIndex("PurchHdrId")
-                        .HasDatabaseName("ix_purchdtls_purchhdrid");
-
-                    b.ToTable("purchdtls");
+                    b.ToTable("invdetails");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.Invoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<int>("AppUserId")
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("accountid");
+
+                    b.Property<int?>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("appuserid");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text")
+                        .HasColumnName("comment");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime")
+                        .HasColumnName("date");
+
+                    b.Property<string>("InvNo")
+                        .HasColumnType("text")
+                        .HasColumnName("invno");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime")
                         .HasColumnName("lastupdate");
 
-                    b.Property<string>("SeriesNo")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("seriesno");
-
-                    b.Property<string>("purComment")
-                        .HasColumnType("text")
-                        .HasColumnName("purcomment");
-
-                    b.Property<DateTime>("purDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("purdate");
-
-                    b.Property<string>("purNo")
-                        .HasColumnType("text")
-                        .HasColumnName("purno");
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
-                        .HasName("pk_purchhdrs");
+                        .HasName("pk_invoices");
+
+                    b.HasIndex("AccountId")
+                        .HasDatabaseName("ix_invoices_accountid");
 
                     b.HasIndex("AppUserId")
-                        .HasDatabaseName("ix_purchhdrs_appuserid");
+                        .HasDatabaseName("ix_invoices_appuserid");
 
-                    b.ToTable("purchhdrs");
+                    b.ToTable("invoices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -839,35 +847,44 @@ namespace ALBaB.Migrations
                     b.Navigation("Model");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchDtl", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.InvDetail", b =>
                 {
+                    b.HasOne("ALBAB.Entities.Purchases.Invoice", "Invoice")
+                        .WithMany("InvDetail")
+                        .HasForeignKey("InvoiceId")
+                        .HasConstraintName("fk_invdetails_invoices_invoiceid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ALBAB.Entities.Products.Product", "Product")
                         .WithMany("PurchDTLs")
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("fk_purchdtls_products_productid")
+                        .HasConstraintName("fk_invdetails_products_productid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ALBAB.Entities.Purchases.PurchHdr", "PurchHdr")
-                        .WithMany("purchDtl")
-                        .HasForeignKey("PurchHdrId")
-                        .HasConstraintName("fk_purchdtls_purchhdrs_purchhdrid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Invoice");
 
                     b.Navigation("Product");
-
-                    b.Navigation("PurchHdr");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.Invoice", b =>
                 {
+                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccounts", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .HasConstraintName("fk_invoices_dbaccounts_accountid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId")
-                        .HasConstraintName("fk_purchhdrs_aspnetusers_appuserid")
+                        .HasConstraintName("fk_invoices_aspnetusers_appuserid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Account");
 
                     b.Navigation("AppUser");
                 });
@@ -949,9 +966,9 @@ namespace ALBaB.Migrations
                     b.Navigation("PurchDTLs");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Purchases.PurchHdr", b =>
+            modelBuilder.Entity("ALBAB.Entities.Purchases.Invoice", b =>
                 {
-                    b.Navigation("purchDtl");
+                    b.Navigation("InvDetail");
                 });
 #pragma warning restore 612, 618
         }

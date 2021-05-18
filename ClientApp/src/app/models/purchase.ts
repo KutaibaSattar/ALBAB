@@ -1,19 +1,19 @@
-export interface IPurchase{
+export interface IInvoice{
   id: number
   purNo:string
   purDate :Date
   appUserId:number
-  purchDtl : IPurchDtl[];
+  purchDtl : IInvDetail[];
 }
 
-export interface IPurchHdr {
+/* export interface IPurchHdr {
   id:number
   purNo:string
   purDate? :Date
   appUserId:number
-}
+} */
 
-export interface IPurchDtl {
+export interface IInvDetail {
   id:number;
   productId:number;
   purchId:number;
@@ -42,11 +42,11 @@ export interface IPurchDtl {
     }
   } */
 
-export class IPurchase implements IPurchase{
+export class IInvoice implements IInvoice{
   id = 0;
   purNo ='';
   appUserId = 0;
   purDate = new Date();
-  purchDtl : IPurchDtl[];
+  purchDtl : IInvDetail[];
 
 }

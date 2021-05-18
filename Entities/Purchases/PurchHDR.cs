@@ -6,22 +6,24 @@ using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class PurchHdr : BaseEntity
+    public class Invoice : BaseEntity
     {
 
         [Required]
-        public string SeriesNo { get; set; } = "PR";
-        public string purNo { get; set; }
-        public DateTime purDate { get; set; } =  DateTime.Now;
-        public string purComment { get; set; }
+        public string Type { get; set; } = "PR";
+        public string InvNo { get; set; }
+        public DateTime Date { get; set; } =  DateTime.Now;
+        public string Comment { get; set; }
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
         [Required]
-        public int AppUserId { get; set; }
-        public ICollection <PurchDtl> purchDtl { get; set; }
-         public PurchHdr()
+        public int? AppUserId { get; set; }
+        public dbAccounts Account { get; set; }
+        public int AccountId { get; set; }
+        public ICollection <InvDetail> InvDetail { get; set; }
+         public Invoice()
         {
-               purchDtl = new Collection<PurchDtl>();
+               InvDetail = new Collection<InvDetail>();
         }
 
 
