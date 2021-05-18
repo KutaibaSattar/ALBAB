@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   filter(values) {
     console.log(values)
-    return values.filter(joke => joke.displayName.toLowerCase().includes(this.currentJoke))
+    return values.filter(joke => joke.name.toLowerCase().includes(this.currentJoke))
   }
 displayFn(user: any): any {
     console.log(user);

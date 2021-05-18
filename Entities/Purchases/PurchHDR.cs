@@ -16,7 +16,6 @@ namespace ALBAB.Entities.Purchases
         public string purComment { get; set; }
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
-        
         [Required]
         public int AppUserId { get; set; }
         public ICollection <PurchDtl> purchDtl { get; set; }
@@ -24,7 +23,7 @@ namespace ALBAB.Entities.Purchases
         {
                purchDtl = new Collection<PurchDtl>();
         }
-         
+
 
     }
 }

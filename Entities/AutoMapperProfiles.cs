@@ -19,16 +19,16 @@ namespace ALBAB.Entities
     {
         public AutoMapperProfiles()
         {
-            CreateMap<AppUser,RegisterDto>().ForMember(dto => dto.UserId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
-           
-            CreateMap<AppUser,AppUserDto>().ForMember(dto => dto.UserId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
-           
-            CreateMap<AppUser,MemberDto>().ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
-           
+            CreateMap<AppUser,RegisterDto>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+
+            CreateMap<AppUser,AppUserDto>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+
+            CreateMap<AppUser,MemberDto>().ForMember(dest => dest.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
 
             CreateMap<Brand,BrandDto>();
-           
+
             CreateMap<Model,ModelDto>();
 
             CreateMap<Product,ProductDto>()
@@ -45,15 +45,15 @@ namespace ALBAB.Entities
                .AfterMap((phr,ph)=> {
 
                    // removing deleting items
-               
+
                var removedItems = new List<PurchDtl>();
                 foreach (var item in ph.purchDtl)
                    if( phr.purchDtl.SingleOrDefault(pd => pd.Id == item.Id) == null)
                     removedItems.Add(item);
                 foreach (var item in removedItems)
                     ph.purchDtl.Remove(item);
-            
-                   
+
+
                    // updated changing
                 foreach (var pdd in phr.purchDtl)
                    {
@@ -78,25 +78,25 @@ namespace ALBAB.Entities
                            }
 
                        }
-                   }                     
-               });   
+                   }
+               });
 
-              
+
             CreateMap<PurchDtl,PurchDtlDto>();
             CreateMap<PurchDtlDto,PurchDtl>();
 
             CreateMap<JournalEntry,JournalEntryRes>()
-                 //.ForMember(dst => dst.Id , opt => opt.Ignore()) 
+                 //.ForMember(dst => dst.Id , opt => opt.Ignore())
                 .ForMember(dst => dst.journalAccounts, opt => opt.MapFrom(src => src.journalAccounts));
-            
-            CreateMap<JournalEntryRes,JournalEntry>(); 
+
+            CreateMap<JournalEntryRes,JournalEntry>();
                     //.ForMember(dst => dst.Id , opt => opt.Ignore());
-            
+
             CreateMap<JournalAccount,JournalAccountRes>();
             CreateMap<JournalAccountRes,JournalAccount>();
-           
-             
-           
+
+
+
 
 
         }

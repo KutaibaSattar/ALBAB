@@ -30,15 +30,15 @@ namespace ALBAB.Token
             var claims = new List<Claim> // not sensitive information
             {
               new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
-              new Claim(JwtRegisteredClaimNames.GivenName,user.DisplayName),
+              new Claim(JwtRegisteredClaimNames.GivenName,user.Name),
               new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
             };
 
             var roles = await _userManager.GetRolesAsync(user); //all roles of user
-           
+
             // we dont user JwtRegisteredClaimNames because no options of Role has
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role,role)));
-            
+
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -51,7 +51,7 @@ namespace ALBAB.Token
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-           
+
             var token = tokenHandler.CreateToken(tokenDesciptor); // creating token
 
             return tokenHandler.WriteToken(token);

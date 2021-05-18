@@ -49,12 +49,12 @@
               <tbody  *ngFor="let user of memberList">
                 <tr>
                   <td>{{user.id}}</td>
-                  <td>{{user.userId}}</td>
-                  <td>{{user.displayName}}</td>
+                  <td>{{user.keyId}}</td>
+                  <td>{{user.name}}</td>
                   <td>{{user.phoneNumber}}</td>
 
                   <td>
-                    <a [routerLink]="['/members',user.userId]"  class="btn btn-secondary">
+                    <a [routerLink]="['/members',user.keyId]"  class="btn btn-secondary">
                       <i class="fa fa-angle-double-right"></i> Details
                     </a>
                   </td>

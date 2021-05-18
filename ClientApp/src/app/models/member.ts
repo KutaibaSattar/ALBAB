@@ -1,7 +1,7 @@
 export interface Member {
   id: number;
-  userId: string;
-  displayName: string;
+  keyId: string;
+  name: string;
   phoneNumber?: string;
   created?: Date;
   lastActive?: Date;

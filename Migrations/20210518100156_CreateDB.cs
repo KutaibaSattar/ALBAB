@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class CreatingDB : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    displayname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     lastactive = table.Column<DateTime>(type: "datetime", nullable: false),
                     introduction = table.Column<string>(type: "text", nullable: true),
@@ -285,6 +285,7 @@ namespace ALBaB.Migrations
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
                     accountid = table.Column<int>(type: "int", nullable: false),
+                    appuserid = table.Column<int>(type: "int", nullable: true),
                     credit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     debit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     refno = table.Column<string>(type: "text", nullable: true)
@@ -292,6 +293,12 @@ namespace ALBaB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_journalaccounts", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_journalaccounts_aspnetusers_appuserid",
+                        column: x => x.appuserid,
+                        principalTable: "aspnetusers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_journalaccounts_dbaccounts_accountid",
                         column: x => x.accountid,
@@ -460,6 +467,11 @@ namespace ALBaB.Migrations
                 name: "ix_journalaccounts_accountid",
                 table: "journalaccounts",
                 column: "accountid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_journalaccounts_appuserid",
+                table: "journalaccounts",
+                column: "appuserid");
 
             migrationBuilder.CreateIndex(
                 name: "ix_journalaccounts_journalid",

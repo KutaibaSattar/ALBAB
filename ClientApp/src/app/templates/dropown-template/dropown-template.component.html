@@ -1,7 +1,9 @@
-<input type="text" class="form-control" matInput [formControl]= controlName [matAutocomplete]="textinput"
-              placeholder="Customer">
-            <mat-autocomplete  #textinput="matAutocomplete">
-              <mat-option *ngFor="let option of filtered$ | async" [value]="option.id">
-                {{option.displayName}} - {{option.userId}}
-              </mat-option>
-            </mat-autocomplete>
+
+
+  <input type="text" class="form-control " matInput [formControl]= controlName [matAutocomplete]="textinput"
+                placeholder="Customer">
+              <mat-autocomplete  #textinput="matAutocomplete" [displayWith]="displayFn.bind(this)">
+                <mat-option *ngFor="let option of filtered$ | async" [value]="option.id">
+                  {{option.name}} - {{option.userId}}
+                </mat-option>
+              </mat-autocomplete>

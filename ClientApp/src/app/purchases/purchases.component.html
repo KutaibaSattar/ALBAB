@@ -60,10 +60,10 @@
           <span *ngIf="purDate.invalid && purDate.touched && purDate.errors.required"
           class="ml-0 input-group-append invalid-feedback">Please enter a valid date</span>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <div class="form-group">
           <label >Supplier</label>
-          <div class="input-group">
+          <div class="input-group ">
             <!-- <input type="text" class="form-control" matInput formControlName="appUserId" [matAutocomplete]="customers"
               placeholder="Customer" [ngClass]="{'is-invalid': appUserId.invalid &&  appUserId.touched}">
             <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #customers="matAutocomplete"
@@ -72,7 +72,7 @@
                 {{option.displayName}} - {{option.userId}}
               </mat-option>
             </mat-autocomplete> -->
-            <app-dropown-template [controlName] ="appUserId" [filtered$]= filteredUsers$  ></app-dropown-template>
+            <app-dropown-template class="col-12" [listsFilter]= members [controlName] ="appUserId"  ></app-dropown-template>
             <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
               class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span>
@@ -151,7 +151,6 @@
                   <td>
                     <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
                       placeholder="New item">
-
                     <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #products="matAutocomplete" [displayWith]="ProductNameFn.bind(this)">
                       <mat-option *ngFor="let option of filteredItems$[i] | async" [value]="option.id">
                         {{option.name}}
@@ -169,7 +168,7 @@
           </tbody>
       </table>
     </ng-container>
-       <!-- <pre>{{purchHdr.value | json}}</pre> -->
+        <pre>{{formPurchHdr.value | json}}</pre>
 
 
 

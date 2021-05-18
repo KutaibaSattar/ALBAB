@@ -65,12 +65,6 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("created");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("displayname");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)")
@@ -91,6 +85,12 @@ namespace ALBaB.Migrations
                     b.Property<string>("LookingFor")
                         .HasColumnType("text")
                         .HasColumnName("lookingfor");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -202,6 +202,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("accountid");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("appuserid");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime")
                         .HasColumnName("created");
@@ -231,6 +235,9 @@ namespace ALBaB.Migrations
 
                     b.HasIndex("AccountId")
                         .HasDatabaseName("ix_journalaccounts_accountid");
+
+                    b.HasIndex("AppUserId")
+                        .HasDatabaseName("ix_journalaccounts_appuserid");
 
                     b.HasIndex("JournalId")
                         .HasDatabaseName("ix_journalaccounts_journalid");
@@ -722,6 +729,11 @@ namespace ALBaB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .HasConstraintName("fk_journalaccounts_aspnetusers_appuserid");
+
                     b.HasOne("ALBAB.Entities.Journal.JournalEntry", "Journal")
                         .WithMany("journalAccounts")
                         .HasForeignKey("JournalId")
@@ -730,6 +742,8 @@ namespace ALBaB.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Journal");
                 });

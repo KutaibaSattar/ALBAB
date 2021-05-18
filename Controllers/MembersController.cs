@@ -18,7 +18,7 @@ namespace ALBAB.Controllers
         private readonly ITokenService _tokenService;
 
         private readonly IMapper _mapper;
-       
+
         public MembersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
             , IMapper mapper, ITokenService tokenService)
         {
@@ -30,57 +30,57 @@ namespace ALBAB.Controllers
 
         }
 
-      
-       
-       
+
+
+
         [HttpPost("register")]
 
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
-       
+
         {
-            
+
          // because using ActionResult so we can return BadRequest
-           
+
           /* if (registerDto.PhoneNumber != null){
                if (await CheckEmailExistsAsync(registerDto.PhoneNumber))
             {
-                  return BadRequest("Email is taken");   
+                  return BadRequest("Email is taken");
             }
            } */
-            
+
            /*  var user = await _userManager.FindByNameAsync(username);
             if (user == null) return NotFound("Could not find user");
            var userRoles = await _userManager.GetRolesAsync(user); */
-          
+
            //var user = await _userManager.FindByEmailAsync(email);
-         
+
          // var email = HttpContext.User.RetrieveEmailFromPrincipal();
-            
-            
-            if(await UserExists(registerDto.UserId)) return BadRequest("User Name is taken");
+
+
+            if(await UserExists(registerDto.KeyId)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
-  
+
             //user.UserName = registerDto.UserName.ToLower();
-          
+
            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
           var roleResult = await _userManager.AddToRoleAsync(user, "Member");
-                       
+
            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
            if (!result.Succeeded) return BadRequest(result.Errors);
-               
+
             return new AppUserDto
             {
-                DisplayName = user.DisplayName,
-                UserId = user.UserName,
+                Name = user.Name,
+                KeyId = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 PhoneNumber = user.UserName
-            
-            }; 
+
+            };
 
 
        }
@@ -88,24 +88,24 @@ namespace ALBAB.Controllers
         private async Task<bool> UserExists(string userId)
         {
           return await _userManager.FindByNameAsync(userId)  != null;
-           
-                  
+
+
         }
 
         [HttpGet("emailexists")]
 
         public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
         {
-          
+
            return await _userManager.FindByNameAsync(email) != null;
 
-           
 
-           
+
+
         }
 
 
 
     }
-  
+
 }

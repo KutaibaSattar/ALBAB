@@ -64,7 +64,7 @@ export class AuthService {
       map((user: User) => {
        if (user && user.token){
           localStorage.setItem('token', user.token);
-          user.given_name = user.displayName
+          user.given_name = user.name
           this.currentUserSource.next(user); // store user in current user source
           return true;
        }
@@ -136,5 +136,3 @@ getDecodeToken (token)  {
   }
 
 }
-
-

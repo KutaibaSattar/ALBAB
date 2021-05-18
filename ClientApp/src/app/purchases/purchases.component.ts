@@ -39,7 +39,7 @@ export class PurchasesComponent implements OnInit {
       $event.returnValue = true;
     }
   } */
-
+  listsFilter : any
   members: Member[];
   member: string;
   products: Product[];
@@ -56,7 +56,7 @@ export class PurchasesComponent implements OnInit {
 
   purchInv: IPurchase = new IPurchase();
 
-  filteredUsers$: Observable<Array<Member>>;
+  //filteredUsers$: Observable<Array<Member>>;
   filteredItems$: Observable<Array<Product>>[] = [];
   filteredPurchNos$: Observable<any>;
 
@@ -70,7 +70,7 @@ export class PurchasesComponent implements OnInit {
     //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
 
     this.initializeForm();
-    this.attachedUserFilter();
+    //this.attachedUserFilter();
     this.attachItemFilter(0);
     this.listenToChanging(0);
 
@@ -82,7 +82,20 @@ export class PurchasesComponent implements OnInit {
     forkJoin(sources).subscribe((data) => {
       (<any>this.members) = data[0];
 
+      this.listsFilter = this.members.map(obj =>{
+        var returnObj = {};
+        const mapping = ['id', 'name'];
+        returnObj[mapping[0]] = obj.keyId;
+        returnObj[mapping[1]] = obj.name;
+
+        return returnObj;
+     });
+
+     console.log(this.listsFilter);
+
       (<any>this.products) = data[1];
+
+
     });
   }
 
@@ -112,24 +125,31 @@ export class PurchasesComponent implements OnInit {
   }
 
 
-  attachedUserFilter(): any {
-    this.filteredUsers$ = this.formPurchHdr.get('appUserId').valueChanges.pipe(
-      startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
+
+
+  attachItemFilter(index: number) {
+    var arrayControl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
+
+    this.filteredItems$[index] = arrayControl
+      .at(index)
+      .get('productId')
+      .valueChanges.pipe(
+        startWith(''),
+        /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
-      map((val) => this.filter(val))
-    );
+        map((val) => this._filter(val))
+      );
   }
 
-  filter(val: any): any {
-    if (this.members !== undefined) {
-      return this.members.filter((item: Member) => {
+  private _filter(val: any): Product[] {
+    if (this.products !== undefined) {
+      return this.products.filter((item: Product) => {
         // If the user selects an option, the value becomes a Human object,
         // therefore we need to reset the val for the filter because an
         // object cannot be used in this toLowerCase filter
         let x = typeof val;
         if (typeof val === 'string') {
-          const TempString = item.displayName + ' - ' + item.userId;
+          const TempString = item.name; //+ ' - ' + item.userId;
           return TempString.toLowerCase().includes(val.toLowerCase());
         }
       });
@@ -152,6 +172,8 @@ export class PurchasesComponent implements OnInit {
       .subscribe();
   }
 
+
+
   addRecord() {
     const controls = <FormArray>this.formPurchHdr.get('subFormPurchDtl');
     controls.push(this.initSection());
@@ -167,19 +189,7 @@ export class PurchasesComponent implements OnInit {
       return (<FormArray>form.controls.subFormPurchDtl).controls;
   }
 
-  attachItemFilter(index: number) {
-    var arrayControl = this.formPurchHdr.get('subFormPurchDtl') as FormArray;
 
-    this.filteredItems$[index] = arrayControl
-      .at(index)
-      .get('productId')
-      .valueChanges.pipe(
-        startWith(''),
-        /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-        map((val) => this._filter(val))
-      );
-  }
 
   listenToChanging(index: number) {
     this.purchDtl
@@ -221,20 +231,7 @@ export class PurchasesComponent implements OnInit {
     );
   }
 
-  private _filter(val: any): Product[] {
-    if (this.products !== undefined) {
-      return this.products.filter((item: Product) => {
-        // If the user selects an option, the value becomes a Human object,
-        // therefore we need to reset the val for the filter because an
-        // object cannot be used in this toLowerCase filter
-        let x = typeof val;
-        if (typeof val === 'string') {
-          const TempString = item.name; //+ ' - ' + item.userId;
-          return TempString.toLowerCase().includes(val.toLowerCase());
-        }
-      });
-    }
-  }
+
 
   doFilter() {
     this.filteredPurchNos$ = this.purchaseService
@@ -250,7 +247,7 @@ export class PurchasesComponent implements OnInit {
 
   displayFn(this, user: number): string {
     if (user) {
-      let x = this.members.find((element) => element.id === user).displayName;
+      let x = this.members.find((element) => element.id === user).name;
       return x;
     }
   }
