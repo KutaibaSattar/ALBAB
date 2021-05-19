@@ -42,11 +42,12 @@
         <div class="form-group">
           <label >Purch No</label>
           <div class="input-group">
-            <span class="input-group-append input-group-text">#</span>
-            <input name="invNo" formControlName="invNo" class="form-control"
+             <app-text-input [formControl] = "invNo" [label]="'Invoice'" >  </app-text-input>
+
+           <!--  <input name="invNo" formControlName="invNo" class="form-control"
               [ngClass]="{'is-invalid': invNo.invalid &&  invNo.touched }">
             <span *ngIf="invNo.invalid &&  invNo.touched && invNo.errors.required"
-              class="ml-0 input-group-append invalid-feedback">Please enter invoice No</span>
+              class="ml-0 input-group-append invalid-feedback">Please enter invoice No</span> -->
 
 
           </div>
@@ -120,7 +121,7 @@
           <div class="col-md-12">
             <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
                     <button class="fa fa-save btn btn-success ml-2 float-left" type="submit"> Save</button>
-                    <button class="fa fa-edit btn btn-success ml-2 float-left" type="button" (click)="NewInv()"> New</button>
+                    <button class="fa fa-edit btn btn-success ml-2 float-left" type="button" (click)="clearInv()"> New</button>
                     <button class="fa fa-edit btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()" > Delete</button>
                     <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
           </div>

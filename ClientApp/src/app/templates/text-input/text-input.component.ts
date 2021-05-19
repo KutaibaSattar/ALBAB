@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
@@ -15,17 +15,21 @@ export class TextInputComponent implements ControlValueAccessor {
 
    }
   writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+
   }
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+
   }
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+
   }
+
+  get control(){
+    return this.ngControl.control as FormControl
+ }
 
 
 

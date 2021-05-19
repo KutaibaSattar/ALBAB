@@ -19,11 +19,11 @@ export class DropownTemplateComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.attachedUserFilter();
+    this.attachedFilter();
 
   }
 
-  attachedUserFilter(): any {
+  attachedFilter(): any {
     this.filtered$ = this.controlName.valueChanges.pipe(
       startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
@@ -49,8 +49,8 @@ export class DropownTemplateComponent implements OnInit {
 
   displayFn(item: number): string {
     if (item) {
-      let x = this.listsFilter.find((element) => element.id === item).name;
-      return x;
+      return this.listsFilter.find((element) => element.id === item).name;
+
     }
   }
 

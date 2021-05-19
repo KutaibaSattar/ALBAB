@@ -60,7 +60,7 @@ export class PurchasesComponent implements OnInit {
   purchInv: IInvoice = new IInvoice();
 
   //filteredUsers$: Observable<Array<Member>>;
-  filteredItems$: Observable<Array<Product>>[] = [];
+  //filteredItems$: Observable<Array<Product>>[] = [];
   filteredPurchNos$: Observable<any>;
 
   totalSum: number[] = [];
@@ -142,15 +142,14 @@ export class PurchasesComponent implements OnInit {
 
 
   attachItemFilter(index: number) {
-    var arrayControl = this.formInvoice.get('invDetails') as FormArray;
 
-    this.productId[index] = arrayControl.at(index).get('productId') as FormControl
+    this.productId[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('productId') as FormControl
 
-    this.filteredItems$[index] = arrayControl.at(index).get('productId')
-      .valueChanges.pipe(startWith(''),map((val) => this._filter(val)));
+    /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
+      .valueChanges.pipe(startWith(''),map((val) => this._filter(val))); */
   }
 
-  private _filter(val: any): Product[] {
+/*   private _filter(val: any): Product[] {
     if (this.products !== undefined) {
       return this.products.filter((item: Product) => {
         // If the user selects an option, the value becomes a Human object,
@@ -163,7 +162,7 @@ export class PurchasesComponent implements OnInit {
         }
       });
     }
-  }
+  } */
 
   OnHumanSelected(option: MatOption) {
     console.log(option.value);
@@ -254,7 +253,7 @@ export class PurchasesComponent implements OnInit {
     ));
   }
 
-  displayFn(this, user: number): string {
+ /*  displayFn(this, user: number): string {
     if (user) {
       let x = this.members.find((element) => element.id === user).name;
       return x;
@@ -264,7 +263,7 @@ export class PurchasesComponent implements OnInit {
     if (product) {
       return this.products.find((element) => element.id === product).name;
     }
-  }
+  } */
 
   PurchNameFn(option): any {
     if (this.purchNos) {
@@ -335,7 +334,7 @@ export class PurchasesComponent implements OnInit {
     this.invDetail.removeAt(i);
   }
 
-  NewInv() {
+  clearInv() {
     if (this.formInvoice.dirty) {
       //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
     }
