@@ -85,6 +85,7 @@ namespace ALBAB.Controllers
 
 
 
+
          var invoice = _mapper.Map<InvoiceRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;

@@ -1,7 +1,7 @@
 export interface IInvoice{
   id: number
-  purNo:string
-  purDate :Date
+  InvNo:string
+  Date :Date
   appUserId:number
   comment : string,
   accountId: number
@@ -46,7 +46,7 @@ export interface IInvDetail {
 
 export class IInvoice implements IInvoice{
   id = 0;
-  purNo ='';
+  invNo ='';
   appUserId = 0;
   purDate = new Date();
   purchDtl : IInvDetail[];

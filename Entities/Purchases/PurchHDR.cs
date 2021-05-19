@@ -17,19 +17,17 @@ namespace ALBAB.Entities.Purchases
         public string Comment { get; set; }
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
-        [Required]
         public int? AppUserId { get; set; }
+
         public dbAccounts Account { get; set; }
-       
-        //public int AccountId { get; set; }
-        ReservedAccountsType.Clients
-         public int AccountId 
-           { // not allowed more than 50
-            get => AccountId;
+        [Required]
+      private int _accountId;
+        public int AccountId {
 
-            set => AccountId = (value == 0) ? 30 : value;
+             get => _accountId;
 
-           }
+              set => _accountId = (AppUserId == null) ? value : (int)(ReservedAccountsType.Clients); }
+
         public ICollection <InvDetail> InvDetail { get; set; }
          public Invoice()
         {

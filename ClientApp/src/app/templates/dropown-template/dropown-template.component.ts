@@ -12,7 +12,7 @@ export class DropownTemplateComponent implements OnInit {
 
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl
-  @Input() listsFilter : any[]
+  @Input() listsFilter : any []
   @Input() searchingString: string
 
   constructor() { }
@@ -40,7 +40,7 @@ export class DropownTemplateComponent implements OnInit {
         // object cannot be used in this toLowerCase filter
         let x = typeof val;
         if (typeof val === 'string') {
-          const TempString = item.name //+ ' - ' + item.userId;
+          const TempString = item.name + ' - ' + item.keyId;
           return TempString.toLowerCase().includes(val.toLowerCase());
         }
       });

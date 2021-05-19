@@ -39,18 +39,21 @@ export class PurchasesComponent implements OnInit {
       $event.returnValue = true;
     }
   } */
-  listsFilter : any
+  listsFilterCustomer : any
+  listsFilterProducts : any
+
   members: Member[];
   member: string;
   products: Product[];
   txtSearchInv: string;
-  purchNos: [{ id: number; purNo: string }];
+  purchNos: [{ id: number; invNo: string }];
   formInvoice: FormGroup;
   appUserId: FormControl;
-  purNo: FormControl;
-  purDate: FormControl;
+  invNo: FormControl;
+  date: FormControl;
   invoiceId: FormControl;
   invDetail: FormArray;
+  productId : FormControl[] = new Array();
 
   grdTotal = new FormControl(''); // sepearated
 
@@ -82,18 +85,27 @@ export class PurchasesComponent implements OnInit {
     forkJoin(sources).subscribe((data) => {
       (<any>this.members) = data[0];
 
-      this.listsFilter = this.members.map(obj =>{
+      this.listsFilterCustomer = this.members.map(obj =>{
         var returnObj = {};
-        const mapping = ['id', 'name'];
-        returnObj[mapping[0]] = obj.keyId;
+        const mapping = ['id', 'name','keyId'];
+        returnObj[mapping[0]] = obj.id;
         returnObj[mapping[1]] = obj.name;
+        returnObj[mapping[2]] = obj.keyId;
 
         return returnObj;
      });
 
-     console.log(this.listsFilter);
+
 
       (<any>this.products) = data[1];
+
+      this.listsFilterProducts = this.products.map(obj =>{
+        var returnObj = {};
+        const mapping = ['id', 'name'];
+        returnObj[mapping[0]] = obj.id;
+        returnObj[mapping[1]] = obj.name;
+        return returnObj;
+     });
 
 
     });
@@ -102,16 +114,18 @@ export class PurchasesComponent implements OnInit {
   initializeForm() {
     this.formInvoice = this.formBuilder.group({
       id: 0,
-      purNo: [null, Validators.required],
+      invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
-      purDate: [null, Validators.required],
+      accountId:0,
+      date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
     });
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
-    this.purNo = this.formInvoice.get('purNo') as FormControl;
-    this.purDate = this.formInvoice.get('purDate') as FormControl;
+    this.invNo = this.formInvoice.get('invNo') as FormControl;
+    this.date = this.formInvoice.get('date') as FormControl;
     this.invoiceId = this.formInvoice.get('id') as FormControl;
     this.invDetail = this.formInvoice.get('invDetails') as FormArray;
+
   }
 
   initSection(): FormGroup {
@@ -130,9 +144,9 @@ export class PurchasesComponent implements OnInit {
   attachItemFilter(index: number) {
     var arrayControl = this.formInvoice.get('invDetails') as FormArray;
 
-    this.filteredItems$[index] = arrayControl
-      .at(index)
-      .get('productId')
+    this.productId[index] = arrayControl.at(index).get('productId') as FormControl
+
+    this.filteredItems$[index] = arrayControl.at(index).get('productId')
       .valueChanges.pipe(startWith(''),map((val) => this._filter(val)));
   }
 
@@ -236,7 +250,7 @@ export class PurchasesComponent implements OnInit {
   filterPurchase(values) {
     console.log(values);
     return (this.purchNos = values.filter((joke) =>
-      joke.purNo.toLowerCase().includes(this.txtSearchInv)
+      joke.invNo.toLowerCase().includes(this.txtSearchInv)
     ));
   }
 
@@ -254,7 +268,7 @@ export class PurchasesComponent implements OnInit {
 
   PurchNameFn(option): any {
     if (this.purchNos) {
-      return this.purchNos.find((element) => element.id === option).purNo;
+      return this.purchNos.find((element) => element.id === option).invNo;
       //return this.purchNos.
     }
   }
@@ -267,9 +281,9 @@ export class PurchasesComponent implements OnInit {
           this.purchInv = result;
           this.formInvoice.patchValue({
             id: this.purchInv.id,
-            purNo: this.purchInv.purNo,
+            invNo: this.purchInv.invNo,
             appUserId: this.purchInv.appUserId,
-            purDate: this.datePipe.transform(
+            date: this.datePipe.transform(
               this.purchInv.purDate,
               'yyyy-MM-dd'
             ),

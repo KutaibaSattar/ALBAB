@@ -4,6 +4,6 @@
                 placeholder="Customer">
               <mat-autocomplete  #textinput="matAutocomplete" [displayWith]="displayFn.bind(this)">
                 <mat-option *ngFor="let option of filtered$ | async" [value]="option.id">
-                  {{option.name}} - {{option.userId}}
+                  {{option.name}} - {{option.keyId}}
                 </mat-option>
               </mat-autocomplete>
