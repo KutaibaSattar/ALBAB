@@ -1,19 +1,23 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-@Component({
-  selector: 'app-dropown-template',
-  templateUrl: './dropown-template.component.html',
-  styleUrls: ['./dropown-template.component.scss']
-})
-export class DropownTemplateComponent implements OnInit {
 
+
+@Component({
+  selector: 'app-autocomplete',
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss']
+})
+export class AutocompleteComponent  {
+
+  @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete;
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl
   @Input() listsFilter : any []
-
+  
 
 
   constructor() { }

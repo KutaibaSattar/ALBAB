@@ -174,10 +174,7 @@ export class PurchasesComponent implements OnInit {
     dialogConfig.width = '50%';
     dialogConfig.data = { OrderID };
 
-    this.dialog
-      .open(invoiceitemComponent, dialogConfig)
-      .afterClosed()
-      .subscribe();
+    this.dialog.open(invoiceitemComponent, dialogConfig).afterClosed().subscribe();
   }
 
 
@@ -200,41 +197,23 @@ export class PurchasesComponent implements OnInit {
 
 
   listenToChanging(index: number) {
-    this.invDetail
-      .at(index)
-      .get('price')
+    this.invDetail.at(index).get('price')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
 
-    this.invDetail
-      .at(index)
-      .get('quantity')
+    this.invDetail.at(index).get('quantity')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
   }
 
   private updateTotalUnitPrice(index: number) {
-    this.invDetail
-      .at(index)
-      .get('unitTotalPrice')
-      .setValue(
+    this.invDetail.at(index).get('unitTotalPrice').setValue(
         this.invDetail.at(index).get('price').value *
           this.invDetail.at(index).get('quantity').value
       );
 
-    this.totalSum.splice(
-      index,
-      1,
-      this.invDetail.at(index).get('unitTotalPrice').value
+    this.totalSum.splice(index,1,this.invDetail.at(index).get('unitTotalPrice').value
     );
-    console.log(this.totalSum.reduce((sum, current) => sum + current));
 
-    console.log(
-      this.invDetail
-        .getRawValue()
-        .reduce((sum, current) => sum + current.unitTotalPrice, 0)
-    );
-    this.grdTotal.setValue(
-      this.invDetail
-        .getRawValue()
+    this.grdTotal.setValue(this.invDetail.getRawValue()
         .reduce((sum, current) => sum + current.unitTotalPrice, 0)
     );
   }
@@ -242,12 +221,10 @@ export class PurchasesComponent implements OnInit {
 
 
   doFilter() {
-    this.filteredPurchNos$ = this.purchaseService
-      .getPurchNos()
+    this.filteredPurchNos$ = this.purchaseService.getPurchNos()
       .pipe(map((jokes) => this.filterPurchase(jokes)));
   }
   filterPurchase(values) {
-    console.log(values);
     return (this.purchNos = values.filter((joke) =>
       joke.invNo.toLowerCase().includes(this.txtSearchInv)
     ));
@@ -274,18 +251,14 @@ export class PurchasesComponent implements OnInit {
 
   getPurch() {
     if (this.txtSearchInv) {
-      this.purchaseService
-        .getPurchInv(this.txtSearchInv)
-        .subscribe((result) => {
+      this.purchaseService.getPurchInv(this.txtSearchInv).subscribe(
+          (result) => {
           this.purchInv = result;
           this.formInvoice.patchValue({
             id: this.purchInv.id,
             invNo: this.purchInv.invNo,
             appUserId: this.purchInv.appUserId,
-            date: this.datePipe.transform(
-              this.purchInv.purDate,
-              'yyyy-MM-dd'
-            ),
+            date: this.datePipe.transform(this.purchInv.date,'yyyy-MM-dd'),
           });
 
           if (this.formInvoice.dirty) {
@@ -296,13 +269,11 @@ export class PurchasesComponent implements OnInit {
             this.invDetail.controls = []; // delete balnck one
           }
 
-          this.purchInv.purchDtl.map((item) => {
+          this.purchInv.invDetails.map((item) => {
             const group = this.initSection();
             group.patchValue(item);
 
-            let arrayLength = (this.formInvoice.get(
-              'invDetails'
-            ) as FormArray).controls.length;
+            let arrayLength = (this.formInvoice.get('invDetails') as FormArray).controls.length;
 
             (this.formInvoice.get('invDetails') as FormArray).push(group);
 
@@ -343,13 +314,7 @@ export class PurchasesComponent implements OnInit {
   }
 
   deleteInv() {
-    this.confirmService
-      .confirm(
-        'Confirm delete all invocie',
-        'This cannot be undone',
-        'Yes',
-        'No'
-      )
+    this.confirmService.confirm('Confirm delete all invocie','This cannot be undone','Yes','No')
       .subscribe((result) => {
         if (result) {
           if (result) {

@@ -30,7 +30,7 @@ export class DataService {
 
   protected getTableRecordId(id,extraLocation: string ='') : Observable<any>{
 
-   return this.http.get(this.baseUrl + extraLocation + id);
+   return this.http.get(this.baseUrl + extraLocation + '/' + id);
 
   }
 

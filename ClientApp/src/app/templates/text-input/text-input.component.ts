@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Self } from '@angular/core';
+import { Component, Input, OnInit, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-text-input',
@@ -10,7 +11,12 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() type = 'text';
 
-  constructor(@Self() public ngControl: NgControl) {
+  @Input() listsFilter : any []
+  @Input() searchingString: string
+
+
+
+  constructor(@Self() public ngControl: NgControl ) {
     this.ngControl.valueAccessor = this;
 
    }

@@ -55,11 +55,14 @@
       </div>
       <div class="col-md-3">
         <label >Date</label>
-        <input type="date" name="invNo" formControlName="date" class="form-control"
+        <app-text-input  [type] ="'date'" [formControl] = "date" [label]="'Date'" >  </app-text-input>
+
+
+       <!--  <input type="date" name="invNo" formControlName="date" class="form-control"
         [ngClass]="{'is-invalid': date.invalid &&  date.touched }">
 
           <span *ngIf="date.invalid && date.touched && date.errors.required"
-          class="ml-0 input-group-append invalid-feedback">Please enter a valid date</span>
+          class="ml-0 input-group-append invalid-feedback">Please enter a valid date</span> -->
       </div>
       <div class="col-6">
         <div class="form-group">
@@ -74,6 +77,7 @@
               </mat-option>
             </mat-autocomplete> -->
             <app-dropown-template class="col-12" [listsFilter]= listsFilterCustomer [controlName] ="appUserId"  ></app-dropown-template>
+            <app-text-input [formControl]="appUserId" [listsFilter]= listsFilterCustomer ></app-text-input>
             <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
               class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span>

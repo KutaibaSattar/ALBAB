@@ -36,11 +36,11 @@ namespace ALBAB.Controllers
 
          }
 
-          [HttpGet("invnos")]
+          [HttpGet("invNos")]
          public async Task<ActionResult> getInvNos()
          {
 
-          var listId = await  _context.Invoices.Select(pur => new {Id =pur.Id, purNo = pur.InvNo}).ToListAsync();
+          var listId = await  _context.Invoices.Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
 
 
           return Ok(listId);

@@ -32,13 +32,11 @@ export class PurchaseService extends DataService {
 
 
   getPurchNos() {
-    return this.httpClient.get<Observable<any>>(
-      environment.apiUrl + 'invoices/purchnos'
-    );
+    return this.getTableRecords('invnos');
   }
 
   getPurchInv(InvNo: string) {
-    return this.getTableRecordId(InvNo, 'purchinv/');
+    return this.getTableRecordId(InvNo, 'invoice');
   }
 
   UpdaePurchInv(purchase: IInvoice) {
