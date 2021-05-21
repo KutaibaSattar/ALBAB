@@ -43,6 +43,7 @@ import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-che
 import { DbaccountTemplateComponent } from './dbaccount-template/dbaccount-template.component';
 import { DropownTemplateComponent } from './templates/dropown-template/dropown-template.component';
 import { AutocompleteComponent } from './templates/autocomplete/autocomplete.component';
+import { DateInputComponent } from './templates/date-input/date-input.component';
 
 
 
@@ -70,6 +71,7 @@ import { AutocompleteComponent } from './templates/autocomplete/autocomplete.com
    DbaccountTemplateComponent,
    DropownTemplateComponent,
    AutocompleteComponent,
+   DateInputComponent,
 
 
     ],

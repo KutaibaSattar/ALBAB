@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { _MatAutocompleteBase } from '@angular/material/autocomplete';
 
 
 @Component({
@@ -10,6 +11,10 @@ import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() type = 'text';
+  @Input() myAutoComplete: any;
+  @Input() autoCompleteDisabled: boolean = true ;
+  //@Input('matAutocompleteDisabled') autocompleteDisabled: boolean
+  @Input('autocomplete')autocomplete: _MatAutocompleteBase
 
   @Input() listsFilter : any []
   @Input() searchingString: string
@@ -18,6 +23,7 @@ export class TextInputComponent implements ControlValueAccessor {
 
   constructor(@Self() public ngControl: NgControl ) {
     this.ngControl.valueAccessor = this;
+
 
    }
   writeValue(obj: any): void {

@@ -13,8 +13,7 @@ export class DropownTemplateComponent implements OnInit {
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl
   @Input() listsFilter : any []
-
-
+  
 
   constructor() { }
 

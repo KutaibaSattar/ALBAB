@@ -34,7 +34,7 @@
   </div>
 </section>
 <div *ngIf="purchInv"  class="container">
-  <form [formGroup]="formInvoice" (ngSubmit)="OnSubmit()" (keydown.enter)="$event.preventDefault()">
+  <form [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()" >
     <div class="row">
       <!--  -->
       <div class="col-md-3">
@@ -55,7 +55,7 @@
       </div>
       <div class="col-md-3">
         <label >Date</label>
-        <app-text-input  [type] ="'date'" [formControl] = "date" [label]="'Date'" >  </app-text-input>
+        <app-date-input  [formControl] = "date" [label]="'Date'" >  </app-date-input>
 
 
        <!--  <input type="date" name="invNo" formControlName="date" class="form-control"
@@ -77,10 +77,10 @@
               </mat-option>
             </mat-autocomplete> -->
             <app-dropown-template class="col-12" [listsFilter]= listsFilterCustomer [controlName] ="appUserId"  ></app-dropown-template>
-            <app-text-input [formControl]="appUserId" [listsFilter]= listsFilterCustomer ></app-text-input>
-            <span
+
+           <!--  <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
-              class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span>
+              class="ml-0 input-group-append invalid-feedback">Please enter a valid product</span> -->
           </div>
 
         </div>
@@ -124,7 +124,7 @@
         <div class="row pb-2 pt-1">
           <div class="col-md-12">
             <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
-                    <button class="fa fa-save btn btn-success ml-2 float-left" type="submit"> Save</button>
+                    <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit"> Save</button>
                     <button class="fa fa-edit btn btn-success ml-2 float-left" type="button" (click)="clearInv()"> New</button>
                     <button class="fa fa-edit btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()" > Delete</button>
                     <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
@@ -177,8 +177,7 @@
           </tbody>
       </table>
     </ng-container>
-        <pre>{{formInvoice.value | json}}</pre>
-
+       <!-- <pre>{{formInvoice.value | json}}</pre>-->
 
 
 
