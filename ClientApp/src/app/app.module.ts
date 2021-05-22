@@ -36,7 +36,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {TabsModule} from 'ngx-bootstrap/tabs';
-
+import { esDoLocale } from 'ngx-bootstrap/locale';
 
 
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';

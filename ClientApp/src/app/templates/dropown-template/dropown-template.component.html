@@ -1,7 +1,7 @@
 
   <!-- <input type="text" class="form-control " [formControl]= controlName [matAutocomplete]="textinput" placeholder="Customer"> -->
 
-   <app-text-input  [formControl] = "controlName" [autoCompleteDisabled] = "false" [autocomplete]="textinput" [label]="'Customer'" ></app-text-input>
+   <app-text-input  [formControl] = controlName [autoCompleteDisabled] = "false" [autocomplete]="textinput" [label]="label" ></app-text-input>
 
   <mat-autocomplete  #textinput="matAutocomplete" [displayWith]="displayFn.bind(this)">
 

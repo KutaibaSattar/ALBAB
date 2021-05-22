@@ -13,7 +13,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() type = 'text';
   @Input() myAutoComplete: any;
   @Input() autoCompleteDisabled: boolean = true ;
-  //@Input('matAutocompleteDisabled') autocompleteDisabled: boolean
+    //@Input('matAutocompleteDisabled') autocompleteDisabled: boolean
   @Input('autocomplete')autocomplete: _MatAutocompleteBase
 
   @Input() listsFilter : any []

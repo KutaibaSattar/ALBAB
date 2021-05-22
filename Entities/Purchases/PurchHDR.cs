@@ -22,7 +22,7 @@ namespace ALBAB.Entities.Purchases
         public dbAccounts Account { get; set; }
         [Required]
       private int _accountId;
-        public int AccountId {
+        public int AccountId { // if AppUserId is not null then AccountId = 30(Clients)
 
              get => _accountId;
 

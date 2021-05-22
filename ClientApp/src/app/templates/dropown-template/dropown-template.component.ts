@@ -11,9 +11,10 @@ import { map, startWith } from 'rxjs/operators';
 export class DropownTemplateComponent implements OnInit {
 
   filtered$: Observable<Array<any>>;
-  @Input() controlName : FormControl
-  @Input() listsFilter : any []
-  
+  @Input() controlName : FormControl;
+  @Input() listsFilter : any [];
+  @Input()label: string ='';
+
 
   constructor() { }
 
@@ -49,8 +50,9 @@ export class DropownTemplateComponent implements OnInit {
 
   displayFn(item: number): string {
     if (item) {
-      return this.listsFilter.find((element) => element.id === item).name;
-
+      let IdName = this.listsFilter.find((element) => element.id === item).name;
+      console.log('Name',IdName)
+      return IdName;
     }
   }
 

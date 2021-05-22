@@ -17,7 +17,7 @@ namespace ALBAB.Entities.Purchases
         public string Comment { get; set; }
 
         private int? _userId ;
-        public int? AppUserId {
+        public int? AppUserId { // if 0 then set null and update accountId in PurchHdr entity
 
               get => _userId;
               set => _userId = (value ==0 ) ? null : value ;

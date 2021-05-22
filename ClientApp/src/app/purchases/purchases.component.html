@@ -76,7 +76,7 @@
                 {{option.displayName}} - {{option.userId}}
               </mat-option>
             </mat-autocomplete> -->
-            <app-dropown-template class="col-12" [listsFilter]= listsFilterCustomer [controlName] ="appUserId"  ></app-dropown-template>
+            <app-dropown-template class="col-12" [listsFilter]= listsFilterCustomer [label]="'Supplier'" [controlName] ="appUserId"  ></app-dropown-template>
 
            <!--  <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
@@ -155,8 +155,10 @@
                 <tr [formGroupName]="i">
                   <td>
                     <div class="input-group">
-                      <app-dropown-template class="col-12" [listsFilter]= listsFilterProducts  [controlName] ="productId[i]"></app-dropown-template>
+                      <app-dropown-template class="col-12" [listsFilter]= listsFilterProducts [label]="'Item'"  [controlName] ="productId[i]"></app-dropown-template>
+
                     </div>
+                  </td>
 
                    <!--  <input  type="text" class="form-control" matInput formControlName="productId" [matAutocomplete]="products"
                       placeholder="New item">
@@ -165,9 +167,10 @@
                         {{option.name}}
                       </mat-option>
                     </mat-autocomplete> -->
-                  </td>
-                   <td> <input type="number" class="form-control" placeholder="Price" formControlName="price"  > </td>
-                  <td> <input type="number" class="form-control" placeholder="Quantity"  formControlName="quantity" ></td>
+                   <td>
+                     <app-text-input [formControl] = "price[i]" [label]="'Price'">  </app-text-input>
+                    </td>
+                  <td> <app-text-input [formControl] = "quantity[i]"  [label]="'quantity'">  </app-text-input></td>
                   <td> <input type="number" class="form-control" placeholder="UnitTotal"  formControlName="unitTotalPrice" ></td>
                   <td>  <button class="fa fa-save btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Delete</button></td>
 

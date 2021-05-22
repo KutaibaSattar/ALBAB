@@ -54,6 +54,8 @@ export class PurchasesComponent implements OnInit {
   invoiceId: FormControl;
   invDetail: FormArray;
   productId : FormControl[] = new Array();
+  price : FormControl[] = new Array();
+  quantity : FormControl[] = new Array();
 
   grdTotal = new FormControl(''); // sepearated
 
@@ -131,7 +133,7 @@ export class PurchasesComponent implements OnInit {
   initSection(): FormGroup {
     return this.formBuilder.group({
       id: 0,
-      productId: [null, Validators.required],
+      productId: [null, [Validators.required,DropDownValidators.shouldLimited]],
       price: [null, Validators.required],
       quantity: [null, Validators.required],
       unitTotalPrice: [{ value: '', disabled: true }],
@@ -143,7 +145,10 @@ export class PurchasesComponent implements OnInit {
 
   attachItemFilter(index: number) {
 
-    this.productId[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('productId') as FormControl
+    this.productId[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('productId') as FormControl;
+    this.price[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('price') as FormControl;
+    this.quantity[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('quantity') as FormControl;
+
 
     /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
       .valueChanges.pipe(startWith(''),map((val) => this._filter(val))); */

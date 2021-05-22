@@ -37,7 +37,7 @@ export class JournalentryComponent implements OnInit {
 
   ngOnInit(): void {
     this.JournalService.getJournal().subscribe((res) => {
-      //console.log(res);
+      console.log(res);
     });
   }
 
