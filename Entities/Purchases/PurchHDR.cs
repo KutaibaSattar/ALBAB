@@ -21,13 +21,7 @@ namespace ALBAB.Entities.Purchases
 
         public dbAccounts Account { get; set; }
         [Required]
-      private int _accountId;
-        public int AccountId { // if AppUserId is not null then AccountId = 30(Clients)
-
-             get => _accountId;
-
-              set => _accountId = (AppUserId == null) ? value : (int)(ReservedAccountsType.Clients); }
-
+        public int AccountId {get;set;}
         public ICollection <InvDetail> InvDetail { get; set; }
          public Invoice()
         {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210519071259_UpdateDB")]
+    [Migration("20210523065135_UpdateDB")]
     partial class UpdateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,17 +258,18 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("created");
 
-                    b.Property<int>("JournalNo")
-                        .HasColumnType("int")
-                        .HasColumnName("journalno");
-
-                    b.Property<string>("JournalType")
+                    b.Property<string>("JENo")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("journaltype");
+                        .HasColumnName("jeno");
 
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasColumnName("type");
 
                     b.Property<DateTime>("entryDate")
                         .HasColumnType("datetime")

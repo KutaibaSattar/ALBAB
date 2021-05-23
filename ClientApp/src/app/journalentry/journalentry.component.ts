@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Journal, JournalEntry, JournalSingle } from 'app/models/journal';
 import { JournalService } from 'app/services/journal.service';
+import { observeOn } from 'rxjs/operators';
 
 @Component({
   selector: 'app-journalentry',
@@ -9,52 +10,50 @@ import { JournalService } from 'app/services/journal.service';
   styleUrls: ['./journalentry.component.scss'],
 })
 export class JournalentryComponent implements OnInit {
-  constructor(
-    private JournalService: JournalService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private JournalService: JournalService) {}
 
-  frmJournal = this.fb.group({
-    journalNo: new FormControl(''),
+  frmJournal = new FormGroup({
+    jeNo: new FormControl(''),
     note: new FormControl(''),
     entryDate: new FormControl(''),
-
-    singleAccount: this.fb.group({
-      account: new FormControl(),
-      note: new FormControl(''),
-      dueDate: new FormControl(''),
-      credit: new FormControl(null),
-      debit: new FormControl(null),
-    }),
-
-    journalAccounts: this.fb.array([this.initSection()]),
+    journalAccounts : new FormArray([this.initSection()]),
   });
 
-  journalNo  = this.frmJournal.get('journalNo');
+  journalNo  = this.frmJournal.get('jeNo');
   note  = this.frmJournal.get('note');
   entryDate  = this.frmJournal.get('entryDate');
+  journalAccounts = this.frmJournal.get('journalAccounts') as FormArray
 
+
+  frmSingleAccount =  new FormGroup ({
+    account: new FormControl(),
+    note: new FormControl(''),
+    dueDate: new FormControl(''),
+    credit: new FormControl(null),
+    debit: new FormControl(null),
+  });
 
   ngOnInit(): void {
     this.JournalService.getJournal().subscribe((res) => {
       console.log(res);
     });
+
+
   }
 
   initSection(): FormGroup {
-    return this.fb.group({
+    return new FormGroup({
       account: new FormControl(),
       note: new FormControl(''),
-      debit: new FormControl(null),
-      credit: new FormControl(null),
       dueDate: new FormControl(''),
+      credit: new FormControl(null),
+      debit: new FormControl(null),
     });
   }
-  addItem(frm: JournalSingle) {
-    console.log('first', frm);
-    console.log(this.frmJournal.value);
 
-    let journal = new Journal();
+
+  addItem(frm: JournalSingle) {
+
 
     //journal.journalAccounts = []
     /*  let combined = [];
@@ -68,13 +67,23 @@ export class JournalentryComponent implements OnInit {
     //delete journal.singleAccount
     //console.log(journal)
     //console.log ('second',journal)
-    journal.journalNo = this.journalNo.value;
-    journal.entryDate = this.entryDate.value;
-    journal.note = this.note.value;
 
-    journal.journalAccounts = this.frmJournal.get('journalAccounts').value;
-    journal.journalAccounts.push(this.frmJournal.get('singleAccount').value);
+   let journal : Journal = JSON.parse(JSON.stringify(this.frmJournal.value))
 
-    console.log(journal);
+
+   /*  let journal : Journal = {...this.frmJournal.value}; */
+
+   journal.journalAccounts.push(this.frmSingleAccount.value)
+    console.log(journal)
+    console.log(this.frmJournal)
+
+
+    /* var joinForm = new FormGroup({form1:this.frmJournal});
+    console.log(joinForm);
+
+
+    (<FormArray>joinForm.get('journalAccounts')).push(this.frmSingleAccount)
+
+    console.log(joinForm); */
   }
 }

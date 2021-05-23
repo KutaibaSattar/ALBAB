@@ -1,7 +1,7 @@
 export interface JournalEntry {
   id: number;
-  journalNo: number;
-  JournalType: string;
+  jeNo: string;
+  type: string;
   note: string;
   entryDate: string;
   created: string;
@@ -11,6 +11,7 @@ export interface JournalAccount {
   journalId: number;
   created: string;
   dueDate: string;
+  appUserId: number;
   accountId: number;
   credit: number;
   debit: number;
@@ -19,7 +20,7 @@ export interface JournalAccount {
 
 export class Journal{
   id: number;
-  journalNo: number;
+  jeNo: string;
   JournalType: string;
   note: string;
   entryDate: string;

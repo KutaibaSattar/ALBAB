@@ -23,14 +23,12 @@ namespace ALBAB.Entities.Purchases
               set => _userId = (value ==0 ) ? null : value ;
              }
 
-        public int AccountId {get;set;}
-
-        /* private int _accountId;
+        private int _accountId;
         public int AccountId {
 
              get => _accountId;
 
-              set => _accountId = (_userId == null) ? value : (int)(ReservedAccountsType.Clients); } */
+              set => _accountId = (_userId == null) ? value : (int)(ReservedAccountsType.Clients); }
 
          public ICollection <InvDetailsRes> invDetails { get; set; }
          public InvoiceRes()

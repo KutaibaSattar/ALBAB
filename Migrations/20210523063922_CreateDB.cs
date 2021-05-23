@@ -98,8 +98,8 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    journalno = table.Column<int>(type: "int", nullable: false),
-                    journaltype = table.Column<string>(type: "text", nullable: true),
+                    jeno = table.Column<int>(type: "int", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: true),
                     note = table.Column<string>(type: "text", nullable: true),
                     entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -262,7 +262,7 @@ namespace ALBaB.Migrations
                     date = table.Column<DateTime>(type: "datetime", nullable: false),
                     comment = table.Column<string>(type: "text", nullable: true),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    appuserid = table.Column<int>(type: "int", nullable: false),
+                    appuserid = table.Column<int>(type: "int", nullable: true),
                     accountid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -273,7 +273,7 @@ namespace ALBaB.Migrations
                         column: x => x.appuserid,
                         principalTable: "aspnetusers",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_invoices_dbaccounts_accountid",
                         column: x => x.accountid,

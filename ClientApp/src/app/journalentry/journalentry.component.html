@@ -36,7 +36,7 @@
               <div class="form-group">
                 <label class="font-weight-bold">No</label>
                 <div class="input-group">
-                  <input formControlName="journalNo" type="text" class="form-control" />
+                  <input formControlName="jeNo" type="text" class="form-control" />
                 </div>
               </div>
             </div>
@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <div  formGroupName ="singleAccount" class="card col-6">
+        <div  [formGroup]="frmSingleAccount" class="card col-6">
           <div class="card-header bg-primary font-weight-bold mt-1"> Credit </div>
           <div class="row">
             <!--  -->
@@ -138,5 +138,6 @@
       </ng-container>
     </div>
     <pre>{{frmJournal.value | json}}</pre>
+    <pre>{{frmSingleAccount.value | json}}</pre>
   </form>
 </div>

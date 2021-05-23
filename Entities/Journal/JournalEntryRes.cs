@@ -10,7 +10,7 @@ namespace ALBAB.Entities.Journal
 
     {
        public int Id { get; private set; }
-       public int JENo { get; set; }
+       public string JENo { get; set; }
        public string Type { get; set; } = Journal.JournalType.Journal;
        public string Note { get; set; }
        public DateTime Created { get; set; }

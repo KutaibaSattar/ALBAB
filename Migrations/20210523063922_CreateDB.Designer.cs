@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210518105051_CreateDB")]
+    [Migration("20210523063922_CreateDB")]
     partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,17 +258,17 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("created");
 
-                    b.Property<int>("JournalNo")
+                    b.Property<int>("JENo")
                         .HasColumnType("int")
-                        .HasColumnName("journalno");
-
-                    b.Property<string>("JournalType")
-                        .HasColumnType("text")
-                        .HasColumnName("journaltype");
+                        .HasColumnName("jeno");
 
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasColumnName("type");
 
                     b.Property<DateTime>("entryDate")
                         .HasColumnType("datetime")
@@ -509,7 +509,6 @@ namespace ALBaB.Migrations
                         .HasColumnName("accountid");
 
                     b.Property<int?>("AppUserId")
-                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("appuserid");
 
@@ -882,9 +881,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId")
-                        .HasConstraintName("fk_invoices_aspnetusers_appuserid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_invoices_aspnetusers_appuserid");
 
                     b.Navigation("Account");
 
