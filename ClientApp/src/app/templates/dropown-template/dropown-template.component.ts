@@ -20,9 +20,20 @@ export class DropownTemplateComponent implements OnInit {
   @Input()label: string ='';
   @Input() members : boolean = false;
   @Input() products : boolean = false;
+  res;
 
 
   constructor(private memberService : AuthService, private productService : ProductsService ) { }
+
+  private fetchData(){
+    const promise =  this.productService.getProducts().toPromise();
+    console.log(promise);
+    promise.then((data)=>{
+      console.log("Promise resolved with: " + JSON.stringify(data));
+    }).catch((error)=>{
+      console.log("Promise rejected with " + JSON.stringify(error));
+    });
+  }
 
   ngOnInit(): void {
 
@@ -43,6 +54,8 @@ export class DropownTemplateComponent implements OnInit {
     );
 
  if (this.products)
+   this.fetchData();
+    console.log(this.res);
     this.productService.getProducts().subscribe(
         (products: Product[]) => {this.listsFilter =
             products.map(obj =>{
@@ -74,7 +87,7 @@ export class DropownTemplateComponent implements OnInit {
   attachedFilter(): any {
 
     this.filtered$ = this.controlName.valueChanges.pipe(
-      //startWith(''),
+      startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
       map((val) => this.filter(val))
@@ -99,7 +112,7 @@ export class DropownTemplateComponent implements OnInit {
   }
 
   displayFn(item: number): string {
-    if (item) {
+    if (item && this.listsFilter) {
       let IdName = this.listsFilter.find((element) => element.id === item).name;
       console.log('Name',IdName)
       return IdName;
