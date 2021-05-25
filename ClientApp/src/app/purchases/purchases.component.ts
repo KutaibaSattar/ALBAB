@@ -84,33 +84,33 @@ export class PurchasesComponent implements OnInit {
       this.productService.getProducts(),
     ];
 
-    forkJoin(sources).subscribe((data) => {
-      (<any>this.members) = data[0];
+    // forkJoin(sources).subscribe((data) => {
+    //   (<any>this.members) = data[0];
 
-      this.listsFilterCustomer = this.members.map(obj =>{
-        var returnObj = {};
-        const mapping = ['id', 'name','keyId'];
-        returnObj[mapping[0]] = obj.id;
-        returnObj[mapping[1]] = obj.name;
-        returnObj[mapping[2]] = obj.keyId;
+    //   this.listsFilterCustomer = this.members.map(obj =>{
+    //     var returnObj = {};
+    //     const mapping = ['id', 'name','keyId'];
+    //     returnObj[mapping[0]] = obj.id;
+    //     returnObj[mapping[1]] = obj.name;
+    //     returnObj[mapping[2]] = obj.keyId;
 
-        return returnObj;
-     });
-
-
-
-      (<any>this.products) = data[1];
-
-      this.listsFilterProducts = this.products.map(obj =>{
-        var returnObj = {};
-        const mapping = ['id', 'name'];
-        returnObj[mapping[0]] = obj.id;
-        returnObj[mapping[1]] = obj.name;
-        return returnObj;
-     });
+    //     return returnObj;
+    //  });
 
 
-    });
+
+    //   (<any>this.products) = data[1];
+
+    //   this.listsFilterProducts = this.products.map(obj =>{
+    //     var returnObj = {};
+    //     const mapping = ['id', 'name'];
+    //     returnObj[mapping[0]] = obj.id;
+    //     returnObj[mapping[1]] = obj.name;
+    //     return returnObj;
+    //  });
+
+
+    // });
   }
 
   initializeForm() {

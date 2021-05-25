@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Member } from 'app/models/member';
+import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
+import { ProductsService } from 'app/services/goods.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -16,50 +18,67 @@ export class DropownTemplateComponent implements OnInit {
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
   @Input()label: string ='';
+  @Input() members : boolean = false;
+  @Input() products : boolean = false;
 
 
-  constructor(public authService : AuthService) { }
+  constructor(private memberService : AuthService, private productService : ProductsService ) { }
 
   ngOnInit(): void {
 
-    this.attachedFilter();
-    this.filterDirectly('Abd');
+   if (this.members)
+    this.memberService.getMembers().subscribe(
+      (members:Member[]) => { this.listsFilter =
+          members.map(obj =>{
+            var returnObj = {};
+            const mapping = ['id', 'name','keyId'];
+            returnObj[mapping[0]] = obj.id;
+            returnObj[mapping[1]] = obj.name;
+            returnObj[mapping[2]] = obj.keyId;
+            return returnObj;
+         });
+        //console.log(this.members);
+      }
+
+    );
+
+ if (this.products)
+    this.productService.getProducts().subscribe(
+        (products: Product[]) => {this.listsFilter =
+            products.map(obj =>{
+            var returnObj = {};
+            const mapping = ['id', 'name','keyId'];
+            returnObj[mapping[0]] = obj.id;
+            returnObj[mapping[1]] = obj.name;
+            return returnObj;
+         });}
+      )
+
+    console.log(this.members)
+
+   /*  this.members = this.memberService.getMembers().su..map(obj =>{
+      var returnObj = {};
+      const mapping = ['id', 'name','keyId'];
+      returnObj[mapping[0]] = obj.id;
+      returnObj[mapping[1]] = obj.name;
+      returnObj[mapping[2]] = obj.keyId;
+
+      return returnObj;
+   }); */
+
+   this.attachedFilter();
+
 
   }
 
   attachedFilter(): any {
-    this.filtered$ = this.controlName.valueChanges.pipe(
-      startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-      map((val) => this.filterDirectly(val))
-    );
 
     this.filtered$ = this.controlName.valueChanges.pipe(
-      startWith(''),
+      //startWith(''),
       /*map(value => typeof value === 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.users.slice()),*/
       map((val) => this.filter(val))
     );
-  }
-
-  filterDirectly(val) {
-   this.authService.getMembers().pipe(
-    map((member) => {
-      console.log('New Member', member);
-        let rtn =  member.filter(item =>item.name.includes(val));
-        return rtn;
-      }))
-
-
-    /* .subscribe((data) => {
-      console.log('after Sub',data)
-
-    }
-
-
-
-    ) */
   }
 
 
@@ -85,6 +104,30 @@ export class DropownTemplateComponent implements OnInit {
       console.log('Name',IdName)
       return IdName;
     }
+  }
+
+  filterTesting(){
+    this.controlName.valueChanges.pipe(
+      //startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.users.slice()),*/
+     map((val) => {
+        console.log(val);
+        //return this.filter(val);
+         return  this.memberService.getMembers().pipe(
+            map( x=> {
+              console.log('First',x);
+               return  x.filter(item => item.name.toLowerCase().includes(val))
+
+            })
+        )
+
+      }),
+
+    ).subscribe( x => {console.log('Output',x)
+      this.filtered$ = x;
+
+    })
   }
 
 }
