@@ -25,15 +25,6 @@ export class DropownTemplateComponent implements OnInit {
 
   constructor(private memberService : AuthService, private productService : ProductsService ) { }
 
-  private fetchData(){
-    const promise =  this.productService.getProducts().toPromise();
-    console.log(promise);
-    promise.then((data)=>{
-      console.log("Promise resolved with: " + JSON.stringify(data));
-    }).catch((error)=>{
-      console.log("Promise rejected with " + JSON.stringify(error));
-    });
-  }
 
   ngOnInit(): void {
 
@@ -54,7 +45,7 @@ export class DropownTemplateComponent implements OnInit {
     );
 
  if (this.products)
-   this.fetchData();
+   
     console.log(this.res);
     this.productService.getProducts().subscribe(
         (products: Product[]) => {this.listsFilter =

@@ -76,7 +76,7 @@
                 {{option.displayName}} - {{option.userId}}
               </mat-option>
             </mat-autocomplete> -->
-            <app-dropown-template class="col-12" [members]= true [label]="'Supplier'" [controlName] ="appUserId"  ></app-dropown-template>
+            <app-dropown-template class="col-12" [listsFilter] = "listsFilterClients" [label]="'Supplier'" [controlName] ="appUserId"  ></app-dropown-template>
 
            <!--  <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
@@ -155,7 +155,7 @@
                 <tr [formGroupName]="i">
                   <td>
                     <div class="input-group">
-                      <app-dropown-template class="col-12" [products]= true [label]="'Item'"  [controlName] ="productId[i]"></app-dropown-template>
+                      <app-dropown-template class="col-12" [listsFilter] = " listsFilterProducts"  [label]="'Item'"  [controlName] ="productId[i]"></app-dropown-template>
 
                     </div>
                   </td>
