@@ -18,61 +18,13 @@ export class DropownTemplateComponent implements OnInit {
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
   @Input()label: string ='';
-  @Input() members : boolean = false;
-  @Input() products : boolean = false;
-  res;
 
 
-  constructor(private memberService : AuthService, private productService : ProductsService ) { }
+  constructor() { }
 
 
   ngOnInit(): void {
-
-   if (this.members)
-    this.memberService.getMembers().subscribe(
-      (members:Member[]) => { this.listsFilter =
-          members.map(obj =>{
-            var returnObj = {};
-            const mapping = ['id', 'name','keyId'];
-            returnObj[mapping[0]] = obj.id;
-            returnObj[mapping[1]] = obj.name;
-            returnObj[mapping[2]] = obj.keyId;
-            return returnObj;
-         });
-        //console.log(this.members);
-      }
-
-    );
-
- if (this.products)
-   
-    console.log(this.res);
-    this.productService.getProducts().subscribe(
-        (products: Product[]) => {this.listsFilter =
-            products.map(obj =>{
-            var returnObj = {};
-            const mapping = ['id', 'name','keyId'];
-            returnObj[mapping[0]] = obj.id;
-            returnObj[mapping[1]] = obj.name;
-            return returnObj;
-         });}
-      )
-
-    console.log(this.members)
-
-   /*  this.members = this.memberService.getMembers().su..map(obj =>{
-      var returnObj = {};
-      const mapping = ['id', 'name','keyId'];
-      returnObj[mapping[0]] = obj.id;
-      returnObj[mapping[1]] = obj.name;
-      returnObj[mapping[2]] = obj.keyId;
-
-      return returnObj;
-   }); */
-
    this.attachedFilter();
-
-
   }
 
   attachedFilter(): any {
@@ -110,28 +62,28 @@ export class DropownTemplateComponent implements OnInit {
     }
   }
 
-  filterTesting(){
-    this.controlName.valueChanges.pipe(
-      //startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-     map((val) => {
-        console.log(val);
-        //return this.filter(val);
-         return  this.memberService.getMembers().pipe(
-            map( x=> {
-              console.log('First',x);
-               return  x.filter(item => item.name.toLowerCase().includes(val))
+  // filterTesting(){
+  //   this.controlName.valueChanges.pipe(
+  //     //startWith(''),
+  //     /*map(value => typeof value === 'string' ? value : value.name),
+  //     map(name => name ? this._filter(name) : this.users.slice()),*/
+  //    map((val) => {
+  //       console.log(val);
+  //       //return this.filter(val);
+  //        return  this.memberService.getMembers().pipe(
+  //           map( x=> {
+  //             console.log('First',x);
+  //              return  x.filter(item => item.name.toLowerCase().includes(val))
 
-            })
-        )
+  //           })
+  //       )
 
-      }),
+  //     }),
 
-    ).subscribe( x => {console.log('Output',x)
-      this.filtered$ = x;
+  //   ).subscribe( x => {console.log('Output',x)
+  //     this.filtered$ = x;
 
-    })
-  }
+  //   })
+  // }
 
 }

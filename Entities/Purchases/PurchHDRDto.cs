@@ -15,20 +15,20 @@ namespace ALBAB.Entities.Purchases
         public string Type { get; set; } = "PR";
         public DateTime Date { get; set; } =  DateTime.Now;
         public string Comment { get; set; }
+        public int? AppUserId { get; set; }
+        // private int? _userId ;
+        // public int? AppUserId { // if 0 then set null and update accountId in PurchHdr entity
 
-        private int? _userId ;
-        public int? AppUserId { // if 0 then set null and update accountId in PurchHdr entity
+        //       get => _userId;
+        //       set => _userId = (value ==0 ) ? null : value ;
+        //      }
+         public int AccountId{ get; set; }
+        // private int _accountId;
+        // public int AccountId {
 
-              get => _userId;
-              set => _userId = (value ==0 ) ? null : value ;
-             }
+        //      get => _accountId;
 
-        private int _accountId;
-        public int AccountId {
-
-             get => _accountId;
-
-              set => _accountId = (_userId == null) ? value : (int)(ReservedAccountsType.Clients); }
+        //       set => _accountId = (_userId == null) ? value : (int)(ReservedAccountsType.Clients); }
 
          public ICollection <InvDetailsRes> invDetails { get; set; }
          public InvoiceRes()

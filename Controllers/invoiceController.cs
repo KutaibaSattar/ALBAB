@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
+using ALBAB.Entities;
 
 namespace ALBAB.Controllers
 {
@@ -83,6 +84,11 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+          if (invRes.AppUserId > 0)
+          {
+              invRes.AccountId = (int)(ReservedAccountsType.Clients);
+
+          }
 
 
 

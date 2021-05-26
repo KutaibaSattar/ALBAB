@@ -145,9 +145,9 @@ export class PurchasesComponent implements OnInit {
 
   attachItemFilter(index: number) {
 
-    this.productId[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('productId') as FormControl;
-    this.price[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('price') as FormControl;
-    this.quantity[index] = (<FormArray>this.formInvoice.get('invDetails')).at(index).get('quantity') as FormControl;
+    this.productId[index] = this.invDetail.at(index).get('productId') as FormControl;
+    this.price[index] = this.invDetail.at(index).get('price') as FormControl;
+    this.quantity[index] = this.invDetail.at(index).get('quantity') as FormControl;
 
 
     /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
@@ -196,7 +196,7 @@ export class PurchasesComponent implements OnInit {
 
   getSections(form: FormGroup) {
     if ((form.controls.invDetails as FormArray).controls.length > 0)
-      return (<FormArray>form.controls.invDetails).controls;
+      return this.invDetail.controls;
   }
 
 
@@ -264,9 +264,12 @@ export class PurchasesComponent implements OnInit {
             invNo: this.purchInv.invNo,
             appUserId: this.purchInv.appUserId,
             accountId:this.purchInv.accountId,
-            date: this.datePipe.transform(this.purchInv.date,'yyyy-MM-dd'),
+            date: this.datePipe.transform(this.purchInv.date,'dd/MM/YYYY'),
+
+
           });
 
+        
           if (this.formInvoice.dirty) {
             //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
           }
@@ -279,9 +282,9 @@ export class PurchasesComponent implements OnInit {
             const group = this.initSection();
             group.patchValue(item);
 
-            let arrayLength = (this.formInvoice.get('invDetails') as FormArray).controls.length;
+            let arrayLength = this.invDetail.controls.length;
 
-            (this.formInvoice.get('invDetails') as FormArray).push(group);
+            this.invDetail.push(group);
 
             this.listenToChanging(arrayLength);
             this.updateTotalUnitPrice(arrayLength);
@@ -322,7 +325,6 @@ export class PurchasesComponent implements OnInit {
   deleteInv() {
     this.confirmService.confirm('Confirm delete all invocie','This cannot be undone','Yes','No')
       .subscribe((result) => {
-        if (result) {
           if (result) {
             this.purchaseService
               .deletePurchase(this.invoiceId.value)
@@ -333,7 +335,7 @@ export class PurchasesComponent implements OnInit {
                 this.addRecord();
               });
           }
-        }
+
       });
   }
 }

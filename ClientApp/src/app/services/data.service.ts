@@ -34,9 +34,9 @@ export class DataService {
 
   }
 
-  protected UpdateTable(id,extraLocation: string ='') : Observable<any>{
+  protected UpdateTable(resource,extraLocation: string ='') : Observable<any>{
 
-   return this.http.get(this.baseUrl + extraLocation + id);
+   return this.http.put(this.baseUrl + extraLocation, resource );
 
   }
 
