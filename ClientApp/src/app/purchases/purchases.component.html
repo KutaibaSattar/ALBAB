@@ -17,14 +17,12 @@
       <div class="col-md-6 ml-auto">
         <div class="input-group ">
           <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
-                 name="joke" #joke="ngModel" [(ngModel)]="txtSearchInv" (ngModelChange)="doFilter()">
+                 name="joke" #joke="ngModel" [(ngModel)]="txtSearchInv" >
           <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete" [displayWith]="PurchNameFn.bind(this)">
-            <mat-option *ngFor="let purch of this.filteredPurchNos$| async" [value]="purch.id">
+            <mat-option *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
               {{purch.invNo}}
             </mat-option>
           </mat-autocomplete>
-
-
           <div class="input-group-append">
             <button class="fa fa-search ml-1 btn btn-success" (click)="getPurch()" > Search</button>
           </div>
@@ -76,7 +74,7 @@
                 {{option.displayName}} - {{option.userId}}
               </mat-option>
             </mat-autocomplete> -->
-            <app-dropown-template class="col-12" [listsFilter] = "listsFilterClients" [label]="'Supplier'" [controlName] ="appUserId"  ></app-dropown-template>
+            <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName] ="appUserId"  ></app-dropown-template>
 
            <!--  <span
               *ngIf="appUserId.invalid &&  appUserId.touched && (appUserId.errors.required || appUserId.errors.shouldLimited) "
@@ -155,7 +153,7 @@
                 <tr [formGroupName]="i">
                   <td>
                     <div class="input-group">
-                      <app-dropown-template class="col-12" [listsFilter] = "listsFilterProducts"  [label]="'Item'"  [controlName] ="productId[i]"></app-dropown-template>
+                      <app-dropown-template class="col-12" [products]=true  [label]="'Item'"  [controlName] ="productId[i]"></app-dropown-template>
 
                     </div>
                   </td>

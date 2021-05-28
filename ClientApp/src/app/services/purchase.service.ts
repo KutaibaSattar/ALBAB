@@ -18,6 +18,7 @@ export class PurchaseService extends DataService {
   }
 
 
+
   getPurchases() {
     return this.getTableRecords('purchlist').pipe(
       map((purch: IInvoice) => {

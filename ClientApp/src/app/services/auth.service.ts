@@ -85,10 +85,8 @@ setCurrentUser(user: User){
  const roles = this.getDecodeToken(user.token).role
  Array.isArray(roles) ? user.roles = roles : user.roles.push(roles)
  this.currentUserSource.next(user);  // store user in current user source
- this.currentUser$.subscribe(
-   res => console.log('subject',res)
- )
-  this.tokenExpired();
+ this.currentUser$.subscribe()
+ this.tokenExpired();
 
 }
 

@@ -13,8 +13,13 @@ import { ConfirmService } from 'app/services/confirm.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+interface invoice {
+  id: number;
+   invNo: string
+}
 
 @Component({
   selector: 'app-purchases',
@@ -39,6 +44,8 @@ export class PurchasesComponent implements OnInit {
       $event.returnValue = true;
     }
   } */
+
+
   listsFilterClients : any
   listsFilterProducts : any
 
@@ -46,7 +53,7 @@ export class PurchasesComponent implements OnInit {
   member: string;
   products: Product[];
   txtSearchInv: string;
-  purchNos: [{ id: number; invNo: string }];
+  purchNos: invoice[];
   formInvoice: FormGroup;
   appUserId: FormControl;
   invNo: FormControl;
@@ -72,7 +79,15 @@ export class PurchasesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //this.purchaseService.getPurchInv(1).subscribe(data => this.purchase = data)
+
+    //this.productService.testing = true;
+
+    this.purchaseService.getPurchNos().pipe(
+      map ((data : invoice[]) =>{
+        this.purchNos = data;
+
+      })
+    ).subscribe();
 
     this.initializeForm();
     //this.attachedUserFilter();
@@ -84,7 +99,9 @@ export class PurchasesComponent implements OnInit {
       this.productService.getProducts(),
     ];
 
-    forkJoin(sources).subscribe((data) => {
+
+
+    forkJoin(sources).subscribe(/* (data) => {
       (<any>this.members) = data[0];
 
       this.listsFilterClients = this.members.map(obj =>{
@@ -110,7 +127,7 @@ export class PurchasesComponent implements OnInit {
      });
 
 
-    });
+    } */);
   }
 
   initializeForm() {
@@ -224,28 +241,15 @@ export class PurchasesComponent implements OnInit {
   }
 
 
-
-  doFilter() {
-    this.filteredPurchNos$ = this.purchaseService.getPurchNos()
-      .pipe(map((jokes) => this.filterPurchase(jokes)));
-  }
-  filterPurchase(values) {
-    return (this.purchNos = values.filter((joke) =>
-      joke.invNo.toLowerCase().includes(this.txtSearchInv)
+  filterPurchase() : Observable<any> {
+    if (this.purchNos &&this.txtSearchInv)
+    return  of(this.purchNos.filter((purch) =>
+      purch.invNo.toLowerCase().includes(this.txtSearchInv)
     ));
   }
 
- /*  displayFn(this, user: number): string {
-    if (user) {
-      let x = this.members.find((element) => element.id === user).name;
-      return x;
-    }
-  }
-  ProductNameFn(this, product: number): string {
-    if (product) {
-      return this.products.find((element) => element.id === product).name;
-    }
-  } */
+
+
 
   PurchNameFn(option): any {
     if (this.purchNos) {
@@ -269,7 +273,7 @@ export class PurchasesComponent implements OnInit {
 
           });
 
-        
+
           if (this.formInvoice.dirty) {
             //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
           }
@@ -335,7 +339,6 @@ export class PurchasesComponent implements OnInit {
                 this.addRecord();
               });
           }
-
       });
   }
 }

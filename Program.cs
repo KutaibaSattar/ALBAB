@@ -44,8 +44,7 @@ namespace ALBAB
                  logger.LogError(ex.Message);
             } 
 
-
-        
+       
            
            host.Run();
 

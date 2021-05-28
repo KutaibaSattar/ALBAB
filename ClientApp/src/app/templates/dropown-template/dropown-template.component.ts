@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
-import { ProductsService } from 'app/services/goods.service';
+import { ProductService } from 'app/services/product.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -18,13 +18,59 @@ export class DropownTemplateComponent implements OnInit {
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
   @Input()label: string ='';
+  @Input() members : boolean = false;
+  @Input() products : boolean = false;
+  showing: boolean;
 
-
-  constructor() { }
+  constructor(private memberService : AuthService, private productService : ProductService) { }
 
 
   ngOnInit(): void {
-   this.attachedFilter();
+
+
+    if (this.members)
+    this.memberService.getMembers().pipe(
+       map ((members:Member[]) => {
+        this.listsFilter =   members.map( obj =>{
+           var returnObj = {};
+           const mapping = ['id', 'name','keyId'];
+           returnObj[mapping[0]] = obj.id;
+           returnObj[mapping[1]] = obj.name;
+           returnObj[mapping[2]] = obj.keyId;
+            return returnObj;
+           })
+       this.showing = true;
+       })
+     ).subscribe();
+
+
+
+
+  if (this.products)
+        this.productService.productSource$.subscribe(
+       res => {
+        if (res){
+           this.listsFilter = res;
+           this.showing = true;
+        }
+        }
+
+      )
+
+      // this.productService.getProducts().pipe(
+      //   map((product: Product[]) => {
+      //     console.log('Product', product);
+      //     this.listsFilter = product;
+      //     this.showing = true;
+      //   })
+      // )
+      // .subscribe();
+
+  console.log(this.listsFilter);
+
+  this.attachedFilter();
+
+
   }
 
   attachedFilter(): any {
@@ -40,7 +86,7 @@ export class DropownTemplateComponent implements OnInit {
 
 
   filter(val: any) {
-    if (this.listsFilter !== undefined) {
+    if (this.listsFilter != undefined) {
     return  this.listsFilter.filter((item:any) => {
         // If the user selects an option, the value becomes a Human object,
         // therefore we need to reset the val for the filter because an
@@ -62,28 +108,28 @@ export class DropownTemplateComponent implements OnInit {
     }
   }
 
-  // filterTesting(){
-  //   this.controlName.valueChanges.pipe(
-  //     //startWith(''),
-  //     /*map(value => typeof value === 'string' ? value : value.name),
-  //     map(name => name ? this._filter(name) : this.users.slice()),*/
-  //    map((val) => {
-  //       console.log(val);
-  //       //return this.filter(val);
-  //        return  this.memberService.getMembers().pipe(
-  //           map( x=> {
-  //             console.log('First',x);
-  //              return  x.filter(item => item.name.toLowerCase().includes(val))
+  filterTesting(){
+    this.controlName.valueChanges.pipe(
+      //startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.users.slice()),*/
+     map((val) => {
+        console.log(val);
+        //return this.filter(val);
+         return  this.memberService.getMembers().pipe(
+            map( x=> {
+              console.log('First',x);
+               return  x.filter(item => item.name.toLowerCase().includes(val))
 
-  //           })
-  //       )
+            })
+        )
 
-  //     }),
+      }),
 
-  //   ).subscribe( x => {console.log('Output',x)
-  //     this.filtered$ = x;
+    ).subscribe( x => {console.log('Output',x)
+      this.filtered$ = x;
 
-  //   })
-  // }
+    })
+  }
 
 }
