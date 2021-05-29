@@ -63,9 +63,8 @@ export class PurchasesComponent implements OnInit {
   productId : FormControl[] = new Array();
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
-
   grdTotal = new FormControl(''); // sepearated
-
+  testing = new Array();
   purchInv: IInvoice = new IInvoice();
 
   //filteredUsers$: Observable<Array<Member>>;
@@ -202,17 +201,18 @@ export class PurchasesComponent implements OnInit {
 
 
   addRecord() {
-    const controls = <FormArray>this.formInvoice.get('invDetails');
-    controls.push(this.initSection());
+
+    this.invDetail.controls.push(this.initSection());
     // Build the account Auto Complete values
-    this.attachItemFilter(controls.length - 1);
-    this.listenToChanging(controls.length - 1);
+    this.attachItemFilter(this.invDetail.length - 1);
+    this.listenToChanging(this.invDetail.length - 1);
   }
 
 
 
-  getSections(form: FormGroup) {
-    if ((form.controls.invDetails as FormArray).controls.length > 0)
+  getSections() {
+    if (this.invDetail.controls.length > 0)
+    this.testing[this.invDetail.controls.length-1] = this.invDetail.controls;
       return this.invDetail.controls;
   }
 
@@ -268,7 +268,7 @@ export class PurchasesComponent implements OnInit {
             invNo: this.purchInv.invNo,
             appUserId: this.purchInv.appUserId,
             accountId:this.purchInv.accountId,
-            date: this.datePipe.transform(this.purchInv.date,'dd/MM/YYYY'),
+            date: new Date(this.purchInv.date)
 
 
           });
@@ -314,8 +314,32 @@ export class PurchasesComponent implements OnInit {
     }
   }
 
-  removeUnit(i: number) {
-    this.invDetail.removeAt(i);
+   removeUnit(i: number) {
+    //this.getSections();
+    //this.invDetail.controls.splice(i);
+    this.invDetail.controls.splice(i,1)
+
+
+    //this.productId.splice[i];
+
+    // console.log('productId',this.productId)
+    // this.price.splice[i];
+    // this.quantity.splice[i];
+    // this.price[index] = this.invDetail.at(index).get('price') as FormControl;
+    // this.quantity[index] = this.invDetail.at(index).get('quantity') as FormControl;
+    // const controls = <FormArray>this.formInvoice.controls['invDetails'];
+
+    // controls.removeAt(i);
+    // remove from filteredOptions too.
+    //console.log('productId',this.productId)
+    //this.invDetail.controls.splice(i,1);
+   /*  console.log(this.invDetail.value[i])
+    console.log(this.invDetail.controls.indexOf(this.invDetail.value[i]))
+    console.log(this.invDetail.value)
+    this.invDetail.controls.splice(i,1)
+    //this.invDetail.value(i).splice(i,1);
+    //this.purchInv.invDetails.splice(1);
+    console.log(this.invDetail.value) */
   }
 
   clearInv() {
