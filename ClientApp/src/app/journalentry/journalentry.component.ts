@@ -19,7 +19,7 @@ export class JournalentryComponent implements OnInit {
     journalAccounts : new FormArray([this.initSection()]),
   });
 
-  journalNo  = this.frmJournal.get('jeNo');
+  JeNo  = this.frmJournal.get('jeNo');
   note  = this.frmJournal.get('note');
   entryDate  = this.frmJournal.get('entryDate');
   journalAccounts = this.frmJournal.get('journalAccounts') as FormArray

@@ -34,13 +34,12 @@
 </section>
 
 <div class="container">
-
-  <form [formGroup]="frmJournal" (keydown.enter)="$event.preventDefault()">
+   <form [formGroup]="frmJournal" (keydown.enter)="$event.preventDefault()">
     <div class="row">
       <div class=" col-sm-6">
         <div class="card bg-light">
           <div class="card-body">
-            <h2  class="card-header bg-center">Journal Details</h2>
+            <h2  class="card-header py-1 bg-center">Journal Details</h2>
              <div class="row">
               <!--  -->
               <div class="col-md-6">
@@ -72,7 +71,7 @@
       <div class="col-sm-6">
         <div  [formGroup]="frmSingleAccount" class="card bg-light">
           <div class="card-body">
-            <h2  class="card-header bg-center">Credit</h2>
+            <h2  class="card-header py-1 bg-center">Credit</h2>
           <div class="row">
             <!--  -->
             <div class="col-md-6">
@@ -133,7 +132,7 @@
 
 
         <!-- Table Header -->
-        <table  class="table table-bordered table-active table-hover table-sm table-condensed mt-1">
+        <table  class=" table table-bordered table-active table-hover table-sm table-condensed mt-1">
 
           <thead >
             <tr class="border" >
@@ -145,28 +144,44 @@
           </thead>
 
           <!-- Table Body -->
-          <tbody>
-            <tr [formGroupName]="0">
+          <tbody *ngFor="let _ of journalAccounts.controls; index as i " [formGroupName]="i" >
+
+            <tr>
               <td>
                 <input formControlName="account" class="form-control" />
               </td>
               <td>
                 <input formControlName="note" class="form-control" />
               </td>
-              <td>
+              <!-- <td>
                 <input formControlName="debit" class="form-control" />
               </td>
               <td>
                 <input formControlName="dueDate" class="form-control" />
-              </td>
+              </td> -->
 
             </tr>
 
+
           </tbody>
+
         </table>
       </ng-container>
+      <div class="container">
+
+        <!-- NAVS -->
+          <!-- VERTICAL -->
+      <ng-container>
+
+        <ul class="nav nav-pills active container fixed-bottom flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" >Link 2</a>
+            </li>
+        </ul>
+      </ng-container>
     </div>
-    <pre>{{frmJournal.value | json}}</pre>
-    <pre>{{frmSingleAccount.value | json}}</pre>
+    </div>
+    <!-- <pre>{{frmJournal.value | json}}</pre>
+    <pre>{{frmSingleAccount.value | json}}</pre> -->
   </form>
 </div>

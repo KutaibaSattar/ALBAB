@@ -137,7 +137,8 @@
 
       <!-- Table Header -->
       <table class="table table-secondary table- table-hover table-sm table-condensed" formArrayName="invDetails">
-           <thead class="thead-light">
+        <caption>List of users</caption>
+        <thead class="thead-light">
 
           <tr>
             <th style="width: 30%">Item</th>
@@ -179,7 +180,10 @@
 
                 </tr>
           </tbody>
-      </table>
+          <nav class="navbar fixed-bottom navbar-dark bg-dark">
+            <a href="#" class="navbar-brand">Navbar Fixed Bottom</a>
+        </nav>
+        </table>
 
        <pre>{{formInvoice.value | json}}</pre>
 
