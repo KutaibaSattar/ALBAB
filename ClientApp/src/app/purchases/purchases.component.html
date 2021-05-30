@@ -11,9 +11,11 @@
 </header>
 
 <!-- SEARCH -->
-<section id="search" class="py-1 mb-2 bg-light">
+<section id="search" class="py-1 mb-2 ">
   <div class="container">
     <div class="row">
+      <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" (click)="clearInv()"> New</button>
+      <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()" > Delete</button>
       <div class="col-md-6 ml-auto">
         <div class="input-group ">
           <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
@@ -123,9 +125,9 @@
           <div class="col-md-12">
             <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()"> Add </button>
                     <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit"> Save</button>
-                    <button class="fa fa-edit btn btn-success ml-2 float-left" type="button" (click)="clearInv()"> New</button>
-                    <button class="fa fa-edit btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()" > Delete</button>
                     <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
+
+
           </div>
         </div>
       </div>
@@ -134,7 +136,7 @@
 
 
       <!-- Table Header -->
-      <table class="table table-bordered table-dark table-hover table-sm table-condensed" formArrayName="invDetails">
+      <table class="table table-secondary table- table-hover table-sm table-condensed" formArrayName="invDetails">
            <thead class="thead-light">
 
           <tr>
@@ -149,12 +151,12 @@
           </tr>
         </thead>
         <!-- Table Body -->
-          <tbody *ngFor="let _ of invDetail.controls; index as i " [formGroupName]="i" >
+          <tbody *ngFor="let _ of invDetails.controls; index as i " [formGroupName]="i" >
 
               <tr >
                   <td>
                     <div class="input-group">
-                      <app-dropown-template class="col-12" [products]=true  [label]="'Item'"  [controlName] ="productId[i]"> </app-dropown-template>
+                      <app-dropown-template class="col-12" [products]=true  [label]="'Item'" [controlName] ="productId[i]"> </app-dropown-template>
 
                     </div>
                   </td>
@@ -171,7 +173,7 @@
                     </td>
                   <td> <app-text-input [formControl] = "quantity[i]"  [label]="'quantity'">  </app-text-input></td>
                   <td> <input type="number" class="form-control" placeholder="UnitTotal"  formControlName="unitTotalPrice" ></td>
-                  <td>  <button class="fa fa-save btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Delete</button></td>
+                  <td>  <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button" (click)="removeUnit(i)"> Remove</button></td>
 
 
 
@@ -179,7 +181,7 @@
           </tbody>
       </table>
 
-       <!-- <pre>{{formInvoice.value | json}}</pre>-->
+       <pre>{{formInvoice.value | json}}</pre>
 
 
 

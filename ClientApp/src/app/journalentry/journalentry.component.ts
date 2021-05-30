@@ -51,6 +51,11 @@ export class JournalentryComponent implements OnInit {
     });
   }
 
+  addRecord() {
+      this.journalAccounts.push(this.initSection());
+    // Build the account Auto Complete values
+
+  }
 
   addItem(frm: JournalSingle) {
 

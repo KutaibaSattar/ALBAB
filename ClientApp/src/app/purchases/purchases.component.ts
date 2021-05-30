@@ -59,7 +59,7 @@ export class PurchasesComponent implements OnInit {
   invNo: FormControl;
   date: FormControl;
   invoiceId: FormControl;
-  invDetail: FormArray;
+  invDetails: FormArray;
   productId : FormControl[] = new Array();
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
@@ -138,11 +138,13 @@ export class PurchasesComponent implements OnInit {
       date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
     });
+
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
     this.invNo = this.formInvoice.get('invNo') as FormControl;
     this.date = this.formInvoice.get('date') as FormControl;
     this.invoiceId = this.formInvoice.get('id') as FormControl;
-    this.invDetail = this.formInvoice.get('invDetails') as FormArray;
+
+    this.invDetails = this.formInvoice.get('invDetails') as FormArray;
 
   }
 
@@ -161,9 +163,9 @@ export class PurchasesComponent implements OnInit {
 
   attachItemFilter(index: number) {
 
-    this.productId[index] = this.invDetail.at(index).get('productId') as FormControl;
-    this.price[index] = this.invDetail.at(index).get('price') as FormControl;
-    this.quantity[index] = this.invDetail.at(index).get('quantity') as FormControl;
+    this.productId[index] = this.invDetails.at(index).get('productId') as FormControl;
+    this.price[index] = this.invDetails.at(index).get('price') as FormControl;
+    this.quantity[index] = this.invDetails.at(index).get('quantity') as FormControl;
 
 
     /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
@@ -202,40 +204,31 @@ export class PurchasesComponent implements OnInit {
 
   addRecord() {
 
-    this.invDetail.controls.push(this.initSection());
+    this.invDetails.push(this.initSection());
     // Build the account Auto Complete values
-    this.attachItemFilter(this.invDetail.length - 1);
-    this.listenToChanging(this.invDetail.length - 1);
+    this.attachItemFilter(this.invDetails.length - 1);
+    this.listenToChanging(this.invDetails.length - 1);
   }
-
-
-
-  getSections() {
-    if (this.invDetail.controls.length > 0)
-    this.testing[this.invDetail.controls.length-1] = this.invDetail.controls;
-      return this.invDetail.controls;
-  }
-
 
 
   listenToChanging(index: number) {
-    this.invDetail.at(index).get('price')
+    this.invDetails.at(index).get('price')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
 
-    this.invDetail.at(index).get('quantity')
+    this.invDetails.at(index).get('quantity')
       .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
   }
 
   private updateTotalUnitPrice(index: number) {
-    this.invDetail.at(index).get('unitTotalPrice').setValue(
-        this.invDetail.at(index).get('price').value *
-          this.invDetail.at(index).get('quantity').value
+    this.invDetails.at(index).get('unitTotalPrice').setValue(
+        this.invDetails.at(index).get('price').value *
+          this.invDetails.at(index).get('quantity').value
       );
 
-    this.totalSum.splice(index,1,this.invDetail.at(index).get('unitTotalPrice').value
+    this.totalSum.splice(index,1,this.invDetails.at(index).get('unitTotalPrice').value
     );
 
-    this.grdTotal.setValue(this.invDetail.getRawValue()
+    this.grdTotal.setValue(this.invDetails.getRawValue()
         .reduce((sum, current) => sum + current.unitTotalPrice, 0)
     );
   }
@@ -278,17 +271,17 @@ export class PurchasesComponent implements OnInit {
             //return confirm('Are you sure you want to continue ? Any unsaved changes will be lost')
           }
 
-          if (this.invDetail.length > 0) {
-            this.invDetail.controls = []; // delete balnck one
+          if (this.invDetails.length > 0) {
+            this.invDetails.controls = []; // delete balnck one
           }
 
           this.purchInv.invDetails.map((item) => {
             const group = this.initSection();
             group.patchValue(item);
 
-            let arrayLength = this.invDetail.controls.length;
+            let arrayLength = this.invDetails.controls.length;
 
-            this.invDetail.push(group);
+            this.invDetails.push(group);
 
             this.listenToChanging(arrayLength);
             this.updateTotalUnitPrice(arrayLength);
@@ -315,31 +308,10 @@ export class PurchasesComponent implements OnInit {
   }
 
    removeUnit(i: number) {
-    //this.getSections();
-    //this.invDetail.controls.splice(i);
-    this.invDetail.controls.splice(i,1)
-
-
-    //this.productId.splice[i];
-
-    // console.log('productId',this.productId)
-    // this.price.splice[i];
-    // this.quantity.splice[i];
-    // this.price[index] = this.invDetail.at(index).get('price') as FormControl;
-    // this.quantity[index] = this.invDetail.at(index).get('quantity') as FormControl;
-    // const controls = <FormArray>this.formInvoice.controls['invDetails'];
-
-    // controls.removeAt(i);
-    // remove from filteredOptions too.
-    //console.log('productId',this.productId)
-    //this.invDetail.controls.splice(i,1);
-   /*  console.log(this.invDetail.value[i])
-    console.log(this.invDetail.controls.indexOf(this.invDetail.value[i]))
-    console.log(this.invDetail.value)
-    this.invDetail.controls.splice(i,1)
-    //this.invDetail.value(i).splice(i,1);
-    //this.purchInv.invDetails.splice(1);
-    console.log(this.invDetail.value) */
+    this.invDetails.removeAt(i);
+    this.productId.splice(i,1);
+    this.price.splice(i,1);
+    this.quantity.splice(i,1);
   }
 
   clearInv() {
@@ -348,6 +320,7 @@ export class PurchasesComponent implements OnInit {
     }
 
     this.formInvoice.reset();
+    this.invDetails.controls = [];
   }
 
   deleteInv() {
@@ -359,7 +332,7 @@ export class PurchasesComponent implements OnInit {
               .subscribe((resp) => {
                 this.toastr.success('Invoice deleted successfully');
                 this.formInvoice.reset();
-                this.invDetail.controls = [];
+                this.invDetails.controls = [];
                 this.addRecord();
               });
           }
