@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Journal } from 'app/models/journal';
+import { Journal, JournalEntry } from 'app/models/journal';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,5 +24,13 @@ export class JournalService extends DataService {
 
     )
   }
-}
 
+  updateJournal(journal : Journal){
+    this.createTableRecords(journal).subscribe(
+
+      data => console.log(data)
+
+    )
+
+  }
+}

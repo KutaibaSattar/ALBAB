@@ -28,9 +28,4 @@ export class Journal{
   journalAccounts: JournalAccount[];
 
 }
-export interface JournalSingle{
-  entry : JournalEntry;
-  singleAccount: JournalAccount;
-  journalAccounts: JournalAccount[];
 
-}

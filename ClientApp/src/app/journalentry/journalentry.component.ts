@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Journal, JournalEntry, JournalSingle } from 'app/models/journal';
+import { Journal, JournalEntry } from 'app/models/journal';
 import { JournalService } from 'app/services/journal.service';
+import { ProductService } from 'app/services/product.service';
 import { observeOn } from 'rxjs/operators';
 
 @Component({
@@ -10,7 +11,9 @@ import { observeOn } from 'rxjs/operators';
   styleUrls: ['./journalentry.component.scss'],
 })
 export class JournalentryComponent implements OnInit {
-  constructor(private JournalService: JournalService) {}
+  constructor(private JournalService: JournalService, private productService : ProductService) {}
+
+  grdTotal = new FormControl(0); // sepearated
 
   frmJournal = new FormGroup({
     jeNo: new FormControl(''),
@@ -19,10 +22,6 @@ export class JournalentryComponent implements OnInit {
     journalAccounts : new FormArray([this.initSection()]),
   });
 
-  JeNo  = this.frmJournal.get('jeNo');
-  note  = this.frmJournal.get('note');
-  entryDate  = this.frmJournal.get('entryDate');
-  journalAccounts = this.frmJournal.get('journalAccounts') as FormArray
 
 
   frmSingleAccount =  new FormGroup ({
@@ -33,62 +32,89 @@ export class JournalentryComponent implements OnInit {
     debit: new FormControl(null),
   });
 
+  JeNo  = this.frmJournal.get('jeNo');
+  note  = this.frmJournal.get('note');
+  entryDate  = this.frmJournal.get('entryDate') as FormControl;
+  journalAccounts = this.frmJournal.get('journalAccounts') as FormArray
+
+
+  account = this.frmSingleAccount.get('account') as FormControl
+  dueDate  = this.frmSingleAccount.get('dueDate') as FormControl;
+
+  accounts : FormControl[] = new Array();
+  dueDates : FormControl[] = new Array();
+
+
+
   ngOnInit(): void {
     this.JournalService.getJournal().subscribe((res) => {
       console.log(res);
     });
+
+      this.accounts[0] =  this.journalAccounts.at(0).get('accounts') as FormControl
+      this.dueDates[0] =  this.journalAccounts.at(0).get('dueDate') as FormControl
+
+      this.journalAccounts.at(0).get('debit')
+      .valueChanges.subscribe(() => this.updateTotalUnitPrice());
+
 
 
   }
 
   initSection(): FormGroup {
     return new FormGroup({
-      account: new FormControl(),
+      accounts: new FormControl(),
       note: new FormControl(''),
       dueDate: new FormControl(''),
       credit: new FormControl(null),
       debit: new FormControl(null),
     });
+
+
   }
 
   addRecord() {
       this.journalAccounts.push(this.initSection());
+      this.accounts[this.journalAccounts.length-1] =  this.journalAccounts.at(this.journalAccounts.length-1).get('accounts') as FormControl
+      this.dueDates[this.journalAccounts.length-1] =  this.journalAccounts.at(this.journalAccounts.length-1).get('dueDate') as FormControl
+      this.journalAccounts.at(this.journalAccounts.length-1).get('debit')
+      .valueChanges.subscribe(() => this.updateTotalUnitPrice());
     // Build the account Auto Complete values
 
   }
 
-  addItem(frm: JournalSingle) {
+  private updateTotalUnitPrice() {
+
+    this.grdTotal.setValue(this.journalAccounts.getRawValue()
+        .reduce((sum, current) => sum + +current.debit, 0)
+    );
+  }
 
 
-    //journal.journalAccounts = []
-    /*  let combined = [];
-    combined = _.map(frm, (parent) => {
-      parent.child = frm.accounts.find(child => child.parent.id === parent.id);
-  return parent;
-}); */
+    removeUnit(i: number) {
+      this.journalAccounts.removeAt(i);
+      this.accounts.splice(i,1);
+      this.dueDates.splice(i,1);
+      this.updateTotalUnitPrice();
+    }
 
-    //var result = Object.assign(frm.journalAccounts,frm.singleAccount)
-    //journal.journalAccounts.push(journal.singleAccount)
-    //delete journal.singleAccount
-    //console.log(journal)
-    //console.log ('second',journal)
+
+
+  onSubmit() {
+
+
 
    let journal : Journal = JSON.parse(JSON.stringify(this.frmJournal.value))
 
 
    /*  let journal : Journal = {...this.frmJournal.value}; */
 
+   this.frmSingleAccount.value.credit = this.grdTotal.value
    journal.journalAccounts.push(this.frmSingleAccount.value)
     console.log(journal)
     console.log(this.frmJournal)
+    this.JournalService.updateJournal(journal);
 
 
-    /* var joinForm = new FormGroup({form1:this.frmJournal});
-    console.log(joinForm);
-
-
-    (<FormArray>joinForm.get('journalAccounts')).push(this.frmSingleAccount)
-
-    console.log(joinForm); */
   }
 }

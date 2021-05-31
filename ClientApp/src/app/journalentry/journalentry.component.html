@@ -1,4 +1,5 @@
 <!-- HEADER -->
+<form [formGroup]="frmJournal" (ngSubmit)="onSubmit()">
 <header id="main-header" class="bg-info text-white">
   <div class="container">
     <div class="row">
@@ -14,6 +15,7 @@
   <div class="container">
     <div class="row">
       <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" > New</button>
+      <button class="fa fa-save btn btn-success ml-2 float-left"  type="submit"> Save</button>
       <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" > Delete</button>
       <div class="col-md-6 ml-auto">
         <div class="input-group ">
@@ -34,7 +36,7 @@
 </section>
 
 <div class="container">
-   <form [formGroup]="frmJournal" (keydown.enter)="$event.preventDefault()">
+
     <div class="row">
       <div class=" col-sm-6">
         <div class="card bg-light">
@@ -52,10 +54,8 @@
               </div>
               <div class="col-md-6">
                 <label class="font-weight-bold">Date</label>
-                <input formControlName="entryDate" type="date" name="purNo" class="form-control" />
-
-              </div>
-
+                <app-date-input [formControl]="entryDate" [label]="'Date'"> </app-date-input>
+               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -74,17 +74,17 @@
             <h2  class="card-header py-1 bg-center">Credit</h2>
           <div class="row">
             <!--  -->
-            <div class="col-md-6">
+            <div class="col-md-7">
               <div class="form-group">
                 <label class="font-weight-bold">Account</label>
                 <div class="input-group">
-                  <input formControlName="account" type="text" class="form-control" />
+                  <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName] ="account"  ></app-dropown-template>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               <label class="font-weight-bold">Date</label>
-              <input type="date" formControlName="dueDate" class="form-control" />
+              <app-date-input [formControl]="dueDate" [label]="'Date'"> </app-date-input>
 
             </div>
 
@@ -105,30 +105,20 @@
     <header id="main-header" class="nav-bordera mt-1">
       <div class="container">
         <div class="row pb-2 pt-1">
-          <div class="col-md-12">
-            <button class="fa fa-plus-circle btn btn-success float-left" type="button"  (click)="addRecord()" > Add </button>
-                    <button class="fa fa-save btn btn-success ml-2 float-left"  type="submit"> Save</button>
-                    <button class=" fa fa-search-minus btn btn-secondary float-right" type="button" > Search</button>
-
-
+          <div class="col-md-8">
+            <button class="fa fa-plus-circle btn btn-success float-left mt-2" type="button"  (click)="addRecord()" > Add </button>
+            <button class=" fa fa-search-minus btn btn-secondary float-right mt-2" type="button" > Search</button>
+          </div>
+          <div class="form-inline col-md-4">
+            <label class="font-weight-bold">Total</label>
+              <input name="gtotal" [formControl]='grdTotal' class="form-control ml-3" readonly>
           </div>
         </div>
       </div>
     </header>
     <div class="row">
 
-        <!-- <div class="bg-info py-1 col-12 form-inline">
-         Debit Accounts
-         <div class="input-group ml-auto">
-          <div class="input-group-prepend">
-            <div class="input-group-text">AED</div>
-          </div>
-          <input name="gtotal" [formControl] = ''class="form-control " readonly>
-        </div>
-        </div> -->
-
-
-      <ng-container formArrayName="journalAccounts">
+       <ng-container formArrayName="journalAccounts">
 
 
         <!-- Table Header -->
@@ -137,9 +127,10 @@
           <thead >
             <tr class="border" >
               <th style="width: 30%">Account</th>
-              <th style="width: 10%">Note</th>
               <th style="width: 10%">Debit</th>
+              <th style="width: 10%">Note</th>
               <th style="width: 10%">Date</th>
+              <th style="width: 10%">Action</th>
             </tr>
           </thead>
 
@@ -148,17 +139,21 @@
 
             <tr>
               <td>
-                <input formControlName="account" class="form-control" />
+                <div class="input-group">
+                  <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName] ="accounts[i]"  ></app-dropown-template>
+                </div>
+              </td>
+              <td>
+                <input formControlName="debit" class="form-control" />
               </td>
               <td>
                 <input formControlName="note" class="form-control" />
               </td>
-              <!-- <td>
-                <input formControlName="debit" class="form-control" />
-              </td>
               <td>
-                <input formControlName="dueDate" class="form-control" />
-              </td> -->
+                <app-date-input [formControl]="dueDates[i]" [label]="'Date'"> </app-date-input>
+              </td>
+              <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
+                (click)="removeUnit(i)"> Remove</button></td>
 
             </tr>
 
@@ -169,19 +164,9 @@
       </ng-container>
       <div class="container">
 
-        <!-- NAVS -->
-          <!-- VERTICAL -->
-      <ng-container>
+     </div>
+    </div>
 
-        <ul class="nav nav-pills active container fixed-bottom flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" >Link 2</a>
-            </li>
-        </ul>
-      </ng-container>
-    </div>
-    </div>
-    <!-- <pre>{{frmJournal.value | json}}</pre>
-    <pre>{{frmSingleAccount.value | json}}</pre> -->
-  </form>
-</div>
+  </div>
+</form>
+<!-- <pre>{{frmSingleAccount.value | json}}</pre> -->

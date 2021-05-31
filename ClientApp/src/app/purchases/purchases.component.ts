@@ -213,10 +213,10 @@ export class PurchasesComponent implements OnInit {
 
   listenToChanging(index: number) {
     this.invDetails.at(index).get('price')
-      .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
+      .valueChanges.subscribe(() => this.updateTotalUnitPrice(index));
 
     this.invDetails.at(index).get('quantity')
-      .valueChanges.subscribe((units) => this.updateTotalUnitPrice(index));
+      .valueChanges.subscribe(() => this.updateTotalUnitPrice(index));
   }
 
   private updateTotalUnitPrice(index: number) {
@@ -312,6 +312,7 @@ export class PurchasesComponent implements OnInit {
     this.productId.splice(i,1);
     this.price.splice(i,1);
     this.quantity.splice(i,1);
+    this.updateTotalUnitPrice( this.invDetails.controls.length-1);
   }
 
   clearInv() {
