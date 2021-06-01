@@ -4,7 +4,6 @@
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul *ngIf="(authService.currentUser$| async)" class="navbar-nav mr-auto">
         <ng-container>
@@ -21,17 +20,13 @@
             <a routerLink='/members' class="nav-link" routerLinkActive='active current'>Users</a>
           </li>
           <li class="nav-item px-2">
-            <a routerLink='/journalentry' class="nav-link" routerLinkActive='active current'>Journal</a>
+            <a routerLink='/journalentry' class="nav-link" routerLinkActive='active current'>Receipt</a>
           </li>
           <li class="nav-item px-2">
             <a routerLink='/dbAccount' class="nav-link" routerLinkActive='active current'>Accounts</a>
           </li>
-
         </ng-container>
-
       </ul>
-
-
       <ul *ngIf="!(authService.currentUser$| async)" class="navbar-nav ml-auto">
         <li  class="nav-item dropdown mr-5">
           <a routerLink='/login' class="nav-link" routerLinkActive='active current'>Login</a>

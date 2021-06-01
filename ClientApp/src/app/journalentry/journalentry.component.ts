@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Journal, JournalEntry } from 'app/models/journal';
+import { Journal, JournalEntry, JournalType} from 'app/models/journal';
 import { JournalService } from 'app/services/journal.service';
 import { ProductService } from 'app/services/product.service';
 import { observeOn } from 'rxjs/operators';
@@ -44,6 +44,9 @@ export class JournalentryComponent implements OnInit {
   accounts : FormControl[] = new Array();
   dueDates : FormControl[] = new Array();
 
+  journalType =  Object.keys(JournalType)
+
+
 
 
   ngOnInit(): void {
@@ -57,7 +60,7 @@ export class JournalentryComponent implements OnInit {
       this.journalAccounts.at(0).get('debit')
       .valueChanges.subscribe(() => this.updateTotalUnitPrice());
 
-
+    console.log ('journal',this.journalType);
 
   }
 

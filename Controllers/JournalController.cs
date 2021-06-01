@@ -12,14 +12,14 @@ namespace ALBAB.Controllers
     {
          private readonly DataContext _context;
        private readonly IMapper _mapper;
-      
-      
+
+
 
         public JournalController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
-         
+
         }
 
         [HttpGet("journallist")]
@@ -29,33 +29,34 @@ namespace ALBAB.Controllers
            var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<JournalEntryRes>>(journals);
-           
-           return Ok(result);  
 
-         }  
-        
+           return Ok(result);
+
+         }
+
+       
         [HttpPost]
          public async Task<ActionResult<JournalEntryRes>> createJournals(JournalEntryRes journalEntryRes)
          {
 
 
-          
+
            var journal = _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes);
-           
+
           _context.journals.Add(journal);
-          
+
            await _context.SaveChangesAsync();
 
            //var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
 
            var result = _mapper.Map<JournalEntryRes>(journal);
-           
-           return Ok(result);  
 
-         }  
+           return Ok(result);
+
+         }
 
 
-   
-        
+
+
     }
 }

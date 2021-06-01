@@ -145,7 +145,7 @@ namespace ALBAB.Entities.DB
                });
 
 
-
+              builder.Entity<JournalEntry>().Property( t => t.type).HasConversion<String>();
 
 
 

@@ -1,3 +1,13 @@
+export enum JournalType {
+ Receipt = "Receipt" ,
+ SalesReceipt = "SalesReceipt",
+ Paymnet = "Paymnet",
+ Purchase2Pay = "Purchase2Pay",
+ Journal = "Journal",
+ Purchase = "Purchase",
+ Sales ="Sales",
+}
+
 export interface JournalEntry {
   id: number;
   jeNo: string;
@@ -28,4 +38,3 @@ export class Journal{
   journalAccounts: JournalAccount[];
 
 }
-
