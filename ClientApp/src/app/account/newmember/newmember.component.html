@@ -13,13 +13,14 @@
   <form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
 
      <div class="form-group form-inline col-md-12">
-         <input required  [ngClass]="!keyId.valid ? 'is-invalid' : 'is-valid' "
-
+         <input required
+         [ngClass]="!keyId.valid && form.submitted ? 'is-invalid' : 'is-valid' "
          ngModel #keyId="ngModel" name="keyId" Id="keyId"
           class="form-control border-primary"
           placeholder="UserId"
-         Pattern="^[0-9]*$"
+          pattern="^[0-9]*$"
          (change)="log(keyId)" >
+
 
          <!-- <input type="text" id="txtNewProjectID" style="width:130px" class="form-control" placeholder="Project ID" name="ProjectID" [(ngModel)]="keyId" required="required" pattern="^[0-9]*$" #newProjectID="ngModel" [ngClass]="{ 'is-invalid': newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted), 'is-valid': newProjectID.valid && (newProjectID.dirty || newProjectID.touched || form.submitted) }">
 
@@ -56,6 +57,6 @@
   <div>
   </div>
 </div>
-
+{{form.value | json}}
 
 </mat-dialog-content>
