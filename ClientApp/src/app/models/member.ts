@@ -1,3 +1,10 @@
+
+export enum MemberType {
+  Client = 'Client' ,
+  Supplier = 'Supplier',
+  Staff = 'Staff',
+ }
+
 export interface Member {
   id: number;
   keyId: string;

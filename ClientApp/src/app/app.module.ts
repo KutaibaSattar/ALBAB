@@ -24,12 +24,12 @@ import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { DatePipe } from '@angular/common';
-import { ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import {ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
+import {ModalModule } from 'ngx-bootstrap/modal';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import { TextInputComponent } from './templates/text-input/text-input.component';
-import { JournalentryComponent } from './journalentry/journalentry.component';
-import { DbaccountComponent } from './dbaccount/dbaccount.component'
+import {TextInputComponent } from './templates/text-input/text-input.component';
+import {JournalentryComponent } from './journalentry/journalentry.component';
+import {DbaccountComponent } from './dbaccount/dbaccount.component'
 import {MatTreeModule} from '@angular/material/tree';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
@@ -37,8 +37,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import { esDoLocale } from 'ngx-bootstrap/locale';
-
-
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
 import { DbaccountTemplateComponent } from './dbaccount-template/dbaccount-template.component';
 import { DropownTemplateComponent } from './templates/dropown-template/dropown-template.component';
@@ -92,6 +91,7 @@ import { DateInputComponent } from './templates/date-input/date-input.component'
       positionClass: 'toast-bottom-right'
 
     }),
+    BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     MatTreeModule,

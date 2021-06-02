@@ -74,10 +74,6 @@ namespace ALBaB.Migrations
                         .HasColumnType("text")
                         .HasColumnName("interests");
 
-                    b.Property<string>("Introduction")
-                        .HasColumnType("text")
-                        .HasColumnName("introduction");
-
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime")
                         .HasColumnName("lastactive");
@@ -118,6 +114,10 @@ namespace ALBaB.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)")
                         .HasColumnName("username");
+
+                    b.Property<int>("type")
+                        .HasColumnType("int")
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("pk_aspnetusers");

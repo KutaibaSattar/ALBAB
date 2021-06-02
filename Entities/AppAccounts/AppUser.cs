@@ -10,13 +10,13 @@ namespace ALBAB.Entities.AppAccounts
 {
     public class AppUser : IdentityUser<int>
     {
-      
+
       [Required]
       [MaxLength(50)]
       public string Name {get;set;}
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now;
-      public string Introduction { get; set; }
+      public int type { get; set; } = (int)UserType.Staff;
       public string LookingFor { get; set; }
       public string Interests { get; set; }
      public Address Address {get;set;}

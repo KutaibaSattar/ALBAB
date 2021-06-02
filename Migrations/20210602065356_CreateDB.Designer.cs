@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210523063922_CreateDB")]
+    [Migration("20210602065356_CreateDB")]
     partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,10 +76,6 @@ namespace ALBaB.Migrations
                         .HasColumnType("text")
                         .HasColumnName("interests");
 
-                    b.Property<string>("Introduction")
-                        .HasColumnType("text")
-                        .HasColumnName("introduction");
-
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime")
                         .HasColumnName("lastactive");
@@ -120,6 +116,10 @@ namespace ALBaB.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)")
                         .HasColumnName("username");
+
+                    b.Property<int>("type")
+                        .HasColumnType("int")
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("pk_aspnetusers");
@@ -258,21 +258,23 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("created");
 
-                    b.Property<int>("JENo")
-                        .HasColumnType("int")
+                    b.Property<string>("JENo")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("jeno");
 
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("text")
-                        .HasColumnName("type");
-
                     b.Property<DateTime>("entryDate")
                         .HasColumnType("datetime")
                         .HasColumnName("entrydate");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("pk_journals");

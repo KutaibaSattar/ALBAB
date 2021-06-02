@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Member } from 'app/models/member';
+import { Member, MemberType } from 'app/models/member';
 import { AuthService } from 'app/services/auth.service';
 
 
@@ -13,6 +13,11 @@ import { AuthService } from 'app/services/auth.service';
 })
 export class NewMemberComponent implements OnInit {
   formData: Member;
+  type = null;
+  keyId;
+
+  memberType =  Object.keys(MemberType)
+
 
   constructor(public dialogRef: MatDialogRef<NewMemberComponent>,
               private accountService: AuthService  ) { }
@@ -23,6 +28,8 @@ export class NewMemberComponent implements OnInit {
       userName : '',
       phoneNumber : ''
     } */
+    console.log('Member',this.memberType)
+    console.log('type',this.type)
   }
 
   // tslint:disable-next-line: typedef
@@ -33,6 +40,11 @@ export class NewMemberComponent implements OnInit {
       // console.log(form.value);
     this.dialogRef.close();
 
+  }
+
+  log(x){
+
+    console.log(x);
   }
 
 

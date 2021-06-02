@@ -10,13 +10,31 @@
 </header>
 <hr>
 <mat-dialog-content>
-  <form #f="ngForm" autocomplete="off" (ngSubmit)="onSubmit(f)">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
 
-     <div class="form-group col-md-6">
+     <div class="form-group form-inline col-md-12">
+         <input required  [ngClass]="!keyId.valid ? 'is-invalid' : 'is-valid' "
 
-         <input  ngModel  name="keyId"  class="form-control border-primary" placeholder="UserId" >
+         ngModel #keyId="ngModel" name="keyId" Id="keyId"
+          class="form-control border-primary"
+          placeholder="UserId"
+         Pattern="^[0-9]*$"
+         (change)="log(keyId)" >
 
-     </div>
+         <!-- <input type="text" id="txtNewProjectID" style="width:130px" class="form-control" placeholder="Project ID" name="ProjectID" [(ngModel)]="keyId" required="required" pattern="^[0-9]*$" #newProjectID="ngModel" [ngClass]="{ 'is-invalid': newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted), 'is-valid': newProjectID.valid && (newProjectID.dirty || newProjectID.touched || form.submitted) }">
+
+              <span class="text-danger" *ngIf="newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted) && newProjectID.errors?.required">Project ID can't be blank</span>
+
+              <span class="text-danger" *ngIf="newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted) && newProjectID.errors?.pattern">Project ID should contain numbers only</span> -->
+
+         <select [class.is-invalid] required="required" [(ngModel)] = "type"  name="type" ng-option = "type for type in memberType"  class="form-control border-primary ml-2" placeholder="type" >
+
+           <option [ngValue]="null"> Please Select Item </option>
+           <option *ngFor="let item of memberType, index as i"> {{item}}</option>
+
+         </select>
+
+        </div>
 
      <div class="form-group col-md-6">
        <input name="password" type="password"  ngModel  placeholder="Password" class="form-control">
@@ -34,4 +52,10 @@
      <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i> Close</button>
    </div>
  </form>
+ <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+  <div>
+  </div>
+</div>
+
+
 </mat-dialog-content>

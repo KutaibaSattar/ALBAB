@@ -65,11 +65,7 @@ export class DropownTemplateComponent implements OnInit {
       //   })
       // )
       // .subscribe();
-
-  console.log(this.listsFilter);
-
   this.attachedFilter();
-
 
   }
 

@@ -32,7 +32,7 @@ namespace ALBaB.Migrations
                     name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     lastactive = table.Column<DateTime>(type: "datetime", nullable: false),
-                    introduction = table.Column<string>(type: "text", nullable: true),
+                    type = table.Column<int>(type: "int", nullable: false),
                     lookingfor = table.Column<string>(type: "text", nullable: true),
                     interests = table.Column<string>(type: "text", nullable: true),
                     line1 = table.Column<string>(type: "text", nullable: true),
@@ -98,8 +98,8 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    jeno = table.Column<int>(type: "int", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: true),
+                    jeno = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: false),
                     note = table.Column<string>(type: "text", nullable: true),
                     entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -291,8 +291,8 @@ namespace ALBaB.Migrations
                     journalid = table.Column<int>(type: "int", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    accountid = table.Column<int>(type: "int", nullable: false),
                     appuserid = table.Column<int>(type: "int", nullable: true),
+                    accountid = table.Column<int>(type: "int", nullable: false),
                     credit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     debit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     refno = table.Column<string>(type: "text", nullable: true)

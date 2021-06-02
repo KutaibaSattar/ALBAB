@@ -50,15 +50,15 @@ export class JournalentryComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.JournalService.getJournal().subscribe((res) => {
-      console.log(res);
-    });
+    // this.JournalService.getJournal().subscribe((res) => {
+    //   console.log(res);
+    // });
 
       this.accounts[0] =  this.journalAccounts.at(0).get('accounts') as FormControl
       this.dueDates[0] =  this.journalAccounts.at(0).get('dueDate') as FormControl
 
-      this.journalAccounts.at(0).get('debit')
-      .valueChanges.subscribe(() => this.updateTotalUnitPrice());
+      // this.journalAccounts.at(0).get('debit')
+      // .valueChanges.subscribe(() => this.updateTotalUnitPrice());
 
     console.log ('journal',this.journalType);
 
