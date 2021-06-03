@@ -13,7 +13,7 @@ import { AuthService } from 'app/services/auth.service';
 })
 export class NewMemberComponent implements OnInit {
   formData: Member;
-  type = null;
+  type = 'Client';
   keyId;
 
   memberType =  Object.keys(MemberType)
@@ -36,10 +36,12 @@ export class NewMemberComponent implements OnInit {
   onSubmit(form: NgForm){
     // tslint:disable-next-line: deprecation
 
-    this.accountService.registor(form.value).subscribe(
-      response => {console.log('response' , response); });
-      // console.log(form.value);
-    this.dialogRef.close();
+    console.log(form)
+
+    // this.accountService.registor(form.value).subscribe(
+    //   response => {console.log('response' , response); });
+    //   // console.log(form.value);
+    // this.dialogRef.close();
 
   }
 

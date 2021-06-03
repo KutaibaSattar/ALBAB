@@ -1,62 +1,65 @@
 <header id="main-header" class="bg-warning text-white">
   <div class="container">
-   <div class="row">
+    <div class="row">
       <div class="col-md-6">
         <h1>
-          <i class="fa fa-user"></i>New member</h1>
+          <i class="fa fa-user"></i>New member
+        </h1>
       </div>
     </div>
   </div>
 </header>
 <hr>
-<mat-dialog-content>
-  <form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
 
-     <div class="form-group form-inline col-md-12">
-         <input required
-         [ngClass]="!keyId.valid && form.submitted ? 'is-invalid' : 'is-valid' "
-         ngModel #keyId="ngModel" name="keyId" Id="keyId"
-          class="form-control border-primary"
-          placeholder="UserId"
-          pattern="^[0-9]*$"
-         (change)="log(keyId)" >
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
 
 
-         <!-- <input type="text" id="txtNewProjectID" style="width:130px" class="form-control" placeholder="Project ID" name="ProjectID" [(ngModel)]="keyId" required="required" pattern="^[0-9]*$" #newProjectID="ngModel" [ngClass]="{ 'is-invalid': newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted), 'is-valid': newProjectID.valid && (newProjectID.dirty || newProjectID.touched || form.submitted) }">
+  <div class="form-row col-md-12">
+
+    <div class="form-group col">
+      <input required [ngClass]="{'is-invalid' : !keyId.valid && keyId.touched} "
+       (change)="log(keyId)" ngModel #keyId="ngModel" name="keyId"
+        class="form-control border-primary"
+         placeholder="UserId" minlength="12" [maxLength]="12" Pattern="^[0-9]*$"
+         (change)="log(keyId)">
+      <div class="invalid-feedback">Password should be 12 digits</div>
+    </div>
+
+    <!-- <input type="text" id="txtNewProjectID" style="width:130px" class="form-control" placeholder="Project ID" name="ProjectID" [(ngModel)]="keyId" required="required" pattern="^[0-9]*$" #newProjectID="ngModel" [ngClass]="{ 'is-invalid': newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted), 'is-valid': newProjectID.valid && (newProjectID.dirty || newProjectID.touched || form.submitted) }">
 
               <span class="text-danger" *ngIf="newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted) && newProjectID.errors?.required">Project ID can't be blank</span>
 
               <span class="text-danger" *ngIf="newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted) && newProjectID.errors?.pattern">Project ID should contain numbers only</span> -->
 
-         <select [class.is-invalid] required="required" [(ngModel)] = "type"  name="type" ng-option = "type for type in memberType"  class="form-control border-primary ml-2" placeholder="type" >
+    <div class="form-group col">
+      <select [class.is-invalid] required [(ngModel)]="type" name="type"
+        ng-option="type for type in memberType" class="form-control border-primary ml-2" placeholder="type">
+          <option [ngValue]="item" *ngFor="let item of memberType, index as i"> {{item}}</option>
+      </select>
+    </div>
+  </div>
 
-           <option [ngValue]="null"> Please Select Item </option>
-           <option *ngFor="let item of memberType, index as i"> {{item}}</option>
+  <div class="form-row col-md-6">
+    <div class="form-group">
+      <input name="password" required type="password" ngModel placeholder="Password" class="form-control">
+    </div>
 
-         </select>
+    </div>
 
-        </div>
+  <div class="form-group col-md-9">
 
-     <div class="form-group col-md-6">
-       <input name="password" type="password"  ngModel  placeholder="Password" class="form-control">
-     </div>
+    <div class="input-group">
 
-   <div class="form-group col-md-9" >
-
-     <div class="input-group">
-
-       <input name="name"  ngModel  class="form-control" placeholder="Name">
-     </div>
-   </div>
-   <div class="form-group">
-     <button type="submit" class="btn btn-outline-primary ml-3"><i class="fa fa-paper-plane"></i> Submit</button>
-     <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i> Close</button>
-   </div>
- </form>
- <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+      <input name="name" required ngModel class="form-control" placeholder="Name">
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" [disabled]= "!form.valid" class="btn btn-outline-primary ml-3"><i class="fa fa-paper-plane"></i> Submit</button>
+    <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i>
+      Close</button>
+  </div>
+</form>
+<div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
   <div>
   </div>
 </div>
-{{form.value | json}}
-
-</mat-dialog-content>
