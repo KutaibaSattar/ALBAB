@@ -21,7 +21,7 @@ export class Service {
 
 export class HomeComponent implements OnInit {
   jokes : Observable<any>;
-
+  model: any = {};
   currentJoke=1 ;
   constructor(private service: Service) { }
 
@@ -41,5 +41,10 @@ export class HomeComponent implements OnInit {
 displayFn(user: any): any {
     console.log(user);
 
+   }
+
+
+   onSubmit() {
+     alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model));
    }
 }

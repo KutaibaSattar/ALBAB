@@ -30,25 +30,24 @@ export class NewMemberComponent implements OnInit {
     } */
     console.log('Member',this.memberType)
     console.log('type',this.type)
+
   }
 
   // tslint:disable-next-line: typedef
   onSubmit(form: NgForm){
     // tslint:disable-next-line: deprecation
 
-    console.log(form)
+    console.log(form.value)
+    delete form.value.confirmPassword
 
-    // this.accountService.registor(form.value).subscribe(
-    //   response => {console.log('response' , response); });
-    //   // console.log(form.value);
-    // this.dialogRef.close();
+    this.accountService.registor(form.value).subscribe(
+      response => {console.log('response' , response); });
+      // console.log(form.value);
+    this.dialogRef.close();
 
   }
 
-  log(x){
-
-    console.log(x);
-  }
+ 
 
 
 }

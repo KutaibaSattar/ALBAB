@@ -11,18 +11,17 @@
 </header>
 <hr>
 
-<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)" [mustMatch]="['password', 'confirmPassword']">
 
 
   <div class="form-row col-md-12">
 
     <div class="form-group col">
-      <input required [ngClass]="{'is-invalid' : !keyId.valid && keyId.touched} "
-       (change)="log(keyId)" ngModel #keyId="ngModel" name="keyId"
-        class="form-control border-primary"
-         placeholder="UserId" minlength="12" [maxLength]="12" Pattern="^[0-9]*$"
-         (change)="log(keyId)">
-      <div class="invalid-feedback">Password should be 12 digits</div>
+      <input required placeholder="UserId" minlength="12" [maxLength]="12" Pattern="^[0-9]*$"
+       [ngClass]="{'is-invalid' : !keyId.valid && keyId.touched}"
+       ngModel #keyId="ngModel" name="keyId"
+       class="form-control">
+      <div class="invalid-feedback">User Phone should be 12 digits</div>
     </div>
 
     <!-- <input type="text" id="txtNewProjectID" style="width:130px" class="form-control" placeholder="Project ID" name="ProjectID" [(ngModel)]="keyId" required="required" pattern="^[0-9]*$" #newProjectID="ngModel" [ngClass]="{ 'is-invalid': newProjectID.invalid && (newProjectID.dirty || newProjectID.touched || form.submitted), 'is-valid': newProjectID.valid && (newProjectID.dirty || newProjectID.touched || form.submitted) }">
@@ -39,10 +38,28 @@
     </div>
   </div>
 
-  <div class="form-row col-md-6">
-    <div class="form-group">
-      <input name="password" required type="password" ngModel placeholder="Password" class="form-control">
+  <div class="form-row col-md-12">
+    <div class="form-group col">
+      <input type="password"  placeholder="Password"
+       required
+       ngModel name="password" #password="ngModel"
+       [ngClass]="{'is-invalid' : !password.valid && password.touched}"
+        class="form-control">
+        <div class="invalid-feedback" >Password required</div>
     </div>
+
+
+
+      <div class="form-group col">
+        <input type="password"  placeholder="Confirm Password"
+         required
+         ngModel name="confirmPassword"  #confirmPassword="ngModel"
+          [ngClass]="{'is-invalid' : !confirmPassword.valid && confirmPassword.touched}"
+          class="form-control">
+         <div *ngIf="confirmPassword.errors?.required" class="invalid-feedback" >Confirm passwords required</div>
+         <div *ngIf="confirmPassword.errors?.mustMatch" class="invalid-feedback">Confirm passwords must match</div>
+      </div>
+
 
     </div>
 
@@ -50,7 +67,12 @@
 
     <div class="input-group">
 
-      <input name="name" required ngModel class="form-control" placeholder="Name">
+      <input  placeholder="Name"
+      required
+      ngModel name="name" #name ="ngModel"
+      [ngClass]="{'is-invalid' : !name.valid && name.touched}"
+     class="form-control">
+     <div *ngIf="name.errors?.required" class="invalid-feedback" >Name required</div>
     </div>
   </div>
   <div class="form-group">

@@ -43,6 +43,7 @@ import { DbaccountTemplateComponent } from './dbaccount-template/dbaccount-templ
 import { DropownTemplateComponent } from './templates/dropown-template/dropown-template.component';
 import { AutocompleteComponent } from './templates/autocomplete/autocomplete.component';
 import { DateInputComponent } from './templates/date-input/date-input.component';
+import { MustMatchDirective } from './_helper/must-match.directive';
 
 
 
@@ -71,6 +72,7 @@ import { DateInputComponent } from './templates/date-input/date-input.component'
    DropownTemplateComponent,
    AutocompleteComponent,
    DateInputComponent,
+   MustMatchDirective,
 
 
     ],
