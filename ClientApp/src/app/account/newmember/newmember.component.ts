@@ -16,8 +16,8 @@ export class NewMemberComponent implements OnInit {
   type = 'Client';
   keyId;
 
- 
-  memberType = MemberType
+
+  memberType =  MemberType
 
 
   constructor(public dialogRef: MatDialogRef<NewMemberComponent>,
