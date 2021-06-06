@@ -1,8 +1,8 @@
 
 export enum MemberType {
-  Client = 'Client' ,
-  Supplier = 'Supplier',
-  Staff = 'Staff',
+  Client = '30' ,
+  Supplier = '31',
+  Staff = '32',
  }
 
 export interface Member {

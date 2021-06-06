@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -66,59 +67,25 @@ namespace ALBAB.Controllers
         }
 
 
-        [HttpPost("register")]
 
-        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
-
-        {
-
-
-            if(await UserExists(registerDto.KeyId)) return BadRequest("User Name is taken");
-
-            var user = _mapper.Map<AppUser>(registerDto);
+        // private async Task<bool> UserExists(string userKey)
+        // {
+        //   return await _userManager.FindByNameAsync(userKey)  != null;
 
 
-            //user.UserName = registerDto.UserName.ToLower();
+        // }
 
-           var result = await _userManager.CreateAsync(user, registerDto.Password);
+        // [HttpGet("emailexists")]
 
-          var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+        // public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
+        // {
 
-           if (!roleResult.Succeeded) return BadRequest(result.Errors);
-
-           if (!result.Succeeded) return BadRequest(result.Errors);
-
-            return new AppUserDto
-            {
-                Name = user.Name,
-                KeyId = user.UserName,
-                Token = await _tokenService.CreateToken(user),
-                Email = user.Email,
-                PhoneNumber = user.UserName
-
-            };
-
-
-       }
-
-        private async Task<bool> UserExists(string userKey)
-        {
-          return await _userManager.FindByNameAsync(userKey)  != null;
-
-
-        }
-
-        [HttpGet("emailexists")]
-
-        public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
-        {
-
-           return await _userManager.FindByNameAsync(email) != null;
+        //    return await _userManager.FindByNameAsync(email) != null;
 
 
 
 
-        }
+        // }
 
 
 

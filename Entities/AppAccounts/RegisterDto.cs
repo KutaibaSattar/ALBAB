@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities
 {
@@ -11,7 +12,10 @@ namespace ALBAB.Entities
      //[RegularExpression("^[0-9]*$", ErrorMessage = "Phone or code must be numeric")]
      public string KeyId { get; set; }
 
-     public int type = (int)UserType.Staff;
+
+
+     public UserType? type { get; set; } = UserType.Client;
+
 
       [Required]
       public string Password { get; set; }

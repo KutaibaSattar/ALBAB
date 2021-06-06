@@ -56,7 +56,6 @@ namespace ALBAB.Controllers
 
          // var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
-
             if(await UserExists(registerDto.KeyId)) return BadRequest("User Name is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
@@ -78,7 +77,8 @@ namespace ALBAB.Controllers
                 KeyId = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
-                PhoneNumber = user.UserName
+                PhoneNumber = user.UserName,
+                type = user.type,
 
             };
 

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Member, MemberType } from 'app/models/member';
@@ -16,7 +16,8 @@ export class NewMemberComponent implements OnInit {
   type = 'Client';
   keyId;
 
-  memberType =  Object.keys(MemberType)
+ 
+  memberType = MemberType
 
 
   constructor(public dialogRef: MatDialogRef<NewMemberComponent>,
@@ -40,6 +41,7 @@ export class NewMemberComponent implements OnInit {
     console.log(form.value)
     delete form.value.confirmPassword
 
+
     this.accountService.registor(form.value).subscribe(
       response => {console.log('response' , response); });
       // console.log(form.value);
@@ -47,7 +49,7 @@ export class NewMemberComponent implements OnInit {
 
   }
 
- 
+
 
 
 }

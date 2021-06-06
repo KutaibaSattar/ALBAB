@@ -16,7 +16,7 @@ namespace ALBAB.Entities.AppAccounts
       public string Name {get;set;}
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now;
-      public int type { get; set; } = (int)UserType.Staff;
+      public UserType type { get; set; }
       public string LookingFor { get; set; }
       public string Interests { get; set; }
      public Address Address {get;set;}

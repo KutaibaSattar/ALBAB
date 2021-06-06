@@ -53,7 +53,7 @@ export class AuthService {
 
   registor(model: any) {
 
-    return this.http.post<Member>(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post<Member>(this.baseUrl + 'members/register', model).pipe(
       map((response: Member) => {console.log('mapMember', response); }));
 
   }
