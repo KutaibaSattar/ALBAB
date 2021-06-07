@@ -8,5 +8,6 @@ namespace ALBAB.Entities.AppAccounts
         Supplier = 31,
         Staff = 32,
 
+
         }
 }

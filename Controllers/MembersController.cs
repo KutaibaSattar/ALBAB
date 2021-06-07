@@ -16,9 +16,7 @@ namespace ALBAB.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
-
         private readonly IMapper _mapper;
-
         public MembersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
             , IMapper mapper, ITokenService tokenService)
         {
@@ -26,15 +24,9 @@ namespace ALBAB.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
-
-
         }
 
-
-
-
         [HttpPost("register")]
-
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
 
         {

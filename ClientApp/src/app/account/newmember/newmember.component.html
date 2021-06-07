@@ -32,7 +32,7 @@
 
     <div class="form-group col">
       <select [class.is-invalid] required [(ngModel)]="type" name="type"
-        ng-option="type for type in memberType" class="form-control border-primary ml-2" placeholder="type">
+         class="form-control border-primary ml-2" placeholder="type">
           <option *ngFor="let item of memberType | enumToArray" [ngValue] = "item.id"> {{item.key}}</option>
       </select>
     </div>

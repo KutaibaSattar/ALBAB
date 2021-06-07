@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities
 {
@@ -11,6 +12,7 @@ namespace ALBAB.Entities
       [Phone]
       public string KeyId { get; set; }
       public string Name { get; set; }
+      public string type { get; set; }
       public string PhoneNumber { get; set; }
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now;

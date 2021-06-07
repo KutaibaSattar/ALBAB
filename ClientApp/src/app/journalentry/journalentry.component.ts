@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Journal, JournalEntry, JournalType} from 'app/models/journal';
+import { AuthService } from 'app/services/auth.service';
+import { DbAccountService } from 'app/services/dbaccount.service';
 import { JournalService } from 'app/services/journal.service';
 import { ProductService } from 'app/services/product.service';
+import { forkJoin } from 'rxjs';
 import { observeOn } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +14,8 @@ import { observeOn } from 'rxjs/operators';
   styleUrls: ['./journalentry.component.scss'],
 })
 export class JournalentryComponent implements OnInit {
-  constructor(private JournalService: JournalService, private productService : ProductService) {}
+  constructor(private JournalService: JournalService,private dbaccountService: DbAccountService,
+    private authService : AuthService  ) {}
 
   grdTotal = new FormControl(0); // sepearated
 
@@ -48,14 +52,21 @@ export class JournalentryComponent implements OnInit {
 
 
 
-
   ngOnInit(): void {
     // this.JournalService.getJournal().subscribe((res) => {
     //   console.log(res);
     // });
 
-      this.accounts[0] =  this.journalAccounts.at(0).get('accounts') as FormControl
-      this.dueDates[0] =  this.journalAccounts.at(0).get('dueDate') as FormControl
+    let sources = [
+      this.dbaccountService.getDbAccounts(),
+      this.authService.getMembers(),
+    ];
+
+    forkJoin(sources).subscribe();
+
+
+    this.accounts[0] =  this.journalAccounts.at(0).get('accounts') as FormControl
+    this.dueDates[0] =  this.journalAccounts.at(0).get('dueDate') as FormControl
 
       // this.journalAccounts.at(0).get('debit')
       // .valueChanges.subscribe(() => this.updateTotalUnitPrice());

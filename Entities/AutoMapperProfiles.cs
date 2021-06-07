@@ -1,4 +1,5 @@
 
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata.Ecma335;
@@ -23,7 +24,13 @@ namespace ALBAB.Entities
 
             CreateMap<AppUser,AppUserDto>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
 
-            CreateMap<AppUser,MemberDto>().ForMember(dest => dest.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+            CreateMap<AppUser,MemberDto>()
+                .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
+
+            CreateMap<AppUser,dbAccountsFlattenRes>()
+                .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
+
+
 
             CreateMap<dbAccounts,dbAccountsDto>().ReverseMap();
 
@@ -100,5 +107,6 @@ namespace ALBAB.Entities
 
 
         }
+
     }
 }

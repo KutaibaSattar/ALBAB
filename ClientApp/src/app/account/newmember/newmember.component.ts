@@ -13,7 +13,7 @@ import { AuthService } from 'app/services/auth.service';
 })
 export class NewMemberComponent implements OnInit {
   formData: Member;
-  type = 'Client';
+  type = 30;
   keyId;
 
 
@@ -37,19 +37,11 @@ export class NewMemberComponent implements OnInit {
   // tslint:disable-next-line: typedef
   onSubmit(form: NgForm){
     // tslint:disable-next-line: deprecation
-
     console.log(form.value)
     delete form.value.confirmPassword
-
-
     this.accountService.registor(form.value).subscribe(
       response => {console.log('response' , response); });
       // console.log(form.value);
     this.dialogRef.close();
-
   }
-
-
-
-
 }

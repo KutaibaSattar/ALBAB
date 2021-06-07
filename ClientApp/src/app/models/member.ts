@@ -9,7 +9,7 @@ export interface Member {
   id: number;
   keyId: string;
   name: string;
-  type:string;
+  type: MemberType;
   phoneNumber?: string;
   created?: Date;
   lastActive?: Date;

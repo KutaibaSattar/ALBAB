@@ -93,6 +93,8 @@ export class PurchasesComponent implements OnInit {
     this.attachItemFilter(0);
     this.listenToChanging(0);
 
+    // initialized first time
+    
     let sources = [
       this.authService.getMembers(),
       this.productService.getProducts(),

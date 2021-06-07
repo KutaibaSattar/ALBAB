@@ -25,14 +25,13 @@ namespace ALBAB.Controllers
 
         }
 
-       
+
                //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<dbAccountsDto>>> GetdbAccounts()
 
         {
-
-            var dbaccounts = await _context.dbAccounts.ToListAsync();
+            //var dbaccounts = await _context.dbAccounts.ToListAsync();
 
            var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
             .AsQueryable(); //.ToListAsync();
@@ -42,34 +41,52 @@ namespace ALBAB.Controllers
             var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccountsTreeResults);
 
            // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
-
-
             return Ok(result);
-
-
-
         }
-       
+
+        [HttpGet("Flatten")]
+        public async Task<ActionResult<IEnumerable<dbAccountsFlattenRes>>> GetFlattdbAccounts()
+
+        {
+            var dbaccounts = await _context.dbAccounts.ToListAsync();
+
+          var x = _context.dbAccounts.AsEnumerable().Where( x => x.ParentId == null).ToList();
+
+          var y = _context.dbAccounts.Include(ch => ch.Children).ToList();
+
+           var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
+            .AsQueryable(); //.ToListAsync();
+
+           var dbaccountsTreeResults = await Task.FromResult(dbaccountsTree.ToList());
+
+           // var result = _mapper.Map<IEnumerable<dbAccountsFlattenRes>>(dbaccounts);
+
+           // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
+            return Ok(dbaccounts);
+        }
+
+
+
        [HttpPost]
          public async Task<ActionResult<dbAccountsDto>> createDbAccounts(dbAccountsDto dbAccount)
          {
 
-          
-           var dbaccount = _mapper.Map<dbAccountsDto,dbAccounts>(dbAccount);
-           
 
-           
+           var dbaccount = _mapper.Map<dbAccountsDto,dbAccounts>(dbAccount);
+
+
+
           _context.dbAccounts.Add(dbaccount);
-          
+
            await _context.SaveChangesAsync();
 
            //var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
 
            var result = _mapper.Map<dbAccountsDto>(dbaccount);
-           
-           return Ok(result);  
 
-         }  
+           return Ok(result);
+
+         }
 
         //[Authorize]
         // api/dbAccounts/3

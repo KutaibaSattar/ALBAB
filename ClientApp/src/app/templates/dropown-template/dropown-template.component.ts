@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
+import { DbAccountService } from 'app/services/dbaccount.service';
 import { ProductService } from 'app/services/product.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -20,9 +21,11 @@ export class DropownTemplateComponent implements OnInit {
   @Input()label: string ='';
   @Input() members : boolean = false;
   @Input() products : boolean = false;
+  @Input() accounts : boolean = false
   showing: boolean;
 
-  constructor(private memberService : AuthService, private productService : ProductService) { }
+  constructor(private memberService : AuthService, private productService : ProductService,
+     private accountService : DbAccountService) { }
 
 
   ngOnInit(): void {
@@ -43,7 +46,16 @@ export class DropownTemplateComponent implements OnInit {
        })
      ).subscribe();
 
+  if(this.accounts)
+       this.accountService.accountSource$.subscribe(
 
+        res =>{
+          if (res){
+            this.listsFilter = res;
+            this.showing = true;
+          }
+        }
+       )
 
 
   if (this.products)
