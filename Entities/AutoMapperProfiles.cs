@@ -27,8 +27,9 @@ namespace ALBAB.Entities
             CreateMap<AppUser,MemberDto>()
                 .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
 
-            CreateMap<AppUser,dbAccountsFlattenRes>()
-                .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
+
+            CreateMap<dbAccounts,dbAccountsFlattenRes>();
+
 
 
 

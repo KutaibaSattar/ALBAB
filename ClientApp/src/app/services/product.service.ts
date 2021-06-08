@@ -12,13 +12,13 @@ import { DataService } from './data.service';
 export class ProductService extends DataService {
 
   constructor(private httpClient: HttpClient) {
-    super(environment.apiUrl + 'products/', httpClient);
+    super(environment.apiUrl + 'products', httpClient);
   }
 
 
 
-  public CurrentProductSource = new BehaviorSubject<Product[]>(null);
-  public productSource$ = this.CurrentProductSource.asObservable();
+  public productsSource = new BehaviorSubject<Product[]>(null);
+  public productsSource$ = this.productsSource.asObservable();
 
  products : Product[];
 
@@ -37,7 +37,7 @@ export class ProductService extends DataService {
    return this.getTableRecords().pipe(
       map((res: Product[]) => {
        this.products = res;
-      this.CurrentProductSource.next(this.products);
+      this.productsSource.next(this.products);
       return this.products;
       })
     );

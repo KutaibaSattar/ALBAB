@@ -13,27 +13,27 @@ namespace ALBAB.Controllers
     {
        private readonly DataContext _context;
        private readonly IMapper _mapper;
-      
-      
+
+
 
         public ProductsController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
-           
+
 
         }
 
-        [HttpGet("products")]
+        [HttpGet]
          public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
          {
            var products = await _context.products.Include(m => m.Model).ThenInclude(b => b.Brand).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<ProductDto>>(products);
-           
-           return Ok(result);  
 
-         }  
+           return Ok(result);
+
+         }
 
            [HttpGet("brands")]
          public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
@@ -41,10 +41,10 @@ namespace ALBAB.Controllers
            var brands = await _context.brands.Include(m => m.models).ToListAsync();
 
            var result = _mapper.Map<IEnumerable<BrandDto>>(brands);
-           
-           return Ok(result);  
 
-         }  
-        
+           return Ok(result);
+
+         }
+
     }
 }

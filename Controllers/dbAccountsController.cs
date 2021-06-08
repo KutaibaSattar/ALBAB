@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +8,8 @@ using ALBAB.Entities.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.AppAccounts;
+using AutoMapper.QueryableExtensions;
+using ALBAB.Entities;
 
 namespace ALBAB.Controllers
 {
@@ -33,36 +37,35 @@ namespace ALBAB.Controllers
         {
             //var dbaccounts = await _context.dbAccounts.ToListAsync();
 
-           var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
-            .AsQueryable(); //.ToListAsync();
+        //    var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
+        //     .AsQueryable(); //.ToListAsync();
 
-           var dbaccountsTreeResults = await Task.FromResult(dbaccountsTree.ToList());
+        //    var dbaccountsTreeResults = await Task.FromResult(dbaccountsTree.ToList());
 
-            var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccountsTreeResults);
+           // var dbaccountsTreeResults = await _context.dbAccounts.Where( x => x.ParentId == null).ToListAsync();
+
+            var dbaccounts = _context.dbAccounts.AsEnumerable().Where( x => x.ParentId == null).AsQueryable();//.ToListAsync();
+
+             var result = await Task.FromResult(dbaccounts.ToList());
+
+            //var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccountsTreeResults);
+            //var result2 = _mapper.Map<IEnumerable<dbAccountsDto>>(x);
+
 
            // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
-            return Ok(result);
+            return Ok(_mapper.Map<IEnumerable<dbAccountsDto>>(result));
         }
 
         [HttpGet("Flatten")]
         public async Task<ActionResult<IEnumerable<dbAccountsFlattenRes>>> GetFlattdbAccounts()
 
         {
-            var dbaccounts = await _context.dbAccounts.ToListAsync();
 
-          var x = _context.dbAccounts.AsEnumerable().Where( x => x.ParentId == null).ToList();
+          //var x = _context.dbAccounts.AsEnumerable().Where( x => x.ParentId == null).ToList();
 
-          var y = _context.dbAccounts.Include(ch => ch.Children).ToList();
+          var result = await  _context.dbAccounts.ProjectTo<dbAccountsFlattenRes>(_mapper.ConfigurationProvider).ToListAsync();
 
-           var dbaccountsTree = _context.dbAccounts.Include(ch => ch.Children).AsEnumerable().Where(p => p.ParentId == null)
-            .AsQueryable(); //.ToListAsync();
-
-           var dbaccountsTreeResults = await Task.FromResult(dbaccountsTree.ToList());
-
-           // var result = _mapper.Map<IEnumerable<dbAccountsFlattenRes>>(dbaccounts);
-
-           // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
-            return Ok(dbaccounts);
+          return Ok(result);
         }
 
 

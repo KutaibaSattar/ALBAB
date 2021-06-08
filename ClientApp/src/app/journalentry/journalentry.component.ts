@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Journal, JournalEntry, JournalType} from 'app/models/journal';
 import { AuthService } from 'app/services/auth.service';
@@ -15,7 +15,7 @@ import { observeOn } from 'rxjs/operators';
 })
 export class JournalentryComponent implements OnInit {
   constructor(private JournalService: JournalService,private dbaccountService: DbAccountService,
-    private authService : AuthService  ) {}
+    private authService : AuthService,private cdr: ChangeDetectorRef  ) {}
 
   grdTotal = new FormControl(0); // sepearated
 
@@ -23,6 +23,7 @@ export class JournalentryComponent implements OnInit {
     jeNo: new FormControl(''),
     note: new FormControl(''),
     entryDate: new FormControl(''),
+    type:new FormControl(''),
     journalAccounts : new FormArray([this.initSection()]),
   });
 
@@ -58,7 +59,7 @@ export class JournalentryComponent implements OnInit {
     // });
 
     let sources = [
-      this.dbaccountService.getDbAccounts(),
+      this.dbaccountService.getFlattenDbAccounts(),
       this.authService.getMembers(),
     ];
 
@@ -131,4 +132,9 @@ export class JournalentryComponent implements OnInit {
 
 
   }
+
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
+ // call or add here your code
+}
 }

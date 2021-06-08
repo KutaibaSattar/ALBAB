@@ -39,12 +39,29 @@ export class AuthService {
   private currentUserSource = new ReplaySubject<User>(1); // buffer for only one user object
   currentUser$ = this.currentUserSource.asObservable(); // $ at end as convention that is Observable
 
+  private membersSource = new ReplaySubject<Member[]>(1); // buffer for only one user object
+  membersSource$ = this.membersSource.asObservable(); // $ at end as convention that is Observable
+
+
+
   getMembers()  {
-   return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
+   return this.http.get(this.baseUrl + 'users').pipe(
+
+    map( (res:Member[]) =>{
+      if(res){
+        this.membersSource.next(res);
+        return res;
+      }
+
+
+    })
+
+
+    )
 
     // map( x => console.log(x))
 
-   );
+
   }
 
   getMember(Id: number) {

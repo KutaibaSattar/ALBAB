@@ -33,6 +33,19 @@ export class DbAccountService extends DataService {
 
     );
   }
+  getFlattenDbAccounts() {
+    return this.getTableRecords('Flatten').pipe(
+
+      map( (res:dbAccounts[]) => {
+
+            this.accounts = res;
+            this.CurrentAccountService.next(this.accounts);
+            return this.accounts;
+      }
+      )
+
+    );
+  }
 
   createDbAccount(dbaccount: dbAccountsNewChild) {
     if (dbaccount.id ==0) {

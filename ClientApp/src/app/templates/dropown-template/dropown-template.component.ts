@@ -32,7 +32,7 @@ export class DropownTemplateComponent implements OnInit {
 
 
     if (this.members)
-    this.memberService.getMembers().pipe(
+    this.memberService.membersSource$.pipe(
        map ((members:Member[]) => {
         this.listsFilter =   members.map( obj =>{
            var returnObj = {};
@@ -59,7 +59,7 @@ export class DropownTemplateComponent implements OnInit {
 
 
   if (this.products)
-        this.productService.productSource$.subscribe(
+        this.productService.productsSource$.subscribe(
        res => {
         if (res){
            this.listsFilter = res;
