@@ -14,7 +14,7 @@ namespace ALBAB.Entities.Journal
         public int Id { get; private set; }
         [Required]
         public string JENo { get; set; }
-        public JournalType type { get; set; } = JournalType.JRNL;
+        public JournalType type { get; set; }
         public string Note { get; set; }
         public DateTime entryDate { get; set; } = DateTime.Now;
         public DateTime Created { get; set; } = DateTime.Now;

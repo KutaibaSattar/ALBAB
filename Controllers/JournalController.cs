@@ -34,16 +34,41 @@ namespace ALBAB.Controllers
 
          }
 
-       
+
         [HttpPost]
          public async Task<ActionResult<JournalEntryRes>> createJournals(JournalEntryRes journalEntryRes)
          {
 
-
+           
 
            var journal = _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes);
 
           _context.journals.Add(journal);
+
+           await _context.SaveChangesAsync();
+
+           //var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
+
+           var result = _mapper.Map<JournalEntryRes>(journal);
+
+           return Ok(result);
+
+         }
+        [HttpPut]
+         public async Task<ActionResult<JournalEntryRes>> updateJournals(JournalEntryRes journalEntryRes)
+         {
+
+
+            if (!ModelState.IsValid)
+               return BadRequest(ModelState);
+          var journal = await _context.journals.Include(pd => pd.journalAccounts).SingleOrDefaultAsync(p => p.Id == journalEntryRes.Id);
+
+          if (journal == null)
+              return BadRequest("Journal not founded");
+
+
+
+         _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes,journal);
 
            await _context.SaveChangesAsync();
 

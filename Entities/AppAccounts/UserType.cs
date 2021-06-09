@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 
 namespace ALBAB.Entities.AppAccounts
 {
-    public enum UserType
+    public enum AccountType
         {
         Client = 30,
         Supplier = 31,

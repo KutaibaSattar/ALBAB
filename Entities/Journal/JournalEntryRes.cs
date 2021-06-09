@@ -9,10 +9,9 @@ namespace ALBAB.Entities.Journal
     public class JournalEntryRes
 
     {
-       public int Id { get; private set; }
+       public int Id { get; set; }
        public string JENo { get; set; }
-
-       public JournalType Type { get; set; }
+       public string Type { get; set; }
        public string Note { get; set; }
        public DateTime Created { get; set; }
       public DateTime entryDate { get; set; } = DateTime.Now;

@@ -56,17 +56,24 @@
 
       </div>
       <div class="col-6">
-        <div class="form-group">
-          <label>Supplier</label>
-          <div class="input-group ">
 
-            <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName]="appUserId">
-            </app-dropown-template>
+       <div class="form-row" >
 
-
-          </div>
-
-        </div>
+         <div class="form-group col">
+           <label>Account</label>
+           <div class="input-group ">
+             <app-dropown-template class="col-12" [textDisabled]= "appUserId.value > 0" [accounts]=true [label]="'Account'" [controlName]="accountId">
+             </app-dropown-template>
+           </div>
+         </div>
+         <div class="form-group col">
+           <label>Supplier</label>
+           <div class="input-group ">
+             <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" disabled="true" [controlName]="appUserId">
+             </app-dropown-template>
+           </div>
+         </div>
+       </div>
       </div>
     </div>
     <div class="row">

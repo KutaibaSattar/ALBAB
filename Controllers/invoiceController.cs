@@ -117,13 +117,14 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+           if (invRes.AppUserId > 0)
+          {
+              invRes.AccountId = (int)(ReservedAccountsType.Clients);
+          }
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-
        _mapper.Map<InvoiceRes,Invoice>(invRes,invoice);
-
-
 
         var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 

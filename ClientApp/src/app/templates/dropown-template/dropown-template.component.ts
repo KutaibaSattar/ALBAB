@@ -19,9 +19,10 @@ export class DropownTemplateComponent implements OnInit {
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
   @Input()label: string ='';
-  @Input() members : boolean = false;
-  @Input() products : boolean = false;
-  @Input() accounts : boolean = false
+  @Input() members  = false;
+  @Input() products= false;
+  @Input() accounts = false;
+  @Input() textDisabled = false;
   showing: boolean;
 
   constructor(private memberService : AuthService, private productService : ProductService,
@@ -108,8 +109,8 @@ export class DropownTemplateComponent implements OnInit {
     }
   }
 
-  displayFn(item: number): string {
-    if (item && this.listsFilter) {
+  displayFn(item: any): string {
+    if ( item !== null && item.value !==null && this.listsFilter) {
       let IdName = this.listsFilter.find((element) => element.id === item).name;
       console.log('Name',IdName)
       return IdName;

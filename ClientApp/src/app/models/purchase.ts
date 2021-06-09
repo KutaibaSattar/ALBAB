@@ -48,6 +48,7 @@ export class IInvoice implements IInvoice{
   id = 0;
   invNo ='';
   appUserId = 0;
+  accountId = 0;
   date = new Date();
   invDetails : IInvDetail[];
 

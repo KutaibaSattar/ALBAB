@@ -10,6 +10,7 @@ import { Product } from 'app/models/product';
 import { IInvoice } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
+import { DbAccountService } from 'app/services/dbaccount.service';
 import { ProductService } from 'app/services/product.service';
 import { PurchaseService } from 'app/services/purchase.service';
 import { ToastrService } from 'ngx-toastr';
@@ -35,7 +36,8 @@ export class PurchasesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private datePipe: DatePipe,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private dbAccountService : DbAccountService,
   ) {}
   /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
     $event: any
@@ -46,9 +48,6 @@ export class PurchasesComponent implements OnInit {
   } */
 
 
-  listsFilterClients : any
-  listsFilterProducts : any
-
   members: Member[];
   member: string;
   products: Product[];
@@ -56,6 +55,7 @@ export class PurchasesComponent implements OnInit {
   purchNos: invoice[];
   formInvoice: FormGroup;
   appUserId: FormControl;
+  accountId: FormControl;
   invNo: FormControl;
   date: FormControl;
   invoiceId: FormControl;
@@ -94,10 +94,12 @@ export class PurchasesComponent implements OnInit {
     this.listenToChanging(0);
 
     // initialized first time
-    
+
     let sources = [
       this.authService.getMembers(),
       this.productService.getProducts(),
+      this.dbAccountService.getFlattenDbAccounts()
+
     ];
 
 
@@ -136,7 +138,7 @@ export class PurchasesComponent implements OnInit {
       id: 0,
       invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
-      accountId:0,
+      accountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
       date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
     });
@@ -145,6 +147,7 @@ export class PurchasesComponent implements OnInit {
     this.invNo = this.formInvoice.get('invNo') as FormControl;
     this.date = this.formInvoice.get('date') as FormControl;
     this.invoiceId = this.formInvoice.get('id') as FormControl;
+    this.accountId = this.formInvoice.get('accountId') as FormControl;
 
     this.invDetails = this.formInvoice.get('invDetails') as FormArray;
 
