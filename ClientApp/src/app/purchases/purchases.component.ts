@@ -47,10 +47,7 @@ export class PurchasesComponent implements OnInit {
     }
   } */
 
-
-  members: Member[];
-  member: string;
-  products: Product[];
+  members : Member[];
   txtSearchInv: string;
   purchNos: invoice[];
   formInvoice: FormGroup;
@@ -64,7 +61,6 @@ export class PurchasesComponent implements OnInit {
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
   grdTotal = new FormControl(''); // sepearated
-  testing = new Array();
   purchInv: IInvoice = new IInvoice();
 
   //filteredUsers$: Observable<Array<Member>>;
@@ -104,7 +100,13 @@ export class PurchasesComponent implements OnInit {
 
 
 
-    forkJoin(sources).subscribe(/* (data) => {
+    forkJoin(sources).subscribe(
+      (data:any) =>{
+        this.members = data[0];
+
+      }
+
+      /* (data) => {
       (<any>this.members) = data[0];
 
       this.listsFilterClients = this.members.map(obj =>{
@@ -144,10 +146,40 @@ export class PurchasesComponent implements OnInit {
     });
 
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
+
+    this.appUserId.valueChanges.subscribe( value =>{
+
+        if ( typeof value == 'number'){
+         this.accountId.setValue( this.members.find(member => member.id == value).type,{emitEvent:false})
+         this.accountId.disable({emitEvent:false});
+        }
+        else
+        this.accountId.enable({emitEvent:false});
+
+    })
+    this.accountId = this.formInvoice.get('accountId') as FormControl;
+
+    this.accountId.valueChanges.subscribe( value =>{
+
+        if ( typeof value == 'number'){
+          if (!this.members.find(member => member.type == value)){
+
+            this.appUserId.setValue( null,{emitEvent:false})
+            this.appUserId.disable({emitEvent:false});
+          }
+          else
+          this.appUserId.enable({emitEvent:false});
+
+
+      }
+
+
+    })
+
+
     this.invNo = this.formInvoice.get('invNo') as FormControl;
     this.date = this.formInvoice.get('date') as FormControl;
     this.invoiceId = this.formInvoice.get('id') as FormControl;
-    this.accountId = this.formInvoice.get('accountId') as FormControl;
 
     this.invDetails = this.formInvoice.get('invDetails') as FormArray;
 
@@ -260,16 +292,18 @@ export class PurchasesComponent implements OnInit {
     if (this.txtSearchInv) {
       this.purchaseService.getPurchInv(this.txtSearchInv).subscribe(
           (result) => {
-          this.purchInv = result;
-          this.formInvoice.patchValue({
-            id: this.purchInv.id,
-            invNo: this.purchInv.invNo,
-            appUserId: this.purchInv.appUserId,
-            accountId:this.purchInv.accountId,
-            date: new Date(this.purchInv.date)
+            if (result){
 
+              this.purchInv = result;
+             this.formInvoice.patchValue({
+              id: this.purchInv.id,
+              invNo: this.purchInv.invNo,
+              appUserId: this.purchInv.appUserId,
+              accountId:this.purchInv.accountId,
+              date: new Date(this.purchInv.date)
 
-          });
+            });
+            }
 
 
           if (this.formInvoice.dirty) {
@@ -302,7 +336,7 @@ export class PurchasesComponent implements OnInit {
     this.formInvoice.markAllAsTouched();
 
     if (this.formInvoice.valid) {
-      this.purchInv = this.formInvoice.value;
+      this.purchInv =  this.formInvoice.getRawValue();
       //this.purchInv.purchDtl = this.invDetail.value;
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {

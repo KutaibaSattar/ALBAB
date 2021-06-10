@@ -84,11 +84,11 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-          if (invRes.AppUserId > 0)
-          {
-              invRes.AccountId = (int)(ReservedAccountsType.Clients);
+          // if (invRes.AppUserId > 0)
+          // {
+          //     invRes.AccountId = (int)(ReservedAccountsType.Clients);
 
-          }
+          // }
 
 
 
@@ -117,10 +117,10 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-           if (invRes.AppUserId > 0)
-          {
-              invRes.AccountId = (int)(ReservedAccountsType.Clients);
-          }
+          //  if (invRes.AppUserId > 0)
+          // {
+          //     invRes.AccountId = (int)(ReservedAccountsType.Clients);
+          // }
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 

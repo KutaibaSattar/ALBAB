@@ -18,7 +18,6 @@ namespace ALBAB.Entities.Purchases
         public DateTime LastUpdate { get; set; }
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }
-
         public dbAccounts Account { get; set; }
         [Required]
         public int AccountId {get;set;}
