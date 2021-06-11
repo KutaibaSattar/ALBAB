@@ -48,7 +48,7 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.invDetails, opt => opt.MapFrom(src => src.InvDetail));
 
             CreateMap<InvoiceRes, Invoice>()
-               .ForMember(dst => dst.VatAccountId, opt => opt.UseDestinationValue) 
+               .ForMember(dst => dst.VatAccountId, opt => opt.MapFrom(Checking(opt.)) ) 
               .ForMember(dst => dst.Id, opt => opt.Ignore())
               .ForMember(dst => dst.InvDetail, opt => opt.Ignore())
               .AfterMap((phr, ph) => AfterMapPurchase(phr, ph)  /* (phr,p                 h)=> {
@@ -200,6 +200,12 @@ namespace ALBAB.Entities
 
                 }
             }
+
+        }
+
+        private void Checking(InvoiceRes InvRes){
+
+
 
         }
 
