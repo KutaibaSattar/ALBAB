@@ -48,9 +48,10 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.invDetails, opt => opt.MapFrom(src => src.InvDetail));
 
             CreateMap<InvoiceRes, Invoice>()
-             .ForMember(dst => dst.Id, opt => opt.Ignore())
+               .ForMember(dst => dst.VatAccountId, opt => opt.UseDestinationValue) 
+              .ForMember(dst => dst.Id, opt => opt.Ignore())
               .ForMember(dst => dst.InvDetail, opt => opt.Ignore())
-              .AfterMap((phr, ph) => AfterMapPurchase(phr, ph)  /* (phr,ph)=> {
+              .AfterMap((phr, ph) => AfterMapPurchase(phr, ph)  /* (phr,p                 h)=> {
 
                    // removing deleting items
 

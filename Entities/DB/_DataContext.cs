@@ -147,16 +147,10 @@ namespace ALBAB.Entities.DB
 
               builder.Entity<JournalEntry>().Property( t => t.type).HasConversion<String>();
 
-
-
-
-
+              builder.Entity<Invoice>().Property(a => a.VatAccountId).HasDefaultValue(AccountType.Vat);
 
         }
 
-        private string ToSnakeCase()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

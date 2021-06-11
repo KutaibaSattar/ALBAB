@@ -7,6 +7,7 @@ namespace ALBAB.Entities.AppAccounts
         Client = 30,
         Supplier = 31,
         Staff = 32,
+        Vat = 33,
 
 
         }
