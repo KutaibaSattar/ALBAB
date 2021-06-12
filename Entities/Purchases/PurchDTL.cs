@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using ALBAB.Entities.Products;
 
 namespace ALBAB.Entities.Purchases
@@ -14,6 +15,12 @@ namespace ALBAB.Entities.Purchases
         public Invoice  Invoice { get; set; }
         public int ProductId { get; set;}
         public Product Product { get; set; }
+
+        [NotMapped]
+        public decimal Value
+        {
+            get { return Quantity * Price; }
+        }
 
 
 

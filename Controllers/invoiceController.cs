@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
 using ALBAB.Entities;
+using ALBAB.Entities.Journal;
+using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Controllers
 {
@@ -90,21 +92,25 @@ namespace ALBAB.Controllers
 
           // }
 
-
-
          var invoice = _mapper.Map<InvoiceRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
-
            foreach (var item in invoice.InvDetail)
             {
                 item.LastUpdate = DateTime.Now;
             }
 
+          _context.Invoices.Add(invoice);
 
-         _context.Invoices.Add(invoice);
+          var journal = new JournalEntry(invoice.InvNo, JournalType.PRCH,invoice.Date);
 
+           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
+          _context.journals.Add(journal);
+
+         
          await _context.SaveChangesAsync();
+
 
           var result = _mapper.Map<InvoiceRes>(invoice);
 

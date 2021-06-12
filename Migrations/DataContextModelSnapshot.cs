@@ -520,16 +520,17 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("date");
 
-                    b.Property<int>("DebitAccountId")
+                    b.Property<int>("DebitAcctId")
                         .HasColumnType("int")
-                        .HasColumnName("debitaccountid");
+                        .HasColumnName("debitacctid");
 
                     b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(5, 2)")
                         .HasColumnName("discount");
 
                     b.Property<string>("InvNo")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("invno");
 
                     b.Property<DateTime>("LastUpdate")
@@ -540,12 +541,7 @@ namespace ALBaB.Migrations
                         .HasColumnType("decimal(5, 2)")
                         .HasColumnName("subtotal");
 
-                    b.Property<decimal?>("TotalAmount")
-                        .HasColumnType("decimal(5, 2)")
-                        .HasColumnName("totalamount");
-
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("type");
 
@@ -553,10 +549,9 @@ namespace ALBaB.Migrations
                         .HasColumnType("decimal(5, 2)")
                         .HasColumnName("vat");
 
-                    b.Property<int>("VatAccountId")
+                    b.Property<int>("VatAcctId")
                         .HasColumnType("int")
-                        .HasDefaultValue(33)
-                        .HasColumnName("vataccountid");
+                        .HasColumnName("vatacctid");
 
                     b.HasKey("Id")
                         .HasName("pk_invoices");
@@ -566,6 +561,9 @@ namespace ALBaB.Migrations
 
                     b.HasIndex("AppUserId")
                         .HasDatabaseName("ix_invoices_appuserid");
+
+                    b.HasIndex("InvNo")
+                        .IsUnique();
 
                     b.ToTable("invoices");
                 });

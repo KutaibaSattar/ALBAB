@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210606074655_UpdateDatbase")]
-    partial class UpdateDatbase
+    [Migration("20210612101733_CreatingDB")]
+    partial class CreatingDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -522,18 +522,38 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("date");
 
+                    b.Property<int>("DebitAcctId")
+                        .HasColumnType("int")
+                        .HasColumnName("debitacctid");
+
+                    b.Property<decimal?>("Discount")
+                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnName("discount");
+
                     b.Property<string>("InvNo")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)")
                         .HasColumnName("invno");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime")
                         .HasColumnName("lastupdate");
 
+                    b.Property<decimal?>("SubTotal")
+                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnName("subtotal");
+
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("type");
+
+                    b.Property<decimal?>("Vat")
+                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnName("vat");
+
+                    b.Property<int>("VatAcctId")
+                        .HasColumnType("int")
+                        .HasColumnName("vatacctid");
 
                     b.HasKey("Id")
                         .HasName("pk_invoices");
@@ -543,6 +563,9 @@ namespace ALBaB.Migrations
 
                     b.HasIndex("AppUserId")
                         .HasDatabaseName("ix_invoices_appuserid");
+
+                    b.HasIndex("InvNo")
+                        .IsUnique();
 
                     b.ToTable("invoices");
                 });

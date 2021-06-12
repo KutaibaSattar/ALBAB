@@ -11,12 +11,24 @@ namespace ALBAB.Entities.Journal
     public class JournalEntry
     {
 
+
+        public JournalEntry(){
+
+        }
+
+        public JournalEntry(string jeNo, JournalType type, DateTime entryDate){
+            this.JENo = jeNo;
+            this.Type = type;
+            this.EntryDate = entryDate;
+
+        }
+
         public int Id { get; private set; }
         [Required]
         public string JENo { get; set; }
-        public JournalType type { get; set; }
+        public JournalType Type { get; set; }
         public string Note { get; set; }
-        public DateTime entryDate { get; set; } = DateTime.Now;
+        public DateTime EntryDate { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
 
         public ICollection<JournalAccount> journalAccounts { get; set; }

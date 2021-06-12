@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class CreateDB : Migration
+    public partial class CreatingDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -257,13 +257,18 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    type = table.Column<string>(type: "text", nullable: false),
-                    invno = table.Column<string>(type: "text", nullable: true),
+                    invno = table.Column<string>(type: "varchar(767)", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: true),
                     date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    comment = table.Column<string>(type: "text", nullable: true),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    comment = table.Column<string>(type: "text", nullable: true),
                     appuserid = table.Column<int>(type: "int", nullable: true),
-                    accountid = table.Column<int>(type: "int", nullable: false)
+                    accountid = table.Column<int>(type: "int", nullable: false),
+                    debitacctid = table.Column<int>(type: "int", nullable: false),
+                    subtotal = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
+                    discount = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
+                    vatacctid = table.Column<int>(type: "int", nullable: false),
+                    vat = table.Column<decimal>(type: "decimal(5, 2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -489,6 +494,12 @@ namespace ALBaB.Migrations
                 name: "ix_invoices_appuserid",
                 table: "invoices",
                 column: "appuserid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_invoices_invno",
+                table: "invoices",
+                column: "invno",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_journalaccounts_accountid",
