@@ -4,15 +4,17 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using ALBAB.Entities.AppAccounts;
+using ALBAB.Entities.Journal;
 
 namespace ALBAB.Entities.Purchases
 {
-    public class InvoiceRes
+    public class InvoiceSaveRes
 
     {
         public int? Id { get; set; }
         public string InvNo { get; set; }
-        public string Type { get; set; } = "PRCH";
+        [Required]
+        public JournalType Type { get; set; }
         public DateTime Date { get; set; } =  DateTime.Now;
         public string Comment { get; set; }
         public int? AppUserId { get; set; }
@@ -42,7 +44,7 @@ namespace ALBAB.Entities.Purchases
         public int AccountId{ get; set; }
 
          public ICollection <InvDetailsRes> invDetails { get; set; }
-         public InvoiceRes()
+         public InvoiceSaveRes()
         {
                invDetails = new Collection<InvDetailsRes>();
         }

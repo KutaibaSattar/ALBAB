@@ -5,6 +5,7 @@ namespace ALBAB.Entities.AppAccounts
 {
     public class AppRole : IdentityRole<int>
     {
-       public ICollection<AppUserRole> UserRoles { get; set; }  
+       public ICollection<AppUserRole> UserRoles { get; set; }
+
     }
 }

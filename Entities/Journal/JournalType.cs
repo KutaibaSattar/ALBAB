@@ -1,22 +1,23 @@
+using System;
 using System.Runtime.Serialization;
 
 namespace ALBAB.Entities.Journal
 {
     public enum JournalType
         {
-         [EnumMember(Value="Receipt")]
-        RCPT,
-        [EnumMember(Value="SalesReceipt")]
-        SLRT,
-        [EnumMember(Value="Paymnet")]
-        PYMT,
-        [EnumMember(Value="Purchase2Pay")]
-        PR2P,
-        [EnumMember(Value="Journal")]
-        JRNL,
-        [EnumMember(Value="Purchase")]
-        PRCH,
-        [EnumMember(Value="Sales")]
-        SALS,
+         //[EnumMember(Value ="Receipt")]
+        RECPT,
+        //[EnumMember(Value="SalesReceipt")]
+        SLRCT,
+        //[EnumMember(Value="Paymnet")]
+        PYMNT,
+        //[EnumMember(Value="Purchase2Pay")]
+        PR2PY,
+        //[EnumMember(Value="Journal")]
+        JORNL,
+        //[EnumMember(Value="Purchase")]
+        PURCH,
+        //[EnumMember(Value="Sales")]
+        SALES,
         }
 }

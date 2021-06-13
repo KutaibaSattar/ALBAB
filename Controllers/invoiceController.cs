@@ -29,11 +29,11 @@ namespace ALBAB.Controllers
         }
 
           [HttpGet("invlist")]
-         public async Task<ActionResult<IEnumerable<InvoiceRes>>> getInvoices()
+         public async Task<ActionResult<IEnumerable<InvoiceSaveRes>>> getInvoices()
          {
            var invoices = await _context.Invoices.Include(d => d.InvDetail).ThenInclude(p =>p.Product).ToListAsync();
 
-           var result = _mapper.Map<IEnumerable<InvoiceRes>>(invoices);
+           var result = _mapper.Map<IEnumerable<InvoiceSaveRes>>(invoices);
 
            return Ok(result);
 
@@ -50,14 +50,14 @@ namespace ALBAB.Controllers
 
          }
           [HttpGet("invoice/{id}")]
-         public async Task<ActionResult<IEnumerable<InvoiceRes>>> getInvId(int id)
+         public async Task<ActionResult<IEnumerable<InvoiceSaveRes>>> getInvId(int id)
          {
            var invoices = await _context.Invoices.Include(d => d.InvDetail)
            .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.Id == id);
 
 
 
-         var result =  _mapper.Map<Invoice,InvoiceRes>(invoices);
+         var result =  _mapper.Map<Invoice,InvoiceSaveRes>(invoices);
 
 
           return Ok(result);
@@ -81,7 +81,7 @@ namespace ALBAB.Controllers
          }
 
           [HttpPost]
-         public async  Task<ActionResult<InvoiceRes>> createInvoice(InvoiceRes invRes)
+         public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -92,7 +92,7 @@ namespace ALBAB.Controllers
 
           // }
 
-         var invoice = _mapper.Map<InvoiceRes,Invoice>(invRes);
+         var invoice = _mapper.Map<InvoiceSaveRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
            foreach (var item in invoice.InvDetail)
@@ -102,23 +102,23 @@ namespace ALBAB.Controllers
 
           _context.Invoices.Add(invoice);
 
-          var journal = new JournalEntry(invoice.InvNo, JournalType.PRCH,invoice.Date);
+          var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
           _context.journals.Add(journal);
 
-         
+
          await _context.SaveChangesAsync();
 
 
-          var result = _mapper.Map<InvoiceRes>(invoice);
+          var result = _mapper.Map<InvoiceSaveRes>(invoice);
 
           return  Ok(result);
 
          }
           [HttpPut] // api/purchases/id
-         public async  Task<ActionResult<InvoiceRes>> updateInvoice(InvoiceRes invRes)
+         public async  Task<ActionResult<InvoiceSaveRes>> updateInvoice(InvoiceSaveRes invRes)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -130,7 +130,7 @@ namespace ALBAB.Controllers
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-       _mapper.Map<InvoiceRes,Invoice>(invRes,invoice);
+       _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
 
         var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 
@@ -145,7 +145,7 @@ namespace ALBAB.Controllers
 
           await _context.SaveChangesAsync();
 
-          var result = _mapper.Map<Invoice,InvoiceRes>(invoice);
+          var result = _mapper.Map<Invoice,InvoiceSaveRes>(invoice);
 
           return  Ok(result);
 

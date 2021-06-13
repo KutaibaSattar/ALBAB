@@ -3,7 +3,6 @@ using ALBAB.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.OrderAggregate;
@@ -145,8 +144,12 @@ namespace ALBAB.Entities.DB
                });
 
               builder.Entity<JournalEntry>().Property( t => t.Type).HasConversion<String>();
+              builder.Entity<Invoice>().Property( t => t.Type).HasConversion<String>();
 
-              builder.Entity<Invoice>(inv => {inv.HasIndex(no => no.InvNo).IsUnique();});
+              builder.Entity<Invoice>().HasIndex(i => new {i.InvNo,i.Type}).IsUnique();
+              builder.Entity<JournalEntry>().HasIndex(i => new {i.JENo,i.Type}).IsUnique();
+
+
 
         }
 

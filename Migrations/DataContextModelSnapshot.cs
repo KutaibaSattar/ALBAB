@@ -167,10 +167,12 @@ namespace ALBaB.Migrations
                         .HasColumnName("isexpandable");
 
                     b.Property<string>("KeyId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("keyid");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
@@ -256,26 +258,31 @@ namespace ALBaB.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("created");
 
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("entrydate");
+
                     b.Property<string>("JENo")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("jeno");
 
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
 
-                    b.Property<DateTime>("entryDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("entrydate");
-
-                    b.Property<string>("type")
+                    b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("pk_journals");
+
+                    b.HasIndex("JENo", "Type")
+                        .IsUnique();
 
                     b.ToTable("journals");
                 });
@@ -530,7 +537,8 @@ namespace ALBaB.Migrations
 
                     b.Property<string>("InvNo")
                         .IsRequired()
-                        .HasColumnType("varchar(767)")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("invno");
 
                     b.Property<DateTime>("LastUpdate")
@@ -542,7 +550,9 @@ namespace ALBaB.Migrations
                         .HasColumnName("subtotal");
 
                     b.Property<string>("Type")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("type");
 
                     b.Property<decimal?>("Vat")
@@ -562,7 +572,7 @@ namespace ALBaB.Migrations
                     b.HasIndex("AppUserId")
                         .HasDatabaseName("ix_invoices_appuserid");
 
-                    b.HasIndex("InvNo")
+                    b.HasIndex("InvNo", "Type")
                         .IsUnique();
 
                     b.ToTable("invoices");

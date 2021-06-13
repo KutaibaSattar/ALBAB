@@ -5,16 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace ALBAB.Entities.Journal
 {
+
+   //[Index(nameof(JENo), nameof(Type), IsUnique = true)]
     public class JournalEntry
     {
-
-
-        public JournalEntry(){
-
-        }
+        public JournalEntry(){}
 
         public JournalEntry(string jeNo, JournalType type, DateTime entryDate){
             this.JENo = jeNo;
@@ -24,8 +23,12 @@ namespace ALBAB.Entities.Journal
         }
 
         public int Id { get; private set; }
+
         [Required]
+        [MaxLength(20)]
         public string JENo { get; set; }
+        [Required]
+        [MaxLength(10)]
         public JournalType Type { get; set; }
         public string Note { get; set; }
         public DateTime EntryDate { get; set; }

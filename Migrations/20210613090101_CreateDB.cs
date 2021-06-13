@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ALBaB.Migrations
 {
-    public partial class CreatingDB : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,8 +74,8 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    keyid = table.Column<string>(type: "text", nullable: true),
-                    name = table.Column<string>(type: "text", nullable: true),
+                    keyid = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
                     lvl = table.Column<int>(type: "int", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     parentid = table.Column<int>(type: "int", nullable: true),
@@ -98,8 +98,8 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    jeno = table.Column<string>(type: "text", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
+                    jeno = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    type = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     note = table.Column<string>(type: "text", nullable: true),
                     entrydate = table.Column<DateTime>(type: "datetime", nullable: false),
                     created = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -257,8 +257,8 @@ namespace ALBaB.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    invno = table.Column<string>(type: "varchar(767)", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: true),
+                    invno = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    type = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     date = table.Column<DateTime>(type: "datetime", nullable: false),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     comment = table.Column<string>(type: "text", nullable: true),
@@ -496,9 +496,9 @@ namespace ALBaB.Migrations
                 column: "appuserid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_invoices_invno",
+                name: "IX_invoices_invno_type",
                 table: "invoices",
-                column: "invno",
+                columns: new[] { "invno", "type" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -515,6 +515,12 @@ namespace ALBaB.Migrations
                 name: "ix_journalaccounts_journalid",
                 table: "journalaccounts",
                 column: "journalid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_journals_jeno_type",
+                table: "journals",
+                columns: new[] { "jeno", "type" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_models_brandid",

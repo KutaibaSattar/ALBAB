@@ -10,7 +10,10 @@ namespace ALBAB.Entities.Journal
 
     {
        public int Id { get; set; }
+
+      [Required]
        public string JENo { get; set; }
+       [Required]
        public string Type { get; set; }
        public string Note { get; set; }
        public DateTime Created { get; set; }

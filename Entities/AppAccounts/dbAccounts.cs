@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace ALBAB.Entities.AppAccounts
 {
@@ -8,9 +8,12 @@ namespace ALBAB.Entities.AppAccounts
     {
         public int Id { get; set; }
 
+       [Required]
         public string KeyId { get; set; }
 
+        [Required]
         public string Name { get; set; }
+
 
         public int lvl { get; set; }
 
@@ -19,6 +22,7 @@ namespace ALBAB.Entities.AppAccounts
         public dbAccounts Parent { get; set; }
 
        // Reference for self
+      
         public int? ParentId {get;set;}
         public ICollection <dbAccounts> Children { get; set; }
 

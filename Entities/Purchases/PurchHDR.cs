@@ -7,15 +7,22 @@ using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using ALBAB.Entities.Journal;
 
 namespace ALBAB.Entities.Purchases
 {
+
+    //[Index(nameof(InvNo), nameof(Type), IsUnique = true)]
     public class Invoice : BaseEntity
     {
 
         [Required]
+        [MaxLength(20)]
         public string InvNo { get; set; }
-        public string Type { get; set; } = "PRCH";
+
+        [Required]
+        [MaxLength(10)]
+        public JournalType Type { get; set; }
         public DateTime Date { get; set; }
         public DateTime LastUpdate { get; set; }
         public string Comment { get; set; }
