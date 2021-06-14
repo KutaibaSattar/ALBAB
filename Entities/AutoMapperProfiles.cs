@@ -50,7 +50,7 @@ namespace ALBAB.Entities
             CreateMap<Invoice, InvoiceSaveRes>()
             // .ForMember(destination => destination.Type,
             //      opt => opt.MapFrom(source => Enum.GetName(typeof(JournalType), source.Type)))
-             .ForMember(dst => dst.Type, opt => opt.MapFrom(src => MapGrade(Enum.GetName(typeof(JournalType), src.Type))))
+
                       /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
             .ForMember(dst => dst.invDetails, opt => opt.MapFrom(src => src.InvDetail));
 
@@ -74,6 +74,24 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Id , opt => opt.Ignore())
             .ForMember(dst => dst.journalAccounts , opt => opt.Ignore())
             .AfterMap((jer, je) => AfterMapJournal(jer, je));
+
+            CreateMap<JournalEntry,JournalEntry>()
+            .ForMember(dst => dst.Id, opt => opt.Ignore());
+            // .BeforeMap((dst, src) =>{
+            //     foreach (var item in src.journalAccounts)
+            //     {
+            //         foreach (var item2 in dst.journalAccounts)
+            //         {
+            //                 item.Id = item2.Id;
+            //         }
+            //     }
+
+            // });
+
+
+            
+
+
 
             CreateMap<JournalAccount, JournalAccountRes>();
             CreateMap<JournalAccountRes, JournalAccount>();
@@ -183,12 +201,6 @@ namespace ALBAB.Entities
 
 
     }
-    public class DateTimeTypeConverter : ITypeConverter<string, JournalType>
-{
-    public DateTime Convert(string source, DateTime destination, ResolutionContext context)
-    {
-        return System.Convert.ToDateTime(source);
-    }
-}
+
 
 }

@@ -20,7 +20,8 @@ namespace ALBAB.Entities.Journal
             this.Debit = debit;
 
         }
-        public int Id { get; private set; }
+      
+        public int Id { get; set; }
         public JournalEntry Journal { get; set; }
         public int JournalId { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;

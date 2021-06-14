@@ -128,6 +128,7 @@ namespace ALBAB.Controllers
           //     invRes.AccountId = (int)(ReservedAccountsType.Clients);
           // }
 
+
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
        _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
@@ -140,7 +141,18 @@ namespace ALBAB.Controllers
         });
 
 
+        var journal = _context.journals.Include( ja => ja.journalAccounts).FirstOrDefault( j => j.JENo.Equals(invRes.InvNo) & j.Type.Equals(invRes.Type));
 
+        var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
+
+
+        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
+
+        //NewJournal.journalAccounts.da = journal.Id
+
+
+           _mapper.Map<JournalEntry,JournalEntry>(NewJournal,journal);
 
 
           await _context.SaveChangesAsync();

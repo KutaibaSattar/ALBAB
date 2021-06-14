@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using ALBAB.Entities;
 using ALBAB.Entities.DB;
 using ALBAB.Token;
@@ -20,7 +21,12 @@ namespace ALBAB.Extensions
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
-            services.AddControllers().AddNewtonsoftJson();
+                 services.AddControllers().AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+                
+            //services.AddControllers().AddNewtonsoftJson();
 
           /*  services.AddControllersWithViews()
                         .AddNewtonsoftJson(options =>
