@@ -1,3 +1,7 @@
+using System.Data.Common;
+using System.Text.RegularExpressions;
+using System.Security.AccessControl;
+using System.Data;
 using System.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,10 +11,7 @@ using ALBAB.Entities.Purchases;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper.QueryableExtensions;
-using ALBAB.Entities;
 using ALBAB.Entities.Journal;
-using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Controllers
 {
@@ -100,6 +101,25 @@ namespace ALBAB.Controllers
                 item.LastUpdate = DateTime.Now;
             }
 
+             var product  = invRes.invDetails.GroupBy(ac => ac.Id)
+             .Select(group =>
+             new {Quantity = group.Sum(q => q.Quantity) , Total = group.Sum(r => r.Price * r.Quantity) ,Id = group.Max(r => r.ProductId)})
+             .ToList() ;
+
+            var store  = _context.products.ToList(); //.Where(s => product.Select( p => p.Id).Contains(s.Id)).ToList();
+
+            store.Select( p => p.Id).c
+
+            store.Where( s )
+            {
+
+            }
+
+          foreach (var item in product)
+          {
+
+          }
+
           _context.Invoices.Add(invoice);
 
           var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
@@ -107,6 +127,7 @@ namespace ALBAB.Controllers
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
           _context.journals.Add(journal);
+
 
 
          await _context.SaveChangesAsync();
