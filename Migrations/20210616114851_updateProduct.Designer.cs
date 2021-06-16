@@ -3,14 +3,16 @@ using System;
 using ALBAB.Entities.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210616114851_updateProduct")]
+    partial class updateProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,8 +458,8 @@ namespace ALBaB.Migrations
                         .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
-                    b.Property<decimal?>("Quantity")
-                        .HasColumnType("decimal(7, 2)")
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")

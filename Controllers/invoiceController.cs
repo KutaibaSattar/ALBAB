@@ -106,18 +106,13 @@ namespace ALBAB.Controllers
              new {Quantity = group.Sum(q => q.Quantity) , Total = group.Sum(r => r.Price * r.Quantity) ,Id = group.Max(r => r.ProductId)})
              .ToList() ;
 
-            var store  = _context.products.ToList(); //.Where(s => product.Select( p => p.Id).Contains(s.Id)).ToList();
+            var store  = _context.products.Where(s => product.Select( p => p.Id).Contains(s.Id)).ToList();
 
-            store.Select( p => p.Id).c
 
-            store.Where( s )
-            {
 
-            }
-
-          foreach (var item in product)
+          foreach (var item in store)
           {
-
+            
           }
 
           _context.Invoices.Add(invoice);

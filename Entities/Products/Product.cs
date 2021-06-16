@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using ALBAB.Entities.Purchases;
 
 namespace ALBAB.Entities.Products
@@ -10,7 +11,9 @@ namespace ALBAB.Entities.Products
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public decimal Quantit { get; set; }
+
+        [Column(TypeName = "decimal(7, 2)")]
+        public decimal Quantity { get; set; }
         public string PictureUrl { get; set; }
         /* public DateTime LastUpdate { get; set; } */
 
