@@ -12,6 +12,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.Journal;
+using ALBAB.Entities.Products;
 
 namespace ALBAB.Controllers
 {
@@ -101,19 +102,33 @@ namespace ALBAB.Controllers
                 item.LastUpdate = DateTime.Now;
             }
 
-             var product  = invRes.invDetails.GroupBy(ac => ac.Id)
-             .Select(group =>
-             new {Quantity = group.Sum(q => q.Quantity) , Total = group.Sum(r => r.Price * r.Quantity) ,Id = group.Max(r => r.ProductId)})
-             .ToList() ;
-
-            var store  = _context.products.Where(s => product.Select( p => p.Id).Contains(s.Id)).ToList();
-
+           var  invProducts  = invRes.invDetails.GroupBy(ac => ac.ProductId)
+                      .Select(group =>
+                      new {Quantity = group.Sum(q => q.Quantity)
+                       , Total = group.Sum(r => r.Price * r.Quantity)
+                       ,Id = group.Max(r => r.ProductId)});
 
 
-          foreach (var item in store)
-          {
-            
-          }
+
+
+            var  store  = _context.products.Where(s => invProducts.Select( p => p.Id).Contains(s.Id)).ToList();
+
+
+           // var join3 = _context.products.Join( product, ps => ps.Id, p => p.Id, (ps,p) => new {ps.Id,ps.Quantity, p.Total}).ToList();
+
+
+          store.ForEach( s => {
+            var qty = s.Quantity;
+             var amount = s.Quantity * s.Price;
+             var newItems = invProducts.FirstOrDefault(j => j.Id == s.Id);
+
+             s.Quantity +=  newItems.Quantity;
+             s.Price = (newItems.Total + amount)/ s.Quantity;
+
+
+            });
+
+
 
           _context.Invoices.Add(invoice);
 
@@ -133,6 +148,9 @@ namespace ALBAB.Controllers
           return  Ok(result);
 
          }
+
+
+
           [HttpPut] // api/purchases/id
          public async  Task<ActionResult<InvoiceSaveRes>> updateInvoice(InvoiceSaveRes invRes)
          {
@@ -147,7 +165,53 @@ namespace ALBAB.Controllers
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-       _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
+
+
+        var  invProductDetailRes  = invRes.invDetails.GroupBy(ac => ac.ProductId)
+                      .Select(group =>
+                      new {Quantity = group.Sum(q => q.Quantity)
+                       , Total = group.Sum(r => r.Price * r.Quantity)
+                       ,productId = group.Max(r => r.ProductId)
+                       ,price = group.Max(r => r.Price)}).ToList();
+
+        var  invProductDetail  = invoice.InvDetail.GroupBy(ac => ac.ProductId)
+                      .Select(group =>
+                      new {Quantity = group.Sum(q => q.Quantity)
+                       , Total = group.Sum(r => r.Price * r.Quantity)
+                       ,productId = group.Max(r => r.ProductId)
+                       ,price = group.Max(r => r.Price)}).ToList();
+
+
+         var  store  = _context.products.Where(s => invProductDetailRes.Select( p => p.productId).Contains(s.Id)).ToList();
+
+
+            store.ForEach(stock =>
+            {
+                var qty = stock.Quantity;
+                var amount = stock.Quantity * stock.Price;
+                var newItems = invProductDetailRes.FirstOrDefault(j => j.productId == stock.Id);
+                var oldItems = invProductDetail.FirstOrDefault(j => j.productId == stock.Id);
+
+                if (oldItems == null) //only new
+                {
+                    stock.Quantity += newItems.Quantity;
+                    stock.Price = (newItems.Total + amount) / stock.Quantity;
+                }
+                else
+                {
+
+                    if (oldItems.Quantity != newItems.Quantity || oldItems.price != newItems.price)
+                    {
+                        stock.Quantity -= oldItems.Quantity;
+                        stock.Price = ((stock.Price * stock.Quantity) + newItems.Total) / (stock.Quantity+ newItems.Quantity);
+                        stock.Quantity += newItems.Quantity;
+
+                    }
+                }
+            });
+
+        _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
+
 
         var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 

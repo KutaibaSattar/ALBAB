@@ -15,12 +15,10 @@ namespace ALBAB.Entities.Products
         [Column(TypeName = "decimal(7, 2)")]
         public decimal Quantity { get; set; }
         public string PictureUrl { get; set; }
-        /* public DateTime LastUpdate { get; set; } */
-
-        public int ModelId { get; set; }
+       public int ModelId { get; set; }
         public Model Model { get; set; }
          public ICollection<InvDetail> PurchDTLs {get;set;}
-
+        public DateTime LastUpdate { get; set; }
 
     }
 
