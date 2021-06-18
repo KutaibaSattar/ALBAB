@@ -503,11 +503,11 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_invdetails");
 
-                    b.HasIndex("InvoiceId")
-                        .HasDatabaseName("ix_invdetails_invoiceid");
-
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_invdetails_productid");
+
+                    b.HasIndex("InvoiceId", "ProductId")
+                        .IsUnique();
 
                     b.ToTable("invdetails");
                 });

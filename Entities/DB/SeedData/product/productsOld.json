@@ -3,760 +3,570 @@
     "Name": "CASIT MC300",
     "Description": "CASIT MC300",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 2,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 2
   },
   {
     "Name": "1/2 Curve 2.9 m Overhead low roof Aluminum Profile",
     "Description": "1/2 Curve 2.9 m Overhead low roof Aluminum Profile",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "1/2 Curve 3.3 mOverhead low roof  Aluminum Profile",
     "Description": "1/2 Curve 3.3 mOverhead low roof  Aluminum Profile",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "1/2 Curve 4.2 m Overhead low roof Aluminum Profile",
     "Description": "1/2 Curve 4.2 m Overhead low roof Aluminum Profile",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Accessories for OverHead Garage door 2.5 H",
     "Description": "Accessories for OverHead Garage door 2.5 H",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Accessories for OverHead Garage door 3.0 H",
     "Description": "Accessories for OverHead Garage door 3.0 H",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Accessories for OverHead Garage door 3.3 H",
     "Description": "Accessories for OverHead Garage door 3.3 H",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Accessories for OverHead Garage door 4.5 H",
     "Description": "Accessories for OverHead Garage door 4.5 H",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "APR- Glass 6 Pos Key Switch",
     "Description": "APR- Glass 6 Pos Key Switch",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 18,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 18
   },
   {
     "Name": "Apr Glass Door Sensor Double Tech",
     "Description": "Apr Glass Door Sensor Double Tech",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 18,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 18
   },
   {
     "Name": "Apr Photocell Reflecter",
     "Description": "Apr Photocell Reflecter",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "APR-Microwave Radar",
     "Description": "APR-Microwave Radar",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "APR-SLD 424",
     "Description": "APR-SLD 424",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "APR-SLD ONDA 801",
     "Description": "APR-SLD ONDA 801",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "APZ - 40 - 16 Lines",
     "Description": "APZ - 40 - 16 Lines",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - 9006 - Smoth",
     "Description": "APZ - 40 - 9006 - Smoth",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - Beige",
     "Description": "APZ - 40 - Beige",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - Beige - SMooth",
     "Description": "APZ - 40 - Beige - SMooth",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - Standards",
     "Description": "APZ - 40 - Standards",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - Window Big",
     "Description": "APZ - 40 - Window Big",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 40 - Window Small",
     "Description": "APZ - 40 - Window Small",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 610 - 9005",
     "Description": "APZ - 610 - 9005",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "APZ - 610 - DARK OAK Smooth",
     "Description": "APZ - 610 - DARK OAK Smooth",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 6,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 6
   },
   {
     "Name": "CASIT BM944",
     "Description": "CASIT BM944",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 3,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 3
   },
   {
     "Name": "CASIT ECREF",
     "Description": "CASIT ECREF",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 12,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 12
   },
   {
     "Name": "CASIT ERTS14R",
     "Description": "CASIT ERTS14R",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 19,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 19
   },
   {
     "Name": "CASIT PARKY",
     "Description": "CASIT PARKY",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 3,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 3
   },
   {
     "Name": "CASIT SCORRY500",
     "Description": "CASIT SCORRY500",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 1,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 1
   },
   {
     "Name": "CR/15 3PH control",
     "Description": "CR/15 3PH control",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "CR/50",
     "Description": "CR/50",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "CR/53",
     "Description": "CR/53",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "DoorGate OverHead Side motor",
     "Description": "DoorGate OverHead Side motor",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 10,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 10
   },
   {
     "Name": "DoorGate remotes",
     "Description": "DoorGate remotes",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 19,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 19
   },
   {
     "Name": "GC/46",
     "Description": "GC/46",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 11,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 11
   },
   {
     "Name": "Glass D MATIC L 3010",
     "Description": "Glass D MATIC L 3010",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 14,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 14
   },
   {
     "Name": "Glass D MATIC L 4010",
     "Description": "Glass D MATIC L 4010",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 14,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 14
   },
   {
     "Name": "Granmercurio 2000F",
     "Description": "Granmercurio 2000F",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 4,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 4
   },
   {
     "Name": "Hands Free Antenna",
     "Description": "Hands Free Antenna",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   },
   {
     "Name": "Hands Free Radio Receiver",
     "Description": "Hands Free Radio Receiver",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   },
   {
     "Name": "Hands Free TAG",
     "Description": "Hands Free TAG",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   },
   {
     "Name": "Home Zero Overhead",
     "Description": "Home Zero Overhead",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Hydrolic not self locking 3M/400KG",
     "Description": "Hydrolic not self locking 3M/400KG",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "Hydrolic self locking 2.5M/400KG",
     "Description": "Hydrolic self locking 2.5M/400KG",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "Hydrolic self locking 3M/400KG",
     "Description": "Hydrolic self locking 3M/400KG",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "Industrial window 664*346",
     "Description": "Industrial window 664*346",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "KIT UNICO/230",
     "Description": "KIT UNICO/230",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "KIT UNICO/24F",
     "Description": "KIT UNICO/24F",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "KIT/ 78F",
     "Description": "KIT/ 78F",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "KITH4F",
     "Description": "KITH4F",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 5,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 5
   },
   {
     "Name": "KTH Control for Sliding Glass Door",
     "Description": "KTH Control for Sliding Glass Door",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 21,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 21
   },
   {
     "Name": "KTH Function Switch",
     "Description": "KTH Function Switch",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 21,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 21
   },
   {
     "Name": "KTH Magnatic lock",
     "Description": "KTH Magnatic lock",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 21,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 21
   },
   {
     "Name": "KTH Motor for Sliding Glass Door",
     "Description": "KTH Motor for Sliding Glass Door",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 21,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 21
   },
   {
     "Name": "KTH Sliding Glass Door KIT",
     "Description": "KTH Sliding Glass Door KIT",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 15,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 15
   },
   {
     "Name": "KTH SW-2 Swing Door",
     "Description": "KTH SW-2 Swing Door",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 15,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 15
   },
   {
     "Name": "Loop Detector 1 Ch",
     "Description": "Loop Detector 1 Ch",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 12,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 12
   },
   {
     "Name": "Loop Detector 2 Ch",
     "Description": "Loop Detector 2 Ch",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 12,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 12
   },
   {
     "Name": "M/04",
     "Description": "M/04",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M/10",
     "Description": "M/10",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M/14",
     "Description": "M/14",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 22,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 22
   },
   {
     "Name": "M/26A",
     "Description": "M/26A",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M/27-200 Sensitive Edge",
     "Description": "M/27-200 Sensitive Edge",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M/59",
     "Description": "M/59",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M/83/1",
     "Description": "M/83/1",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "M-Comfort 270",
     "Description": "M-Comfort 270",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 9,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 9
   },
   {
     "Name": "M-Comfort 280",
     "Description": "M-Comfort 280",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 9,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 9
   },
   {
     "Name": "ME RCURIO 502 Chain",
     "Description": "ME RCURIO 502 Chain",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 4,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 4
   },
   {
     "Name": "MIO MP/30",
     "Description": "MIO MP/30",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 23,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 23
   },
   {
     "Name": "MS10",
     "Description": "MS10",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   },
   {
     "Name": "MS22",
     "Description": "MS22",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   },
   {
     "Name": "MT/11",
     "Description": "MT/11",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 24,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 24
   },
   {
     "Name": "MT/14",
     "Description": "MT/14",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 24,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 24
   },
   {
     "Name": "Overhead chain",
     "Description": "Overhead chain",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "OverHead Garage Panel Soft 0.5m 9006 color gray",
     "Description": "OverHead Garage Panel Soft 0.5m 9006 color gray",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "OverHead Garage Panel wood89 0.5m soft",
     "Description": "OverHead Garage Panel wood89 0.5m soft",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "OverHead Garage Panel wood89 0.6m soft",
     "Description": "OverHead Garage Panel wood89 0.6m soft",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "Overhead Window 587*266",
     "Description": "Overhead Window 587*266",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "P/10/12",
     "Description": "P/10/12",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "P94",
     "Description": "P94",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 20,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 20
   },
   {
     "Name": "Panel 500 Cream 1015 Lines",
     "Description": "Panel 500 Cream 1015 Lines",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "Panel 610 Cream 1015 Lines",
     "Description": "Panel 610 Cream 1015 Lines",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "Panel 610 Light Wood Smooth",
     "Description": "Panel 610 Light Wood Smooth",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "Panel 610 White 9016 Square",
     "Description": "Panel 610 White 9016 Square",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 7,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 7
   },
   {
     "Name": "Parking Lock",
     "Description": "Parking Lock",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 25,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 25
   },
   {
     "Name": "Passing Door Full Set",
     "Description": "Passing Door Full Set",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Passing Door Normal",
     "Description": "Passing Door Normal",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Powertch AC Swing",
     "Description": "Powertch AC Swing",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 27,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 27
   },
   {
     "Name": "Powertech AC Sliding",
     "Description": "Powertech AC Sliding",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 26,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 26
   },
   {
     "Name": "Powertech Overhead motor",
     "Description": "Powertech Overhead motor",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 28,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 28
   },
   {
     "Name": "RFID UHF Middle Range Reader",
     "Description": "RFID UHF Middle Range Reader",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 29,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 29
   },
   {
     "Name": "SCORRY800",
     "Description": "SCORRY800",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 1,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 1
   },
   {
     "Name": "Serai Granmercurio 1300F",
     "Description": "Serai Granmercurio 1300F",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 4,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 4
   },
   {
     "Name": "Spring 6-7 mm",
     "Description": "Spring 6-7 mm",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "Spring 7.5-8 mm",
     "Description": "Spring 7.5-8 mm",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 8,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 8
   },
   {
     "Name": "SV100 KIT",
     "Description": "SV100 KIT",
     "price": 0,
-    "quantity": 0,
-    "ModelId": 13,
-    "LastUpdate": "2021-01-01T00:00:00.000000"
+    "ModelId": 13
   }
 ]

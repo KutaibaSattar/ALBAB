@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210616114851_updateProduct")]
-    partial class updateProduct
+    [Migration("20210618162048_CreateDB")]
+    partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -442,6 +442,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("lastupdate");
+
                     b.Property<int>("ModelId")
                         .HasColumnType("int")
                         .HasColumnName("modelid");
@@ -459,7 +463,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("price");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("decimal(7, 2)")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
@@ -501,11 +505,11 @@ namespace ALBaB.Migrations
                     b.HasKey("Id")
                         .HasName("pk_invdetails");
 
-                    b.HasIndex("InvoiceId")
-                        .HasDatabaseName("ix_invdetails_invoiceid");
-
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_invdetails_productid");
+
+                    b.HasIndex("InvoiceId", "ProductId")
+                        .IsUnique();
 
                     b.ToTable("invdetails");
                 });

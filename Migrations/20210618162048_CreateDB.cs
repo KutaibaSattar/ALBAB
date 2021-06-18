@@ -369,8 +369,10 @@ namespace ALBaB.Migrations
                     name = table.Column<string>(type: "text", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
                     price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    quantity = table.Column<decimal>(type: "decimal(7, 2)", nullable: false),
                     pictureurl = table.Column<string>(type: "text", nullable: true),
-                    modelid = table.Column<int>(type: "int", nullable: false)
+                    modelid = table.Column<int>(type: "int", nullable: false),
+                    lastupdate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -476,9 +478,10 @@ namespace ALBaB.Migrations
                 column: "parentid");
 
             migrationBuilder.CreateIndex(
-                name: "ix_invdetails_invoiceid",
+                name: "IX_invdetails_invoiceid_productid",
                 table: "invdetails",
-                column: "invoiceid");
+                columns: new[] { "invoiceid", "productid" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_invdetails_productid",

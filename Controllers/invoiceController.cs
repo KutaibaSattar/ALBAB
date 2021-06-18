@@ -88,12 +88,14 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-          // if (invRes.AppUserId > 0)
-          // {
-          //     invRes.AccountId = (int)(ReservedAccountsType.Clients);
-
-          // }
-
+       
+        var x =  invRes.invDetails.GroupBy( p => p.ProductId).Select( g => new {count = g.Count()});
+        
+        var y =  invRes.invDetails.GroupBy( p => p.ProductId).Distinct().Count();
+       
+         if(invRes.invDetails.GroupBy( p => p.ProductId).Distinct().Count()>1)
+            return BadRequest(ModelState);
+         
          var invoice = _mapper.Map<InvoiceSaveRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
@@ -165,7 +167,7 @@ namespace ALBAB.Controllers
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-
+         
 
         var  invProductDetailRes  = invRes.invDetails.GroupBy(ac => ac.ProductId)
                       .Select(group =>
@@ -182,16 +184,19 @@ namespace ALBAB.Controllers
                        ,price = group.Max(r => r.Price)}).ToList();
 
 
-         var  store  = _context.products.Where(s => invProductDetailRes.Select( p => p.productId).Contains(s.Id)).ToList();
+         var  newInvStoreItem  = _context.products.Where(s => invProductDetailRes.Select( p => p.productId).Contains(s.Id)).ToList();
+            var newInvItems = new List<InvDetail>();
 
-
-            store.ForEach(stock =>
+            newInvStoreItem.ForEach(stock =>
             {
                 var qty = stock.Quantity;
                 var amount = stock.Quantity * stock.Price;
                 var newItems = invProductDetailRes.FirstOrDefault(j => j.productId == stock.Id);
                 var oldItems = invProductDetail.FirstOrDefault(j => j.productId == stock.Id);
-
+               
+             
+              // newInvItems.Add(invoice.InvDetail.Where( p => p.ProductId == stock.Id));
+               
                 if (oldItems == null) //only new
                 {
                     stock.Quantity += newItems.Quantity;
@@ -208,7 +213,10 @@ namespace ALBAB.Controllers
 
                     }
                 }
-            });
+            });                  
+
+         //var except = invoice.InvDetail.Except((IEnumerable<InvDetail>)invRes.invDetails);
+        
 
         _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
 
