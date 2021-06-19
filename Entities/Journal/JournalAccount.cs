@@ -20,7 +20,7 @@ namespace ALBAB.Entities.Journal
             this.Debit = debit;
 
         }
-      
+
         public int Id { get; set; }
         public JournalEntry Journal { get; set; }
         public int JournalId { get; set; }

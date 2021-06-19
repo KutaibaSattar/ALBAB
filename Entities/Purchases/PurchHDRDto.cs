@@ -20,12 +20,12 @@ namespace ALBAB.Entities.Purchases
         public int? AppUserId { get; set; }
 
 
-        private int? _debitAccount = (int)AccountType.CostGoodsSold ;
+        private int? _acctionAccont = (int)AccountType.CostGoodsSold ;
         [Required]
-        public int? DebitAcctId { // if 0 then set null and update accountId in JournalAccount entity
+        public int? ActionAcctId { // if 0 then set null and update accountId in JournalAccount entity
 
-              get => _debitAccount;
-              set => _debitAccount = (value ==0 || value==null ) ? _debitAccount : value ;
+              get => _acctionAccont;
+              set => _acctionAccont = (value ==0 || value==null ) ? _acctionAccont : value ;
              }
 
         //public int? DebitAccountId {get;set;}  = (int)AccountType.CostGoodsSold;
@@ -42,7 +42,7 @@ namespace ALBAB.Entities.Purchases
         public decimal?  Vat { get; set; }
         public decimal?  TotalAmount { get; set; }
         public int AccountId{ get; set; }
-
+         public string Description { get; set; }
          public ICollection <InvDetailsRes> invDetails { get; set; }
          public InvoiceSaveRes()
         {

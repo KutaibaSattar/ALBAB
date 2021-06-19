@@ -30,7 +30,7 @@ namespace ALBAB.Entities.Purchases
         public int? AppUserId { get; set; }
         public dbAccounts Account { get; set; }
         public int AccountId {get;set;}
-        public int DebitAcctId { get; set;}
+        public int ActionAcctId { get; set;}
 
         [Column(TypeName = "decimal(5, 2)")]
         public decimal?  SubTotal { get; set; }

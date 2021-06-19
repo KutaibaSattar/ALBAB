@@ -15,6 +15,7 @@ namespace ALBAB.Entities.Purchases
         public Invoice  Invoice { get; set; }
         public int ProductId { get; set;}
         public Product Product { get; set; }
+        public string Description { get; set; }
 
         [NotMapped]
         public decimal Value

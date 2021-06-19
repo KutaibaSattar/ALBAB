@@ -523,6 +523,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("accountid");
 
+                    b.Property<int>("ActionAcctId")
+                        .HasColumnType("int")
+                        .HasColumnName("actionacctid");
+
                     b.Property<int?>("AppUserId")
                         .HasColumnType("int")
                         .HasColumnName("appuserid");
@@ -534,10 +538,6 @@ namespace ALBaB.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime")
                         .HasColumnName("date");
-
-                    b.Property<int>("DebitAcctId")
-                        .HasColumnType("int")
-                        .HasColumnName("debitacctid");
 
                     b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(5, 2)")

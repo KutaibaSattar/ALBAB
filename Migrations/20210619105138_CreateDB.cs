@@ -264,7 +264,7 @@ namespace ALBaB.Migrations
                     comment = table.Column<string>(type: "text", nullable: true),
                     appuserid = table.Column<int>(type: "int", nullable: true),
                     accountid = table.Column<int>(type: "int", nullable: false),
-                    debitacctid = table.Column<int>(type: "int", nullable: false),
+                    actionacctid = table.Column<int>(type: "int", nullable: false),
                     subtotal = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
                     discount = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
                     vatacctid = table.Column<int>(type: "int", nullable: false),

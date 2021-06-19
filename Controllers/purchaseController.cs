@@ -13,17 +13,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.Journal;
 using ALBAB.Entities.Products;
+using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Controllers
 {
-    public class InvoicesController : BaseController
+    public class PurchaseController : BaseController
     {
          private readonly DataContext _context;
        private readonly IMapper _mapper;
 
 
 
-        public InvoicesController(DataContext context, IMapper mapper)
+        public PurchaseController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
@@ -88,14 +89,20 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-       
-        var x =  invRes.invDetails.GroupBy( p => p.ProductId).Select( g => new {count = g.Count()});
-        
-        var y =  invRes.invDetails.GroupBy( p => p.ProductId).Distinct().Count();
-       
-         if(invRes.invDetails.GroupBy( p => p.ProductId).Distinct().Count()>1)
-            return BadRequest(ModelState);
-         
+          if (invRes.Type != JournalType.PURCH )
+                return BadRequest("Please check invoice type");
+
+
+        var rowCount =  invRes.invDetails.GroupBy( p => p.ProductId)
+        .Select( g => new {count = g.Count()}).FirstOrDefault(c => c.count > 1);
+
+
+       if (  !(rowCount==null) && rowCount.count  > 1 )
+              return BadRequest("Item sholud not be dublicated");
+
+
+
+
          var invoice = _mapper.Map<InvoiceSaveRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
@@ -104,16 +111,16 @@ namespace ALBAB.Controllers
                 item.LastUpdate = DateTime.Now;
             }
 
-           var  invProducts  = invRes.invDetails.GroupBy(ac => ac.ProductId)
+           var  invProducts  = invRes.invDetails ;/* .GroupBy(ac => ac.ProductId)
                       .Select(group =>
                       new {Quantity = group.Sum(q => q.Quantity)
                        , Total = group.Sum(r => r.Price * r.Quantity)
                        ,Id = group.Max(r => r.ProductId)});
+ */
 
 
 
-
-            var  store  = _context.products.Where(s => invProducts.Select( p => p.Id).Contains(s.Id)).ToList();
+            var  store  = _context.products.Where(s => invProducts.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
 
            // var join3 = _context.products.Join( product, ps => ps.Id, p => p.Id, (ps,p) => new {ps.Id,ps.Quantity, p.Total}).ToList();
@@ -122,10 +129,10 @@ namespace ALBAB.Controllers
           store.ForEach( s => {
             var qty = s.Quantity;
              var amount = s.Quantity * s.Price;
-             var newItems = invProducts.FirstOrDefault(j => j.Id == s.Id);
+             var newItems = invProducts.FirstOrDefault(p => p.ProductId == s.Id);
 
              s.Quantity +=  newItems.Quantity;
-             s.Price = (newItems.Total + amount)/ s.Quantity;
+             s.Price = (newItems.Price * newItems.Quantity + amount)/ s.Quantity;
 
 
             });
@@ -137,7 +144,7 @@ namespace ALBAB.Controllers
           var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
+           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
           _context.journals.Add(journal);
 
 
@@ -159,64 +166,74 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-          //  if (invRes.AppUserId > 0)
-          // {
-          //     invRes.AccountId = (int)(ReservedAccountsType.Clients);
-          // }
+        var rowCount =  invRes.invDetails.GroupBy( p => p.ProductId)
+        .Select( g => new {count = g.Count()}).FirstOrDefault(c => c.count > 1);
+
+
+       if (  !(rowCount==null) && rowCount.count  > 1 )
+              return BadRequest("Item sholud not be dublicated");
 
 
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-         
-
-        var  invProductDetailRes  = invRes.invDetails.GroupBy(ac => ac.ProductId)
-                      .Select(group =>
-                      new {Quantity = group.Sum(q => q.Quantity)
-                       , Total = group.Sum(r => r.Price * r.Quantity)
-                       ,productId = group.Max(r => r.ProductId)
-                       ,price = group.Max(r => r.Price)}).ToList();
-
-        var  invProductDetail  = invoice.InvDetail.GroupBy(ac => ac.ProductId)
-                      .Select(group =>
-                      new {Quantity = group.Sum(q => q.Quantity)
-                       , Total = group.Sum(r => r.Price * r.Quantity)
-                       ,productId = group.Max(r => r.ProductId)
-                       ,price = group.Max(r => r.Price)}).ToList();
 
 
-         var  newInvStoreItem  = _context.products.Where(s => invProductDetailRes.Select( p => p.productId).Contains(s.Id)).ToList();
-            var newInvItems = new List<InvDetail>();
+        var  invProductDetailRes  = invRes.invDetails ;
+
+       var  invProductDetail  = invoice.InvDetail ;
+
+
+       var  newInvStoreItem  = _context.products.Where(s => invProductDetailRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
+
+       var newInvItems = new List<int>();
+
+
 
             newInvStoreItem.ForEach(stock =>
             {
                 var qty = stock.Quantity;
                 var amount = stock.Quantity * stock.Price;
-                var newItems = invProductDetailRes.FirstOrDefault(j => j.productId == stock.Id);
-                var oldItems = invProductDetail.FirstOrDefault(j => j.productId == stock.Id);
-               
-             
-              // newInvItems.Add(invoice.InvDetail.Where( p => p.ProductId == stock.Id));
-               
+
+                var newItems = invProductDetailRes.FirstOrDefault(j => j.ProductId == stock.Id);
+                var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+
+
+                  newInvItems.Add(newItems.ProductId);
+
                 if (oldItems == null) //only new
                 {
                     stock.Quantity += newItems.Quantity;
-                    stock.Price = (newItems.Total + amount) / stock.Quantity;
+                    stock.Price = (newItems.Price * newItems.Quantity + amount) / stock.Quantity;
                 }
                 else
                 {
 
-                    if (oldItems.Quantity != newItems.Quantity || oldItems.price != newItems.price)
+                    if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                     {
                         stock.Quantity -= oldItems.Quantity;
-                        stock.Price = ((stock.Price * stock.Quantity) + newItems.Total) / (stock.Quantity+ newItems.Quantity);
+                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
                         stock.Quantity += newItems.Quantity;
 
                     }
                 }
-            });                  
+            });
 
-         //var except = invoice.InvDetail.Except((IEnumerable<InvDetail>)invRes.invDetails);
-        
+
+         var deletedItems = invoice.InvDetail.Where( i => !newInvItems.Contains(i.ProductId));
+
+         var  deletedInvStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id)).ToList();
+
+         deletedInvStoreItem.ForEach(stock =>
+            {
+                var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+               //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+                stock.Quantity += deletedInvItems.Quantity;
+
+         }
+
+            );
+
+
 
         _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
 
@@ -235,7 +252,7 @@ namespace ALBAB.Controllers
 
 
         NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.DebitAcctId,null,invoice.TotalAmount));
+        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
 
         //NewJournal.journalAccounts.da = journal.Id
 
