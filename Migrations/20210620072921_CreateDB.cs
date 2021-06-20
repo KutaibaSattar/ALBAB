@@ -416,7 +416,8 @@ namespace ALBaB.Migrations
                     price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     invoiceid = table.Column<int>(type: "int", nullable: false),
-                    productid = table.Column<int>(type: "int", nullable: false)
+                    productid = table.Column<int>(type: "int", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -432,7 +433,7 @@ namespace ALBaB.Migrations
                         column: x => x.productid,
                         principalTable: "products",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

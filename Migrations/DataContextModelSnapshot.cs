@@ -480,6 +480,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
                     b.Property<int>("InvoiceId")
                         .HasColumnType("int")
                         .HasColumnName("invoiceid");
@@ -492,7 +496,7 @@ namespace ALBaB.Migrations
                         .HasColumnType("decimal(18, 2)")
                         .HasColumnName("price");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int")
                         .HasColumnName("productid");
 
@@ -901,9 +905,7 @@ namespace ALBaB.Migrations
                     b.HasOne("ALBAB.Entities.Products.Product", "Product")
                         .WithMany("PurchDTLs")
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("fk_invdetails_products_productid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_invdetails_products_productid");
 
                     b.Navigation("Invoice");
 

@@ -122,29 +122,28 @@ namespace ALBAB.Controllers
 
             var  store  = _context.products.Where(s => invProducts.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-
            // var join3 = _context.products.Join( product, ps => ps.Id, p => p.Id, (ps,p) => new {ps.Id,ps.Quantity, p.Total}).ToList();
 
 
           store.ForEach( s => {
             var qty = s.Quantity;
-             var amount = s.Quantity * s.Price;
+             //var amount = s.TotalValue;
              var newItems = invProducts.FirstOrDefault(p => p.ProductId == s.Id);
 
+             s.Price = (newItems.Price * newItems.Quantity + s.TotalValue)/ (s.Quantity + newItems.Quantity);
              s.Quantity +=  newItems.Quantity;
-             s.Price = (newItems.Price * newItems.Quantity + amount)/ s.Quantity;
-
 
             });
 
 
 
-          _context.Invoices.Add(invoice);
+         _context.Invoices.Add(invoice);
 
           var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+
           _context.journals.Add(journal);
 
 
@@ -177,57 +176,51 @@ namespace ALBAB.Controllers
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
 
+       var  purchDetailsRes  = invRes.invDetails ;
+       var  purchDetails  = invoice.InvDetail ;
 
-        var  invProductDetailRes  = invRes.invDetails ;
+       var  newInvStoreItem  = _context.products.Where(s => purchDetailsRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-       var  invProductDetail  = invoice.InvDetail ;
-
-
-       var  newInvStoreItem  = _context.products.Where(s => invProductDetailRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
-
-       var newInvItems = new List<int>();
-
-
+       var newInvItems = new List<int?>();
 
             newInvStoreItem.ForEach(stock =>
             {
                 var qty = stock.Quantity;
-                var amount = stock.Quantity * stock.Price;
+                //var amount = stock.Quantity * stock.Price;
 
-                var newItems = invProductDetailRes.FirstOrDefault(j => j.ProductId == stock.Id);
-                var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
-
+                var newItems = purchDetailsRes.FirstOrDefault(j => j.ProductId == stock.Id);
+                var oldItems = purchDetails.FirstOrDefault(j => j.ProductId == stock.Id);
 
                   newInvItems.Add(newItems.ProductId);
 
-                if (oldItems == null) //only new
+                if (newItems.Id == null ) //only new
                 {
                     stock.Quantity += newItems.Quantity;
-                    stock.Price = (newItems.Price * newItems.Quantity + amount) / stock.Quantity;
+                    stock.Price = (newItems.Price * newItems.Quantity + stock.TotalValue) / stock.Quantity;
                 }
                 else
                 {
 
+
                     if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                     {
                         stock.Quantity -= oldItems.Quantity;
-                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
+                        stock.Price = (stock.TotalValue + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
                         stock.Quantity += newItems.Quantity;
 
                     }
                 }
             });
 
+         var deletedItems = invoice.InvDetail.Where( p => !newInvItems.Contains(p.Id));
 
-         var deletedItems = invoice.InvDetail.Where( i => !newInvItems.Contains(i.ProductId));
+         var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
 
-         var  deletedInvStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id)).ToList();
-
-         deletedInvStoreItem.ForEach(stock =>
+         deletedStoreItem.ForEach(stock =>
             {
                 var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
                //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
-                stock.Quantity += deletedInvItems.Quantity;
+                stock.Quantity -= deletedInvItems.Quantity;
 
          }
 

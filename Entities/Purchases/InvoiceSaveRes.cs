@@ -11,6 +11,7 @@ namespace ALBAB.Entities.Purchases
     public class InvoiceSaveRes
 
     {
+        [RequiredGreaterThanZero]
         public int? Id { get; set; }
         public string InvNo { get; set; }
         [Required]

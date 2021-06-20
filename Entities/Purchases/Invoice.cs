@@ -42,7 +42,7 @@ namespace ALBAB.Entities.Purchases
         [Column(TypeName = "decimal(5, 2)")]
 
         public decimal?  TotalAmount {
-            get { return InvDetail.Sum(v => v.Value);}
+            get { return InvDetail.Sum(v => v.TotalValue);}
              }
 
         public ICollection <InvDetail> InvDetail { get; set; }

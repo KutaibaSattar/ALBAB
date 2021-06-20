@@ -10,6 +10,7 @@ namespace ALBAB.Entities.AppAccounts
         Staff = 32,
         Vat = 33,
         Store = 34,
+        SellingGoods = 35,
 
 
 
