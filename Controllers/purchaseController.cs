@@ -130,7 +130,7 @@ namespace ALBAB.Controllers
              //var amount = s.TotalValue;
              var newItems = invProducts.FirstOrDefault(p => p.ProductId == s.Id);
 
-             s.Price = (newItems.Price * newItems.Quantity + s.TotalValue)/ (s.Quantity + newItems.Quantity);
+             s.Price = (newItems.Price * newItems.Quantity + (s.Price * s.Quantity))/ (s.Quantity + newItems.Quantity);
              s.Quantity +=  newItems.Quantity;
 
             });
@@ -181,8 +181,8 @@ namespace ALBAB.Controllers
 
        var  newInvStoreItem  = _context.products.Where(s => purchDetailsRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-       var newInvItems = new List<int?>();
-
+            List<InvDetail> newInvItems = new List<InvDetail>();
+            //var newInvItems = new List<int>();
             newInvStoreItem.ForEach(stock =>
             {
                 var qty = stock.Quantity;
@@ -191,12 +191,13 @@ namespace ALBAB.Controllers
                 var newItems = purchDetailsRes.FirstOrDefault(j => j.ProductId == stock.Id);
                 var oldItems = purchDetails.FirstOrDefault(j => j.ProductId == stock.Id);
 
-                  newInvItems.Add(newItems.ProductId);
+                newInvItems.Add(oldItems);
 
                 if (newItems.Id == null ) //only new
                 {
+
+                    stock.Price = (newItems.Price * newItems.Quantity + (stock.Price * stock.Quantity)) / stock.Quantity;
                     stock.Quantity += newItems.Quantity;
-                    stock.Price = (newItems.Price * newItems.Quantity + stock.TotalValue) / stock.Quantity;
                 }
                 else
                 {
@@ -204,28 +205,49 @@ namespace ALBAB.Controllers
 
                     if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                     {
-                        stock.Quantity -= oldItems.Quantity;
-                        stock.Price = (stock.TotalValue + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
+
+                       //step one: pull
+
+                       if( stock.Quantity != oldItems.Quantity){
+
+                       stock.Price = (stock.Price * stock.Quantity -oldItems.TotalValue) / (stock.Quantity - oldItems.Quantity);
+                       stock.Quantity -= oldItems.Quantity;
+                       }
+                      else
+                       stock.Price  = stock.Quantity = 0;
+
+                       //step two: push
+                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
                         stock.Quantity += newItems.Quantity;
 
                     }
                 }
             });
 
-         var deletedItems = invoice.InvDetail.Where( p => !newInvItems.Contains(p.Id));
+
+
+         //var deletedItems1 = invoice.InvDetail.Where(s => !newInvItems.Select( p => p.ProductId).Contains(s.ProductId)).ToList();
+         var deletedItems = invoice.InvDetail.Where( id => !newInvItems.Contains(id));
+
 
          var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
 
          deletedStoreItem.ForEach(stock =>
             {
-                var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+                var deletedInvItems = deletedItems.FirstOrDefault(p => p.ProductId == stock.Id);
                //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+
+                if(stock.Quantity!= deletedInvItems.Quantity)
+                {
+                stock.Price = ((stock.Price * stock.Quantity) - deletedInvItems.TotalValue)/(stock.Quantity-deletedInvItems.Quantity) ;
                 stock.Quantity -= deletedInvItems.Quantity;
+                }
+                else
+                stock.Quantity = stock.Price = 0;
 
          }
 
             );
-
 
 
         _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
@@ -243,9 +265,8 @@ namespace ALBAB.Controllers
 
         var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
-
-        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+        NewJournal.journalAccounts.Add(new JournalAccount(z, invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+        NewJournal.journalAccounts.Add(new JournalAccount(z,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
 
         //NewJournal.journalAccounts.da = journal.Id
 

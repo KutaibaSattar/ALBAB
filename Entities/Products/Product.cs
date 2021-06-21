@@ -20,11 +20,11 @@ namespace ALBAB.Entities.Products
          public ICollection<InvDetail> PurchDTLs {get;set;}
         public DateTime LastUpdate { get; set; }
 
-        [NotMapped]
-        public decimal TotalValue
-        {
-            get { return Quantity * Price; }
-        }
+        //[NotMapped]
+        // public decimal TotalValue
+        // {
+        //     get { return Quantity * Price; }
+        // }
 
 
 

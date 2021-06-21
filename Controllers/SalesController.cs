@@ -154,7 +154,7 @@ namespace ALBAB.Controllers
                 if (oldItems == null) //only new
                 {
                     stock.Quantity += newItems.Quantity;
-                    stock.Price = (newItems.Price * newItems.Quantity + stock.TotalValue) / stock.Quantity;
+                    stock.Price = (newItems.Price * newItems.Quantity + (stock.Price * stock.Quantity)) / stock.Quantity;
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace ALBAB.Controllers
                     if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                     {
                         stock.Quantity -= oldItems.Quantity;
-                        stock.Price = (stock.TotalValue + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
+                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
                         stock.Quantity += newItems.Quantity;
 
                     }

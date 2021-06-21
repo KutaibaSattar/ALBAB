@@ -10,8 +10,20 @@ namespace ALBAB.Entities.Journal
         {
         }
 
-        public JournalAccount( DateTime created, DateTime dueDate, int? appUserId, int accountId, decimal? credit,decimal? debit)
+        public JournalAccount(DateTime created, DateTime dueDate, int? appUserId, int accountId, decimal? credit,decimal? debit)
         {
+           this.Id = Id;
+            this.Created = created;
+            this.DueDate = dueDate;
+            this.AppUserId = appUserId;
+            this.AccountId = accountId;
+            this.Credit = credit;
+            this.Debit = debit;
+
+        }
+        public JournalAccount(int Id, DateTime created, DateTime dueDate, int? appUserId, int accountId, decimal? credit,decimal? debit)
+        {
+           this.Id = Id;
             this.Created = created;
             this.DueDate = dueDate;
             this.AppUserId = appUserId;
