@@ -265,8 +265,8 @@ namespace ALBAB.Controllers
 
         var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
-        NewJournal.journalAccounts.Add(new JournalAccount(z, invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-        NewJournal.journalAccounts.Add(new JournalAccount(z,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+        NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( c => c.Credit > 0).Id, invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+        NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( d => d.Debit > 0).Id,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
 
         //NewJournal.journalAccounts.da = journal.Id
 
