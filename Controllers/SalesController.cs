@@ -62,8 +62,7 @@ namespace ALBAB.Controllers
 
           var  store  = _context.products.Where(s => invSales.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-         decimal totalCoast = 0;
-
+         decimal stockCost = 0;
 
 
           store.ForEach( stock => {
@@ -71,7 +70,7 @@ namespace ALBAB.Controllers
             decimal newItemQty = invRes.invDetails.FirstOrDefault(i => i.ProductId == stock.Id).Quantity;
 
            if(newItemQty !=0){
-            totalCoast += stock.Price * newItemQty ;
+            stockCost += stock.Price * newItemQty ;
             stock.Quantity -=  newItemQty;
            }
 
@@ -84,19 +83,18 @@ namespace ALBAB.Controllers
 
           var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
+          if(stockCost >0)
           journal.journalAccounts.Add(new JournalAccount
-          (invoice.Date,invoice.Date,null,(int)AccountType.Store,totalCoast,null)); // Store Credit
+          (invoice.Date,invoice.Date,null,invoice.ActionAcctId,stockCost,null)); // Store Credit
 
            journal.journalAccounts.Add(new JournalAccount
            (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
 
 
-          if(invoice.TotalAmount-totalCoast>0)
+          if(invoice.TotalAmount != stockCost )
            journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount-totalCoast,null)); // Sales profit
-          else
-             journal.journalAccounts.Add(new JournalAccount
-             (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,null,totalCoast-invoice.TotalAmount)); // Sales loss
+           (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount-stockCost,null)); // Sales profit Credit
+
 
 
 
@@ -136,9 +134,9 @@ namespace ALBAB.Controllers
 
        var  newInvStoreItem  = _context.products.Where(s => salesDetailsRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-       var newInvItems = new List<int?>();
+       List<InvDetail> newInvItems = new List<InvDetail>();
 
-
+            decimal stockCost = 0;
 
             newInvStoreItem.ForEach(stock =>
             {
@@ -149,12 +147,13 @@ namespace ALBAB.Controllers
                 var oldItems = salesDetails.FirstOrDefault(s => s.ProductId == stock.Id);
 
 
-                  newInvItems.Add(newItems.ProductId);
+                  newInvItems.Add(oldItems);
 
                 if (oldItems == null) //only new
                 {
-                    stock.Quantity += newItems.Quantity;
-                    stock.Price = (newItems.Price * newItems.Quantity + (stock.Price * stock.Quantity)) / stock.Quantity;
+                    stock.Quantity -= newItems.Quantity;
+                    stockCost += stock.Price * newItems.Quantity ;
+
                 }
                 else
                 {
@@ -170,7 +169,7 @@ namespace ALBAB.Controllers
             });
 
 
-         var deletedItems = invoice.InvDetail.Where( p => !newInvItems.Contains(p.Id));
+          var deletedItems = invoice.InvDetail.Where( id => !newInvItems.Contains(id));
 
          var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
 
@@ -202,8 +201,18 @@ namespace ALBAB.Controllers
         var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
 
-        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-        NewJournal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+         if(stockCost >0)
+          journal.journalAccounts.Add(new JournalAccount
+          (invoice.Date,invoice.Date,null,invoice.ActionAcctId,stockCost,null)); // Store Credit
+
+           journal.journalAccounts.Add(new JournalAccount
+           (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
+
+
+          if(invoice.TotalAmount != stockCost )
+           journal.journalAccounts.Add(new JournalAccount
+           (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount-stockCost,null)); // Sales profit Credit
+
 
         //NewJournal.journalAccounts.da = journal.Id
 
