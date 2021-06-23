@@ -119,7 +119,6 @@ namespace ALBAB.Controllers
  */
 
 
-
             var  store  = _context.products.Where(s => invProducts.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
            // var join3 = _context.products.Join( product, ps => ps.Id, p => p.Id, (ps,p) => new {ps.Id,ps.Quantity, p.Total}).ToList();
@@ -132,6 +131,7 @@ namespace ALBAB.Controllers
 
              s.Price = (newItems.Price * newItems.Quantity + (s.Price * s.Quantity))/ (s.Quantity + newItems.Quantity);
              s.Quantity +=  newItems.Quantity;
+             invoice.InvDetail.Where( p => p.ProductId == s.Id).First().Cost = s.Price;
 
             });
 
@@ -173,7 +173,15 @@ namespace ALBAB.Controllers
               return BadRequest("Item sholud not be dublicated");
 
 
+
+
+
         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
+
+        var updatedItems =  invoice.InvDetail.Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
+
+       if (updatedItems.Count == 0)
+           return BadRequest("Old item sholud be deleted instead of replacing");
 
 
        var  purchDetailsRes  = invRes.invDetails ;
@@ -198,6 +206,7 @@ namespace ALBAB.Controllers
 
                     stock.Price = (newItems.Price * newItems.Quantity + (stock.Price * stock.Quantity)) / stock.Quantity;
                     stock.Quantity += newItems.Quantity;
+                    invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
                 }
                 else
                 {
@@ -206,19 +215,25 @@ namespace ALBAB.Controllers
                     if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                     {
 
+
                        //step one: pull
 
                        if( stock.Quantity != oldItems.Quantity){
 
                        stock.Price = (stock.Price * stock.Quantity -oldItems.TotalValue) / (stock.Quantity - oldItems.Quantity);
                        stock.Quantity -= oldItems.Quantity;
+                       invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
                        }
-                      else
+                      else{
+
                        stock.Price  = stock.Quantity = 0;
+                       invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = 0;
+                      }
 
                        //step two: push
                         stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
                         stock.Quantity += newItems.Quantity;
+                        invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price = stock.Price;
 
                     }
                 }
@@ -241,9 +256,12 @@ namespace ALBAB.Controllers
                 {
                 stock.Price = ((stock.Price * stock.Quantity) - deletedInvItems.TotalValue)/(stock.Quantity-deletedInvItems.Quantity) ;
                 stock.Quantity -= deletedInvItems.Quantity;
+                invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
                 }
-                else
+                else{
                 stock.Quantity = stock.Price = 0;
+                invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = 0;
+                }
 
          }
 

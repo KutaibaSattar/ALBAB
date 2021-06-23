@@ -125,7 +125,10 @@ namespace ALBAB.Controllers
 
        var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
+       var updatedItems =  invoice.InvDetail.Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
 
+       if (updatedItems.Count == 0)
+           return BadRequest("Old item sholud be deleted instead of replacing");
 
         var  salesDetailsRes  = invRes.invDetails ;
 
@@ -134,7 +137,7 @@ namespace ALBAB.Controllers
 
        var  newInvStoreItem  = _context.products.Where(s => salesDetailsRes.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-       List<InvDetail> newInvItems = new List<InvDetail>();
+            var newInvItems = new List<int?>();
 
             decimal stockCost = 0;
 
@@ -147,42 +150,42 @@ namespace ALBAB.Controllers
                 var oldItems = salesDetails.FirstOrDefault(s => s.ProductId == stock.Id);
 
 
-                  newInvItems.Add(oldItems);
 
-                if (oldItems == null) //only new
+                  newInvItems.Add(newItems.ProductId);
+
+                if (newItems.Id == null) //only new
                 {
                     stock.Quantity -= newItems.Quantity;
-                    stockCost += stock.Price * newItems.Quantity ;
-
+                    stockCost += stock.Price * newItems.Quantity;
                 }
-                else
+
+               // same item
+                else if ( oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
                 {
-
-                    if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
-                    {
-                        stock.Quantity -= oldItems.Quantity;
-                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
-                        stock.Quantity += newItems.Quantity;
-
-                    }
+                    stock.Quantity += oldItems.Quantity;
+                    stock.Quantity -= newItems.Quantity;
                 }
+
             });
 
 
-          var deletedItems = invoice.InvDetail.Where( id => !newInvItems.Contains(id));
+        var deletedItems = invoice.InvDetail.Where( id => !newInvItems.Contains(id.ProductId)).ToList();
 
-         var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
+       if (deletedItems.Count > 0) {
 
-         deletedStoreItem.ForEach(stock =>
-            {
-                var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
-               //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+                var deletedStoreItem = _context.products.Where(s => deletedItems.Select(p => p.ProductId).Contains(s.Id)).ToList();
+
+                deletedStoreItem.ForEach(stock =>
+                   {
+                       var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+                //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
                 stock.Quantity += deletedInvItems.Quantity;
 
-         }
+                   }
 
-            );
+                   );
 
+       }
 
 
         _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
@@ -201,9 +204,10 @@ namespace ALBAB.Controllers
         var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
 
-         if(stockCost >0)
+         if(stockCost >0){}
           journal.journalAccounts.Add(new JournalAccount
           (invoice.Date,invoice.Date,null,invoice.ActionAcctId,stockCost,null)); // Store Credit
+
 
            journal.journalAccounts.Add(new JournalAccount
            (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit

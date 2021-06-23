@@ -414,6 +414,7 @@ namespace ALBaB.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     quantity = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    cost = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     invoiceid = table.Column<int>(type: "int", nullable: false),
                     productid = table.Column<int>(type: "int", nullable: true),

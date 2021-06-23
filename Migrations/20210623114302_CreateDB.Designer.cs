@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210620072921_CreateDB")]
+    [Migration("20210623114302_CreateDB")]
     partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -481,6 +481,10 @@ namespace ALBaB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("cost");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")

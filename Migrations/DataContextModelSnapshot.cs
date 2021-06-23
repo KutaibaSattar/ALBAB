@@ -480,6 +480,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("cost");
+
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
