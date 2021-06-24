@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Data.Common;
 using System.Text.RegularExpressions;
 using System.Security.AccessControl;
@@ -128,7 +129,6 @@ namespace ALBAB.Controllers
             var qty = s.Quantity;
              //var amount = s.TotalValue;
              var newItems = invProducts.FirstOrDefault(p => p.ProductId == s.Id);
-
              s.Price = (newItems.Price * newItems.Quantity + (s.Price * s.Quantity))/ (s.Quantity + newItems.Quantity);
              s.Quantity +=  newItems.Quantity;
              invoice.InvDetail.Where( p => p.ProductId == s.Id).First().Cost = s.Price;
@@ -176,12 +176,24 @@ namespace ALBAB.Controllers
 
 
 
-        var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
+         var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-        var updatedItems =  invoice.InvDetail.Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
+      //   var updatedItems =  invoice.InvDetail.Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
 
-       if (updatedItems.Count == 0)
-           return BadRequest("Old item sholud be deleted instead of replacing");
+      //  if ( invRes.invDetails.Count !=  updatedItems.Count)
+      //      return BadRequest("Old item sholud be deleted instead of replacing");
+
+      foreach (var item in invoice.InvDetail)
+        {
+            if (item.Id > 0 & item.ProductId != null){
+
+                if (invRes.invDetails.FirstOrDefault(p => p.Id == item.Id & p.ProductId == item.ProductId) == null)
+                     return BadRequest("Old item sholud be deleted instead of replacing");
+
+            }
+
+
+        }
 
 
        var  purchDetailsRes  = invRes.invDetails ;
@@ -196,32 +208,32 @@ namespace ALBAB.Controllers
                 var qty = stock.Quantity;
                 //var amount = stock.Quantity * stock.Price;
 
-                var newItems = purchDetailsRes.FirstOrDefault(j => j.ProductId == stock.Id);
-                var oldItems = purchDetails.FirstOrDefault(j => j.ProductId == stock.Id);
+                var newItem = purchDetailsRes.FirstOrDefault(j => j.ProductId == stock.Id);
+                var oldItem = purchDetails.FirstOrDefault(j => j.ProductId == stock.Id);
 
-                newInvItems.Add(oldItems);
+                newInvItems.Add(oldItem);
 
-                if (newItems.Id == null ) //only new
+                if (newItem.Id == null ) //only new
                 {
 
-                    stock.Price = (newItems.Price * newItems.Quantity + (stock.Price * stock.Quantity)) / stock.Quantity;
-                    stock.Quantity += newItems.Quantity;
-                    invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
+                    stock.Price = (newItem.Price * newItem.Quantity + (stock.Price * stock.Quantity)) / (stock.Quantity + newItem.Quantity);
+                    stock.Quantity += newItem.Quantity;
+                    invRes.invDetails.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
                 }
                 else
                 {
 
 
-                    if (oldItems.Quantity != newItems.Quantity || oldItems.Price != newItems.Price)
+                    if (oldItem.Quantity != newItem.Quantity || oldItem.Price != newItem.Price)
                     {
 
 
                        //step one: pull
 
-                       if( stock.Quantity != oldItems.Quantity){
+                       if( stock.Quantity != oldItem.Quantity){
 
-                       stock.Price = (stock.Price * stock.Quantity -oldItems.TotalValue) / (stock.Quantity - oldItems.Quantity);
-                       stock.Quantity -= oldItems.Quantity;
+                       stock.Price = (stock.Price * stock.Quantity -oldItem.TotalValue) / (stock.Quantity - oldItem.Quantity);
+                       stock.Quantity -= oldItem.Quantity;
                        invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
                        }
                       else{
@@ -231,8 +243,8 @@ namespace ALBAB.Controllers
                       }
 
                        //step two: push
-                        stock.Price = ((stock.Price * stock.Quantity) + (newItems.Price * newItems.Quantity)) / (stock.Quantity+ newItems.Quantity);
-                        stock.Quantity += newItems.Quantity;
+                        stock.Price = ((stock.Price * stock.Quantity) + (newItem.Price * newItem.Quantity)) / (stock.Quantity+ newItem.Quantity);
+                        stock.Quantity += newItem.Quantity;
                         invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price = stock.Price;
 
                     }
@@ -281,15 +293,48 @@ namespace ALBAB.Controllers
 
         var journal = _context.journals.Include( ja => ja.journalAccounts).FirstOrDefault( j => j.JENo.Equals(invRes.InvNo) & j.Type.Equals(invRes.Type));
 
-        var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
+        // var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
-        NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( c => c.Credit > 0).Id, invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
-        NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( d => d.Debit > 0).Id,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+        // NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( c => c.Credit > 0).Id, invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+        // NewJournal.journalAccounts.Add(new JournalAccount(journal.journalAccounts.FirstOrDefault( d => d.Debit > 0).Id,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
+
+
+        if(journal.JENo != invoice.InvNo) journal.JENo = invoice.InvNo;
+        if(journal.Note != invoice.Comment) journal.Note = invoice.Comment;
+        if(journal.EntryDate != invoice.Date) journal.EntryDate = invoice.Date;
+
+         var entry =  journal.journalAccounts.ToList();
+
+         entry.ForEach( E =>
+
+         {
+            //aaaa
+           if (E.Credit > 0){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+             if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+             if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
+             if (E.Credit != invoice.TotalAmount) E.Credit= invoice.TotalAmount;
+           }
+           if (E.Debit > 0){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+             //if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+             if (E.AccountId != invoice.ActionAcctId) E.AccountId= invoice.ActionAcctId;
+             if (E.Debit != invoice.TotalAmount) E.Debit= invoice.TotalAmount;
+           }
+
+         }
+
+
+         );
 
         //NewJournal.journalAccounts.da = journal.Id
 
 
-           _mapper.Map<JournalEntry,JournalEntry>(NewJournal,journal);
+        // _mapper.Map<JournalEntry,JournalEntry>(NewJournal,journal);
 
 
           await _context.SaveChangesAsync();
@@ -304,6 +349,33 @@ namespace ALBAB.Controllers
          public async Task<ActionResult> deleteInv(int id)
          {
            var invoice = await _context.Invoices.FindAsync(id);
+
+           var deletedInv = invoice.InvDeta;
+
+
+         var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
+
+         deletedStoreItem.ForEach(stock =>
+            {
+                var deletedInvItems = deletedItems.FirstOrDefault(p => p.ProductId == stock.Id);
+               //var oldItems = invProductDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+
+                if(stock.Quantity!= deletedInvItems.Quantity)
+                {
+                stock.Price = ((stock.Price * stock.Quantity) - deletedInvItems.TotalValue)/(stock.Quantity-deletedInvItems.Quantity) ;
+                stock.Quantity -= deletedInvItems.Quantity;
+                invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
+                }
+                else{
+                stock.Quantity = stock.Price = 0;
+                invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = 0;
+                }
+
+         }
+
+            );
+
+           var journal = await _context.journals.Where( j =)
 
            if (invoice == null)
               return BadRequest("No invoice found");

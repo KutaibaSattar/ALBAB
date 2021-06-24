@@ -75,23 +75,6 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.journalAccounts , opt => opt.Ignore())
             .AfterMap((jer, je) => AfterMapJournal(jer, je));
 
-            CreateMap<JournalEntry,JournalEntry>()
-            .ForMember(dst => dst.Id, opt => opt.Ignore());
-            // .BeforeMap((dst, src) =>{
-            //     foreach (var item in src.journalAccounts)
-            //     {
-            //         foreach (var item2 in dst.journalAccounts)
-            //         {
-            //                 item.Id = item2.Id;
-            //         }
-            //     }
-
-            // });
-
-
-
-
-
 
             CreateMap<JournalAccount, JournalAccountRes>();
             CreateMap<JournalAccountRes, JournalAccount>();
@@ -126,6 +109,8 @@ namespace ALBAB.Entities
                         Quantity = pdd.Quantity,
                         ProductId = pdd.ProductId,
                         LastUpdate = DateTime.Now,
+                        Cost = pdd.Cost,
+                        Description = pdd.Description,
                     }
                      );
                 }
@@ -137,6 +122,8 @@ namespace ALBAB.Entities
                         if (pd.Price != pdd.Price) pd.Price = pdd.Price;
                         if (pd.Quantity != pdd.Quantity) pd.Quantity = pdd.Quantity;
                         if (pd.ProductId != pdd.ProductId) pd.ProductId = pdd.ProductId;
+                        if (pd.Description != pdd.Description) pd.Description = pdd.Description;
+
                     }
 
                 }

@@ -44,6 +44,9 @@ namespace ALBAB.Entities.Purchases
         public decimal?  TotalAmount {
             get { return InvDetail.Sum(v => v.TotalValue);}
              }
+        public decimal?  InvCost {
+            get { return InvDetail.Sum(v => (v.Quantity * v.Cost));}
+        }
 
         public ICollection <InvDetail> InvDetail { get; set; }
          public Invoice()

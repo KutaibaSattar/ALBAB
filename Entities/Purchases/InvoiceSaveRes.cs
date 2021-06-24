@@ -21,25 +21,31 @@ namespace ALBAB.Entities.Purchases
         public int? AppUserId { get; set; }
 
 
-        private int? _acctionAccont = (int)AccountType.CostGoodsSold ;
-        [Required]
-        public int? ActionAcctId { // if 0 then set null and update accountId in JournalAccount entity
+        // private int? _acctionAccont = (int)AccountType.CostGoodsSold ;
+        // [Required]
+        // public int? ActionAcctId { // if 0 then set null and update accountId in JournalAccount entity
 
-              get => _acctionAccont;
-              set => _acctionAccont = (value ==0 || value==null ) ? _acctionAccont : value ;
-             }
+        //       get => _acctionAccont;
+        //       set => _acctionAccont = (value ==0 || value==null ) ? _acctionAccont : value ;
+        //      }
 
         //public int? DebitAccountId {get;set;}  = (int)AccountType.CostGoodsSold;
+
+        public int? ActionAcctId { get; set; }
         public decimal?  Discount { get; set; }
 
-        private int? _vatAccount = (int)AccountType.Vat ;
+        // private int? _vatAccount = (int)AccountType.Vat ;
 
-        public int? VatAcctId { // if 0 then set null and update accountId in JournalAccount entity
 
-              get => _vatAccount;
-              set => _vatAccount = (value ==0 || value==null ) ? _vatAccount : value ;
-             }
+
+        // public int? VatAcctId { // if 0 then set null and update accountId in JournalAccount entity
+
+        //       get => _vatAccount;
+        //       set => _vatAccount = (value ==0 || value==null ) ? _vatAccount : value ;
+        //      }
         //public int? VatAccountId  {get;set;} = (int)AccountType.Vat;
+
+       public int? VatAcctId { get; set; }
         public decimal?  Vat { get; set; }
         public decimal?  TotalAmount { get; set; }
         public int AccountId{ get; set; }

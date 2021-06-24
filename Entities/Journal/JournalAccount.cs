@@ -21,17 +21,17 @@ namespace ALBAB.Entities.Journal
             this.Debit = debit;
 
         }
-        public JournalAccount(int Id, DateTime created, DateTime dueDate, int? appUserId, int accountId, decimal? credit,decimal? debit)
-        {
-           this.Id = Id;
-            this.Created = created;
-            this.DueDate = dueDate;
-            this.AppUserId = appUserId;
-            this.AccountId = accountId;
-            this.Credit = credit;
-            this.Debit = debit;
+        // public JournalAccount(int Id, DateTime created, DateTime dueDate, int? appUserId, int accountId, decimal? credit,decimal? debit)
+        // {
+        //    this.Id = Id;
+        //     this.Created = created;
+        //     this.DueDate = dueDate;
+        //     this.AppUserId = appUserId;
+        //     this.AccountId = accountId;
+        //     this.Credit = credit;
+        //     this.Debit = debit;
 
-        }
+        // }
 
         public int Id { get; set; }
         public JournalEntry Journal { get; set; }

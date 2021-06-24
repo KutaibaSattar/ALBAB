@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace ALBAB.Controllers
 
           var  store  = _context.products.Where(s => invSales.Select( p => p.ProductId).Contains(s.Id)).ToList();
 
-         decimal stockCost = 0;
+        // decimal stockCost = 0;
 
 
           store.ForEach( stock => {
@@ -70,8 +71,9 @@ namespace ALBAB.Controllers
             decimal newItemQty = invRes.invDetails.FirstOrDefault(i => i.ProductId == stock.Id).Quantity;
 
            if(newItemQty !=0){
-            stockCost += stock.Price * newItemQty ;
+            //stockCost += stock.Price * newItemQty ;
             stock.Quantity -=  newItemQty;
+            invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
            }
 
 
@@ -83,18 +85,20 @@ namespace ALBAB.Controllers
 
           var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
-          if(stockCost >0)
+         if(invoice.InvCost >0){
+
           journal.journalAccounts.Add(new JournalAccount
-          (invoice.Date,invoice.Date,null,invoice.ActionAcctId,stockCost,null)); // Store Credit
+          (invoice.Date,invoice.Date,null,(int)AccountType.Store,invoice.InvCost,null)); // Store Credit
+            journal.journalAccounts.Add(new JournalAccount
+          (invoice.Date,invoice.Date,null,(int)AccountType.CostGoodsSold,null,invoice.InvCost)); // Store Debit
+
+         }
 
            journal.journalAccounts.Add(new JournalAccount
+           (invoice.Date,invoice.Date,null,invoice.ActionAcctId,invoice.TotalAmount,null)); // Sales profit Credit
+
+             journal.journalAccounts.Add(new JournalAccount
            (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
-
-
-          if(invoice.TotalAmount != stockCost )
-           journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount-stockCost,null)); // Sales profit Credit
-
 
 
 
@@ -105,17 +109,18 @@ namespace ALBAB.Controllers
 
          await _context.SaveChangesAsync();
          var result = _mapper.Map<InvoiceSaveRes>(invoice);
-          return  Ok(result);
+        return  Ok(result);
 
          }
 
         [HttpPut] // api/sales
          public async  Task<ActionResult<InvoiceSaveRes>> updateInvoice(InvoiceSaveRes invRes)
          {
+
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var rowCount =  invRes.invDetails.GroupBy( p => p.ProductId)
+        var rowCount =  invRes.invDetails.Where(p => p.ProductId != null).GroupBy( p => p.ProductId)
         .Select( g => new {count = g.Count()}).FirstOrDefault(c => c.count > 1);
 
 
@@ -125,10 +130,24 @@ namespace ALBAB.Controllers
 
        var invoice = await _context.Invoices.Include(pd => pd.InvDetail).SingleOrDefaultAsync(p => p.Id == invRes.Id);
 
-       var updatedItems =  invoice.InvDetail.Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
 
-       if (updatedItems.Count == 0)
-           return BadRequest("Old item sholud be deleted instead of replacing");
+        foreach (var item in invoice.InvDetail)
+        {
+            if (item.Id > 0 & item.ProductId != null){
+
+                if (invRes.invDetails.FirstOrDefault(p => p.Id == item.Id & p.ProductId == item.ProductId) == null)
+                     return BadRequest("Old item sholud be deleted instead of replacing");
+
+            }
+
+
+        }
+
+    //    var updatedItems =  invoice.InvDetail
+    //     .Where(invres => invRes.invDetails.Any(productRes => productRes.ProductId == invres.ProductId ) && invres.Id > 0).ToList();
+
+    //    if (invRes.invDetails.Where( p => p.ProductId != null).Count() !=  updatedItems.Count)
+    //        return BadRequest("Old item sholud be deleted instead of replacing");
 
         var  salesDetailsRes  = invRes.invDetails ;
 
@@ -139,7 +158,7 @@ namespace ALBAB.Controllers
 
             var newInvItems = new List<int?>();
 
-            decimal stockCost = 0;
+
 
             newInvStoreItem.ForEach(stock =>
             {
@@ -156,7 +175,7 @@ namespace ALBAB.Controllers
                 if (newItems.Id == null) //only new
                 {
                     stock.Quantity -= newItems.Quantity;
-                    stockCost += stock.Price * newItems.Quantity;
+
                 }
 
                // same item
@@ -199,29 +218,77 @@ namespace ALBAB.Controllers
         });
 
 
+
         var journal = _context.journals.Include( ja => ja.journalAccounts).FirstOrDefault( j => j.JENo.Equals(invRes.InvNo) & j.Type.Equals(invRes.Type));
 
-        var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
+        //var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
 
 
-         if(stockCost >0){}
-          journal.journalAccounts.Add(new JournalAccount
-          (invoice.Date,invoice.Date,null,invoice.ActionAcctId,stockCost,null)); // Store Credit
+        //  if(invoice.InvCost >0){
 
+        //   journal.journalAccounts.Add(new JournalAccount
+        //   (journal.journalAccounts.FirstOrDefault( c => c.Credit > 0 ).Id,invoice.Date,invoice.Date,null,(int)AccountType.Store,invoice.InvCost,null)); // Store Credit
+        //     journal.journalAccounts.Add(new JournalAccount
+        //   (journal.journalAccounts.FirstOrDefault( c => c.Debit > 0).Id,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.InvCost)); // Store Debit
 
-           journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
+        //  }
 
+        //    journal.journalAccounts.Add(new JournalAccount
+        //    (journal.journalAccounts.LastOrDefault( c => c.Credit > 0 ).Id,invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount,null)); // Sales profit Credit
 
-          if(invoice.TotalAmount != stockCost )
-           journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount-stockCost,null)); // Sales profit Credit
+        //    journal.journalAccounts.Add(new JournalAccount
+        //    (journal.journalAccounts.LastOrDefault( c => c.Debit > 0 ).Id,invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
+
+        if(journal.JENo != invoice.InvNo) journal.JENo = invoice.InvNo;
+        if(journal.Note != invoice.Comment) journal.Note = invoice.Comment;
+        if(journal.EntryDate != invoice.Date) journal.EntryDate = invoice.Date;
+
+         var entry =  journal.journalAccounts.ToList();
+
+         entry.ForEach( E =>
+
+         {
+            //aaaa
+           if (E.Credit > 0 & E.AccountId == (int)AccountType.Store){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+            //  if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+            //  if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
+             if (E.Credit != invoice.InvCost) E.Credit= invoice.InvCost;
+           }
+           else if (E.Debit > 0 & E.AccountId == (int)AccountType.CostGoodsSold){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+             //if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+             //if (E.AccountId != invoice.ActionAcctId) E.AccountId= invoice.ActionAcctId;
+             if (E.Debit != invoice.InvCost) E.Debit= invoice.InvCost;
+           }
+           else if (E.Credit > 0 & E.AccountId != (int)AccountType.Store){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+            //  if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+            //  if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
+             if (E.Credit != invoice.TotalAmount) E.Credit= invoice.TotalAmount;
+           }
+           else if (E.Debit > 0 & E.AccountId != (int)AccountType.CostGoodsSold){
+
+             if (E.Created != invoice.Date) E.Created = invoice.Date;
+             if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
+             //if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+             //if (E.AccountId != invoice.ActionAcctId) E.AccountId= invoice.ActionAcctId;
+             if (E.Debit != invoice.TotalAmount) E.Debit= invoice.TotalAmount;
+           }
+
+         });
 
 
         //NewJournal.journalAccounts.da = journal.Id
 
 
-           _mapper.Map<JournalEntry,JournalEntry>(NewJournal,journal);
+           //_mapper.Map<JournalEntry,JournalEntry>(NewJournal,journal);
 
 
           await _context.SaveChangesAsync();
