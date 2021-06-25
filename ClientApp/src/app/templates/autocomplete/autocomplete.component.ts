@@ -17,7 +17,7 @@ export class AutocompleteComponent  {
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl
   @Input() listsFilter : any []
-  
+
 
 
   constructor() { }
@@ -43,7 +43,7 @@ export class AutocompleteComponent  {
         // If the user selects an option, the value becomes a Human object,
         // therefore we need to reset the val for the filter because an
         // object cannot be used in this toLowerCase filter
-        let x = typeof val;
+        //let x = typeof val;
         if (typeof val === 'string') {
           const TempString = item.name + ' - ' + item.keyId;
           return TempString.toLowerCase().includes(val.toLowerCase());

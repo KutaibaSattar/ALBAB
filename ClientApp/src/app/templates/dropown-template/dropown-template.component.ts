@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/core';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
@@ -14,7 +16,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./dropown-template.component.scss']
 })
 export class DropownTemplateComponent implements OnInit {
-
+  @ViewChild( 'typehead', {read:MatAutocompleteTrigger})  autoTrigger: MatAutocompleteTrigger;
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
@@ -43,6 +45,8 @@ export class DropownTemplateComponent implements OnInit {
            returnObj[mapping[2]] = obj.keyId;
             return returnObj;
            })
+
+           this.attachedFilter();
        this.showing = true;
        })
      ).subscribe();
@@ -54,6 +58,7 @@ export class DropownTemplateComponent implements OnInit {
           if (res){
             this.listsFilter = res;
             this.showing = true;
+            this.attachedFilter();
           }
         }
        )
@@ -65,6 +70,7 @@ export class DropownTemplateComponent implements OnInit {
         if (res){
            this.listsFilter = res;
            this.showing = true;
+           this.attachedFilter();
         }
         }
 
@@ -78,7 +84,7 @@ export class DropownTemplateComponent implements OnInit {
       //   })
       // )
       // .subscribe();
-  this.attachedFilter();
+
 
   }
 
@@ -139,6 +145,19 @@ export class DropownTemplateComponent implements OnInit {
       this.filtered$ = x;
 
     })
+  }
+  onKeydown(event) {
+    if (event.keyCode === 9) {
+         event.stopPropagation();
+      }
+  }
+  onEnter(evt: any){
+    if (evt.source.selected) {
+    alert("hello ");
+    }
+  }
+  OnHumanSelected(option: MatOption) {
+    console.log(option.value);
   }
 
 }

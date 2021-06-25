@@ -130,7 +130,7 @@ namespace ALBAB.Entities
             }
 
         }
-        private static void AfterMapJournal(JournalEntryRes jer, JournalEntry je)
+        private static void AfterMapJournal(JournalEntryRes jer, Journal.JournalEntry je)
         {
 
             // removing deleting items

@@ -217,27 +217,8 @@ namespace ALBAB.Controllers
             E.Property("LastUpdate").CurrentValue = DateTime.Now;
         });
 
-
-
         var journal = _context.journals.Include( ja => ja.journalAccounts).FirstOrDefault( j => j.JENo.Equals(invRes.InvNo) & j.Type.Equals(invRes.Type));
-
-        //var NewJournal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
-
-
-        //  if(invoice.InvCost >0){
-
-        //   journal.journalAccounts.Add(new JournalAccount
-        //   (journal.journalAccounts.FirstOrDefault( c => c.Credit > 0 ).Id,invoice.Date,invoice.Date,null,(int)AccountType.Store,invoice.InvCost,null)); // Store Credit
-        //     journal.journalAccounts.Add(new JournalAccount
-        //   (journal.journalAccounts.FirstOrDefault( c => c.Debit > 0).Id,invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.InvCost)); // Store Debit
-
-        //  }
-
-        //    journal.journalAccounts.Add(new JournalAccount
-        //    (journal.journalAccounts.LastOrDefault( c => c.Credit > 0 ).Id,invoice.Date,invoice.Date,null,(int)AccountType.SellingGoods,invoice.TotalAmount,null)); // Sales profit Credit
-
-        //    journal.journalAccounts.Add(new JournalAccount
-        //    (journal.journalAccounts.LastOrDefault( c => c.Debit > 0 ).Id,invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
+  
 
         if(journal.JENo != invoice.InvNo) journal.JENo = invoice.InvNo;
         if(journal.Note != invoice.Comment) journal.Note = invoice.Comment;
@@ -296,6 +277,43 @@ namespace ALBAB.Controllers
           var result = _mapper.Map<Invoice,InvoiceSaveRes>(invoice);
 
           return  Ok(result);
+
+         }
+       
+       
+       
+       
+         [HttpDelete("{id}")]
+         public async Task<ActionResult> deleteInv(int id)
+         {
+         
+          var invoice = await _context.Invoices.Include(i => i.InvDetail).FirstOrDefaultAsync(inv => inv.Id == id);
+
+          if (invoice == null)
+              return BadRequest("No invoice found");   
+        
+
+        var deletedItems = invoice.InvDetail;
+
+
+            if (deletedItems.Count > 0)
+            {
+
+                var deletedStoreItem = _context.products.Where(s => deletedItems.Select(p => p.ProductId).Contains(s.Id)).ToList();
+                deletedStoreItem.ForEach(stock =>
+                   {
+                       var deletedInvItems = invoice.InvDetail.FirstOrDefault(j => j.ProductId == stock.Id);
+                       stock.Quantity += deletedInvItems.Quantity;
+                   }
+                   );
+            }
+
+            var journal = await _context.journals.FirstOrDefaultAsync( j => j.JENo == invoice.InvNo & j.Type == JournalType.SALES);
+            
+            _context.Remove(invoice);
+           _context.Remove(journal);
+          await _context.SaveChangesAsync();
+          return Ok(id);
 
          }
     }

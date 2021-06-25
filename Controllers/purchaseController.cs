@@ -348,9 +348,12 @@ namespace ALBAB.Controllers
          [HttpDelete("{id}")]
          public async Task<ActionResult> deleteInv(int id)
          {
-           var invoice = await _context.Invoices.FindAsync(id);
+           var invoice = await _context.Invoices.Include(i => i.InvDetail).FirstOrDefaultAsync(inv => inv.Id == id);
 
-           var deletedInv = invoice.InvDeta;
+          if (invoice == null)
+              return BadRequest("No invoice found");   
+        
+        var deletedItems = invoice.InvDetail;
 
 
          var  deletedStoreItem  = _context.products.Where(s => deletedItems.Select( p => p.ProductId).Contains(s.Id) ).ToList();
@@ -375,12 +378,17 @@ namespace ALBAB.Controllers
 
             );
 
-           var journal = await _context.journals.Where( j =)
+            var journal = await _context.journals.FirstOrDefaultAsync( j => j.JENo == invoice.InvNo & j.Type == JournalType.PURCH);
+            
+            _context.Remove(invoice);
+           
+            _context.Remove(journal);
 
-           if (invoice == null)
-              return BadRequest("No invoice found");
+          // var journal = await _context.journals.Where( j =)
 
-             _context.Remove(invoice);
+         
+
+            
              await _context.SaveChangesAsync();
 
               return Ok(id);

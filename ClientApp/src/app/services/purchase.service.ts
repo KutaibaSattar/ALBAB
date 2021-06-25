@@ -13,7 +13,7 @@ export class PurchaseService extends DataService {
 
   constructor(private httpClient: HttpClient) {
 
-    super(environment.apiUrl + 'Invoices/', httpClient);
+    super(environment.apiUrl + 'purchase/', httpClient);
 
   }
 
