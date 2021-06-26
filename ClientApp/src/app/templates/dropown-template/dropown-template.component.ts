@@ -16,7 +16,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./dropown-template.component.scss']
 })
 export class DropownTemplateComponent implements OnInit {
-  @ViewChild( 'typehead', {read:MatAutocompleteTrigger})  autoTrigger: MatAutocompleteTrigger;
+
   filtered$: Observable<Array<any>>;
   @Input() controlName : FormControl;
   @Input() listsFilter : any [];
@@ -115,8 +115,8 @@ export class DropownTemplateComponent implements OnInit {
     }
   }
 
-  displayFn(item: any): string {
-    if ( item !== null && item.value !==null && this.listsFilter) {
+  displayFn(item: number): string {
+    if ( item >0 && this.listsFilter) {
       let IdName = this.listsFilter.find((element) => element.id === item).name;
       console.log('Name',IdName)
       return IdName;
@@ -145,19 +145,6 @@ export class DropownTemplateComponent implements OnInit {
       this.filtered$ = x;
 
     })
-  }
-  onKeydown(event) {
-    if (event.keyCode === 9) {
-         event.stopPropagation();
-      }
-  }
-  onEnter(evt: any){
-    if (evt.source.selected) {
-    alert("hello ");
-    }
-  }
-  OnHumanSelected(option: MatOption) {
-    console.log(option.value);
   }
 
 }

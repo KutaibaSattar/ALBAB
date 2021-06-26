@@ -21,6 +21,7 @@ export interface IInvDetail {
   purchId:number;
   quantity: number;
   price: number;
+  description: string;
   total: number;
   itemName: string;
 }

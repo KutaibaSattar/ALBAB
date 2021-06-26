@@ -48,7 +48,7 @@ export class PurchasesComponent implements OnInit {
   } */
 
   members : Member[];
-  txtSearchInv: string;
+  txtSearchInv: string ='';
   purchNos: invoice[];
   formInvoice: FormGroup;
   appUserId: FormControl;
@@ -137,7 +137,7 @@ export class PurchasesComponent implements OnInit {
 
   initializeForm() {
     this.formInvoice = this.formBuilder.group({
-      id: 0,
+      id: null,
       invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
       accountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
@@ -146,6 +146,7 @@ export class PurchasesComponent implements OnInit {
     });
 
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
+    this.accountId = this.formInvoice.get('accountId') as FormControl;
 
     this.appUserId.valueChanges.subscribe( value =>{
 
@@ -157,24 +158,17 @@ export class PurchasesComponent implements OnInit {
         this.accountId.enable({emitEvent:false});
 
     })
-    this.accountId = this.formInvoice.get('accountId') as FormControl;
-
-    this.accountId.valueChanges.subscribe( value =>{
-
-        if ( typeof value == 'number'){
-          if (!this.members.find(member => member.type == value)){
-
-            this.appUserId.setValue( null,{emitEvent:false})
-            this.appUserId.disable({emitEvent:false});
-          }
-          else
-          this.appUserId.enable({emitEvent:false});
 
 
+    this.accountId.valueChanges.subscribe((value) => {
+      if (typeof value == 'number') {
+        if (!this.members.find((member) => member.type == value)) {
+          this.appUserId.setValue( null,{emitEvent:false})
+          this.appUserId.disable({emitEvent:false});
+        }
+        else this.appUserId.enable({ emitEvent: false });
       }
-
-
-    })
+    });
 
 
     this.invNo = this.formInvoice.get('invNo') as FormControl;
@@ -187,8 +181,9 @@ export class PurchasesComponent implements OnInit {
 
   initSection(): FormGroup {
     return this.formBuilder.group({
-      id: 0,
-      productId: [null, [Validators.required,DropDownValidators.shouldLimited]],
+      id: null,
+      productId:[null, [DropDownValidators.shouldLimited]],// [null, [Validators.required,DropDownValidators.shouldLimited]],
+      description : null,
       price: [null, Validators.required],
       quantity: [null, Validators.required],
       unitTotalPrice: [{ value: '', disabled: true }],
@@ -272,8 +267,8 @@ export class PurchasesComponent implements OnInit {
 
 
   filterPurchase() : Observable<any> {
-    if (this.purchNos &&this.txtSearchInv)
-    return  of(this.purchNos.filter((purch) =>
+    //if (this.purchNos)
+    return  of(this.purchNos?.filter((purch) =>
       purch.invNo.toLowerCase().includes(this.txtSearchInv)
     ));
   }
@@ -282,10 +277,10 @@ export class PurchasesComponent implements OnInit {
 
 
   PurchNameFn(option): any {
-    if (this.purchNos) {
-      return this.purchNos.find((element) => element.id === option).invNo;
+    //(this.purchNos) {
+      return this.purchNos?.find((element) => element.id === option).invNo;
       //return this.purchNos.
-    }
+    //}
   }
 
   getPurch() {
@@ -337,6 +332,8 @@ export class PurchasesComponent implements OnInit {
 
     if (this.formInvoice.valid) {
       this.purchInv =  this.formInvoice.getRawValue();
+
+
       //this.purchInv.purchDtl = this.invDetail.value;
 
       this.purchaseService.UpdaePurchInv(this.purchInv).subscribe(() => {

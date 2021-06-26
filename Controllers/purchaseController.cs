@@ -43,11 +43,11 @@ namespace ALBAB.Controllers
 
          }
 
-          [HttpGet("invNos")]
+          [HttpGet("purchListNo")]
          public async Task<ActionResult> getInvNos()
          {
 
-          var listId = await  _context.Invoices.Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
+          var listId = await  _context.Invoices.Where(t => t.Type == JournalType.PURCH).Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
 
 
           return Ok(listId);
@@ -89,6 +89,10 @@ namespace ALBAB.Controllers
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+          invRes.Type = JournalType.PURCH;
+          invRes.VatAcctId = (int)AccountType.Vat;
+          invRes.ActionAcctId = (int)AccountType.Store;
 
           if (invRes.Type != JournalType.PURCH )
                 return BadRequest("Please check invoice type");
@@ -351,8 +355,8 @@ namespace ALBAB.Controllers
            var invoice = await _context.Invoices.Include(i => i.InvDetail).FirstOrDefaultAsync(inv => inv.Id == id);
 
           if (invoice == null)
-              return BadRequest("No invoice found");   
-        
+              return BadRequest("No invoice found");
+
         var deletedItems = invoice.InvDetail;
 
 
@@ -379,16 +383,16 @@ namespace ALBAB.Controllers
             );
 
             var journal = await _context.journals.FirstOrDefaultAsync( j => j.JENo == invoice.InvNo & j.Type == JournalType.PURCH);
-            
+
             _context.Remove(invoice);
-           
+
             _context.Remove(journal);
 
           // var journal = await _context.journals.Where( j =)
 
-         
 
-            
+
+
              await _context.SaveChangesAsync();
 
               return Ok(id);

@@ -47,6 +47,7 @@ import { MustMatchDirective } from './_helper/must-match.directive';
 
 
 import { EnumToArrayPipe } from './_helper/enumToArray';
+import { TabEnterDirective } from './_helper/tab-enter.directive';
 
 
 
@@ -78,6 +79,7 @@ import { EnumToArrayPipe } from './_helper/enumToArray';
    DateInputComponent,
    MustMatchDirective,
    EnumToArrayPipe,
+   TabEnterDirective,
 
 
     ],

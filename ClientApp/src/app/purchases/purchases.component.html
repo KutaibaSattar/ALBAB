@@ -12,20 +12,26 @@
 </header>
 
 <!-- SEARCH -->
+<form [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()">
 <section id="search" class="py-1 mb-2 ">
-  <div class="container">
+  <div class="container border-bottom border-dark pb-1">
     <div class="row">
       <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" (click)="clearInv()">
         New</button>
       <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()"> Delete</button>
-      <div class="col-md-6 ml-auto">
+      <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit">
+        Save</button>
+      <div class="col-md-3 ml-auto">
         <div class="input-group ">
-          <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto" name="joke"
-            #joke="ngModel" [(ngModel)]="txtSearchInv">
-          <mat-autocomplete (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete"
+          <input type="text"
+           class="form-control"
+           placeholder="Search Invoice..."
+           [matAutocomplete]="auto"
+           [(ngModel)]="txtSearchInv">
+          <mat-autocomplete  autoActiveFirstOption (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete"
             [displayWith]="PurchNameFn.bind(this)">
-            <mat-option *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
-              {{purch.invNo}}
+            <mat-option   *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
+             {{purch.invNo}}
             </mat-option>
           </mat-autocomplete>
           <div class="input-group-append">
@@ -37,7 +43,7 @@
   </div>
 </section>
 <div *ngIf="purchInv" class="container">
-  <form [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()">
+
     <div class="row">
       <!--  -->
       <div class="col-md-3">
@@ -62,14 +68,14 @@
          <div class="form-group col">
            <label>Account</label>
            <div class="input-group ">
-             <app-dropown-template class="col-12" [accounts]=true [label]="'Account'" [controlName]="accountId">
+             <app-dropown-template class="col-12" [accounts]=true [label]="'account name...'" [controlName]="accountId">
              </app-dropown-template>
            </div>
          </div>
          <div class="form-group col">
            <label>Supplier</label>
            <div class="input-group ">
-             <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" disabled="true" [controlName]="appUserId">
+             <app-dropown-template class="col-12" [members]=true [label]="'vendor name...'" disabled="true" [controlName]="appUserId">
              </app-dropown-template>
            </div>
          </div>
@@ -115,8 +121,7 @@
           <div class="col-md-12">
             <button class="fa fa-plus-circle btn btn-success float-left" type="button" (click)="addRecord()"> Add
             </button>
-            <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit">
-              Save</button>
+
             <button class=" fa fa-search-minus btn btn-secondary float-right" type="button"
               (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
 
@@ -135,6 +140,7 @@
 
         <tr>
           <th style="width: 30%">Item</th>
+          <th style="width: 30%">description</th>
           <th style="width: 10%">Price</th>
           <th style="width: 10%">Quantity</th>
           <th style="width: 10%">Total</th>
@@ -151,6 +157,9 @@
               </app-dropown-template>
 
             </div>
+          </td>
+          <td>
+            <app-text-input formControlName="description" [label]="'description'"> </app-text-input>
           </td>
 
           <td>
@@ -177,6 +186,6 @@
 
     </div>
 
+    
+    </div>
   </form>
-
-</div>

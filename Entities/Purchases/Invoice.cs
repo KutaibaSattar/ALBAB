@@ -32,14 +32,14 @@ namespace ALBAB.Entities.Purchases
         public int AccountId {get;set;}
         public int ActionAcctId { get; set;}
 
-        [Column(TypeName = "decimal(5, 2)")]
+        [Column(TypeName = "decimal(10, 3)")]
         public decimal?  SubTotal { get; set; }
-       [Column(TypeName = "decimal(5, 2)")]
+       [Column(TypeName = "decimal(10, 3)")]
         public decimal?  Discount { get; set; }
         public int  VatAcctId { get; set; }
-        [Column(TypeName = "decimal(5, 2)")]
+        [Column(TypeName = "decimal(10, 3)")]
         public decimal?  Vat { get; set; }
-        [Column(TypeName = "decimal(5, 2)")]
+        [Column(TypeName = "decimal(10, 3)")]
 
         public decimal?  TotalAmount {
             get { return InvDetail.Sum(v => v.TotalValue);}

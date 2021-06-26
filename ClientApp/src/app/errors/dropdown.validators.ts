@@ -6,7 +6,10 @@ export class DropDownValidators{
 
   static  shouldLimited(control: AbstractControl) : ValidationErrors| null{
 
-    if ( typeof(<string>control.value) !==  'number')
+    if (control.value ==  null)
+      return null;
+
+    if ( control.value != '' && typeof(<string>control.value) !==  'number')
         return { shouldLimited: true };
 
     return null;

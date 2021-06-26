@@ -1,11 +1,11 @@
 
   <!-- <input type="text" class="form-control " [formControl]= controlName [matAutocomplete]="textinput" placeholder="Customer"> -->
 
-  <app-text-input (keydown)="onKeydown($event)"  *ngIf="showing" [textDisabled]= textDisabled [formControl] = controlName [autoCompleteDisabled] = "false" [autocomplete]="textinput" [label]="label" ></app-text-input>
+  <app-text-input  *ngIf="showing" [textDisabled]= textDisabled [formControl] = controlName [autoCompleteDisabled] = "false" [autocomplete]="textinput" [label]="label" ></app-text-input>
 
-  <mat-autocomplete  #textinput="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)="OnHumanSelected($event.option)" >
+  <mat-autocomplete  #textinput="matAutocomplete" [displayWith]="displayFn.bind(this)">
 
-    <mat-option *ngFor="let option of filtered$ | async" [value]="option.id" (onSelectionChange)="onEnter($event)"  tabindex="index">
+    <mat-option *ngFor="let option of filtered$ | async" [value]="option.id" >
         {{option.name}} - {{option.keyId}}
     </mat-option>
 

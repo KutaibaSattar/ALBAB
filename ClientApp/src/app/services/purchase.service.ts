@@ -33,7 +33,7 @@ export class PurchaseService extends DataService {
 
 
   getPurchNos() {
-    return this.getTableRecords('invnos');
+    return this.getTableRecords('purchListNo');
   }
 
   getPurchInv(InvNo: string) {

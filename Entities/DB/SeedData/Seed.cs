@@ -33,7 +33,8 @@ namespace ALBAB.Entities.DB.SeedData
                   UserName ="971551234561",
                   Name ="قتيبة",
                   Email = "md@seraime.com",
-                  PhoneNumber ="+971 55 1234561"
+                  PhoneNumber ="+971 55 1234561",
+                  type = AccountType.Client,
 
                  /*  Address =  new Address
                   {
@@ -52,7 +53,8 @@ namespace ALBAB.Entities.DB.SeedData
                   UserName =  "971551234562",
                   Name="Huda Hussain",
                   Email = "info@seraime.com",
-                  PhoneNumber ="+971 55 1234562"
+                  PhoneNumber ="+971 55 1234562",
+                  type = AccountType.Client,
 
                  /*  Address =  new Address
                   {
@@ -72,7 +74,7 @@ namespace ALBAB.Entities.DB.SeedData
                  Name ="Abd ALRahman",
                  Email = "support@seraime.com",
                  PhoneNumber ="+971 55 1234563",
-
+                  type = AccountType.Client,
                 /*   Address =  new Address
                   {
                       Line1="Sharjah",
@@ -114,7 +116,8 @@ namespace ALBAB.Entities.DB.SeedData
                 UserName =  "971551234560",
                 Name ="MD",
                 Email = "admin@seraime.com",
-                PhoneNumber ="+971 55 1234560"
+                PhoneNumber ="+971 55 1234560",
+                type = AccountType.Client,
 
 
                };
