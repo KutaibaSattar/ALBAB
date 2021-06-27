@@ -75,7 +75,7 @@ namespace ALBAB.Controllers
          {
 
 
-           var dbaccount = _mapper.Map<dbAccountsDto,dbAccounts>(dbAccount);
+           var dbaccount = _mapper.Map<dbAccountsDto,dbAccount>(dbAccount);
 
 
 
@@ -94,7 +94,7 @@ namespace ALBAB.Controllers
         //[Authorize]
         // api/dbAccounts/3
         [HttpGet("{id}")]
-        public async Task<ActionResult<dbAccounts>> GetUser(int id)
+        public async Task<ActionResult<dbAccount>> GetUser(int id)
         {
             var dbAccount = await _context.dbAccounts.FindAsync(id);
 

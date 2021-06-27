@@ -263,12 +263,12 @@ namespace ALBaB.Migrations
                     lastupdate = table.Column<DateTime>(type: "datetime", nullable: false),
                     comment = table.Column<string>(type: "text", nullable: true),
                     appuserid = table.Column<int>(type: "int", nullable: true),
-                    accountid = table.Column<int>(type: "int", nullable: false),
+                    dbaccountid = table.Column<int>(type: "int", nullable: false),
                     actionacctid = table.Column<int>(type: "int", nullable: false),
-                    subtotal = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
-                    discount = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
+                    subtotal = table.Column<decimal>(type: "decimal(10, 3)", nullable: true),
+                    discount = table.Column<decimal>(type: "decimal(10, 3)", nullable: true),
                     vatacctid = table.Column<int>(type: "int", nullable: false),
-                    vat = table.Column<decimal>(type: "decimal(5, 2)", nullable: true)
+                    vat = table.Column<decimal>(type: "decimal(10, 3)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -280,8 +280,8 @@ namespace ALBaB.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "fk_invoices_dbaccounts_accountid",
-                        column: x => x.accountid,
+                        name: "fk_invoices_dbaccounts_dbaccountid",
+                        column: x => x.dbaccountid,
                         principalTable: "dbaccounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -297,7 +297,7 @@ namespace ALBaB.Migrations
                     created = table.Column<DateTime>(type: "datetime", nullable: false),
                     duedate = table.Column<DateTime>(type: "datetime", nullable: false),
                     appuserid = table.Column<int>(type: "int", nullable: true),
-                    accountid = table.Column<int>(type: "int", nullable: false),
+                    dbaccountid = table.Column<int>(type: "int", nullable: false),
                     credit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     debit = table.Column<decimal>(type: "decimal(18, 2)", nullable: true),
                     refno = table.Column<string>(type: "text", nullable: true)
@@ -312,8 +312,8 @@ namespace ALBaB.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "fk_journalaccounts_dbaccounts_accountid",
-                        column: x => x.accountid,
+                        name: "fk_journalaccounts_dbaccounts_dbaccountid",
+                        column: x => x.dbaccountid,
                         principalTable: "dbaccounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -491,14 +491,14 @@ namespace ALBaB.Migrations
                 column: "productid");
 
             migrationBuilder.CreateIndex(
-                name: "ix_invoices_accountid",
-                table: "invoices",
-                column: "accountid");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_invoices_appuserid",
                 table: "invoices",
                 column: "appuserid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_invoices_dbaccountid",
+                table: "invoices",
+                column: "dbaccountid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_invoices_invno_type",
@@ -507,14 +507,14 @@ namespace ALBaB.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_journalaccounts_accountid",
-                table: "journalaccounts",
-                column: "accountid");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_journalaccounts_appuserid",
                 table: "journalaccounts",
                 column: "appuserid");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_journalaccounts_dbaccountid",
+                table: "journalaccounts",
+                column: "dbaccountid");
 
             migrationBuilder.CreateIndex(
                 name: "ix_journalaccounts_journalid",

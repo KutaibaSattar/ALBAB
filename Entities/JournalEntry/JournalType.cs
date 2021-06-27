@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ALBAB.Entities.Journal
+namespace ALBAB.Entities.JournalEntry
 {
     public enum JournalType
         {

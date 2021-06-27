@@ -7,15 +7,15 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALBAB.Entities.Journal
+namespace ALBAB.Entities.JournalEntry
 {
 
    //[Index(nameof(JENo), nameof(Type), IsUnique = true)]
-    public class JournalEntry
+    public class Journal
     {
-        public JournalEntry(){}
+        public Journal(){}
 
-        public JournalEntry(string jeNo, JournalType type, DateTime entryDate){
+        public Journal(string jeNo, JournalType type, DateTime entryDate){
             this.JENo = jeNo;
             this.Type = type;
             this.EntryDate = entryDate;

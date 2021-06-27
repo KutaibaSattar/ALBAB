@@ -7,7 +7,7 @@ using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 
 namespace ALBAB.Entities.Purchases
 {
@@ -28,8 +28,8 @@ namespace ALBAB.Entities.Purchases
         public string Comment { get; set; }
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }
-        public dbAccounts Account { get; set; }
-        public int AccountId {get;set;}
+        public dbAccount dbAccount { get; set; }
+        public int dbAccountId {get;set;}
         public int ActionAcctId { get; set;}
 
         [Column(TypeName = "decimal(10, 3)")]

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +39,9 @@ namespace ALBAB.Controllers
          public async Task<ActionResult<JournalEntryRes>> createJournals(JournalEntryRes journalEntryRes)
          {
 
-           
 
-           var journal = _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes);
+
+           var journal = _mapper.Map<JournalEntryRes,Journal>(journalEntryRes);
 
           _context.journals.Add(journal);
 
@@ -68,7 +68,7 @@ namespace ALBAB.Controllers
 
 
 
-         _mapper.Map<JournalEntryRes,JournalEntry>(journalEntryRes,journal);
+         _mapper.Map<JournalEntryRes,Journal>(journalEntryRes,journal);
 
            await _context.SaveChangesAsync();
 

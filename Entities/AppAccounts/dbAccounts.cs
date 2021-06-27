@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ALBAB.Entities.AppAccounts
 {
-        public class dbAccounts
+        public class dbAccount
     {
         public int Id { get; set; }
 
@@ -19,12 +19,12 @@ namespace ALBAB.Entities.AppAccounts
 
         public DateTime Created { get; set; }   = DateTime.Now;
 
-        public dbAccounts Parent { get; set; }
+        public dbAccount Parent { get; set; }
 
        // Reference for self
-      
+
         public int? ParentId {get;set;}
-        public ICollection <dbAccounts> Children { get; set; }
+        public ICollection <dbAccount> Children { get; set; }
 
         public bool IsExpandable {get;set;} = false;
 

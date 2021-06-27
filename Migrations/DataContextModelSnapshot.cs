@@ -151,7 +151,7 @@ namespace ALBaB.Migrations
                     b.ToTable("aspnetuserroles");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccounts", b =>
+            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,61 +193,7 @@ namespace ALBaB.Migrations
                     b.ToTable("dbaccounts");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Journal.JournalAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int")
-                        .HasColumnName("accountid");
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("appuserid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created");
-
-                    b.Property<decimal?>("Credit")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("credit");
-
-                    b.Property<decimal?>("Debit")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("debit");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("duedate");
-
-                    b.Property<int>("JournalId")
-                        .HasColumnType("int")
-                        .HasColumnName("journalid");
-
-                    b.Property<string>("RefNo")
-                        .HasColumnType("text")
-                        .HasColumnName("refno");
-
-                    b.HasKey("Id")
-                        .HasName("pk_journalaccounts");
-
-                    b.HasIndex("AccountId")
-                        .HasDatabaseName("ix_journalaccounts_accountid");
-
-                    b.HasIndex("AppUserId")
-                        .HasDatabaseName("ix_journalaccounts_appuserid");
-
-                    b.HasIndex("JournalId")
-                        .HasDatabaseName("ix_journalaccounts_journalid");
-
-                    b.ToTable("journalaccounts");
-                });
-
-            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
+            modelBuilder.Entity("ALBAB.Entities.JournalEntry.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,6 +231,60 @@ namespace ALBaB.Migrations
                         .IsUnique();
 
                     b.ToTable("journals");
+                });
+
+            modelBuilder.Entity("ALBAB.Entities.JournalEntry.JournalAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("appuserid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created");
+
+                    b.Property<decimal?>("Credit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("credit");
+
+                    b.Property<decimal?>("Debit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("debit");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("duedate");
+
+                    b.Property<int>("JournalId")
+                        .HasColumnType("int")
+                        .HasColumnName("journalid");
+
+                    b.Property<string>("RefNo")
+                        .HasColumnType("text")
+                        .HasColumnName("refno");
+
+                    b.Property<int>("dbAccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("dbaccountid");
+
+                    b.HasKey("Id")
+                        .HasName("pk_journalaccounts");
+
+                    b.HasIndex("AppUserId")
+                        .HasDatabaseName("ix_journalaccounts_appuserid");
+
+                    b.HasIndex("JournalId")
+                        .HasDatabaseName("ix_journalaccounts_journalid");
+
+                    b.HasIndex("dbAccountId")
+                        .HasDatabaseName("ix_journalaccounts_dbaccountid");
+
+                    b.ToTable("journalaccounts");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.OrderAggregate.Order", b =>
@@ -527,10 +527,6 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int")
-                        .HasColumnName("accountid");
-
                     b.Property<int>("ActionAcctId")
                         .HasColumnType("int")
                         .HasColumnName("actionacctid");
@@ -548,7 +544,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("date");
 
                     b.Property<decimal?>("Discount")
-                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnType("decimal(10, 3)")
                         .HasColumnName("discount");
 
                     b.Property<string>("InvNo")
@@ -562,7 +558,7 @@ namespace ALBaB.Migrations
                         .HasColumnName("lastupdate");
 
                     b.Property<decimal?>("SubTotal")
-                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnType("decimal(10, 3)")
                         .HasColumnName("subtotal");
 
                     b.Property<string>("Type")
@@ -572,21 +568,25 @@ namespace ALBaB.Migrations
                         .HasColumnName("type");
 
                     b.Property<decimal?>("Vat")
-                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnType("decimal(10, 3)")
                         .HasColumnName("vat");
 
                     b.Property<int>("VatAcctId")
                         .HasColumnType("int")
                         .HasColumnName("vatacctid");
 
+                    b.Property<int>("dbAccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("dbaccountid");
+
                     b.HasKey("Id")
                         .HasName("pk_invoices");
 
-                    b.HasIndex("AccountId")
-                        .HasDatabaseName("ix_invoices_accountid");
-
                     b.HasIndex("AppUserId")
                         .HasDatabaseName("ix_invoices_appuserid");
+
+                    b.HasIndex("dbAccountId")
+                        .HasDatabaseName("ix_invoices_dbaccountid");
 
                     b.HasIndex("InvNo", "Type")
                         .IsUnique();
@@ -768,9 +768,9 @@ namespace ALBaB.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccounts", b =>
+            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccount", b =>
                 {
-                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccounts", "Parent")
+                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccount", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .HasConstraintName("fk_dbaccounts_dbaccounts_parentid");
@@ -778,30 +778,30 @@ namespace ALBaB.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Journal.JournalAccount", b =>
+            modelBuilder.Entity("ALBAB.Entities.JournalEntry.JournalAccount", b =>
                 {
-                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccounts", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .HasConstraintName("fk_journalaccounts_dbaccounts_accountid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId")
                         .HasConstraintName("fk_journalaccounts_aspnetusers_appuserid");
 
-                    b.HasOne("ALBAB.Entities.Journal.JournalEntry", "Journal")
+                    b.HasOne("ALBAB.Entities.JournalEntry.Journal", "Journal")
                         .WithMany("journalAccounts")
                         .HasForeignKey("JournalId")
                         .HasConstraintName("fk_journalaccounts_journals_journalid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccount", "dbAccount")
+                        .WithMany()
+                        .HasForeignKey("dbAccountId")
+                        .HasConstraintName("fk_journalaccounts_dbaccounts_dbaccountid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("dbAccount");
 
                     b.Navigation("Journal");
                 });
@@ -918,21 +918,21 @@ namespace ALBaB.Migrations
 
             modelBuilder.Entity("ALBAB.Entities.Purchases.Invoice", b =>
                 {
-                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccounts", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .HasConstraintName("fk_invoices_dbaccounts_accountid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId")
                         .HasConstraintName("fk_invoices_aspnetusers_appuserid");
 
-                    b.Navigation("Account");
+                    b.HasOne("ALBAB.Entities.AppAccounts.dbAccount", "dbAccount")
+                        .WithMany()
+                        .HasForeignKey("dbAccountId")
+                        .HasConstraintName("fk_invoices_dbaccounts_dbaccountid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("dbAccount");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -987,12 +987,12 @@ namespace ALBaB.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccounts", b =>
+            modelBuilder.Entity("ALBAB.Entities.AppAccounts.dbAccount", b =>
                 {
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("ALBAB.Entities.Journal.JournalEntry", b =>
+            modelBuilder.Entity("ALBAB.Entities.JournalEntry.Journal", b =>
                 {
                     b.Navigation("journalAccounts");
                 });

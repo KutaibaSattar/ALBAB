@@ -7,7 +7,7 @@ using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.OrderAggregate;
 using ALBAB.Entities.Purchases;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 
 namespace ALBAB.Entities.DB
 {
@@ -34,7 +34,7 @@ namespace ALBAB.Entities.DB
         public DbSet<InvDetail> InvDetails { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
 
-         public DbSet<dbAccounts> dbAccounts {get;set;}
+         public DbSet<dbAccount> dbAccounts {get;set;}
          public DbSet<Product> products {get;set;}
          public DbSet<Brand> brands  {get;set;}
 
@@ -43,7 +43,7 @@ namespace ALBAB.Entities.DB
          public DbSet<OrderItem> orderItems { get; set; }
 
          public DbSet<JournalAccount> journalAccounts { get; set; }
-         public DbSet<Journal.JournalEntry> journals { get; set; }
+         public DbSet<Journal> journals { get; set; }
 
 
 
@@ -143,13 +143,13 @@ namespace ALBAB.Entities.DB
 
                });
 
-              builder.Entity<JournalEntry>().Property( t => t.Type).HasConversion<String>();
+              builder.Entity<Journal>().Property( t => t.Type).HasConversion<String>();
               builder.Entity<Invoice>().Property( t => t.Type).HasConversion<String>();
 
               builder.Entity<Invoice>().HasIndex(i => new {i.InvNo,i.Type}).IsUnique();
               builder.Entity<InvDetail>().HasIndex(i => new {i.InvoiceId,i.ProductId}).IsUnique();
-              
-              builder.Entity<JournalEntry>().HasIndex(i => new {i.JENo,i.Type}).IsUnique();
+
+              builder.Entity<Journal>().HasIndex(i => new {i.JENo,i.Type}).IsUnique();
 
 
 

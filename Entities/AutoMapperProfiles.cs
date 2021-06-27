@@ -12,7 +12,7 @@ using ALBAB.Entities.Purchases;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 using System.Reflection;
 
 namespace ALBAB.Entities
@@ -32,12 +32,12 @@ namespace ALBAB.Entities
                 .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
 
 
-            CreateMap<dbAccounts, dbAccountsFlattenRes>();
+            CreateMap<dbAccount, dbAccountsFlattenRes>();
 
 
 
 
-            CreateMap<dbAccounts, dbAccountsDto>().ReverseMap();
+            CreateMap<dbAccount, dbAccountsDto>().ReverseMap();
 
             CreateMap<Brand, BrandDto>();
 
@@ -66,11 +66,22 @@ namespace ALBAB.Entities
             CreateMap<InvDetail, InvDetailsRes>();
             CreateMap<InvDetailsRes, InvDetail>();
 
-            CreateMap<JournalEntry, JournalEntryRes>()
+            CreateMap<Journal, JournalEntryRes>()
                 //.ForMember(dst => dst.Id , opt => opt.Ignore())
                 .ForMember(dst => dst.journalAccounts, opt => opt.MapFrom(src => src.journalAccounts));
 
-            CreateMap<JournalEntryRes, JournalEntry>()
+
+
+             CreateMap<JournalAccount, AccountStatementRes>()
+            ;
+
+
+
+
+
+
+
+            CreateMap<JournalEntryRes, Journal>()
             .ForMember(dst => dst.Id , opt => opt.Ignore())
             .ForMember(dst => dst.journalAccounts , opt => opt.Ignore())
             .AfterMap((jer, je) => AfterMapJournal(jer, je));
@@ -130,7 +141,7 @@ namespace ALBAB.Entities
             }
 
         }
-        private static void AfterMapJournal(JournalEntryRes jer, Journal.JournalEntry je)
+        private static void AfterMapJournal(JournalEntryRes jer, Journal je)
         {
 
             // removing deleting items
@@ -154,7 +165,7 @@ namespace ALBAB.Entities
                     {
                         Credit = pdd.Credit,
                         Debit = pdd.Debit,
-                       AccountId = pdd.AccountId,
+                       dbAccountId = pdd.AccountId,
                         AppUserId = pdd.AppUserId,
                         RefNo = pdd.RefNo,
                         DueDate = pdd.DueDate,
@@ -168,8 +179,8 @@ namespace ALBAB.Entities
                     {
                         if (pd.Credit != pdd.Credit) pd.Credit = pdd.Credit;
                         if (pd.Debit != pdd.Debit) pd.Debit = pdd.Debit;
-                        if (pd.AccountId != pdd.AccountId) pd.AccountId = pdd.AccountId;
-                        if (pdd.AppUserId > 0) pd.AccountId = (int)AccountType.Client ;
+                        if (pd.dbAccountId != pdd.AccountId) pd.dbAccountId = pdd.AccountId;
+                        if (pdd.AppUserId > 0) pd.dbAccountId = (int)AccountType.Client ;
                         if (pd.AppUserId != pdd.AppUserId) pd.AppUserId = pdd.AppUserId;
                         if (pd.RefNo != pdd.RefNo) pd.RefNo = pdd.RefNo;
                         if (pd.DueDate != pdd.DueDate) pd.DueDate = pdd.DueDate;

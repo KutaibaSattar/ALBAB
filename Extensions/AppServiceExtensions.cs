@@ -25,7 +25,7 @@ namespace ALBAB.Extensions
                 {
                     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
-                
+
             //services.AddControllers().AddNewtonsoftJson();
 
           /*  services.AddControllersWithViews()
@@ -49,6 +49,11 @@ namespace ALBAB.Extensions
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ALBAB", Version = "v1" });
             });
+
+             services.AddControllersWithViews()
+            .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 
 

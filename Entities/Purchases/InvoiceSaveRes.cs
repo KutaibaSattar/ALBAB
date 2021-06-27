@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using ALBAB.Entities.AppAccounts;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 
 namespace ALBAB.Entities.Purchases
 {

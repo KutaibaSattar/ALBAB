@@ -4,7 +4,7 @@ export interface IInvoice{
   Date :Date
   appUserId:number
   comment : string,
-  accountId: number
+  dbAccountId: number
   purchDtl : IInvDetail[];
 }
 
@@ -49,7 +49,7 @@ export class IInvoice implements IInvoice{
   id = 0;
   invNo ='';
   appUserId = 0;
-  accountId = 0;
+  dbAccountId = 0;
   date = new Date();
   invDetails : IInvDetail[];
 

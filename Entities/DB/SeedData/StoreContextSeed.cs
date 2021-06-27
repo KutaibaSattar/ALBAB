@@ -17,15 +17,15 @@ namespace ALBAB.Entities.DB.SeedData
              if (!context.dbAccounts.Any())
             {
                 var accountData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/account.json");
-                var accounts = JsonSerializer.Deserialize<List<dbAccounts>>(accountData);
+                var accounts = JsonSerializer.Deserialize<List<dbAccount>>(accountData);
                foreach (var item in accounts)
                {
                    context.dbAccounts.Add(item);
                }
 
             }
-            
-             
+
+
             if (!context.brands.Any())
             {
                 var brandsData = File.ReadAllText("../ALBAB/Entities/DB/SeedData/product/brand.json");
@@ -55,17 +55,17 @@ namespace ALBAB.Entities.DB.SeedData
                    context.products.Add(item);
                }
 
-            }  
+            }
             await context.SaveChangesAsync();
         }
         catch (System.Exception ex)
         {
-            
+
            var logger = loggerFactory.CreateLogger<StoreContextSeed>();
            logger.LogError(ex.Message);
         }
         }
 
-      
+
     }
 }

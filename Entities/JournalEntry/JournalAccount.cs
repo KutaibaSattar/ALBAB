@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using ALBAB.Entities.AppAccounts;
 
-namespace ALBAB.Entities.Journal
+namespace ALBAB.Entities.JournalEntry
 {
     public class JournalAccount
     {
@@ -16,7 +16,7 @@ namespace ALBAB.Entities.Journal
             this.Created = created;
             this.DueDate = dueDate;
             this.AppUserId = appUserId;
-            this.AccountId = accountId;
+            this.dbAccountId = accountId;
             this.Credit = credit;
             this.Debit = debit;
 
@@ -34,14 +34,14 @@ namespace ALBAB.Entities.Journal
         // }
 
         public int Id { get; set; }
-        public JournalEntry Journal { get; set; }
+        public Journal Journal { get; set; }
         public int JournalId { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public DateTime DueDate { get; set; } = DateTime.Now;
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }
-        public dbAccounts Account { get; set; }
-        public int AccountId { get; set; }
+        public dbAccount dbAccount { get; set; }
+        public int dbAccountId { get; set; }
         public decimal? Credit { get; set; }
         public decimal? Debit { get; set; }
         public string RefNo { get; set; }

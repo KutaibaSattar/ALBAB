@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ALBAB.Entities.Journal
+namespace ALBAB.Entities.JournalEntry
 {
     public class JournalEntryRes
 

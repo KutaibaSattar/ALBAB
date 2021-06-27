@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ALBAB.Entities.Journal
+namespace ALBAB.Entities.JournalEntry
 {
     public class JournalAccountRes
     {

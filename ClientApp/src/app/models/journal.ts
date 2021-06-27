@@ -22,7 +22,7 @@ export interface JournalAccount {
   created: string;
   dueDate: string;
   appUserId: number;
-  accountId: number;
+  dbAccountId: number;
   credit: number;
   debit: number;
   refNo: string;

@@ -1,7 +1,3 @@
-using System.Globalization;
-using System.Data.Common;
-using System.Text.RegularExpressions;
-using System.Security.AccessControl;
 using System.Data;
 using System.Linq;
 using System;
@@ -12,7 +8,7 @@ using ALBAB.Entities.Purchases;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.AppAccounts;
 
@@ -143,9 +139,9 @@ namespace ALBAB.Controllers
 
          _context.Invoices.Add(invoice);
 
-          var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
+          var journal = new Journal(invoice.InvNo, invoice.Type,invoice.Date);
 
-           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,invoice.TotalAmount,null));
+           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.dbAccountId,invoice.TotalAmount,null));
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
 
           _context.journals.Add(journal);
@@ -318,7 +314,7 @@ namespace ALBAB.Controllers
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
              if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
-             if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
+             if (E.dbAccountId != invoice.dbAccountId) E.dbAccountId= invoice.dbAccountId;
              if (E.Credit != invoice.TotalAmount) E.Credit= invoice.TotalAmount;
            }
            if (E.Debit > 0){
@@ -326,7 +322,7 @@ namespace ALBAB.Controllers
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
              //if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
-             if (E.AccountId != invoice.ActionAcctId) E.AccountId= invoice.ActionAcctId;
+             if (E.dbAccountId != invoice.ActionAcctId) E.dbAccountId= invoice.ActionAcctId;
              if (E.Debit != invoice.TotalAmount) E.Debit= invoice.TotalAmount;
            }
 

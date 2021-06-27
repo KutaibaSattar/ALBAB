@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
-using ALBAB.Entities.Journal;
+using ALBAB.Entities.JournalEntry;
 using ALBAB.Entities.Purchases;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +83,7 @@ namespace ALBAB.Controllers
 
           _context.Invoices.Add(invoice);
 
-          var journal = new JournalEntry(invoice.InvNo, invoice.Type,invoice.Date);
+          var journal = new Journal(invoice.InvNo, invoice.Type,invoice.Date);
 
          if(invoice.InvCost >0){
 
@@ -98,7 +98,7 @@ namespace ALBAB.Controllers
            (invoice.Date,invoice.Date,null,invoice.ActionAcctId,invoice.TotalAmount,null)); // Sales profit Credit
 
              journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,invoice.AppUserId,invoice.AccountId,null,invoice.TotalAmount)); // Client Debit
+           (invoice.Date,invoice.Date,invoice.AppUserId,invoice.dbAccountId,null,invoice.TotalAmount)); // Client Debit
 
 
 
@@ -218,7 +218,7 @@ namespace ALBAB.Controllers
         });
 
         var journal = _context.journals.Include( ja => ja.journalAccounts).FirstOrDefault( j => j.JENo.Equals(invRes.InvNo) & j.Type.Equals(invRes.Type));
-  
+
 
         if(journal.JENo != invoice.InvNo) journal.JENo = invoice.InvNo;
         if(journal.Note != invoice.Comment) journal.Note = invoice.Comment;
@@ -230,7 +230,7 @@ namespace ALBAB.Controllers
 
          {
             //aaaa
-           if (E.Credit > 0 & E.AccountId == (int)AccountType.Store){
+           if (E.Credit > 0 & E.dbAccountId == (int)AccountType.Store){
 
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
@@ -238,7 +238,7 @@ namespace ALBAB.Controllers
             //  if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
              if (E.Credit != invoice.InvCost) E.Credit= invoice.InvCost;
            }
-           else if (E.Debit > 0 & E.AccountId == (int)AccountType.CostGoodsSold){
+           else if (E.Debit > 0 & E.dbAccountId == (int)AccountType.CostGoodsSold){
 
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
@@ -246,7 +246,7 @@ namespace ALBAB.Controllers
              //if (E.AccountId != invoice.ActionAcctId) E.AccountId= invoice.ActionAcctId;
              if (E.Debit != invoice.InvCost) E.Debit= invoice.InvCost;
            }
-           else if (E.Credit > 0 & E.AccountId != (int)AccountType.Store){
+           else if (E.Credit > 0 & E.dbAccountId != (int)AccountType.Store){
 
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
@@ -254,7 +254,7 @@ namespace ALBAB.Controllers
             //  if (E.AccountId != invoice.AccountId) E.AccountId= invoice.AccountId;
              if (E.Credit != invoice.TotalAmount) E.Credit= invoice.TotalAmount;
            }
-           else if (E.Debit > 0 & E.AccountId != (int)AccountType.CostGoodsSold){
+           else if (E.Debit > 0 & E.dbAccountId != (int)AccountType.CostGoodsSold){
 
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
@@ -279,19 +279,19 @@ namespace ALBAB.Controllers
           return  Ok(result);
 
          }
-       
-       
-       
-       
+
+
+
+
          [HttpDelete("{id}")]
          public async Task<ActionResult> deleteInv(int id)
          {
-         
+
           var invoice = await _context.Invoices.Include(i => i.InvDetail).FirstOrDefaultAsync(inv => inv.Id == id);
 
           if (invoice == null)
-              return BadRequest("No invoice found");   
-        
+              return BadRequest("No invoice found");
+
 
         var deletedItems = invoice.InvDetail;
 
@@ -309,7 +309,7 @@ namespace ALBAB.Controllers
             }
 
             var journal = await _context.journals.FirstOrDefaultAsync( j => j.JENo == invoice.InvNo & j.Type == JournalType.SALES);
-            
+
             _context.Remove(invoice);
            _context.Remove(journal);
           await _context.SaveChangesAsync();

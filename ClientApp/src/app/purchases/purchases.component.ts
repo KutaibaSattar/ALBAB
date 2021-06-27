@@ -52,7 +52,7 @@ export class PurchasesComponent implements OnInit {
   purchNos: invoice[];
   formInvoice: FormGroup;
   appUserId: FormControl;
-  accountId: FormControl;
+  dbAccountId: FormControl;
   invNo: FormControl;
   date: FormControl;
   invoiceId: FormControl;
@@ -140,27 +140,27 @@ export class PurchasesComponent implements OnInit {
       id: null,
       invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
-      accountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
+      dbAccountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
       date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
     });
 
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
-    this.accountId = this.formInvoice.get('accountId') as FormControl;
+    this.dbAccountId = this.formInvoice.get('dbAccountId') as FormControl;
 
     this.appUserId.valueChanges.subscribe( value =>{
 
         if ( typeof value == 'number'){
-         this.accountId.setValue( this.members.find(member => member.id == value).type,{emitEvent:false})
-         this.accountId.disable({emitEvent:false});
+         this.dbAccountId.setValue( this.members.find(member => member.id == value).type,{emitEvent:false})
+         this.dbAccountId.disable({emitEvent:false});
         }
         else
-        this.accountId.enable({emitEvent:false});
+        this.dbAccountId.enable({emitEvent:false});
 
     })
 
 
-    this.accountId.valueChanges.subscribe((value) => {
+    this.dbAccountId.valueChanges.subscribe((value) => {
       if (typeof value == 'number') {
         if (!this.members.find((member) => member.type == value)) {
           this.appUserId.setValue( null,{emitEvent:false})
@@ -294,7 +294,7 @@ export class PurchasesComponent implements OnInit {
               id: this.purchInv.id,
               invNo: this.purchInv.invNo,
               appUserId: this.purchInv.appUserId,
-              accountId:this.purchInv.accountId,
+              dbAccountId:this.purchInv.dbAccountId,
               date: new Date(this.purchInv.date)
 
             });
