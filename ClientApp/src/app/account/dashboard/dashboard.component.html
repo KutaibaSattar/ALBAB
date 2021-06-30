@@ -1,19 +1,53 @@
+
 <!-- HEADER -->
 <body>
- <header id="main-header" class="bg-primary text-white">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h1>
-            <i class="fa fa-cog"></i> Dashboard</h1>
-        </div>
-      </div>
-    </div>
-</header>
+
 <!-- ACTIONS -->
 <section id="actions" class="py-4 mb-4 bg-light">
     <div class="container">
+      <header id="main-header" class="bg-primary text-white">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h1>
+                <i class="fa fa-cog"></i> Dashboard</h1>
+            </div>
+          </div>
+        </div>
+    </header>
       <div class="row">
+         <!-- Accordione -->
+      <div class="col-md-3">
+        <div class="card text-center bg-primary text-white mb-3">
+          <div class="card-body">
+            <h3>Posts</h3>
+            <h4 class="display-4">
+              <i class="fa fa-pencil"></i> 1
+            </h4>
+            <a href="posts.html" class="btn btn-outline-light btn-sm">View</a>
+          </div>
+        </div>
+
+        <div class="card text-center bg-success text-white mb-3">
+          <div class="card-body">
+            <h3>Categories</h3>
+            <h4 class="display-4">
+              <i class="fa fa-folder"></i> 2
+            </h4>
+            <a href="categories.html" class="btn btn-outline-light btn-sm">View</a>
+          </div>
+        </div>
+
+        <div class="card text-center bg-warning text-white mb-3">
+          <div class="card-body">
+            <h3>Users</h3>
+            <h4 class="display-4">
+              <i class="fa fa-users"></i> 3
+            </h4>
+            <a href="users.html" class="btn btn-outline-light btn-sm">View</a>
+          </div>
+        </div>
+      </div>
         <div class="col-md-3">
           <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal">
             <i class="fa fa-plus"></i> Add Post
@@ -34,4 +68,3 @@
   </section>
 
 </body>
-   

@@ -4,7 +4,8 @@ export interface IInvoice{
   Date :Date
   appUserId:number
   comment : string,
-  dbAccountId: number
+  dbAccountId: number,
+  actionAcctId: number,
   purchDtl : IInvDetail[];
 }
 
@@ -50,6 +51,7 @@ export class IInvoice implements IInvoice{
   invNo ='';
   appUserId = 0;
   dbAccountId = 0;
+  actionAcctId = 0;
   date = new Date();
   invDetails : IInvDetail[];
 

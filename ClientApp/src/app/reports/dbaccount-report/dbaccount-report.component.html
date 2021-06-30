@@ -1,0 +1,54 @@
+<!-- HEADER -->
+<body>
+  <header id="main-header" class="bg-primary text-white">
+     <div class="container">
+       <div class="row">
+         <div class="col-md-6">
+           <h1>
+             <i class="fa fa-cog"></i> Dashboard</h1>
+         </div>
+       </div>
+     </div>
+ </header>
+ <section id="users">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Active Users</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Type</th>
+                <th>AccountId</th>
+                <th>Dispaly Name</th>
+                <th>Credit</th>
+                <th>Debit</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody  *ngFor="let account of accountStatement">
+              <tr>
+                    <td>{{account.jeNo}} </td>
+                    <td>{{account.type}} </td>
+                    <td>{{account.accountName}} </td>
+                    <td>{{account.supplierName}} </td>
+                    <td>{{account.credit}} </td>
+                    <td>{{account.debit}} </td>
+                <td>
+                  <!-- <a [routerLink]="['/members',user.keyId]"  class="btn btn-secondary">
+                    <i class="fa fa-angle-double-right"></i> Details
+                  </a> -->
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

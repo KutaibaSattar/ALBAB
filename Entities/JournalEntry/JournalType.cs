@@ -19,5 +19,7 @@ namespace ALBAB.Entities.JournalEntry
         PURCH,
         //[EnumMember(Value="Sales")]
         SALES,
+        QUOTE,
+
         }
 }

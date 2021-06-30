@@ -28,7 +28,8 @@
              class="form-control"
              placeholder="Search Invoice..."
              [matAutocomplete]="auto"
-             [(ngModel)]="txtSearchInv">
+             [(ngModel)]="txtSearchInv"
+             [ngModelOptions]="{standalone: true}">
             <mat-autocomplete  autoActiveFirstOption (optionSelected)="OnHumanSelected($event.option)" #auto="matAutocomplete"
               [displayWith]="PurchNameFn.bind(this)">
               <mat-option   *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
@@ -84,7 +85,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="form-group">
             <label>Payment Method</label>
             <select name="pMethod" class="form-control">
@@ -136,7 +137,7 @@
 
       <!-- Table Header -->
       <table class="table table-secondary table- table-hover table-sm table-condensed" formArrayName="invDetails">
-        <caption>List of users</caption>
+        <caption>List of items</caption>
         <thead class="thead-light">
 
           <tr>
@@ -179,7 +180,7 @@
         </nav>
       </table>
 
-      <pre>{{formInvoice.value | json}}</pre>
+      <!-- <pre>{{formInvoice.value | json}}</pre> -->
 
 
 

@@ -73,8 +73,12 @@ namespace ALBAB.Entities
 
 
              CreateMap<JournalAccount, AccountStatementRes>()
-            ;
-
+                  .ForMember(dst => dst.JENo, opt => opt.MapFrom(src => src.Journal.JENo))
+                  .ForMember(dst => dst.Type, opt => opt.MapFrom(src => src.Journal.Type))
+                  .ForMember(dst => dst.Note, opt => opt.MapFrom(src => src.Journal.Note))
+                  .ForMember(dst => dst.EntryDate, opt => opt.MapFrom(src => src.Journal.EntryDate))
+                  .ForMember(dst => dst.AccountName, opt => opt.MapFrom(src => src.dbAccount.Name))
+                  .ForMember(dst => dst.SupplierName, opt => opt.MapFrom(src => src.AppUser.Name));
 
 
 

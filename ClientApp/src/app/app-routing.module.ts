@@ -17,6 +17,7 @@ import { UnsavedchangesGuard } from './guards/unsavedchanges.guard';
 import { JournalentryComponent } from './journalentry/journalentry.component';
 import { DbaccountComponent } from './dbaccount/dbaccount.component';
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
+import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
 
 
 
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'dashboard', component: HomeComponent },
       { path: 'product', component: ProductsComponent},
       { path: 'purchases', component: PurchasesComponent, canDeactivate:[UnsavedchangesGuard]},
+      { path: 'reports', component: DbaccountReportComponent},
       { path: 'errors', component: TestErrorsComponent },
       { path: 'not-found',component: NotFoundComponent},
       { path: 'server-error', component: ServerErrorComponent },

@@ -44,16 +44,10 @@ import { DropownTemplateComponent } from './templates/dropown-template/dropown-t
 import { AutocompleteComponent } from './templates/autocomplete/autocomplete.component';
 import { DateInputComponent } from './templates/date-input/date-input.component';
 import { MustMatchDirective } from './_helper/must-match.directive';
-
-
 import { EnumToArrayPipe } from './_helper/enumToArray';
 import { TabEnterDirective } from './_helper/tab-enter.directive';
-
-
-
-
-
-
+import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
+import { QuotationComponent } from './quotation/quotation.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +74,8 @@ import { TabEnterDirective } from './_helper/tab-enter.directive';
    MustMatchDirective,
    EnumToArrayPipe,
    TabEnterDirective,
+   DbaccountReportComponent,
+   QuotationComponent,
 
 
     ],

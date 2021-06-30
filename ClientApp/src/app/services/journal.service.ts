@@ -19,7 +19,6 @@ export class JournalService extends DataService {
       map((j: any) =>{
         return j.find(txn => txn.id === 1);
 
-
       })
 
     )

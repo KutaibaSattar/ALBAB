@@ -141,6 +141,7 @@ export class PurchasesComponent implements OnInit {
       invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
       dbAccountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
+      actionAcctId: null,
       date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
     });
@@ -295,6 +296,7 @@ export class PurchasesComponent implements OnInit {
               invNo: this.purchInv.invNo,
               appUserId: this.purchInv.appUserId,
               dbAccountId:this.purchInv.dbAccountId,
+              actionAcctId: this.purchInv.actionAcctId,
               date: new Date(this.purchInv.date)
 
             });

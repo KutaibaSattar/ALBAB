@@ -48,7 +48,7 @@ namespace ALBAB.Entities.Purchases
        public int? VatAcctId { get; set; }
         public decimal?  Vat { get; set; }
         public decimal?  TotalAmount { get; set; }
-        public int AccountId{ get; set; }
+        public int dbAccountId{ get; set; }
          public string Description { get; set; }
          public ICollection <InvDetailsRes> invDetails { get; set; }
          public InvoiceSaveRes()

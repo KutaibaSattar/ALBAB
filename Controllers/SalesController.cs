@@ -39,7 +39,7 @@ namespace ALBAB.Controllers
 
 
 
-        var rowCount =  invRes.invDetails.GroupBy( p => p.ProductId)
+        var rowCount =  invRes.invDetails.Where(p => p.ProductId != null).GroupBy( p => p.ProductId)
         .Select( g => new {count = g.Count()}).FirstOrDefault(c => c.count > 1);
 
 
@@ -73,7 +73,7 @@ namespace ALBAB.Controllers
            if(newItemQty !=0){
             //stockCost += stock.Price * newItemQty ;
             stock.Quantity -=  newItemQty;
-            invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
+           var x =  invoice.InvDetail.Where( p => p.ProductId == stock.Id).First().Cost = stock.Price;
            }
 
 

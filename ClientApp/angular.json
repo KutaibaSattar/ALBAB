@@ -118,6 +118,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
+
             "exclude": [
               "**/node_modules/**"
             ]

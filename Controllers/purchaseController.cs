@@ -172,7 +172,7 @@ namespace ALBAB.Controllers
        if (  !(rowCount==null) && rowCount.count  > 1 )
               return BadRequest("Item sholud not be dublicated");
 
-
+       invRes.Type = JournalType.PURCH;
 
 
 
