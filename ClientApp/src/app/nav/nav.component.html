@@ -1,6 +1,102 @@
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-  <div class="container">
+<div  class="main ml-4">
+  <aside>
+    <div class="sidebar left ">
+      <div class="user-panel">
+        <ul *ngIf="!(authService.currentUser$| async)" >
+           <li class="nav-item dropdown mr-3">
+            <a routerLink='/login' class="nav-link" >
+              <i class="fa fa-user"></i> <strong> Login </strong>
+            </a>
+           </li>
+        </ul>
+        <ul *ngIf="(authService.currentUser$| async) as user " class="navbar-nav ml-auto">
+          <li class="nav-item dropdown mr-3">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-user"></i> <strong> Welcome {{user.given_name}} </strong>
+            </a>
+            <div class="text-light bg-info dropdown-menu">
+              <a routerLink='' class="dropdown-item">
+                <i class="fa fa-user-circle"></i> Profile
+              </a>
+              <a routerLink='' class="dropdown-item">
+                <i class="fa fa-cog"></i> Settings
+              </a>
+              <div class="divider dropdown-divider"></div>
+              <a routerLink='' class="dropdown-item d-flex align-items-center py-2" (click)="logOut()">
+                <i class="fa fa-sign-out mr-3"></i> Logout
+              </a>
+            </div>
+
+          </li>
+        </ul>
+        <div class="pull-left image">
+          <img src="http://via.placeholder.com/160x160" class="rounded-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Bab ALSaray</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <ul class="list-sidebar bg-defoult">
+        <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" >
+          <i class="fa fa-th-large"></i>
+          <span class="nav-label"> Dashboards </span>
+          <span class="fa fa-chevron-left pull-right"></span>
+           </a>
+        <ul class="sub-menu collapse" id="dashboard">
+          <li class="active"><a routerLink='/dashboard' class="nav-link" routerLinkActive='active current'>Dashboard</a></li>
+          <li><a href="#">General</a></li>
+          <li><a href="#">Buttons</a></li>
+          <li><a href="#">Tabs & Accordions</a></li>
+          <li><a href="#">Typography</a></li>
+          <li><a href="#">FontAwesome</a></li>
+          <li><a href="#">Slider</a></li>
+          <li><a href="#">Panels</a></li>
+          <li><a href="#">Widgets</a></li>
+          <li><a href="#">Bootstrap Model</a></li>
+        </ul>
+      </li>
+      <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a> </li>
+      <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span> <span class="fa fa-chevron-left pull-right"></span> </a>
+      <ul class="sub-menu collapse" id="products">
+        <li class="active"><a href="#">CSS3 Animation</a></li>
+        <li><a href="#">General</a></li>
+        <li><a href="#">Buttons</a></li>
+        <li><a href="#">Tabs & Accordions</a></li>
+        <li><a href="#">Typography</a></li>
+        <li><a href="#">FontAwesome</a></li>
+        <li><a href="#">Slider</a></li>
+        <li><a href="#">Panels</a></li>
+        <li><a href="#">Widgets</a></li>
+        <li><a href="#">Bootstrap Model</a></li>
+      </ul>
+    </li>
+    <li> <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Grid options</span></a> </li>
+    <li> <a href="#" data-toggle="collapse" data-target="#tables" class="collapsed active" ><i class="fa fa-table"></i> <span class="nav-label">Tables</span><span class="fa fa-chevron-left pull-right"></span></a>
+    <ul  class="sub-menu collapse" id="tables" >
+      <li><a href=""> Static Tables</a></li>
+      <li><a href=""> Data Tables</a></li>
+      <li><a href=""> Foo Tables</a></li>
+      <li><a href=""> jqGrid</a></li>
+    </ul>
+  </li>
+  <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">E-commerce</span><span class="fa fa-chevron-left pull-right"></span></a>
+  <ul  class="sub-menu collapse" id="e-commerce" >
+    <li><a href=""> Products grid</a></li>
+    <li><a href=""> Products list</a></li>
+    <li><a href="">Product edit</a></li>
+    <li><a href=""> Product detail</a></li>
+  </ul>
+  </li>
+  <li> <a href=""><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrics</span> </a></li>
+
+  </ul>
+  </div>
+  </aside>
+</div>
+  <!-- <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <a href="" class="navbar-brand">Bab AL Saray</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
@@ -59,5 +155,5 @@
         </li>
       </ul>
     </div>
-  </div>
-</nav>
+  </nav>
+  </div> -->

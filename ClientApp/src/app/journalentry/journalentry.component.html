@@ -1,19 +1,21 @@
-<!-- HEADER -->
-<form [formGroup]="frmJournal" (ngSubmit)="onSubmit()">
-<header id="main-header" class="bg-info text-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h1><i class="fa fa-credit-card-alt"></i> Journal</h1>
-      </div>
-    </div>
-  </div>
-</header>
 
+<form [formGroup]="frmJournal" (ngSubmit)="onSubmit()">
+
+<div class="container">
 <!-- SEARCH -->
-<section id="search" class="py-1 mb-2 ">
-  <div class="container">
-    <div class="row">
+<div id="search" class="py-1 mb-2  ">
+
+    <!-- HEADER -->
+    <header id="main-header" >
+      <div class="container">
+        <div class="row nav-bordera">
+          <div class="col-md-6">
+            <h1><i class="fa fa-credit-card-alt"></i> Journal</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="mt-1 row">
       <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" > New</button>
       <button class="fa fa-save btn btn-success ml-2 float-left"  type="submit"> Save</button>
       <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" > Delete</button>
@@ -32,16 +34,16 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<div class="container">
+  </div>
+
+
 
     <div class="row">
       <div class=" col-sm-6">
         <div class="card bg-light">
           <div class="card-body">
-            <h2  class="card-header py-1 bg-center">
+            <h2  class="card-header py-1 ">
               <div class="form-inline">
                 <div class="col">
                   Journal Details

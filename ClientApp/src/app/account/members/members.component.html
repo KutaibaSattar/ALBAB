@@ -1,32 +1,45 @@
 
- <!-- HEADER -->
- <header id="main-header" class="bg-warning text-white">
-    <div class="container">
-     <div class="row">
-        <div class="col-md-6">
-          <h1>
-            <i class="fa fa-users"></i>Members</h1>
-        </div>
-      </div>
-    </div>
-  </header>
+
    <!-- SEARCH -->
-  <section id="search" class="py-1 mb-2 bg-light">
-    <div class="container">
-      <div class="row">
-        <button class="btn btn-warning ml-3" (click)="AddOrUpdateUser()" >Add User</button>
-        <div class="col-md-6 ml-auto">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Users...">
-            <div class="input-group-append">
-              <button class="btn btn-warning">Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+   <div class="container border-bottom border-dark pb-1">
+      <section id="search" class="py-1 mb-2 bg-light">
+
+        <header id="main-header" class="bg-warning text-white">
+         <div class="container">
+          <div class="row">
+             <div class="col-md-6">
+               <h1>
+                 <i class="fa fa-users"></i>Members</h1>
+             </div>
+           </div>
+         </div>
+       </header>
+      </section>
+           <div class="container">
+             <div class="row">
+               <div class="col-md-3">
+
+               </div>
+               <div class="col-md-3">
+
+               </div>
+
+               <button class="btn btn-warning ml-3" (click)="AddOrUpdateUser()" >Add User</button>
+               <div class="col-md-6 ml-auto">
+                 <div class="input-group">
+                   <input type="text" class="form-control" placeholder="Search Users...">
+                   <div class="input-group-append">
+                     <button class="btn btn-warning">Search</button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+           </div>
 
     </div>
-  </section>
+    <!-- HEADER -->
    <!-- USERS -->
    <section id="users">
     <div class="container">
