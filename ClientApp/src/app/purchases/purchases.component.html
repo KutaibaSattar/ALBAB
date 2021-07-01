@@ -3,164 +3,165 @@
 <!-- SEARCH -->
 
 <form [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()">
-  <section id="search" class="py-1 mb-2 ">
-    <div class="container border-bottom border-dark pb-1">
-      <!-- HEADER -->
-      <header id="main-header" class="bg-secondary text-white ">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <h1>
-                <i class="fa fa-shopping-basket"></i> Purchases
-              </h1>
-            </div>
-          </div>
-        </div>
-      </header>
-      <div class="row mt-1">
-        <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" (click)="clearInv()">
-          New</button>
-        <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()"> Delete</button>
-        <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit">
-          Save</button>
-        <div class="col-md-3 ml-auto">
-          <div class="input-group ">
-            <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
-              [(ngModel)]="txtSearchInv" [ngModelOptions]="{standalone: true}">
-            <mat-autocomplete autoActiveFirstOption (optionSelected)="OnHumanSelected($event.option)"
-              #auto="matAutocomplete" [displayWith]="PurchNameFn.bind(this)">
-              <mat-option *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
-                {{purch.invNo}}
-              </mat-option>
-            </mat-autocomplete>
-            <div class="input-group-append">
-              <button class="fa fa-search ml-1 btn btn-success" (click)="getPurch()"> Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div *ngIf="purchInv" class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group">
-          <label>Purch No</label>
-          <div class="input-group">
-            <app-text-input [formControl]="invNo" [label]="'Invoice'"> </app-text-input>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <label>Date</label>
-        <app-date-input [formControl]="date" [label]="'Date'"> </app-date-input>
+ <div class="mr-2">
+
+   <section id="search" class=" mb-2 ">
+     <div class="border-bottom border-dark pb-1 mr-2">
+       <!-- HEADER -->
+       <header id="main-header" class="my-1 bg-secondary text-white ">
+           <div class="row">
+             <div class="col-md-6">
+               <h1>
+                 <i class="fa fa-shopping-basket"></i> Purchases
+               </h1>
+             </div>
+           </div>
+       </header>
+       <div class="row mt-1">
+         <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" (click)="clearInv()">
+           New</button>
+         <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" (click)="deleteInv()"> Delete</button>
+         <button class="fa fa-save btn btn-success ml-2 float-left" [disabled]="!formInvoice.valid" type="submit">
+           Save</button>
+         <div class="col-md-3 ml-auto">
+           <div class="input-group ">
+             <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
+               [(ngModel)]="txtSearchInv" [ngModelOptions]="{standalone: true}">
+             <mat-autocomplete autoActiveFirstOption (optionSelected)="OnHumanSelected($event.option)"
+               #auto="matAutocomplete" [displayWith]="PurchNameFn.bind(this)">
+               <mat-option *ngFor="let purch of this.filterPurchase()| async" [value]="purch.id">
+                 {{purch.invNo}}
+               </mat-option>
+             </mat-autocomplete>
+             <div class="input-group-append">
+               <button class="fa fa-search ml-1 btn btn-success" (click)="getPurch()"> Search</button>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+   <div *ngIf="purchInv" class="ml-2" >
+     <div class="row">
+       <div class="col-md-3">
+         <div class="form-group">
+           <label>Purch No</label>
+           <div class="input-group">
+             <app-text-input [formControl]="invNo" [label]="'Invoice'"> </app-text-input>
+           </div>
+         </div>
+       </div>
+       <div class="col-md-3">
+         <label>Date</label>
+         <app-date-input [formControl]="date" [label]="'Date'"> </app-date-input>
 
 
 
-      </div>
-      <div class="col-6">
+       </div>
+       <div class="col-6">
 
-        <div class="form-row">
+         <div class="form-row">
 
-          <div class="form-group col">
-            <label>Account</label>
-            <div class="input-group ">
-              <app-dropown-template class="col-12" [accounts]=true [label]="'account name...'"
-                [controlName]="dbAccountId">
-              </app-dropown-template>
-            </div>
-          </div>
-          <div class="form-group col">
-            <label>Supplier</label>
-            <div class="input-group ">
-              <app-dropown-template class="col-12" [members]=true [label]="'vendor name...'" disabled="true"
-                [controlName]="appUserId">
-              </app-dropown-template>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group">
-          <label>Payment Method</label>
-          <select name="pMethod" class="form-control">
-            <option value="">-Select-</option>
-            <option value="Cash">Cash</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Card">Card</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label>Grand Total</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">AED</div>
-          </div>
-          <input name="gtotal" [formControl]='grdTotal' class="form-control" readonly>
-        </div>
-      </div>
-    </div>
-    <header id="main-header" class="bg-secondary text-white ">
-      <div class="container">
-        <div class="row pb-2 pt-1">
-          <div class="col-md-12">
-            <button class="fa fa-plus-circle btn btn-success float-left" type="button" (click)="addRecord()"> Add
-            </button>
-            <button class=" fa fa-search-minus btn btn-secondary float-right" type="button"
-              (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Table Header -->
-    <table class="table table-secondary table- table-hover table-sm table-condensed" formArrayName="invDetails">
-      <caption>List of items</caption>
-      <thead class="thead-light">
+           <div class="form-group col">
+             <label>Account</label>
+             <div class="input-group ">
+               <app-dropown-template class="col-12" [accounts]=true [label]="'account name...'"
+                 [controlName]="dbAccountId">
+               </app-dropown-template>
+             </div>
+           </div>
+           <div class="form-group col">
+             <label>Supplier</label>
+             <div class="input-group ">
+               <app-dropown-template class="col-12" [members]=true [label]="'vendor name...'" disabled="true"
+                 [controlName]="appUserId">
+               </app-dropown-template>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class="row">
+       <div class="col-md-3">
+         <div class="form-group">
+           <label>Payment Method</label>
+           <select name="pMethod" class="form-control">
+             <option value="">-Select-</option>
+             <option value="Cash">Cash</option>
+             <option value="Cheque">Cheque</option>
+             <option value="Card">Card</option>
+           </select>
+         </div>
+       </div>
+       <div class="col-md-6">
+         <label>Grand Total</label>
+         <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text">AED</div>
+           </div>
+           <input name="gtotal" [formControl]='grdTotal' class="form-control" readonly>
+         </div>
+       </div>
+     </div>
+     <header id="main-header" class="bg-secondary text-white ">
+       <div class="container">
+         <div class="row pb-2 pt-1">
+           <div class="col-md-12">
+             <button class="fa fa-plus-circle btn btn-success float-left" type="button" (click)="addRecord()"> Add
+             </button>
+             <button class=" fa fa-search-minus btn btn-secondary float-right" type="button"
+               (click)="AddOrEditPurchseItem(purchInv)"> Search</button>
+           </div>
+         </div>
+       </div>
+     </header>
+     <!-- Table Header -->
+     <table class="table table-secondary table- table-hover table-sm table-condensed" formArrayName="invDetails">
+       <caption>List of items</caption>
+       <thead class="thead-light">
 
-        <tr>
-          <th style="width: 30%">Item</th>
-          <th style="width: 30%">description</th>
-          <th style="width: 10%">Price</th>
-          <th style="width: 10%">Quantity</th>
-          <th style="width: 10%">Total</th>
-          <th style="width: 10%">Action</th>
-        </tr>
-      </thead>
-      <!-- Table Body -->
-      <tbody *ngFor="let _ of invDetails.controls; index as i " [formGroupName]="i">
+         <tr>
+           <th style="width: 30%">Item</th>
+           <th style="width: 30%">description</th>
+           <th style="width: 10%">Price</th>
+           <th style="width: 10%">Quantity</th>
+           <th style="width: 10%">Total</th>
+           <th style="width: 10%">Action</th>
+         </tr>
+       </thead>
+       <!-- Table Body -->
+       <tbody *ngFor="let _ of invDetails.controls; index as i " [formGroupName]="i">
 
-        <tr>
-          <td>
-            <div class="input-group">
-              <app-dropown-template class="col-12" [products]=true [label]="'Item'" [controlName]="productId[i]">
-              </app-dropown-template>
+         <tr>
+           <td>
+             <div class="input-group">
+               <app-dropown-template class="col-12" [products]=true [label]="'Item'" [controlName]="productId[i]">
+               </app-dropown-template>
 
-            </div>
-          </td>
-          <td>
-            <app-text-input formControlName="description" [label]="'description'"> </app-text-input>
-          </td>
+             </div>
+           </td>
+           <td>
+             <app-text-input formControlName="description" [label]="'description'"> </app-text-input>
+           </td>
 
-          <td>
-            <app-text-input [formControl]="price[i]" [label]="'Price'"> </app-text-input>
-          </td>
-          <td>
-            <app-text-input [formControl]="quantity[i]" [label]="'quantity'"> </app-text-input>
-          </td>
-          <td> <input type="number" class="form-control" placeholder="UnitTotal" formControlName="unitTotalPrice"></td>
-          <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
-              (click)="removeUnit(i)"> Remove</button></td>
-        </tr>
-      </tbody>
-      <nav class="navbar fixed-bottom navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Navbar Fixed Bottom</a>
-      </nav>
-    </table>
+           <td>
+             <app-text-input [formControl]="price[i]" [label]="'Price'"> </app-text-input>
+           </td>
+           <td>
+             <app-text-input [formControl]="quantity[i]" [label]="'quantity'"> </app-text-input>
+           </td>
+           <td> <input type="number" class="form-control" placeholder="UnitTotal" formControlName="unitTotalPrice"></td>
+           <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
+               (click)="removeUnit(i)"> Remove</button></td>
+         </tr>
+       </tbody>
+       <nav class="navbar fixed-bottom navbar-dark bg-dark">
+         <a href="#" class="navbar-brand">Navbar Fixed Bottom</a>
+       </nav>
+     </table>
 
-    <!-- <pre>{{formInvoice.value | json}}</pre> -->
-  
-  </div>
+     <!-- <pre>{{formInvoice.value | json}}</pre> -->
+
+   </div>
+ </div>
 </form>

@@ -1,75 +1,109 @@
 
 <form [formGroup]="frmJournal" (ngSubmit)="onSubmit()">
 
-<div class="container">
-<!-- SEARCH -->
-<div id="search" class="py-1 mb-2  ">
+<div class="mr-3">
 
-    <!-- HEADER -->
-    <header id="main-header" >
-      <div class="container">
-        <div class="row nav-bordera">
-          <div class="col-md-6">
-            <h1><i class="fa fa-credit-card-alt"></i> Journal</h1>
+  <div id="search" class="py-1 mb-2  ">
+
+      <!-- HEADER -->
+      <header id="main-header" >
+
+          <div class="row nav-bordera">
+            <div class="col-md-6">
+              <h1><i class="fa fa-credit-card-alt"></i> Journal</h1>
+            </div>
+
+        </div>
+      </header>
+      <div class="mt-1 row">
+        <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" > New</button>
+        <button class="fa fa-save btn btn-success ml-2 float-left"  type="submit"> Save</button>
+        <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" > Delete</button>
+        <div class="col-md-6 ml-auto">
+          <div class="input-group ">
+            <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
+                   name="joke"  >
+            <mat-autocomplete #auto="matAutocomplete" >
+              <mat-option *ngFor="">
+
+              </mat-option>
+            </mat-autocomplete>
+            <div class="input-group-append">
+              <button class="fa fa-search ml-1 btn btn-success" > Search</button>
+            </div>
           </div>
         </div>
       </div>
-    </header>
-    <div class="mt-1 row">
-      <button class="bi bi-folder2-open btn btn-success ml-2 float-right" type="button" > New</button>
-      <button class="fa fa-save btn btn-success ml-2 float-left"  type="submit"> Save</button>
-      <button class="fa fa-remove btn btn-danger ml-2 float-left" type="button" > Delete</button>
-      <div class="col-md-6 ml-auto">
-        <div class="input-group ">
-          <input type="text" class="form-control" placeholder="Search Invoice..." [matAutocomplete]="auto"
-                 name="joke"  >
-          <mat-autocomplete #auto="matAutocomplete" >
-            <mat-option *ngFor="">
 
-            </mat-option>
-          </mat-autocomplete>
-          <div class="input-group-append">
-            <button class="fa fa-search ml-1 btn btn-success" > Search</button>
-          </div>
-        </div>
-      </div>
     </div>
-
-  </div>
-
-
-
-    <div class="row">
-      <div class=" col-sm-6">
-        <div class="card bg-light">
-          <div class="card-body">
-            <h2  class="card-header py-1 ">
-              <div class="form-inline">
-                <div class="col">
-                  Journal Details
+      <div class="row">
+        <div class=" col-sm-6">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h2  class="card-header py-1 ">
+                <div class="form-inline">
+                  <div class="col">
+                    Journal Details
+                  </div>
+                    <select [class.is-invalid] required formControlName="type"
+                    class="form-control border-primary ml-2 h-25" placeholder="type" data-size="5">
+                    <option > Receipt</option>
+                    <option> SalesReceipt</option>
+                    </select>
                 </div>
-                  <select [class.is-invalid] required formControlName="type"
-                  class="form-control border-primary ml-2 h-25" placeholder="type" data-size="5">
-                  <option > Receipt</option>
-                  <option> SalesReceipt</option>
-                  </select>
-              </div>
 
-            </h2>
-             <div class="row">
-              <!--  -->
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="font-weight-bold">No</label>
+              </h2>
+               <div class="row">
+                <!--  -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="font-weight-bold">No</label>
+                    <div class="input-group">
+                      <input formControlName="jeNo" type="text" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="font-weight-bold">Date</label>
+                  <app-date-input [formControl]="entryDate" [label]="'Date'"> </app-date-input>
+                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label>Note</label>
                   <div class="input-group">
-                    <input formControlName="jeNo" type="text" class="form-control" />
+                    <input formControlName="note" class="form-control" />
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div  [formGroup]="frmSingleAccount" class="card bg-light">
+            <div class="card-body">
+              <h2  class="card-header py-1 bg-center">
+
+                    Credit
+
+
+              </h2>
+            <div class="row">
+              <!--  -->
+              <div class="col-md-7">
+                <div class="form-group">
+                  <label class="font-weight-bold">Account</label>
+                  <div class="input-group">
+                    <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName] ="account"  ></app-dropown-template>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
                 <label class="font-weight-bold">Date</label>
-                <app-date-input [formControl]="entryDate" [label]="'Date'"> </app-date-input>
-               </div>
+                <app-date-input [formControl]="dueDate" [label]="'Date'"> </app-date-input>
+
+              </div>
+
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -81,113 +115,75 @@
             </div>
           </div>
         </div>
+        </div>
+
       </div>
-      <div class="col-sm-6">
-        <div  [formGroup]="frmSingleAccount" class="card bg-light">
-          <div class="card-body">
-            <h2  class="card-header py-1 bg-center">
-
-                  Credit
-
-
-            </h2>
-          <div class="row">
-            <!--  -->
-            <div class="col-md-7">
-              <div class="form-group">
-                <label class="font-weight-bold">Account</label>
-                <div class="input-group">
-                  <app-dropown-template class="col-12" [members]=true [label]="'Supplier'" [controlName] ="account"  ></app-dropown-template>
-                </div>
-              </div>
+      <header id="main-header" class="nav-bordera mt-1">
+        <div class="container">
+          <div class="row pb-2 pt-1">
+            <div class="col-md-8">
+              <button class="fa fa-plus-circle btn btn-success float-left mt-2" type="button"  (click)="addRecord()" > Add </button>
+              <button class=" fa fa-search-minus btn btn-secondary float-right mt-2" type="button" > Search</button>
             </div>
-            <div class="col-md-5">
-              <label class="font-weight-bold">Date</label>
-              <app-date-input [formControl]="dueDate" [label]="'Date'"> </app-date-input>
-
-            </div>
-
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label>Note</label>
-              <div class="input-group">
-                <input formControlName="note" class="form-control" />
-              </div>
+            <div class="form-inline col-md-4">
+              <label class="font-weight-bold">Total</label>
+                <input name="gtotal" [formControl]='grdTotal' class="form-control ml-3" readonly>
             </div>
           </div>
         </div>
+      </header>
+      <div class="row">
+
+         <ng-container formArrayName="journalAccounts">
+
+
+          <!-- Table Header -->
+          <table  class=" table table-bordered table-active table-hover table-sm table-condensed mt-1">
+
+            <thead >
+              <tr class="border" >
+                <th style="width: 20%">Account</th>
+                <th style="width: 10%">Debit</th>
+                <th style="width: 20%">Note</th>
+                <th style="width: 10%">Date</th>
+                <th style="width: 10%">Action</th>
+              </tr>
+            </thead>
+
+            <!-- Table Body -->
+            <tbody *ngFor="let _ of journalAccounts.controls; index as i " [formGroupName]="i" >
+
+              <tr>
+                <td>
+                  <div class="input-group">
+                    <app-dropown-template class="col-12" [accounts]=true [label]="'Accounts'" [controlName] ="accounts[i]"  ></app-dropown-template>
+                  </div>
+                </td>
+                <td>
+                  <input formControlName="debit" class="form-control" />
+                </td>
+                <td>
+                  <input formControlName="note" class="form-control" />
+                </td>
+                <td>
+                  <app-date-input [formControl]="dueDates[i]" [label]="'Date'"> </app-date-input>
+                </td>
+                <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
+                  (click)="removeUnit(i)"> Remove</button></td>
+
+              </tr>
+
+
+            </tbody>
+
+          </table>
+        </ng-container>
+        <div class="container">
+
+       </div>
       </div>
-      </div>
-
-    </div>
-    <header id="main-header" class="nav-bordera mt-1">
-      <div class="container">
-        <div class="row pb-2 pt-1">
-          <div class="col-md-8">
-            <button class="fa fa-plus-circle btn btn-success float-left mt-2" type="button"  (click)="addRecord()" > Add </button>
-            <button class=" fa fa-search-minus btn btn-secondary float-right mt-2" type="button" > Search</button>
-          </div>
-          <div class="form-inline col-md-4">
-            <label class="font-weight-bold">Total</label>
-              <input name="gtotal" [formControl]='grdTotal' class="form-control ml-3" readonly>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="row">
-
-       <ng-container formArrayName="journalAccounts">
-
-
-        <!-- Table Header -->
-        <table  class=" table table-bordered table-active table-hover table-sm table-condensed mt-1">
-
-          <thead >
-            <tr class="border" >
-              <th style="width: 20%">Account</th>
-              <th style="width: 10%">Debit</th>
-              <th style="width: 20%">Note</th>
-              <th style="width: 10%">Date</th>
-              <th style="width: 10%">Action</th>
-            </tr>
-          </thead>
-
-          <!-- Table Body -->
-          <tbody *ngFor="let _ of journalAccounts.controls; index as i " [formGroupName]="i" >
-
-            <tr>
-              <td>
-                <div class="input-group">
-                  <app-dropown-template class="col-12" [accounts]=true [label]="'Accounts'" [controlName] ="accounts[i]"  ></app-dropown-template>
-                </div>
-              </td>
-              <td>
-                <input formControlName="debit" class="form-control" />
-              </td>
-              <td>
-                <input formControlName="note" class="form-control" />
-              </td>
-              <td>
-                <app-date-input [formControl]="dueDates[i]" [label]="'Date'"> </app-date-input>
-              </td>
-              <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
-                (click)="removeUnit(i)"> Remove</button></td>
-
-            </tr>
-
-
-          </tbody>
-
-        </table>
-      </ng-container>
-      <div class="container">
-
-     </div>
-    </div>
-
-  </div>
-
+</div>
+<!-- SEARCH -->
 </form>
 <pre>{{frmJournal.value | json}}</pre>
 <!-- <pre>{{frmSingleAccount.value | json}}</pre> -->
