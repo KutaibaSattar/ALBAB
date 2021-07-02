@@ -124,7 +124,7 @@ a.navbar-brand {
 /***    left menu ****/
 
 /***********************  TOP Bar ********************/
-.sidebar{ width:220px;  background-color:#000;transition: all 0.5s  ease-in-out; }
+.sidebar{ width:100%;  background-color:#000;transition: all 0.5s  ease-in-out; }
 .bg-defoult{background-color:#222;}
 .sidebar ul{ list-style:none; margin:0px; padding:0px; }
 .sidebar li a,.sidebar li a.collapsed.active{ display:block; padding:8px 12px; color:#fff;border-left:0px solid #dedede;  text-decoration:none}
@@ -136,7 +136,7 @@ a.navbar-brand {
     font-family: FontAwesome;
     content: "\f105";
     display: inline-block;
-    padding-left: 0px;
+    padding-left: 5px;
     padding-right: 10px;
     vertical-align: middle;
 }
