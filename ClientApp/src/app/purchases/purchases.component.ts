@@ -7,20 +7,16 @@ import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { IInvoice } from 'app/models/purchase';
+import { Invoice, invoicesList } from 'app/models/purchase';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
 import { ProductService } from 'app/services/product.service';
-import { PurchaseService } from 'app/services/purchase.service';
+import { InvoiceService } from 'app/services/Invoice.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-interface invoice {
-  id: number;
-   invNo: string
-}
 
 @Component({
   selector: 'app-purchases',
@@ -29,7 +25,7 @@ interface invoice {
 })
 export class PurchasesComponent implements OnInit {
   constructor(
-    public purchaseService: PurchaseService,
+    public purchaseService: InvoiceService,
     private productService: ProductService,
     private authService: AuthService,
     private dialog: MatDialog,
@@ -49,7 +45,7 @@ export class PurchasesComponent implements OnInit {
 
   members : Member[];
   txtSearchInv: string ='';
-  purchNos: invoice[];
+  purchList: invoicesList[];
   formInvoice: FormGroup;
   appUserId: FormControl;
   dbAccountId: FormControl;
@@ -61,10 +57,9 @@ export class PurchasesComponent implements OnInit {
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
   grdTotal = new FormControl(''); // sepearated
-  purchInv: IInvoice = new IInvoice();
+  purchInv: Invoice = new Invoice();
 
-  //filteredUsers$: Observable<Array<Member>>;
-  //filteredItems$: Observable<Array<Product>>[] = [];
+
   filteredPurchNos$: Observable<any>;
 
   totalSum: number[] = [];
@@ -77,9 +72,9 @@ export class PurchasesComponent implements OnInit {
 
     //this.productService.testing = true;
 
-    this.purchaseService.getPurchNos().pipe(
-      map ((data : invoice[]) =>{
-        this.purchNos = data;
+    this.purchaseService.getInvLists().pipe(
+      map ((data : invoicesList[]) =>{
+        this.purchList = data;
 
       })
     ).subscribe();
@@ -269,7 +264,7 @@ export class PurchasesComponent implements OnInit {
 
   filterPurchase() : Observable<any> {
     //if (this.purchNos)
-    return  of(this.purchNos?.filter((purch) =>
+    return  of(this.purchList?.filter((purch) =>
       purch.invNo.toLowerCase().includes(this.txtSearchInv)
     ));
   }
@@ -279,7 +274,7 @@ export class PurchasesComponent implements OnInit {
 
   PurchNameFn(option): any {
     //(this.purchNos) {
-      return this.purchNos?.find((element) => element.id === option).invNo;
+      return this.purchList?.find((element) => element.id === option).invNo;
       //return this.purchNos.
     //}
   }

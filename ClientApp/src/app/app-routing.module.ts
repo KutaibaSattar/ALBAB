@@ -18,6 +18,7 @@ import { JournalentryComponent } from './journalentry/journalentry.component';
 import { DbaccountComponent } from './dbaccount/dbaccount.component';
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
 import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
+import { QuotationComponent } from './quotation/quotation.component';
 
 
 
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'members', component: MembersComponent },
       { path: 'dashboard', component: HomeComponent },
       { path: 'product', component: ProductsComponent},
+      { path: 'quotation', component: QuotationComponent},
       { path: 'purchases', component: PurchasesComponent, canDeactivate:[UnsavedchangesGuard]},
       { path: 'reports', component: DbaccountReportComponent},
       { path: 'errors', component: TestErrorsComponent },

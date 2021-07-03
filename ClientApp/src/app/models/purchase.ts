@@ -1,4 +1,4 @@
-export interface IInvoice{
+export interface Invoice{
   id: number
   InvNo:string
   Date :Date
@@ -45,8 +45,13 @@ export interface IInvDetail {
     ]
     }
   } */
+ export interface invoicesList {
+    id: number;
+     invNo: string
+  }
 
-export class IInvoice implements IInvoice{
+
+export class Invoice implements Invoice{
   id = 0;
   invNo ='';
   appUserId = 0;

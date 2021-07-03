@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IInvoice } from 'app/models/purchase';
+import { Invoice } from 'app/models/purchase';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PurchaseService extends DataService {
+export class InvoiceService extends DataService {
 
   constructor(private httpClient: HttpClient) {
 
@@ -21,7 +21,7 @@ export class PurchaseService extends DataService {
 
   getPurchases() {
     return this.getTableRecords('purchlist').pipe(
-      map((purch: IInvoice) => {
+      map((purch: Invoice) => {
         if (purch) {
           const purchase = purch[0];
           return purchase;
@@ -32,7 +32,7 @@ export class PurchaseService extends DataService {
   }
 
 
-  getPurchNos() {
+  getInvLists() {
     return this.getTableRecords('purchListNo');
   }
 
@@ -40,7 +40,7 @@ export class PurchaseService extends DataService {
     return this.getTableRecordId(InvNo, 'invoice');
   }
 
-  UpdaePurchInv(purchase: IInvoice) {
+  UpdaePurchInv(purchase: Invoice) {
     if (purchase.id)
     return this.UpdateTable( purchase);
     //return this.http.put<IInvoice>('https://localhost:5001/api/invoices',purchase);
