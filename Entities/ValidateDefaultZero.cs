@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 
 namespace ALBAB.Entities
 {

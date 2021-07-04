@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using ALBAB.Entities.Products;
 
-namespace ALBAB.Entities.Purchases
+namespace ALBAB.Entities.Invoices
 {
     public class InvDetailsRes
     {

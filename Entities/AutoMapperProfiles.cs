@@ -8,7 +8,7 @@ using System.Reflection.PortableExecutable;
 using AutoMapper;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 using System.Linq;
 using System;
 using System.Collections.Generic;

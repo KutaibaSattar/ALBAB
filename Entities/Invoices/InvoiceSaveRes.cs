@@ -6,13 +6,16 @@ using System.Text.Json.Serialization;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.JournalEntry;
 
-namespace ALBAB.Entities.Purchases
+namespace ALBAB.Entities.Invoices
 {
     public class InvoiceSaveRes
 
     {
+
         [RequiredGreaterThanZero]
         public int? Id { get; set; }
+        [RegularExpression(@"[^0-9]{3}(0|[1-9][0-9]*)$",
+         ErrorMessage = "Characters are not allowed.")]
         public string InvNo { get; set; }
         [Required]
         public JournalType Type { get; set; }

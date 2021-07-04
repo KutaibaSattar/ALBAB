@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using ALBAB.Entities.Products;
 
-namespace ALBAB.Entities.Purchases
+namespace ALBAB.Entities.Invoices
 {
     public class InvDetail : BaseEntity
     {

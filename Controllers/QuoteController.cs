@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
 using ALBAB.Entities.JournalEntry;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 

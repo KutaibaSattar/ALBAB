@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 
 namespace ALBAB.Entities.Products
 {

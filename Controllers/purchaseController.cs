@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

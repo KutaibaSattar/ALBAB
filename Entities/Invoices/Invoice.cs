@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.JournalEntry;
 
-namespace ALBAB.Entities.Purchases
+namespace ALBAB.Entities.Invoices
 {
 
     //[Index(nameof(InvNo), nameof(Type), IsUnique = true)]

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ALBAB.Entities.DB;
 using ALBAB.Entities.JournalEntry;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ALBAB.Entities.AppAccounts;
@@ -31,6 +31,8 @@ namespace ALBAB.Controllers
           [HttpPost]
          public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
          {
+
+           return BadRequest("Testing");
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 

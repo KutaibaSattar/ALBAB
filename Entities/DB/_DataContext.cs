@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
 using ALBAB.Entities.OrderAggregate;
-using ALBAB.Entities.Purchases;
+using ALBAB.Entities.Invoices;
 using ALBAB.Entities.JournalEntry;
 
 namespace ALBAB.Entities.DB
