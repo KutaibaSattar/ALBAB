@@ -48,7 +48,6 @@ import { EnumToArrayPipe } from './_helper/enumToArray';
 import { TabEnterDirective } from './_helper/tab-enter.directive';
 import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
 import { QuotationComponent } from './quotation/quotation.component';
-import {AppConfig, APP_CONFIG } from './_helper/tokens';
 
 
 @NgModule({
@@ -114,8 +113,6 @@ import {AppConfig, APP_CONFIG } from './_helper/tokens';
      {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
      {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
      DatePipe,
-    { provide: APP_CONFIG, useValue: AppConfig.apiEndpoint }
-
   ],
   bootstrap: [AppComponent]
 })

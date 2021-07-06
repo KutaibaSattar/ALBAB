@@ -11,33 +11,29 @@ import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
 import { InvoiceService } from 'app/services/Invoice.service';
 import { ProductService } from 'app/services/product.service';
-import { AppConfig, APP_CONFIG} from 'app/_helper/tokens';
+import { APP_CONFIG} from 'app/_helper/Invoice-token';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-function quotationServiceProvider(http: HttpClient): InvoiceService{
-return new InvoiceService(http,'quote/');
 
-}
-
-const INVOICE_SERVICE = new InjectionToken<InvoiceService>('INVOICE_SERVICE');
 
 @Component({
   selector: 'app-quotation',
   templateUrl: './quotation.component.html',
-  providers: [
-    {provide: APP_CONFIG, useValue: 'CONFIG'},
-    {provide: INVOICE_SERVICE, useFactory: quotationServiceProvider, deps : [HttpClient]}
-  ],
   styleUrls: ['./quotation.component.scss'],
+  providers: [
+    InvoiceService,
+    {provide: APP_CONFIG, useValue: 'quote'},
+   ],
+
 
 })
 
 
 export class QuotationComponent implements OnInit {
   constructor(
-    @Inject(INVOICE_SERVICE) private quotationService :InvoiceService,
+    private quotationService :InvoiceService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,

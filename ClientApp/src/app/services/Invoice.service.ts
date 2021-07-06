@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, Optional} from '@angular/core';
 import { Invoice } from 'app/models/purchase';
-import { APP_CONFIG } from 'app/_helper/tokens';
+import { APP_CONFIG } from 'app/_helper/Invoice-token';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -16,7 +16,7 @@ import { InvoiceService } from 'app/services/Invoice.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { AppConfig } from 'app/_helper/tokens';
+import {APP_CONFIG } from 'app/_helper/Invoice-token';
 
 //AppConfig.apiEndpoint = 'purchase/';
 
@@ -24,6 +24,11 @@ import { AppConfig } from 'app/_helper/tokens';
   selector: 'app-purchases',
   templateUrl: './purchases.component.html',
   styleUrls: ['./purchases.component.scss'],
+  providers: [
+    InvoiceService,
+    {provide: APP_CONFIG, useValue: 'purchase'},
+   ],
+
 })
 export class PurchasesComponent implements OnInit {
   constructor(
