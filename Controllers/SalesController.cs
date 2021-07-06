@@ -32,7 +32,7 @@ namespace ALBAB.Controllers
          public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
          {
 
-           return BadRequest("Testing");
+          // return BadRequest("Testing");
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 

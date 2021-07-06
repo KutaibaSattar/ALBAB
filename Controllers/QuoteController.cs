@@ -6,6 +6,8 @@ using ALBAB.Entities.JournalEntry;
 using ALBAB.Entities.Invoices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ALBAB.Controllers
 {
@@ -20,6 +22,29 @@ namespace ALBAB.Controllers
             _context = context;
 
         }
+            [HttpGet("lastquote")]
+
+            public  ActionResult<string>getLastquote ()
+            {
+                var quote =   _context.Invoices.OrderBy(id => id.Id).Where(t => t.Type == JournalType.QUOTE).Select(i => i.InvNo).LastOrDefault();
+
+               return string.IsNullOrEmpty(quote) ? "": quote;
+            }
+
+        [HttpGet("quoteListNo")]
+         public async Task<ActionResult> getInvNos()
+         {
+
+          var listId = await  _context.Invoices.Where(t => t.Type == JournalType.PURCH).Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
+
+
+          return Ok(listId);
+
+         }
+
+
+
+
           [HttpPost]
          public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
          {
@@ -58,8 +83,14 @@ namespace ALBAB.Controllers
 
          }
 
+            [HttpDelete("deleteallquote")]
+         public async  Task<ActionResult<InvoiceSaveRes>> deleteInvoice()
+         {
+                _context.Invoices.RemoveRange(_context.Invoices.Where(t => t.Type == JournalType.QUOTE ));
+                await _context.SaveChangesAsync();
+                return Ok("All quotations has been deleted");
 
-
+         }
 
     }
 }

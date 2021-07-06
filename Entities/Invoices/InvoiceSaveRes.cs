@@ -14,8 +14,8 @@ namespace ALBAB.Entities.Invoices
 
         [RequiredGreaterThanZero]
         public int? Id { get; set; }
-        [RegularExpression(@"[^0-9]{3}(0|[1-9][0-9]*)$",
-         ErrorMessage = "Characters are not allowed.")]
+        [RegularExpression(@"[A-Z]{2}[0-9\-]{5}(0|[1-9][0-9]*)$",
+         ErrorMessage = "ListNo should formated [BS2020-1].")]
         public string InvNo { get; set; }
         [Required]
         public JournalType Type { get; set; }

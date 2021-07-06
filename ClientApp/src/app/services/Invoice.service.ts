@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional} from '@angular/core';
 import { Invoice } from 'app/models/purchase';
+import { APP_CONFIG } from 'app/_helper/tokens';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,11 +12,20 @@ import { DataService } from './data.service';
 })
 export class InvoiceService extends DataService {
 
-  constructor(private httpClient: HttpClient) {
 
-    super(environment.apiUrl + 'purchase/', httpClient);
+
+  constructor( private httpClient: HttpClient,@Inject(APP_CONFIG) @Optional() private apiPoint?: string) {
+
+
+    super(environment.apiUrl +  apiPoint, httpClient);
+    //this.apiPoint = 'Hello';
+
+
 
   }
+
+
+
 
 
 
@@ -32,8 +42,13 @@ export class InvoiceService extends DataService {
   }
 
 
-  getInvLists() {
-    return this.getTableRecords('purchListNo');
+  getInvLists(Apipoint : string) {
+      return this.getTableRecords(Apipoint);
+  }
+
+  getLastList(){
+    return this.getTableLastList('lastquote');
+
   }
 
   getPurchInv(InvNo: string) {

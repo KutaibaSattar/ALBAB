@@ -16,7 +16,9 @@ import { InvoiceService } from 'app/services/Invoice.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AppConfig } from 'app/_helper/tokens';
 
+//AppConfig.apiEndpoint = 'purchase/';
 
 @Component({
   selector: 'app-purchases',
@@ -72,7 +74,7 @@ export class PurchasesComponent implements OnInit {
 
     //this.productService.testing = true;
 
-    this.purchaseService.getInvLists().pipe(
+    this.purchaseService.getInvLists('purchListNo').pipe(
       map ((data : invoicesList[]) =>{
         this.purchList = data;
 

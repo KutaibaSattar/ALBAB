@@ -31,4 +31,3 @@ export class dbAccountsNewChild {
   isExpandable: boolean;
 }
 
-

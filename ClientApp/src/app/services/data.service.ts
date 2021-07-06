@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,14 @@ export class DataService {
 
 
 
-  constructor(private baseUrl: string, protected http: HttpClient) { }
+  constructor(private baseUrl: string, protected http: HttpClient) {
+
+  
+
+   }
+
+
+
 
   // tslint:disable-next-line: typedef
  protected getTableRecords(extraLocation: string ='') {
@@ -38,6 +45,11 @@ export class DataService {
 
    return this.http.put(this.baseUrl + extraLocation, resource );
 
+  }
+
+  protected getTableLastList(resource , extraLocation: string='')
+  {
+      return this.http.get(this.baseUrl + extraLocation, resource);
   }
 
 

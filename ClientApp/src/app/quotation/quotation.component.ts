@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, Injectable, InjectionToken, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DropDownValidators } from 'app/errors/dropdown.validators';
@@ -10,18 +11,33 @@ import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
 import { InvoiceService } from 'app/services/Invoice.service';
 import { ProductService } from 'app/services/product.service';
+import { AppConfig, APP_CONFIG} from 'app/_helper/tokens';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+function quotationServiceProvider(http: HttpClient): InvoiceService{
+return new InvoiceService(http,'quote/');
+
+}
+
+const INVOICE_SERVICE = new InjectionToken<InvoiceService>('INVOICE_SERVICE');
+
 @Component({
   selector: 'app-quotation',
   templateUrl: './quotation.component.html',
+  providers: [
+    {provide: APP_CONFIG, useValue: 'CONFIG'},
+    {provide: INVOICE_SERVICE, useFactory: quotationServiceProvider, deps : [HttpClient]}
+  ],
   styleUrls: ['./quotation.component.scss'],
+
 })
+
+
 export class QuotationComponent implements OnInit {
   constructor(
-    public quotationService: InvoiceService,
+    @Inject(INVOICE_SERVICE) private quotationService :InvoiceService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -29,10 +45,16 @@ export class QuotationComponent implements OnInit {
     private dbAccountService: DbAccountService,
     private authService: AuthService,
     private dialog: MatDialog,
-  ) {}
+  ) {
+
+
+
+  }
+
   members: Member[];
   txtSearchInv: string = '';
   qutLists: invoicesList[];
+  lastNo : string;
   formInvoice: FormGroup;
   appUserId: FormControl;
   dbAccountId: FormControl;
@@ -52,23 +74,29 @@ export class QuotationComponent implements OnInit {
   priceChanges$ = [];
 
   ngOnInit(): void {
-    this.quotationService
-      .getInvLists()
+
+
+
+      this.quotationService
+      .getInvLists('quoteListNo')
       .pipe(
         map((data: invoicesList[]) => {
           this.qutLists = data;
+          console.log(data);
         })
       )
       .subscribe();
 
     let sources = [
       this.authService.getMembers(),
-      this.productService.getProducts(),
-      this.dbAccountService.getFlattenDbAccounts(),
+      //this.quotationService.getLastList(),
+       this.productService.getProducts(),
+       this.dbAccountService.getFlattenDbAccounts(),
     ];
 
     forkJoin(sources).subscribe((data: any) => {
       this.members = data[0];
+      this.lastNo = data[1];
     });
 
     this.initializeForm();
