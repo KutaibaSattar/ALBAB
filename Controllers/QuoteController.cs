@@ -28,7 +28,7 @@ namespace ALBAB.Controllers
             {
                 var quote =   _context.Invoices.OrderBy(id => id.Id).Where(t => t.Type == JournalType.QUOTE).Select(i => i.InvNo).LastOrDefault();
 
-               return string.IsNullOrEmpty(quote) ? "": quote;
+               return string.IsNullOrEmpty(quote) ? "0": quote;
             }
 
         [HttpGet("quoteListNo")]

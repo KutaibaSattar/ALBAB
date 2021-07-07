@@ -11,7 +11,7 @@ export class DataService {
 
   constructor(private baseUrl: string, protected http: HttpClient) {
 
-  
+
 
    }
 
@@ -47,10 +47,7 @@ export class DataService {
 
   }
 
-  protected getTableLastList(resource , extraLocation: string='')
-  {
-      return this.http.get(this.baseUrl + extraLocation, resource);
-  }
+
 
 
 

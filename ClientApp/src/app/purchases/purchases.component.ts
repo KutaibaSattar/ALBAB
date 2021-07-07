@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Self } from '@angular/core';
 import {FormArray,FormBuilder,FormControl,FormGroup,Validators} from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ import { InvoiceService } from 'app/services/Invoice.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {APP_CONFIG } from 'app/_helper/Invoice-token';
+import {APP_CONFIG } from 'app/_helper/InvoiceType-token';
 
 //AppConfig.apiEndpoint = 'purchase/';
 
@@ -26,19 +26,18 @@ import {APP_CONFIG } from 'app/_helper/Invoice-token';
   styleUrls: ['./purchases.component.scss'],
   providers: [
     InvoiceService,
-    {provide: APP_CONFIG, useValue: 'purchase'},
+    {provide: APP_CONFIG, useValue: 'purchase/'},
    ],
 
 })
 export class PurchasesComponent implements OnInit {
   constructor(
-    public purchaseService: InvoiceService,
+    @Self() public purchaseService: InvoiceService,
     private productService: ProductService,
     private authService: AuthService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private datePipe: DatePipe,
     private confirmService: ConfirmService,
     private dbAccountService : DbAccountService,
   ) {}

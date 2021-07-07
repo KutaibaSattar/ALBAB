@@ -112,7 +112,7 @@ import { QuotationComponent } from './quotation/quotation.component';
      // multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
      {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
      {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
-     DatePipe,
+     
   ],
   bootstrap: [AppComponent]
 })

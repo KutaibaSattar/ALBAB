@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, Injectable, InjectionToken, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, InjectionToken, OnInit, Self } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DropDownValidators } from 'app/errors/dropdown.validators';
@@ -11,7 +11,7 @@ import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
 import { InvoiceService } from 'app/services/Invoice.service';
 import { ProductService } from 'app/services/product.service';
-import { APP_CONFIG} from 'app/_helper/Invoice-token';
+import { APP_CONFIG} from 'app/_helper/InvoiceType-token';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./quotation.component.scss'],
   providers: [
     InvoiceService,
-    {provide: APP_CONFIG, useValue: 'quote'},
+    {provide: APP_CONFIG, useValue: 'quote/'},
    ],
 
 
@@ -33,7 +33,7 @@ import { map } from 'rxjs/operators';
 
 export class QuotationComponent implements OnInit {
   constructor(
-    private quotationService :InvoiceService,
+   @Self() private quotationService :InvoiceService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -43,7 +43,7 @@ export class QuotationComponent implements OnInit {
     private dialog: MatDialog,
   ) {
 
-
+      console.log ('Hello: ' + quotationService)
 
   }
 
@@ -78,14 +78,14 @@ export class QuotationComponent implements OnInit {
       .pipe(
         map((data: invoicesList[]) => {
           this.qutLists = data;
-          console.log(data);
+
         })
       )
       .subscribe();
 
     let sources = [
       this.authService.getMembers(),
-      //this.quotationService.getLastList(),
+      this.quotationService.getLastList(),
        this.productService.getProducts(),
        this.dbAccountService.getFlattenDbAccounts(),
     ];
@@ -93,6 +93,8 @@ export class QuotationComponent implements OnInit {
     forkJoin(sources).subscribe((data: any) => {
       this.members = data[0];
       this.lastNo = data[1];
+      console.log (`${this.lastNo} :
+       ${sources}`)
     });
 
     this.initializeForm();
