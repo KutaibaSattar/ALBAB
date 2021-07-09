@@ -35,7 +35,7 @@ export class DropownTemplateComponent implements OnInit {
 
 
     if (this.members)
-    this.memberService.membersSource$.pipe(
+       this.memberService.membersSource$.pipe(
        map ((members:Member[]) => {
         this.listsFilter =   members.map( obj =>{
            var returnObj = {};
@@ -52,8 +52,7 @@ export class DropownTemplateComponent implements OnInit {
      ).subscribe();
 
   if(this.accounts)
-       this.accountService.accountSource$.subscribe(
-
+      this.accountService.dbAccountService$.subscribe(
         res =>{
           if (res){
             this.listsFilter = res;
@@ -123,28 +122,28 @@ export class DropownTemplateComponent implements OnInit {
     }
   }
 
-  filterTesting(){
-    this.controlName.valueChanges.pipe(
-      //startWith(''),
-      /*map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.users.slice()),*/
-     map((val) => {
-        console.log(val);
-        //return this.filter(val);
-         return  this.memberService.getMembers().pipe(
-            map( x=> {
-              console.log('First',x);
-               return  x.filter(item => item.name.toLowerCase().includes(val))
+  // filterTesting(){
+  //   this.controlName.valueChanges.pipe(
+  //     //startWith(''),
+  //     /*map(value => typeof value === 'string' ? value : value.name),
+  //     map(name => name ? this._filter(name) : this.users.slice()),*/
+  //    map((val) => {
+  //       console.log(val);
+  //       //return this.filter(val);
+  //        return  this.memberService.getMembers().pipe(
+  //           map( x=> {
+  //             console.log('First',x);
+  //              return  x.filter(item => item.name.toLowerCase().includes(val))
 
-            })
-        )
+  //           })
+  //       )
 
-      }),
+  //     }),
 
-    ).subscribe( x => {console.log('Output',x)
-      this.filtered$ = x;
+  //   ).subscribe( x => {console.log('Output',x)
+  //     this.filtered$ = x;
 
-    })
-  }
+  //   })
+  // }
 
 }

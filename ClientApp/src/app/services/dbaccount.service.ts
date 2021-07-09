@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { dbAccounts, dbAccountsNewChild } from 'app/models/dbaccounts';
 import { environment } from 'environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
 
@@ -15,19 +15,17 @@ export class DbAccountService extends DataService {
   }
 
 
-  public CurrentAccountService = new BehaviorSubject<dbAccounts[]>(null);
-  public accountSource$ = this.CurrentAccountService.asObservable();
+  public dbAccountService$ = new ReplaySubject<dbAccounts[]>(null);
+  //public accountSource$ = this.CurrentAccountService.asObservable();
 
-  accounts : dbAccounts[];
+  //accounts : dbAccounts[];
 
   getDbAccounts() {
     return this.getTableRecords().pipe(
-
-      map( (res:dbAccounts[]) => {
-
-            this.accounts = res;
-            this.CurrentAccountService.next(this.accounts);
-            return this.accounts;
+      map( (dbaccounts:dbAccounts[]) => {
+            //this.accounts = res;
+            this.dbAccountService$.next(dbaccounts);
+            return dbaccounts;
       }
       )
 
@@ -35,12 +33,10 @@ export class DbAccountService extends DataService {
   }
   getFlattenDbAccounts() {
     return this.getTableRecords('Flatten').pipe(
-
-      map( (res:dbAccounts[]) => {
-
-            this.accounts = res;
-            this.CurrentAccountService.next(this.accounts);
-            return this.accounts;
+      map( (dbaccounts:dbAccounts[]) => {
+            //this.accounts = res;
+            this.dbAccountService$.next(dbaccounts);
+            return dbaccounts;
       }
       )
 

@@ -16,11 +16,11 @@ export class ProductService extends DataService {
   }
 
 
+  //products : Product[];
 
-  public productsSource = new BehaviorSubject<Product[]>(null);
-  public productsSource$ = this.productsSource.asObservable();
+  public productsSource$ = new BehaviorSubject<Product[]>(null);
+  //public productsSource$ = this.productsSource.asObservable();
 
- products : Product[];
 
 
 
@@ -36,9 +36,9 @@ export class ProductService extends DataService {
   getProducts()  {
    return this.getTableRecords().pipe(
       map((res: Product[]) => {
-       this.products = res;
-      this.productsSource.next(this.products);
-      return this.products;
+       //this.products = res;
+      this.productsSource$.next(res);
+      return res;
       })
     );
 
