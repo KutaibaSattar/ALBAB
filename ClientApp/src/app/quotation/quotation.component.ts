@@ -93,9 +93,16 @@ export class QuotationComponent implements OnInit {
     forkJoin(sources).subscribe((data: any) => {
       this.members = data[0];
       this.lastNo = data[1];
-      console.log (`${this.lastNo} :
-       ${sources}`)
+
+      this.getLastNo()
+
+
     });
+
+
+
+
+
 
     this.initializeForm();
     //this.attachedUserFilter();
@@ -301,6 +308,38 @@ export class QuotationComponent implements OnInit {
       this.grdTotal.setValue(this.invDetails.getRawValue()
           .reduce((sum, current) => sum + current.unitTotalPrice, 0)
       );
+    }
+
+    getLastNo(){
+
+
+      if (this.lastNo){
+
+
+        let str = this.lastNo.split('-')[1];
+
+       let no : number = parseInt(str) + 1;
+
+       let test =  this.lastNo.replace(str,no.toString())
+
+      let x =  "www.testwww.com".replace(/^(www\.)/,"");
+
+
+
+
+
+       console.log (`${test} : Last No`)
+
+        var reg:RegExp =  /\d+/g;
+        var numbers:Array<string> = this.lastNo.match(reg);
+        var LstNo = new RegExp(numbers[1] + '([^1]*)$');
+        //var r = new RegExp(/1([^1]*)$/)
+        console.log(this.lastNo.replace(LstNo, parseInt(numbers[1]) + 1 + '$1')  ) //a_b!c
+        this.lastNo.lastIndexOf(numbers[1])
+      }
+
+
+
     }
 
 

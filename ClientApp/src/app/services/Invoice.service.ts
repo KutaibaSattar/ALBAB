@@ -69,6 +69,6 @@ export class InvoiceService extends DataService {
 
   protected getTableLastList  (resource)
   {
-    return this.http.get(environment.apiUrl + this.apiPoint + resource);
+    return this.http.get<string>(environment.apiUrl + this.apiPoint + resource,{ responseType: 'text' as 'json'});
   }
 }

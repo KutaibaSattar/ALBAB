@@ -25,6 +25,7 @@ namespace ALBAB.Entities.Invoices
         public JournalType Type { get; set; }
         public DateTime Date { get; set; }
         public DateTime LastUpdate { get; set; }
+       
         public string Comment { get; set; }
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }
