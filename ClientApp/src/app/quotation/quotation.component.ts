@@ -316,19 +316,11 @@ export class QuotationComponent implements OnInit {
       if (this.lastNo){
 
 
-        let str = this.lastNo.split('-')[1];
-
-       let no : number = parseInt(str) + 1;
-
-       let test =  this.lastNo.replace(str,no.toString())
-
-      let x =  "www.testwww.com".replace(/^(www\.)/,"");
-
-
-
-
-
-       console.log (`${test} : Last No`)
+      //   let str = this.lastNo.split('-')[1];
+      //  let no : number = parseInt(str) + 1;
+      //  let test =  this.lastNo.replace(str,no.toString())
+      // let x =  "www.testwww.com".replace(/^(www\.)/,"");
+      //  console.log (`${test} : Last No`)
 
         var reg:RegExp =  /\d+/g;
         var numbers:Array<string> = this.lastNo.match(reg);
