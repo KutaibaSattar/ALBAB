@@ -27,9 +27,7 @@ namespace ALBAB.Controllers
             public  ActionResult<string>getLastquote ()
             {
                DateTime firstDay = new DateTime(DateTime.Now.Year , 1, 1);
-
                var quote =   _context.Invoices.OrderBy(id => id.Id).Where(inv => (inv.Type == JournalType.QUOTE) && (inv.Date >= firstDay) ).Select(i => i.InvNo).LastOrDefault();
-
                return string.IsNullOrEmpty(quote) ? InvoiceNoMask.GetMask(): quote;
             }
 
@@ -37,12 +35,8 @@ namespace ALBAB.Controllers
          public async Task<ActionResult> getInvNos()
          {
 
-
           var listId = await  _context.Invoices.Where(t => t.Type == JournalType.PURCH).Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
-
-
           return Ok(listId);
-
          }
 
 

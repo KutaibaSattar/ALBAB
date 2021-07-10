@@ -332,9 +332,10 @@ export class QuotationComponent implements OnInit {
 
         var reg:RegExp =  /\d+/g;
         var numbers:Array<string> = this.lastNo.match(reg);
-        var LstNo = new RegExp(numbers[1] + '([^1]*)$');
+        var LstNoRegExp = new RegExp(numbers[1] + '([^' + numbers[1] + ']*)$');
+        //var LstNoRegExp = new RegExp(numbers[1] + '([^1]*)$');
         //var r = new RegExp(/1([^1]*)$/)
-        console.log(this.lastNo.replace(LstNo, parseInt(numbers[1]) + 1 + '$1')  ) //a_b!c
+        console.log(this.lastNo.replace(LstNoRegExp, parseInt(numbers[1]) + 1 + '$1')  ) //a_b!c
         this.lastNo.lastIndexOf(numbers[1])
       }
 
