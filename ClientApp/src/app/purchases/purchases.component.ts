@@ -7,7 +7,7 @@ import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
 import { Product } from 'app/models/product';
-import { Invoice, invoicesList } from 'app/models/purchase';
+import { Invoice, invoicesList } from 'app/models/Invoice';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
@@ -259,7 +259,7 @@ export class PurchasesComponent implements OnInit {
 
   getPurch() {
     if (this.txtSearchInv) {
-      this.purchaseService.getPurchInv(this.txtSearchInv).subscribe(
+      this.purchaseService.getInvoice(this.txtSearchInv).subscribe(
           (result) => {
             if (result){
 

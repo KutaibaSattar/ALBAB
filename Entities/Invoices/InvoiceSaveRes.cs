@@ -19,6 +19,7 @@ namespace ALBAB.Entities.Invoices
         public string InvNo { get; set; }
         [Required]
         public JournalType Type { get; set; }
+        public InvStatusType Status { get; set; }
         public DateTime Date { get; set; } =  DateTime.Now;
         public string Comment { get; set; }
         public int? AppUserId { get; set; }

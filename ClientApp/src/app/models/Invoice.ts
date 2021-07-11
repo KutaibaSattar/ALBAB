@@ -9,12 +9,12 @@ export interface Invoice{
   purchDtl : IInvDetail[];
 }
 
-/* export interface IPurchHdr {
-  id:number
-  purNo:string
-  purDate? :Date
-  appUserId:number
-} */
+export enum InvStatusType {
+  Pending,
+  Rejected,
+  Accepted,
+  Canceled,
+ }
 
 export interface IInvDetail {
   id:number;

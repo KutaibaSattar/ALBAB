@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, Optional} from '@angular/core';
-import { Invoice } from 'app/models/purchase';
+import { Invoice } from 'app/models/Invoice';
 import { APP_CONFIG } from 'app/_helper/InvoiceType-token';
 import { environment } from 'environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -16,10 +16,6 @@ export class InvoiceService extends DataService {
 
 
     super(environment.apiUrl +  apiPoint, httpClient);
-    console.log (apiPoint);
-    //this.apiPoint = 'Hello';
-
-
 
   }
 
@@ -51,7 +47,7 @@ export class InvoiceService extends DataService {
 
   }
 
-  getPurchInv(InvNo: string) {
+  getInvoice(InvNo: string) {
     return this.getTableRecordId(InvNo, 'invoice');
   }
 

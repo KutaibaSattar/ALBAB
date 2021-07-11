@@ -86,6 +86,7 @@ namespace ALBAB.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+          invRes.Status = InvStatusType.Pending;
           invRes.Type = JournalType.PURCH;
           invRes.VatAcctId = (int)AccountType.Vat;
           invRes.ActionAcctId = (int)AccountType.Store;

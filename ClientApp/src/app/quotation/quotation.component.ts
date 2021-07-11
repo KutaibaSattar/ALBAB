@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
-import { Invoice, invoicesList } from 'app/models/purchase';
+import { Invoice, invoicesList } from 'app/models/Invoice';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
@@ -41,11 +41,7 @@ export class QuotationComponent implements OnInit {
     private dbAccountService: DbAccountService,
     private authService: AuthService,
     private dialog: MatDialog,
-  ) {
-
-      console.log ('Hello: ' + quotationService)
-
-  }
+  ) {}
 
   members: Member[];
   txtSearchInv: string = '';
@@ -93,10 +89,11 @@ export class QuotationComponent implements OnInit {
     forkJoin(sources).subscribe((data: any) => {
       this.members = data[0];
       this.lastNo = data[1];
-
-      this.getLastNo()
-
-
+      this.lastNo =  this.getLastNo();
+      this.initializeForm();
+    //this.attachedUserFilter();
+    this.attachItemFilter(0);
+    this.listenToChanging(0);
     });
 
 
@@ -104,15 +101,12 @@ export class QuotationComponent implements OnInit {
 
 
 
-    this.initializeForm();
-    //this.attachedUserFilter();
-    this.attachItemFilter(0);
-    this.listenToChanging(0);
+
   }
   initializeForm() {
     this.formInvoice = this.formBuilder.group({
       id: null,
-      invNo: [null, Validators.required],
+      invNo: [this.lastNo, Validators.required],
       appUserId: [
         null,
         [Validators.required, DropDownValidators.shouldLimited],
@@ -171,6 +165,7 @@ export class QuotationComponent implements OnInit {
     this.attachItemFilter(this.invDetails.length - 1);
     this.listenToChanging(this.invDetails.length - 1);
   }
+
   OnSubmit() {
     this.formInvoice.markAllAsTouched();
 
@@ -209,7 +204,8 @@ export class QuotationComponent implements OnInit {
 
     PurchNameFn(option): any {
       //(this.purchNos) {
-        return this.qutLists?.find((element) => element.id === option).invNo;
+      if (option)
+      return this.qutLists?.find((element) => element.id === option).invNo;
         //return this.purchNos.
       //}
     }
@@ -222,7 +218,7 @@ export class QuotationComponent implements OnInit {
     }
     getQuotation() {
       if (this.txtSearchInv) {
-        this.quotationService.getPurchInv(this.txtSearchInv).subscribe(
+        this.quotationService.getInvoice(this.txtSearchInv).subscribe(
             (result) => {
               if (result){
 
@@ -311,27 +307,17 @@ export class QuotationComponent implements OnInit {
     }
 
     getLastNo(){
-
-
-      if (this.lastNo){
-
-
-      //   let str = this.lastNo.split('-')[1];
+       //   let str = this.lastNo.split('-')[1];
       //  let no : number = parseInt(str) + 1;
       //  let test =  this.lastNo.replace(str,no.toString())
       // let x =  "www.testwww.com".replace(/^(www\.)/,"");
       //  console.log (`${test} : Last No`)
-
         var reg:RegExp =  /\d+/g;
         var numbers:Array<string> = this.lastNo.match(reg);
         var LstNoRegExp = new RegExp(numbers[1] + '([^' + numbers[1] + ']*)$');
         //var LstNoRegExp = new RegExp(numbers[1] + '([^1]*)$');
         //var r = new RegExp(/1([^1]*)$/)
-        console.log(this.lastNo.replace(LstNoRegExp, parseInt(numbers[1]) + 1 + '$1')  ) //a_b!c
-        this.lastNo.lastIndexOf(numbers[1])
-      }
-
-
+       return (this.lastNo.replace(LstNoRegExp, parseInt(numbers[1]) + 1 + '$1')  ) //a_b!c
 
     }
 

@@ -1,6 +1,6 @@
 <section id="actions" class="py-4 mb-4 bg-light">
 
-  <form [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()">
+  <form *ngIf="formInvoice" [formGroup]="formInvoice" (ngSubmit)="formInvoice.valid && OnSubmit()">
    <div class="mr-2">
 
      <section id="container search" class=" mb-2 ">

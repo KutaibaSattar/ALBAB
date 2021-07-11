@@ -19,13 +19,14 @@ namespace ALBAB.Entities.Invoices
         [Required]
         [MaxLength(20)]
         public string InvNo { get; set; }
-
         [Required]
         [MaxLength(10)]
         public JournalType Type { get; set; }
+        [MaxLength(10)]
+        public InvStatusType Status {get; set;}
         public DateTime Date { get; set; }
         public DateTime LastUpdate { get; set; }
-       
+
         public string Comment { get; set; }
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }

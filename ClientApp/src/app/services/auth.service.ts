@@ -47,18 +47,9 @@ export class AuthService {
 
   getMembers()  {
    return this.http.get(this.baseUrl + 'users').pipe(
-
-    map( (members:Member[]) =>{
-      if(members){
-        this.membersSource$.next(members);
-        console.log(members);
-        return members;
-      }
-
-
-    })
-
-
+    map( (res:Member[]) => {
+      this.membersSource$.next(res)
+      return res;})
     )
 
     // map( x => console.log(x))

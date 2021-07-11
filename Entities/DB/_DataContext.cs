@@ -145,6 +145,7 @@ namespace ALBAB.Entities.DB
 
               builder.Entity<Journal>().Property( t => t.Type).HasConversion<String>();
               builder.Entity<Invoice>().Property( t => t.Type).HasConversion<String>();
+              builder.Entity<Invoice>().Property( t => t.Status).HasConversion<String>();
 
               builder.Entity<Invoice>().HasIndex(i => new {i.InvNo,i.Type}).IsUnique();
               builder.Entity<InvDetail>().HasIndex(i => new {i.InvoiceId,i.ProductId}).IsUnique();

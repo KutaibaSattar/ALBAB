@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Controllers
 {
@@ -35,18 +36,31 @@ namespace ALBAB.Controllers
          public async Task<ActionResult> getInvNos()
          {
 
-          var listId = await  _context.Invoices.Where(t => t.Type == JournalType.PURCH).Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
+          var listId = await  _context.Invoices.Where(t => t.Type == JournalType.QUOTE).Select(pur => new {Id =pur.Id, invNo = pur.InvNo}).ToListAsync();
           return Ok(listId);
          }
 
+         [HttpGet("invoice/{id}")]
+         public async Task<ActionResult<IEnumerable<InvoiceSaveRes>>> getInvId(int id)
+         {
+           var invoices = await _context.Invoices.Include(d => d.InvDetail)
+           .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.Id == id);
 
+         var result =  _mapper.Map<Invoice,InvoiceSaveRes>(invoices);
+          return Ok(result);
 
+         }
 
           [HttpPost]
          public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+          invRes.Status = InvStatusType.Pending;
+          invRes.Type = JournalType.QUOTE;
+          invRes.VatAcctId = (int)AccountType.Vat;
+          invRes.ActionAcctId = (int)AccountType.Store;
 
          if (invRes.Type != JournalType.QUOTE )
                 return BadRequest("Please check invoice type");
