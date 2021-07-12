@@ -131,7 +131,7 @@
          <!-- Table Body -->
          <tbody *ngFor="let _ of invDetails.controls; index as i " [formGroupName]="i">
 
-           <tr>
+           <!-- <tr>
              <td>
                <div class="input-group">
                  <app-dropown-template class="col-12" [products]=true [label]="'Item'" [controlName]="productId[i]">
@@ -152,10 +152,15 @@
              <td> <input type="number" class="form-control" placeholder="UnitTotal" formControlName="unitTotalPrice"></td>
              <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
                  (click)="removeUnit(i)"> Remove</button></td>
-           </tr>
-         </tbody>
+           </tr> -->
+
+                <invoice-template [productId]="productId[i]" [price]="price[i]" [quantity]="quantity[i]" [description]="description[i]"></invoice-template>
+
+
+          </tbody>
 
        </table>
+
 
        <!-- <pre>{{formInvoice.value | json}}</pre> -->
 

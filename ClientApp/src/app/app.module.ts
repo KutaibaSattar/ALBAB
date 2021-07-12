@@ -39,7 +39,7 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
 import { esDoLocale } from 'ngx-bootstrap/locale';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
-import { DbaccountTemplateComponent } from './dbaccount-template/dbaccount-template.component';
+import { DbaccountTemplateComponent } from './dbaccount/dbaccount-template/dbaccount-template.component';
 import { DropownTemplateComponent } from './templates/dropown-template/dropown-template.component';
 import { AutocompleteComponent } from './templates/autocomplete/autocomplete.component';
 import { DateInputComponent } from './templates/date-input/date-input.component';
@@ -48,6 +48,7 @@ import { EnumToArrayPipe } from './_helper/enumToArray';
 import { TabEnterDirective } from './_helper/tab-enter.directive';
 import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
 import { QuotationComponent } from './quotation/quotation.component';
+import { InvoiceTemplateComponent } from './invoice-template/invoice-template.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { QuotationComponent } from './quotation/quotation.component';
    TabEnterDirective,
    DbaccountReportComponent,
    QuotationComponent,
+   InvoiceTemplateComponent,
 
 
     ],

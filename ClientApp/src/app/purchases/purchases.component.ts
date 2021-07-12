@@ -62,6 +62,7 @@ export class PurchasesComponent implements OnInit {
   productId : FormControl[] = new Array();
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
+  description : FormControl[] = new Array();
   grdTotal = new FormControl(''); // sepearated
   purchInv: Invoice = new Invoice();
 
@@ -148,7 +149,6 @@ export class PurchasesComponent implements OnInit {
     this.invNo = this.formInvoice.get('invNo') as FormControl;
     this.date = this.formInvoice.get('date') as FormControl;
     this.invoiceId = this.formInvoice.get('id') as FormControl;
-
     this.invDetails = this.formInvoice.get('invDetails') as FormArray;
 
   }
@@ -172,6 +172,7 @@ export class PurchasesComponent implements OnInit {
     this.productId[index] = this.invDetails.at(index).get('productId') as FormControl;
     this.price[index] = this.invDetails.at(index).get('price') as FormControl;
     this.quantity[index] = this.invDetails.at(index).get('quantity') as FormControl;
+    this.description[index] = this.invDetails.at(index).get('description') as FormControl;
 
 
     /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
