@@ -63,6 +63,7 @@ export class PurchasesComponent implements OnInit {
   price : FormControl[] = new Array();
   quantity : FormControl[] = new Array();
   description : FormControl[] = new Array();
+  unitTotalPrice : FormControl[] = new Array();
   grdTotal = new FormControl(''); // sepearated
   purchInv: Invoice = new Invoice();
 
@@ -173,6 +174,7 @@ export class PurchasesComponent implements OnInit {
     this.price[index] = this.invDetails.at(index).get('price') as FormControl;
     this.quantity[index] = this.invDetails.at(index).get('quantity') as FormControl;
     this.description[index] = this.invDetails.at(index).get('description') as FormControl;
+    this.unitTotalPrice[index] = this.invDetails.at(index).get('unitTotalPrice') as FormControl;
 
 
     /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
@@ -319,11 +321,13 @@ export class PurchasesComponent implements OnInit {
     }
   }
 
-   removeUnit(i: number) {
+  deleteItem(event,i: number) {
     this.invDetails.removeAt(i);
     this.productId.splice(i,1);
     this.price.splice(i,1);
     this.quantity.splice(i,1);
+    this.description.splice(i,1);
+    this.unitTotalPrice.splice(i,1);
     this.updateTotalUnitPrice( this.invDetails.controls.length-1);
   }
 

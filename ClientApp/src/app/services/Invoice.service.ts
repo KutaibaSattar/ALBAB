@@ -37,7 +37,7 @@ export class InvoiceService extends DataService {
   }
 
 
-  getInvLists(Apipoint : string) {
+  getInvLists(Apipoint : string)  {
 
       return this.getTableRecords(Apipoint);
   }

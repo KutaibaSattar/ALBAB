@@ -19,7 +19,7 @@ export class DataService {
 
 
   // tslint:disable-next-line: typedef
- protected getTableRecords(extraLocation: string ='') {
+ protected getTableRecords(extraLocation: string ='') : Observable<any> {
     return this.http.get(this.baseUrl + extraLocation);
 
   }

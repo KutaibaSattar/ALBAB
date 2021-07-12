@@ -1,35 +1,23 @@
 
 
 
-      <tr>
 
+          <td>
 
-
-        <td>
-
-          <div class="input-group">
             <app-dropown-template  [products]=true [label]="'Item'" [controlName]="productId">
             </app-dropown-template>
+          </td>
+          <td>
 
-          </div>
-        </td>
-
-
-         <td>
-          <div class="input-group">
             <app-text-input [formControl]="description" [label]="'description'"> </app-text-input>
-          </div>
-        </td>
-
-
-      </tr>
-
-      <!-- <td>
+          </td>
+      <td>
         <app-text-input [formControl]="price" [label]="'Price'"> </app-text-input>
       </td>
       <td>
         <app-text-input [formControl]="quantity" [label]="'quantity'"> </app-text-input>
-      </td> -->
-      <!-- <td> <input type="number" class="form-control" placeholder="UnitTotal" formControlName="unitTotalPrice"></td>
+      </td>
+
+      <td> <input type="number" class="form-control" placeholder="UnitTotal" [formControl]="unitTotalPrice"></td>
       <td> <button class="bi bi-folder-minus btn btn-danger mt-1" ng-really-message="Are you sure?" type="button"
-          > Remove</button></td> -->
+        (click)="onDeleteItem($event,i)" > Remove</button></td>
