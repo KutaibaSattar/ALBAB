@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
-using ALBAB.Entities.OrderAggregate;
 using ALBAB.Entities.Invoices;
 using ALBAB.Entities.JournalEntry;
 
@@ -31,6 +30,7 @@ namespace ALBAB.Entities.DB
         }
 
         public DbSet<AppUser> AppUser { get; set; }
+        public DbSet<Address> Address {get;set;}
         public DbSet<InvDetail> InvDetails { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
 
@@ -39,9 +39,6 @@ namespace ALBAB.Entities.DB
          public DbSet<Brand> brands  {get;set;}
 
          public DbSet<Model> models {get;set;}
-         public DbSet<Order> orders { get; set; }
-         public DbSet<OrderItem> orderItems { get; set; }
-
          public DbSet<JournalAccount> journalAccounts { get; set; }
          public DbSet<Journal> journals { get; set; }
 
@@ -133,15 +130,7 @@ namespace ALBAB.Entities.DB
                 .HasForeignKey (ur => ur.RoleId)
                 .IsRequired();
 
-             builder.Entity<AppUser>().OwnsOne(a => a.Address, u => {
-                    u.WithOwner().HasForeignKey("id");
-                    u.Property<int>("appuserid");});
 
-               builder.Entity<Order>().OwnsOne(o => o.Address, a =>{
-                   a.WithOwner().HasForeignKey("id");
-                   a.Property<int>("id");
-
-               });
 
               builder.Entity<Journal>().Property( t => t.Type).HasConversion<String>();
               builder.Entity<Invoice>().Property( t => t.Type).HasConversion<String>();

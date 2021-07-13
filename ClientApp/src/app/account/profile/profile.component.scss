@@ -1,0 +1,35 @@
+
+
+html, body {
+  height: 100%;
+}
+
+div.card {
+  height: 100%;
+}
+
+#left-col {
+  height: 100%;
+}
+
+#right-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#right-card-container {
+  flex: 1;
+}
+
+#right-card-content {
+  height: 100%;
+  background: red;
+}
+
+#right-bottom-element {
+  background: blue;
+  display: inline-block;
+  height: 100px;
+  width: 100%;
+}

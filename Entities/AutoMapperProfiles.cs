@@ -1,10 +1,4 @@
 
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
-using System.Reflection.Metadata.Ecma335;
-using System.IO;
-using System.Reflection.PortableExecutable;
 using AutoMapper;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities.Products;
@@ -13,7 +7,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using ALBAB.Entities.JournalEntry;
-using System.Reflection;
+
 
 namespace ALBAB.Entities
 {
@@ -24,20 +18,18 @@ namespace ALBAB.Entities
 
             //CreateMap<JournalType, string>().ConvertUsing(src => src.ToString());
 
-            CreateMap<AppUser, RegisterDto>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+            CreateMap<AppUser, RegisterRes>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
 
-            CreateMap<AppUser, AppUserDto>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+            CreateMap<AppUser, AppUserRes>().ForMember(dto => dto.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
 
-            CreateMap<AppUser, MemberDto>()
+            CreateMap<AppUser, MemberRes>()
                 .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
 
+            CreateMap<AddressRes,Address>();
 
             CreateMap<dbAccount, dbAccountsFlattenRes>();
 
-
-
-
-            CreateMap<dbAccount, dbAccountsDto>().ReverseMap();
+            CreateMap<dbAccount, dbAccountsRes>().ReverseMap();
 
             CreateMap<Brand, BrandDto>();
 

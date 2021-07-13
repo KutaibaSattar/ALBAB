@@ -19,7 +19,8 @@
            <div class="container">
              <div class="row">
                <div class="col-md-3">
-                 <button class="btn btn-warning ml-3" (click)="AddOrUpdateUser()" >Add User</button>
+                 <!-- <button class="btn btn-warning ml-3" (click)="AddOrUpdateUser()" >Add User</button> -->
+                 <button mat-stroked-button class="btn btn-warning ml-3" color="primary" (click)="AddOrUpdateUser()">Add User</button>
                </div>
                <div class="col-md-6 ml-auto">
                  <div class="input-group">
@@ -63,6 +64,7 @@
                   <td>{{user.type}}</td>
                   <td>{{user.phoneNumber}}</td>
                   <td>
+
                     <a [routerLink]="['/members',user.keyId]"  class="btn btn-secondary">
                       <i class="fa fa-angle-double-right"></i> Details
                     </a>

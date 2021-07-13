@@ -27,7 +27,7 @@ namespace ALBAB.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<AppUserRes>> Register(RegisterRes registerDto)
 
         {
 
@@ -63,7 +63,7 @@ namespace ALBAB.Controllers
 
            if (!result.Succeeded) return BadRequest(result.Errors);
 
-            return new AppUserDto
+            return new AppUserRes
             {
                 Name = user.Name,
                 KeyId = user.UserName,

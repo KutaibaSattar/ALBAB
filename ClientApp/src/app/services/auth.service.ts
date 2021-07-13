@@ -52,7 +52,6 @@ export class AuthService {
       return res;})
     )
 
-    // map( x => console.log(x))
 
 
   }

@@ -35,8 +35,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
 import {TabsModule} from 'ngx-bootstrap/tabs';
-import { esDoLocale } from 'ngx-bootstrap/locale';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
 import { DbaccountTemplateComponent } from './dbaccount/dbaccount-template/dbaccount-template.component';
@@ -95,6 +95,7 @@ import { InvoiceTemplateComponent } from './invoice-template/invoice-template.co
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatButtonModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
 
@@ -114,7 +115,7 @@ import { InvoiceTemplateComponent } from './invoice-template/invoice-template.co
      // multi=true, in order to allow the angular to create multiple objects for the JwtInterceptorService.
      {provide : HTTP_INTERCEPTORS , useClass : ErrorInterceptor , multi: true} ,
      {provide : HTTP_INTERCEPTORS , useClass : JwtInterceptor , multi: true},
-     
+
   ],
   bootstrap: [AppComponent]
 })

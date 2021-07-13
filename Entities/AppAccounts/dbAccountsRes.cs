@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ALBAB.Entities.AppAccounts
 {
-    public class dbAccountsDto
+    public class dbAccountsRes
     {
         public int Id { get; set; }
 
@@ -25,7 +25,7 @@ namespace ALBAB.Entities.AppAccounts
 
         public bool IsExpandable {get;set;} = false;
 
-       public ICollection<dbAccountsDto> Children { get; set; }
+       public ICollection<dbAccountsRes> Children { get; set; }
         /*  public dbAccountsDto(){
 
              Children = new Collection<dbAccountsDto>();

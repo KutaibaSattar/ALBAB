@@ -3,14 +3,16 @@ using System;
 using ALBAB.Entities.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210713075412_UpdateAddress")]
+    partial class UpdateAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,46 +193,6 @@ namespace ALBaB.Migrations
                         .HasDatabaseName("ix_dbaccounts_parentid");
 
                     b.ToTable("dbaccounts");
-                });
-
-            modelBuilder.Entity("ALBAB.Entities.DB.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("appuserid");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text")
-                        .HasColumnName("city");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text")
-                        .HasColumnName("country");
-
-                    b.Property<string>("Line1")
-                        .HasColumnType("text")
-                        .HasColumnName("line1");
-
-                    b.Property<string>("Line2")
-                        .HasColumnType("text")
-                        .HasColumnName("line2");
-
-                    b.Property<string>("Region")
-                        .HasColumnType("text")
-                        .HasColumnName("region");
-
-                    b.HasKey("Id")
-                        .HasName("pk_address");
-
-                    b.HasIndex("AppUserId")
-                        .HasDatabaseName("ix_address_appuserid");
-
-                    b.ToTable("address");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.Invoices.InvDetail", b =>
@@ -650,6 +612,52 @@ namespace ALBaB.Migrations
                     b.ToTable("aspnetusertokens");
                 });
 
+            modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUser", b =>
+                {
+                    b.OwnsMany("ALBAB.Entities.DB.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("AppUserId")
+                                .HasColumnType("int")
+                                .HasColumnName("appuserid");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("text")
+                                .HasColumnName("city");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("text")
+                                .HasColumnName("country");
+
+                            b1.Property<string>("Line1")
+                                .HasColumnType("text")
+                                .HasColumnName("line1");
+
+                            b1.Property<string>("Line2")
+                                .HasColumnType("text")
+                                .HasColumnName("line2");
+
+                            b1.Property<string>("Region")
+                                .HasColumnType("text")
+                                .HasColumnName("region");
+
+                            b1.HasKey("AppUserId", "Id")
+                                .HasName("pk_address");
+
+                            b1.ToTable("address");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AppUserId")
+                                .HasConstraintName("fk_address_aspnetusers_appuserid");
+                        });
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUserRole", b =>
                 {
                     b.HasOne("ALBAB.Entities.AppAccounts.AppRole", "Role")
@@ -679,18 +687,6 @@ namespace ALBaB.Migrations
                         .HasConstraintName("fk_dbaccounts_dbaccounts_parentid");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("ALBAB.Entities.DB.Address", b =>
-                {
-                    b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
-                        .WithMany("Address")
-                        .HasForeignKey("AppUserId")
-                        .HasConstraintName("fk_address_aspnetusers_appuserid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.Invoices.InvDetail", b =>
@@ -830,8 +826,6 @@ namespace ALBaB.Migrations
 
             modelBuilder.Entity("ALBAB.Entities.AppAccounts.AppUser", b =>
                 {
-                    b.Navigation("Address");
-
                     b.Navigation("UserRoles");
                 });
 

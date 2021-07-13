@@ -1,1 +1,59 @@
-<p>profile works!</p>
+<section id="actions" class="py-4 mb-4">
+
+  <header id="main-header" class="bg-info text-white p-1 mb-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>
+            <i class="fa fa-user"></i>Edit member
+          </h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <form #editForm="ngForm">
+  <div class="row">
+    <div class=" col-4">
+      <div class="alert alert-info">
+        <strong>Profile:</strong>
+      </div>
+      <div class="card border-success mb-5">
+        <div class="card-header  bg-info border-success">{{userId}}</div>
+        <div class="card-body text-success">
+          <h5 class="card-title">Success card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          <button class=" btn btn-success btn-block"> Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-8">
+
+      <div class="alert alert-info" *ngIf="editForm.dirty"  >
+        <strong>Information:</strong> You have made changes. Any unsaved changes will be lost
+      </div>
+      <div class="card border-success">
+        <div class="card-header bg-transparent border-success">{{userId}}</div>
+        <div class="card-body text-success">
+          <h5 class="card-title">Success card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+         <div class="form-inline">
+            <label for="city"> City</label>
+            <input  type="text">
+         </div>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          <button class=" btn btn-success btn-sm"> Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</form>
+</section>

@@ -33,7 +33,7 @@ namespace ALBAB.Controllers
 
         [HttpPost("register")]
 
-        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<AppUserRes>> Register(RegisterRes registerDto)
 
         {
 
@@ -49,7 +49,7 @@ namespace ALBAB.Controllers
 
            if (!result.Succeeded) return BadRequest(result.Errors);
 
-            return new AppUserDto
+            return new AppUserRes
             {
                 Name = user.Name,
                 KeyId = user.UserName,
@@ -64,11 +64,11 @@ namespace ALBAB.Controllers
 
         [Authorize(Roles ="Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberRes>>> GetUsers()
         {
           var users = await _context.Users.ToListAsync();
 
-         var result = _mapper.Map<List<AppUser>,List<MemberDto>>(users);
+         var result = _mapper.Map<List<AppUser>,List<MemberRes>>(users);
 
           return Ok(result);
 
@@ -81,7 +81,7 @@ namespace ALBAB.Controllers
         {
 
             var user = await _context.Users.FindAsync(id);
-            var result = _mapper.Map<AppUser,AppUserDto>(user);
+            var result = _mapper.Map<AppUser,AppUserRes>(user);
             return Ok(result);
 
 
@@ -90,7 +90,7 @@ namespace ALBAB.Controllers
         [Authorize]
         [HttpGet("getcurrentuser")]
 
-        public async Task<ActionResult<AppUserDto>> GetCurrentUser()
+        public async Task<ActionResult<AppUserRes>> GetCurrentUser()
         {
 
 
@@ -99,7 +99,7 @@ namespace ALBAB.Controllers
             var user = await _userManager.FindByEmailAsync(role);
 
 
-            var userToReturn = _mapper.Map<AppUserDto>(user);
+            var userToReturn = _mapper.Map<AppUserRes>(user);
 
             return Ok(userToReturn);
         }
@@ -111,7 +111,15 @@ namespace ALBAB.Controllers
 
         }
 
+        [HttpPut("updatemember")]
 
+      private async Task<int> updateMember (int id)
+      {
+        var address = await _context.Address.FindAsync(id);
+
+          return address;
+
+      }
 
 
     }

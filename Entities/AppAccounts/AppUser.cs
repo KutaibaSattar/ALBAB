@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ALBAB.Entities.DB;
-using ALBAB.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 
 namespace ALBAB.Entities.AppAccounts
@@ -20,13 +19,12 @@ namespace ALBAB.Entities.AppAccounts
       public AccountType type { get; set; }
       public string LookingFor { get; set; }
       public string Interests { get; set; }
-     public Address Address {get;set;}
      public ICollection<AppUserRole> UserRoles { get; set; }
-     public ICollection<Order> orders { get; set; }
 
+     public ICollection<Address> Address { get; set; }
     public AppUser(){
 
-      orders = new Collection<Order>();
+      Address = new Collection<Address>();
 
     }
 

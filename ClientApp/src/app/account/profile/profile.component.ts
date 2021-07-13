@@ -10,8 +10,10 @@ export class ProfileComponent implements OnInit {
 
   constructor( private route: ActivatedRoute) { }
 
+  userId : string;
+
   ngOnInit(): void {
-    this.route.snapshot.paramMap.get('userId');
+   this.userId = this.route.snapshot.paramMap.get('userId');
 
   }
 

@@ -32,7 +32,7 @@ namespace ALBAB.Controllers
 
                //[Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<dbAccountsDto>>> GetdbAccounts()
+        public async Task<ActionResult<IEnumerable<dbAccountsRes>>> GetdbAccounts()
 
         {
             //var dbaccounts = await _context.dbAccounts.ToListAsync();
@@ -53,7 +53,7 @@ namespace ALBAB.Controllers
 
 
            // var result = _mapper.Map<IEnumerable<dbAccountsDto>>(dbaccounts);
-            return Ok(_mapper.Map<IEnumerable<dbAccountsDto>>(result));
+            return Ok(_mapper.Map<IEnumerable<dbAccountsRes>>(result));
         }
 
         [HttpGet("Flatten")]
@@ -71,11 +71,11 @@ namespace ALBAB.Controllers
 
 
        [HttpPost]
-         public async Task<ActionResult<dbAccountsDto>> createDbAccounts(dbAccountsDto dbAccount)
+         public async Task<ActionResult<dbAccountsRes>> createDbAccounts(dbAccountsRes dbAccount)
          {
 
 
-           var dbaccount = _mapper.Map<dbAccountsDto,dbAccount>(dbAccount);
+           var dbaccount = _mapper.Map<dbAccountsRes,dbAccount>(dbAccount);
 
 
 
@@ -85,7 +85,7 @@ namespace ALBAB.Controllers
 
            //var journals = await _context.journals.Include(j => j.journalAccounts).ToListAsync();
 
-           var result = _mapper.Map<dbAccountsDto>(dbaccount);
+           var result = _mapper.Map<dbAccountsRes>(dbaccount);
 
            return Ok(result);
 
@@ -98,7 +98,7 @@ namespace ALBAB.Controllers
         {
             var dbAccount = await _context.dbAccounts.FindAsync(id);
 
-            var result = _mapper.Map<dbAccountsDto>(dbAccount);
+            var result = _mapper.Map<dbAccountsRes>(dbAccount);
 
             return Ok(result);
 

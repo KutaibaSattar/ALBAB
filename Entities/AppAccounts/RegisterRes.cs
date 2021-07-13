@@ -3,7 +3,7 @@ using ALBAB.Entities.AppAccounts;
 
 namespace ALBAB.Entities
 {
-    public class RegisterDto
+    public class RegisterRes
     {
       [Required]
     public string Name { get; set; }

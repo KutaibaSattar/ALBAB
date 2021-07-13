@@ -12,6 +12,7 @@ import { AuthService } from 'app/services/auth.service';
   styleUrls: ['./newmember.component.scss']
 })
 export class NewMemberComponent implements OnInit {
+
   formData: Member;
   type = 30;
   keyId;

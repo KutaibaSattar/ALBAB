@@ -33,7 +33,7 @@ namespace ALBAB.Controllers
         }
 
        [HttpPost("login")]
-        public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<AppUserRes>> Login(LoginDto loginDto)
         {
 
 
@@ -51,7 +51,7 @@ namespace ALBAB.Controllers
 
 
 
-            return new AppUserDto
+            return new AppUserRes
             {
                 KeyId = user.UserName,
                 Name = user.Name,
