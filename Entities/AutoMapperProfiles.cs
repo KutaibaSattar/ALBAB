@@ -25,7 +25,13 @@ namespace ALBAB.Entities
             CreateMap<AppUser, MemberRes>()
                 .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName));
 
-            CreateMap<AddressRes,Address>();
+            CreateMap<AppUser,MemberUpdateRes>()
+                .ForMember(dst => dst.KeyId, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+
+
+
+            CreateMap<AddressRes,Address>().ReverseMap();
+               //.ForMember(dst => dst.Id, opt => opt.Ignore());
 
             CreateMap<dbAccount, dbAccountsFlattenRes>();
 

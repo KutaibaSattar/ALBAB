@@ -41,9 +41,14 @@ namespace ALBAB.Controllers
 
             var user = _mapper.Map<AppUser>(registerDto);
 
+
            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-          var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+
+           var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+
 
            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
@@ -111,13 +116,19 @@ namespace ALBAB.Controllers
 
         }
 
-        [HttpPut("updatemember")]
+      [HttpPut("updatemember")]
 
-      private async Task<int> updateMember (int id)
+      public async Task<ActionResult<MemberUpdateRes>> updateMember ( MemberUpdateRes memberUpdate )
       {
-        var address = await _context.Address.FindAsync(id);
+        var member = await _context.Users.FirstOrDefaultAsync(i => i.Id == memberUpdate.Id);
 
-          return address;
+        _mapper.Map<MemberUpdateRes,AppUser>(memberUpdate,member);
+
+        _context.SaveChanges();
+
+         _mapper.Map<AppUser,MemberUpdateRes>(member,memberUpdate);
+
+        return memberUpdate;
 
       }
 

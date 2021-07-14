@@ -7,7 +7,6 @@ namespace ALBAB.Entities.AppAccounts
     {
         [Required]
         public string KeyId { get; set; }
-
         [Required]
         public string Password { get; set; }
 

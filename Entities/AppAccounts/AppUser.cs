@@ -13,7 +13,6 @@ namespace ALBAB.Entities.AppAccounts
       [Required]
       [MaxLength(50)]
       public string Name {get;set;}
-
       public DateTime Created { get; set; }   = DateTime.Now;
       public DateTime LastActive { get; set; } =  DateTime.Now;
       public AccountType type { get; set; }

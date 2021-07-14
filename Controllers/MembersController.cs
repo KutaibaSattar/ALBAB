@@ -55,6 +55,8 @@ namespace ALBAB.Controllers
 
             //user.UserName = registerDto.UserName.ToLower();
 
+        
+
            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
           var roleResult = await _userManager.AddToRoleAsync(user, "Member");

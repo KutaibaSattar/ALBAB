@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities;
+using ALBAB.Entities.DB;
 
 namespace ALBAB.Controllers
 {
@@ -20,14 +21,17 @@ namespace ALBAB.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
 
+          private readonly DataContext _context;
+
         private readonly IMapper _mapper;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
+        public AccountController(DataContext context,UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
             , IMapper mapper, ITokenService tokenService)
         {
             _tokenService = tokenService;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
+              _context = context;
 
 
         }
@@ -36,10 +40,7 @@ namespace ALBAB.Controllers
         public async Task<ActionResult<AppUserRes>> Login(LoginDto loginDto)
         {
 
-
            var user = await _userManager.FindByNameAsync(loginDto.KeyId);
-
-
            if (user == null) return Unauthorized(new ApiResponse(401));
 
             var result =  await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
@@ -49,8 +50,6 @@ namespace ALBAB.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
-
-
             return new AppUserRes
             {
                 KeyId = user.UserName,
@@ -58,8 +57,6 @@ namespace ALBAB.Controllers
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber
-
-
             };
 
 
