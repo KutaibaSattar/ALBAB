@@ -142,7 +142,9 @@ namespace ALBAB.Controllers
 
           var journal = new Journal(invoice.InvNo, invoice.Type,invoice.Date);
 
-           journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,invoice.AppUserId,invoice.dbAccountId,invoice.TotalAmount,null));
+          var userId = _context.Address.FirstOrDefault(id => id.AppUserId == invoice.AddressId).AppUserId;
+
+          journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,userId,invoice.dbAccountId,invoice.TotalAmount,null));
            journal.journalAccounts.Add(new JournalAccount(invoice.Date,invoice.Date,null,invoice.ActionAcctId,null,invoice.TotalAmount));
 
           _context.journals.Add(journal);
@@ -305,6 +307,7 @@ namespace ALBAB.Controllers
         if(journal.EntryDate != invoice.Date) journal.EntryDate = invoice.Date;
 
          var entry =  journal.journalAccounts.ToList();
+         var userId = _context.Address.FirstOrDefault(id => id.AppUserId == invoice.AddressId).AppUserId;
 
          entry.ForEach( E =>
 
@@ -314,7 +317,7 @@ namespace ALBAB.Controllers
 
              if (E.Created != invoice.Date) E.Created = invoice.Date;
              if (E.DueDate != invoice.Date) E.DueDate = invoice.Date;
-             if (E.AppUserId != invoice.AppUserId) E.AppUserId = invoice.AppUserId;
+             if (E.AppUserId != userId) E.AppUserId = userId;
              if (E.dbAccountId != invoice.dbAccountId) E.dbAccountId= invoice.dbAccountId;
              if (E.Credit != invoice.TotalAmount) E.Credit= invoice.TotalAmount;
            }

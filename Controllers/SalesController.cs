@@ -86,6 +86,7 @@ namespace ALBAB.Controllers
           _context.Invoices.Add(invoice);
 
           var journal = new Journal(invoice.InvNo, invoice.Type,invoice.Date);
+          var userId = _context.Address.FirstOrDefault(id => id.AppUserId == invoice.AddressId).AppUserId;
 
          if(invoice.InvCost >0){
 
@@ -100,7 +101,7 @@ namespace ALBAB.Controllers
            (invoice.Date,invoice.Date,null,invoice.ActionAcctId,invoice.TotalAmount,null)); // Sales profit Credit
 
              journal.journalAccounts.Add(new JournalAccount
-           (invoice.Date,invoice.Date,invoice.AppUserId,invoice.dbAccountId,null,invoice.TotalAmount)); // Client Debit
+           (invoice.Date,invoice.Date,userId,invoice.dbAccountId,null,invoice.TotalAmount)); // Client Debit
 
 
 

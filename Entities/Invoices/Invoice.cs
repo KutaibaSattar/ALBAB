@@ -28,9 +28,9 @@ namespace ALBAB.Entities.Invoices
         public DateTime LastUpdate { get; set; }
 
         public string Comment { get; set; }
-        public AppUser AppUser { get; set; }
-        public int? AppUserId { get; set; }
-        public dbAccount dbAccount { get; set; }
+
+        public Address Address { get; set; }
+        public int? AddressId { get; set; }
         public int dbAccountId {get;set;}
         public int ActionAcctId { get; set;}
 

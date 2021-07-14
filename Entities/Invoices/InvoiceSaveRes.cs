@@ -22,7 +22,7 @@ namespace ALBAB.Entities.Invoices
         public InvStatusType Status { get; set; }
         public DateTime Date { get; set; } =  DateTime.Now;
         public string Comment { get; set; }
-        public int? AppUserId { get; set; }
+        public int? AddressId { get; set; }
 
 
         // private int? _acctionAccont = (int)AccountType.CostGoodsSold ;

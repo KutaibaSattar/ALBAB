@@ -1,4 +1,4 @@
-<div class="form-group">
+
   <input
     type="text"
     [class.is-invalid]='ngControl.touched && ngControl.invalid'
@@ -10,6 +10,3 @@
     [maxDate] = 'maxDate'
    >
   <div *ngIf="control.errors?.required" class="invalid-feedback"> {{label}} is required</div>
-
-
-</div>

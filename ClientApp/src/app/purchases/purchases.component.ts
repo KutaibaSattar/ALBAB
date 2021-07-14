@@ -17,6 +17,9 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {APP_CONFIG } from 'app/_helper/InvoiceType-token';
+import { MemberAddressService } from 'app/services/memberaddress.service';
+import { MemberAddress } from 'app/models/memberaddress';
+
 
 //AppConfig.apiEndpoint = 'purchase/';
 
@@ -40,6 +43,7 @@ export class PurchasesComponent implements OnInit {
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     private dbAccountService : DbAccountService,
+    private addressService : MemberAddressService
   ) {}
   /*  @HostListener('window:beforeunload', ['$event']) uloadNotification(
     $event: any
@@ -50,6 +54,7 @@ export class PurchasesComponent implements OnInit {
   } */
 
   members : Member[];
+  memberAddress : MemberAddress[];
   txtSearchInv: string ='';
   purchList: invoicesList[];
   formInvoice: FormGroup;
@@ -96,8 +101,9 @@ export class PurchasesComponent implements OnInit {
 
     let sources = [
       this.authService.getMembers(),
+      this.addressService.getAddressList(),
       this.productService.getProducts(),
-      this.dbAccountService.getFlattenDbAccounts()
+      this.dbAccountService.getFlattenDbAccounts(),
 
     ];
 
@@ -106,6 +112,8 @@ export class PurchasesComponent implements OnInit {
     forkJoin(sources).subscribe(
       (data:any) =>{
         this.members = data[0];
+        this.memberAddress = data[1];
+
       }
      );
   }

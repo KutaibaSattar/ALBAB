@@ -3,14 +3,16 @@ using System;
 using ALBAB.Entities.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ALBaB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210714105506_UpdateInvRelwithAddress")]
+    partial class UpdateInvRelwithAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,6 +297,10 @@ namespace ALBaB.Migrations
                         .HasColumnType("int")
                         .HasColumnName("addressid");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("appuserid");
+
                     b.Property<string>("Comment")
                         .HasColumnType("text")
                         .HasColumnName("comment");
@@ -350,6 +356,9 @@ namespace ALBaB.Migrations
 
                     b.HasIndex("AddressId")
                         .HasDatabaseName("ix_invoices_addressid");
+
+                    b.HasIndex("AppUserId")
+                        .HasDatabaseName("ix_invoices_appuserid");
 
                     b.HasIndex("InvNo", "Type")
                         .IsUnique();
@@ -716,7 +725,14 @@ namespace ALBaB.Migrations
                         .HasForeignKey("AddressId")
                         .HasConstraintName("fk_invoices_address_addressid");
 
+                    b.HasOne("ALBAB.Entities.AppAccounts.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .HasConstraintName("fk_invoices_aspnetusers_appuserid");
+
                     b.Navigation("Address");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("ALBAB.Entities.JournalEntry.JournalAccount", b =>
