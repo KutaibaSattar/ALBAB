@@ -1,12 +1,10 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, HostListener, OnInit, Self } from '@angular/core';
+import { Component, OnInit, Self, ViewChild } from '@angular/core';
 import {FormArray,FormBuilder,FormControl,FormGroup,Validators} from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DropDownValidators } from 'app/errors/dropdown.validators';
 import { invoiceitemComponent } from 'app/invoiceitem/invoiceitem.component';
 import { Member } from 'app/models/member';
-import { Product } from 'app/models/product';
 import { Invoice, invoicesList } from 'app/models/Invoice';
 import { AuthService } from 'app/services/auth.service';
 import { ConfirmService } from 'app/services/confirm.service';
@@ -19,6 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 import {APP_CONFIG } from 'app/_helper/InvoiceType-token';
 import { MemberAddressService } from 'app/services/memberaddress.service';
 import { MemberAddress } from 'app/models/memberaddress';
+import { DropownTemplateComponent } from 'app/templates/dropown-template/dropown-template.component';
 
 
 //AppConfig.apiEndpoint = 'purchase/';
@@ -54,12 +53,12 @@ export class PurchasesComponent implements OnInit {
   } */
 
   members : Member[];
-  memberAddress : MemberAddress[];
   txtSearchInv: string ='';
   purchList: invoicesList[];
   formInvoice: FormGroup;
   appUserId: FormControl;
   dbAccountId: FormControl;
+  addressId: FormControl;
   invNo: FormControl;
   date: FormControl;
   invoiceId: FormControl;
@@ -78,7 +77,7 @@ export class PurchasesComponent implements OnInit {
   totalSum: number[] = [];
   priceChanges$ = [];
 
-
+  @ViewChild ('addressdrop') addressdrop : DropownTemplateComponent;
 
 
   ngOnInit(): void {
@@ -104,7 +103,6 @@ export class PurchasesComponent implements OnInit {
       this.addressService.getAddressList(),
       this.productService.getProducts(),
       this.dbAccountService.getFlattenDbAccounts(),
-
     ];
 
 
@@ -112,7 +110,7 @@ export class PurchasesComponent implements OnInit {
     forkJoin(sources).subscribe(
       (data:any) =>{
         this.members = data[0];
-        this.memberAddress = data[1];
+
 
       }
      );
@@ -124,6 +122,7 @@ export class PurchasesComponent implements OnInit {
       invNo: [null, Validators.required],
       appUserId: [null,[Validators.required, DropDownValidators.shouldLimited],],
       dbAccountId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
+      addressId:[{value:null},[Validators.required, DropDownValidators.shouldLimited],],
       actionAcctId: null,
       date: [null, Validators.required],
       invDetails: this.formBuilder.array([this.initSection()]),
@@ -131,28 +130,33 @@ export class PurchasesComponent implements OnInit {
 
     this.appUserId = this.formInvoice.get('appUserId') as FormControl;
     this.dbAccountId = this.formInvoice.get('dbAccountId') as FormControl;
+    this.addressId = this.formInvoice.get('addressId') as FormControl;
+
 
     this.appUserId.valueChanges.subscribe( value =>{
-
         if ( typeof value == 'number'){
          this.dbAccountId.setValue( this.members.find(member => member.id == value).type,{emitEvent:false})
+         this.addressdrop.memberId = value;
+         this.addressId.setValue('')
          this.dbAccountId.disable({emitEvent:false});
-        }
+
+                }
         else
         this.dbAccountId.enable({emitEvent:false});
-
     })
 
 
     this.dbAccountId.valueChanges.subscribe((value) => {
       if (typeof value == 'number') {
         if (!this.members.find((member) => member.type == value)) {
-          this.appUserId.setValue( null,{emitEvent:false})
+          this.appUserId.setValue( '',{emitEvent:false})
           this.appUserId.disable({emitEvent:false});
         }
         else this.appUserId.enable({ emitEvent: false });
       }
     });
+
+
 
 
     this.invNo = this.formInvoice.get('invNo') as FormControl;
@@ -185,24 +189,9 @@ export class PurchasesComponent implements OnInit {
     this.unitTotalPrice[index] = this.invDetails.at(index).get('unitTotalPrice') as FormControl;
 
 
-    /* this.filteredItems$[index] = arrayControl.at(index).get('productId')
-      .valueChanges.pipe(startWith(''),map((val) => this._filter(val))); */
   }
 
-/*   private _filter(val: any): Product[] {
-    if (this.products !== undefined) {
-      return this.products.filter((item: Product) => {
-        // If the user selects an option, the value becomes a Human object,
-        // therefore we need to reset the val for the filter because an
-        // object cannot be used in this toLowerCase filter
-        let x = typeof val;
-        if (typeof val === 'string') {
-          const TempString = item.name; //+ ' - ' + item.userId;
-          return TempString.toLowerCase().includes(val.toLowerCase());
-        }
-      });
-    }
-  } */
+
 
   OnHumanSelected(option: MatOption) {
     console.log(option.value);

@@ -45,14 +45,14 @@ namespace ALBAB.Entities
             .ForMember(dst => dst.Brand, opt => opt.MapFrom(src => src.Model.Brand.Name))
             .ForMember(dst => dst.Model, opt => opt.MapFrom(src => src.Model.Name));
 
-            CreateMap<Invoice, InvoiceSaveRes>()
+            CreateMap<Invoice, SaveInvRes>()
             // .ForMember(destination => destination.Type,
             //      opt => opt.MapFrom(source => Enum.GetName(typeof(JournalType), source.Type)))
 
                       /* .ForMember(dst => dst.Id , opt => opt.Ignore()) */
             .ForMember(dst => dst.invDetails, opt => opt.MapFrom(src => src.InvDetail));
 
-            CreateMap<InvoiceSaveRes, Invoice>()
+            CreateMap<SaveInvRes, Invoice>()
 
               .ForMember(dst => dst.Id, opt => opt.Ignore())
               .ForMember(dst => dst.InvDetail, opt => opt.Ignore())
@@ -98,7 +98,7 @@ namespace ALBAB.Entities
 
         }
 
-        private static void AfterMapPurchase(InvoiceSaveRes phr, Invoice ph)
+        private static void AfterMapPurchase(SaveInvRes phr, Invoice ph)
         {
 
             // removing deleting items

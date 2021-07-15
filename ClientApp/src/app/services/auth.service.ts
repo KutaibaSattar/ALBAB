@@ -6,7 +6,6 @@ import { Member } from '../models/member';
 import {map} from 'rxjs/operators';
 import { User } from '../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Itoken } from 'app/models/token';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,7 +16,6 @@ import { ToastrService } from 'ngx-toastr';
 
 export class AuthService {
   baseUrl = environment.apiUrl;
-
 
  /*  In order to prevent the execution of interceptor for the particular request,
    you have to create object of the HttpClient in a different way;

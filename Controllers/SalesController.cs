@@ -29,7 +29,7 @@ namespace ALBAB.Controllers
         }
 
           [HttpPost]
-         public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
+         public async  Task<ActionResult<SaveInvRes>> createInvoice(SaveInvRes invRes)
          {
 
           // return BadRequest("Testing");
@@ -51,7 +51,7 @@ namespace ALBAB.Controllers
 
 
 
-         var invoice = _mapper.Map<InvoiceSaveRes,Invoice>(invRes);
+         var invoice = _mapper.Map<SaveInvRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
            foreach (var item in invoice.InvDetail)
@@ -111,13 +111,13 @@ namespace ALBAB.Controllers
 
 
          await _context.SaveChangesAsync();
-         var result = _mapper.Map<InvoiceSaveRes>(invoice);
+         var result = _mapper.Map<SaveInvRes>(invoice);
         return  Ok(result);
 
          }
 
         [HttpPut] // api/sales
-         public async  Task<ActionResult<InvoiceSaveRes>> updateInvoice(InvoiceSaveRes invRes)
+         public async  Task<ActionResult<SaveInvRes>> updateInvoice(SaveInvRes invRes)
          {
 
          if (!ModelState.IsValid)
@@ -210,7 +210,7 @@ namespace ALBAB.Controllers
        }
 
 
-        _mapper.Map<InvoiceSaveRes,Invoice>(invRes,invoice);
+        _mapper.Map<SaveInvRes,Invoice>(invRes,invoice);
 
 
         var EditedEntities = _context.ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
@@ -277,7 +277,7 @@ namespace ALBAB.Controllers
 
           await _context.SaveChangesAsync();
 
-          var result = _mapper.Map<Invoice,InvoiceSaveRes>(invoice);
+          var result = _mapper.Map<Invoice,SaveInvRes>(invoice);
 
           return  Ok(result);
 

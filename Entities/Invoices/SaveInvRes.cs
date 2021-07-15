@@ -8,10 +8,9 @@ using ALBAB.Entities.JournalEntry;
 
 namespace ALBAB.Entities.Invoices
 {
-    public class InvoiceSaveRes
+    public class SaveInvRes
 
     {
-
         [RequiredGreaterThanZero]
         public int? Id { get; set; }
         [RegularExpression(@"[A-Z]{2}[0-9\-]{5}(0|[1-9][0-9]*)$",
@@ -23,7 +22,7 @@ namespace ALBAB.Entities.Invoices
         public DateTime Date { get; set; } =  DateTime.Now;
         public string Comment { get; set; }
         public int? AddressId { get; set; }
-
+        public int? AppUserId { get; set; }
 
         // private int? _acctionAccont = (int)AccountType.CostGoodsSold ;
         // [Required]
@@ -55,7 +54,7 @@ namespace ALBAB.Entities.Invoices
         public int dbAccountId{ get; set; }
          public string Description { get; set; }
          public ICollection <InvDetailsRes> invDetails { get; set; }
-         public InvoiceSaveRes()
+         public SaveInvRes()
         {
                invDetails = new Collection<InvDetailsRes>();
         }

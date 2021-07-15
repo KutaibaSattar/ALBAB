@@ -3,9 +3,11 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatOption } from '@angular/material/core';
 import { Member } from 'app/models/member';
+import { MemberAddress, MemberShortAddress } from 'app/models/memberaddress';
 import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
+import { MemberAddressService } from 'app/services/memberaddress.service';
 import { ProductService } from 'app/services/product.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -24,11 +26,13 @@ export class DropownTemplateComponent implements OnInit {
   @Input() members  = false;
   @Input() products= false;
   @Input() accounts = false;
+  @Input() address = false;
   @Input() textDisabled = false;
   showing: boolean;
+  memberId : number = null;
 
   constructor(private memberService : AuthService, private productService : ProductService,
-     private accountService : DbAccountService) { }
+     private accountService : DbAccountService, private addressService : MemberAddressService) { }
 
 
   ngOnInit(): void {
@@ -50,6 +54,27 @@ export class DropownTemplateComponent implements OnInit {
        this.showing = true;
        })
      ).subscribe();
+
+     if (this.address)
+       this.addressService.memberAddressSource$
+         .pipe(
+           map((address: MemberShortAddress[]) => {
+             this.listsFilter = address.map((obj) => {
+               var returnObj = {};
+               const mapping = ['id', 'name', 'keyId','memberId'];
+               returnObj[mapping[0]] = obj.id;
+               returnObj[mapping[1]] = obj.line1;
+               returnObj[mapping[2]] = obj.city;
+               returnObj[mapping[3]] = obj.appUserId;
+
+               return returnObj;
+             });
+
+             this.attachedFilter();
+             this.showing = true;
+           })
+         )
+         .subscribe();
 
   if(this.accounts)
       this.accountService.dbAccountService$.subscribe(
@@ -75,19 +100,22 @@ export class DropownTemplateComponent implements OnInit {
 
       )
 
-      // this.productService.getProducts().pipe(
-      //   map((product: Product[]) => {
-      //     console.log('Product', product);
-      //     this.listsFilter = product;
-      //     this.showing = true;
-      //   })
-      // )
-      // .subscribe();
 
 
   }
 
   attachedFilter(): any {
+
+  if(this.address){
+    this.filtered$ = this.controlName.valueChanges.pipe(
+      startWith(''),
+      /*map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.users.slice()),*/
+      map((val) =>
+      this.filterAddress(val))
+    );
+  }
+  else{
 
     this.filtered$ = this.controlName.valueChanges.pipe(
       startWith(''),
@@ -95,6 +123,7 @@ export class DropownTemplateComponent implements OnInit {
       map(name => name ? this._filter(name) : this.users.slice()),*/
       map((val) => this.filter(val))
     );
+  }
   }
 
 
@@ -108,11 +137,34 @@ export class DropownTemplateComponent implements OnInit {
         let x = typeof val;
         if (typeof val === 'string') {
           const TempString = item.name + ' - ' + item.keyId;
+
+
           return  TempString.toLowerCase().includes(val.toLowerCase());
         }
       });
     }
   }
+  filterAddress(val: any) {
+    if (this.listsFilter != undefined) {
+    return  this.listsFilter.filter((item:any) => {
+        // If the user selects an option, the value becomes a Human object,
+        // therefore we need to reset the val for the filter because an
+        // object cannot be used in this toLowerCase filter
+
+        if(this.memberId && item.memberId == this.memberId){
+
+          if (typeof val === 'string') {
+            const TempString = item.name + ' - ' + item.keyId;
+
+
+              return  TempString.toLowerCase().includes(val.toLowerCase());
+
+          }
+        }
+      });
+    }
+  }
+
 
   displayFn(item: number): string {
     if ( item >0 && this.listsFilter) {

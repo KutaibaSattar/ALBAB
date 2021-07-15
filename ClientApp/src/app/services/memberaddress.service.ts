@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MemberAddress } from 'app/models/memberaddress';
 import { environment } from 'environments/environment';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
 
@@ -17,11 +18,13 @@ export class MemberAddressService extends DataService {
 
   }
 
+  public memberAddressSource$ = new ReplaySubject<MemberAddress[]>(null);
+
   getAddressList()  {
     return this.getTableRecords().pipe(
        map((res: MemberAddress[]) => {
         //this.products = res;
-       console.log(res)
+       this.memberAddressSource$.next(res)
        return res;
        })
      );

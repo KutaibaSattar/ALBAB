@@ -26,9 +26,7 @@ namespace ALBAB.Entities.Invoices
         public InvStatusType Status {get; set;}
         public DateTime Date { get; set; }
         public DateTime LastUpdate { get; set; }
-
         public string Comment { get; set; }
-
         public Address Address { get; set; }
         public int? AddressId { get; set; }
         public int dbAccountId {get;set;}

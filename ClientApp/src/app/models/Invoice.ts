@@ -5,9 +5,22 @@ export interface Invoice{
   appUserId:number
   comment : string,
   dbAccountId: number,
+  addressId:number
   actionAcctId: number,
   purchDtl : IInvDetail[];
 }
+export interface saveInvoice{
+  id: number
+  InvNo:string
+  Date :Date
+  addressId:number
+  comment : string,
+  dbAccountId: number,
+  actionAcctId: number,
+  purchDtl : IInvDetail[];
+}
+
+
 
 export enum InvStatusType {
   Pending,

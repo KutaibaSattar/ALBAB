@@ -41,18 +41,18 @@ namespace ALBAB.Controllers
          }
 
          [HttpGet("invoice/{id}")]
-         public async Task<ActionResult<IEnumerable<InvoiceSaveRes>>> getInvId(int id)
+         public async Task<ActionResult<IEnumerable<SaveInvRes>>> getInvId(int id)
          {
            var invoices = await _context.Invoices.Include(d => d.InvDetail)
            .ThenInclude(p =>p.Product).SingleOrDefaultAsync(p => p.Id == id);
 
-         var result =  _mapper.Map<Invoice,InvoiceSaveRes>(invoices);
+         var result =  _mapper.Map<Invoice,SaveInvRes>(invoices);
           return Ok(result);
 
          }
 
           [HttpPost]
-         public async  Task<ActionResult<InvoiceSaveRes>> createInvoice(InvoiceSaveRes invRes)
+         public async  Task<ActionResult<SaveInvRes>> createInvoice(SaveInvRes invRes)
          {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -77,7 +77,7 @@ namespace ALBAB.Controllers
 
 
 
-         var invoice = _mapper.Map<InvoiceSaveRes,Invoice>(invRes);
+         var invoice = _mapper.Map<SaveInvRes,Invoice>(invRes);
 
           invoice.LastUpdate = DateTime.Now;
            foreach (var item in invoice.InvDetail)
@@ -89,13 +89,13 @@ namespace ALBAB.Controllers
 
 
          await _context.SaveChangesAsync();
-         var result = _mapper.Map<InvoiceSaveRes>(invoice);
+         var result = _mapper.Map<SaveInvRes>(invoice);
         return  Ok(result);
 
          }
 
             [HttpDelete("deleteallquote")]
-         public async  Task<ActionResult<InvoiceSaveRes>> deleteInvoice()
+         public async  Task<ActionResult<SaveInvRes>> deleteInvoice()
          {
                 _context.Invoices.RemoveRange(_context.Invoices.Where(t => t.Type == JournalType.QUOTE ));
                 await _context.SaveChangesAsync();
