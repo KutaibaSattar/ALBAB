@@ -29,4 +29,12 @@ export class MemberAddressService extends DataService {
        })
      );
       }
+  getMemberAddressList(id : number)  {
+    return this.getTableRecordId(id,'getmemberAddresses').pipe(
+       map((res: MemberAddress[]) => {
+        //this.products = res;
+        return res;
+       })
+     );
+      }
 }

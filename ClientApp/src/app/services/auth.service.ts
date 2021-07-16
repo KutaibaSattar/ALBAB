@@ -44,7 +44,7 @@ export class AuthService {
 
 
   getMembers()  {
-   return this.http.get(this.baseUrl + 'users').pipe(
+   return this.http.get(this.baseUrl + 'member').pipe(
     map( (res:Member[]) => {
       this.membersSource$.next(res)
       return res;})
@@ -55,12 +55,12 @@ export class AuthService {
   }
 
   getMember(Id: number) {
-   return this.http.get<Member>(this.baseUrl + 'users/getuser/' + Id);
+   return this.http.get<Member>(this.baseUrl + 'member/getmember/' + Id);
   }
 
   registor(model: any) {
 
-    return this.http.post<Member>(this.baseUrl + 'members/register', model).pipe(
+    return this.http.post<Member>(this.baseUrl + 'account/register', model).pipe(
       map((response: Member) => {console.log('mapMember', response); }));
 
   }

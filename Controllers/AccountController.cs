@@ -65,24 +65,77 @@ namespace ALBAB.Controllers
 
 
 
-        // private async Task<bool> UserExists(string userKey)
-        // {
-        //   return await _userManager.FindByNameAsync(userKey)  != null;
+        [HttpPost("register")]
+        public async Task<ActionResult<AppUserRes>> Register(RegisterRes registerDto)
+
+        {
+
+         // because using ActionResult so we can return BadRequest
+
+          /* if (registerDto.PhoneNumber != null){
+               if (await CheckEmailExistsAsync(registerDto.PhoneNumber))
+            {
+                  return BadRequest("Email is taken");
+            }
+           } */
+
+           /*  var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound("Could not find user");
+           var userRoles = await _userManager.GetRolesAsync(user); */
+
+           //var user = await _userManager.FindByEmailAsync(email);
+
+         // var email = HttpContext.User.RetrieveEmailFromPrincipal();
+
+            if(await UserExists(registerDto.KeyId)) return BadRequest("User Name is taken");
+
+            var user = _mapper.Map<AppUser>(registerDto);
 
 
-        // }
+            //user.UserName = registerDto.UserName.ToLower();
 
-        // [HttpGet("emailexists")]
+        
 
-        // public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
-        // {
+           var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-        //    return await _userManager.FindByNameAsync(email) != null;
+          var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+           if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+           if (!result.Succeeded) return BadRequest(result.Errors);
+
+            return new AppUserRes
+            {
+                Name = user.Name,
+                KeyId = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                PhoneNumber = user.UserName,
+                type = user.type,
+
+            };
+
+
+       }
+
+        private async Task<bool> UserExists(string userId)
+        {
+          return await _userManager.FindByNameAsync(userId)  != null;
+
+
+        }
+
+        [HttpGet("emailexists")]
+
+        public async Task<bool> CheckEmailExistsAsync ([FromQuery] string email)
+        {
+
+           return await _userManager.FindByNameAsync(email) != null;
 
 
 
 
-        // }
+        }
 
 
 

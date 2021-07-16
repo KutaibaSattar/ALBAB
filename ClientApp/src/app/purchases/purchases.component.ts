@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {APP_CONFIG } from 'app/_helper/InvoiceType-token';
-import { MemberAddressService } from 'app/services/memberaddress.service';
+import { MemberAddressService } from 'app/services/address.service';
 import { MemberAddress } from 'app/models/memberaddress';
 import { DropownTemplateComponent } from 'app/templates/dropown-template/dropown-template.component';
 

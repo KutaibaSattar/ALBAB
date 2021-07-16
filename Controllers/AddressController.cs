@@ -34,6 +34,20 @@ namespace ALBAB.Controllers
 
 
         }
+      
+       [HttpGet("getmemberAddresses")]
+
+      public async Task<ActionResult<IEnumerable<AddressRes>>> GetmemberAddresses(int id)
+        {
+
+            var address = await _context.Address.Where(user => user.AppUserId == id ).ToListAsync();
+
+            var result = _mapper.Map<List<Address>,List<AddressRes>>(address);
+
+            return Ok(result);
+
+
+        }
        [HttpPost]
             public async Task<ActionResult<AddressRes>> newAddress( AddressRes addressRes)
         {

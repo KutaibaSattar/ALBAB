@@ -7,7 +7,7 @@ import { MemberAddress, MemberShortAddress } from 'app/models/memberaddress';
 import { Product } from 'app/models/product';
 import { AuthService } from 'app/services/auth.service';
 import { DbAccountService } from 'app/services/dbaccount.service';
-import { MemberAddressService } from 'app/services/memberaddress.service';
+import { MemberAddressService } from 'app/services/address.service';
 import { ProductService } from 'app/services/product.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Member } from 'app/models/member';
+import { MemberAddressService } from 'app/services/address.service';
+import { AuthService } from 'app/services/auth.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -8,12 +12,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor( private route: ActivatedRoute) { }
+  constructor( private route: ActivatedRoute,
+               private authService :AuthService,
+               private addressService : MemberAddressService) { }
 
-  userId : string;
+  member: any ;
 
   ngOnInit(): void {
-   this.userId = this.route.snapshot.paramMap.get('userId');
+
+   this.route.paramMap
+   .pipe(map(() =>{
+
+    this.member =  window.history.state.member })).subscribe()
+
+
+
+
+
+
 
   }
 

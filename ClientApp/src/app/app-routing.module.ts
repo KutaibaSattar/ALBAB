@@ -30,7 +30,7 @@ const routes: Routes = [
     runGuardsAndResolvers:'always',
     canActivate:[Authguard],
     children:[
-      { path: 'members/:userId', component: ProfileComponent },
+      { path: 'members/:memberKeyId', component: ProfileComponent },
       { path: 'members', component: MembersComponent },
       { path: 'dashboard', component: HomeComponent },
       { path: 'product', component: ProductsComponent},

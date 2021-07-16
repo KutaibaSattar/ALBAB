@@ -10,12 +10,12 @@ using System.Linq;
 using System.Security.Claims;
 using ALBAB.Entities.AppAccounts;
 using ALBAB.Entities;
-
+ 
 
 namespace ALBAB.Controllers
 {
    [Authorize(Policy = "RequiredUserRole")]
-    public class UsersController : BaseController
+    public class MemberController : BaseController
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace ALBAB.Controllers
 
 
 
-        public UsersController(DataContext context, IMapper mapper,UserManager<AppUser> userManager)
+        public MemberController(DataContext context, IMapper mapper,UserManager<AppUser> userManager)
         {
             _mapper = mapper;
             _context = context;
@@ -31,41 +31,7 @@ namespace ALBAB.Controllers
 
         }
 
-        [HttpPost("register")]
-
-        public async Task<ActionResult<AppUserRes>> Register(RegisterRes registerDto)
-
-        {
-
-           if(await UserExists(registerDto.KeyId)) return BadRequest("User Name is taken");
-
-            var user = _mapper.Map<AppUser>(registerDto);
-
-
-           var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-
-
-           var roleResult = await _userManager.AddToRoleAsync(user, "Member");
-
-
-
-           if (!roleResult.Succeeded) return BadRequest(result.Errors);
-
-           if (!result.Succeeded) return BadRequest(result.Errors);
-
-            return new AppUserRes
-            {
-                Name = user.Name,
-                KeyId = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.UserName
-
-            };
-
-
-       }
-
+      
 
         [Authorize(Roles ="Admin")]
         [HttpGet]
@@ -80,12 +46,12 @@ namespace ALBAB.Controllers
 
         }
 
-       [HttpGet("getuser/{id}")]
+       [HttpGet("getmember/{id}")]
 
-      public async Task<ActionResult<AppUser>> GetUser(int id)
+      public async Task<ActionResult<AppUser>> GetMember(int id)
         {
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Include(a => a.Address).FirstAsync(i => i.Id == id);
             var result = _mapper.Map<AppUser,AppUserRes>(user);
             return Ok(result);
 
