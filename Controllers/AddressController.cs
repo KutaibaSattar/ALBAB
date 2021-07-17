@@ -34,8 +34,8 @@ namespace ALBAB.Controllers
 
 
         }
-      
-       [HttpGet("getmemberAddresses")]
+
+       [HttpGet("getmemberAddresses/{id}")]
 
       public async Task<ActionResult<IEnumerable<AddressRes>>> GetmemberAddresses(int id)
         {

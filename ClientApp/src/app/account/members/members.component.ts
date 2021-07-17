@@ -49,6 +49,3 @@ export class MembersComponent implements OnInit {
     }
 
   }
-
-
-

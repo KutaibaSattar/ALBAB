@@ -11,11 +11,11 @@
       </div>
     </div>
   </header>
-  <form #editForm="ngForm">
+  <form #editForm="ngForm" *ngIf = "member">
   <div class="row">
     <div class=" col-4">
       <div class="alert alert-info">
-        <strong>Profile:</strong>
+        <strong>Profile: {{member.name}}</strong>
       </div>
       <div class="card border-success mb-5">
         <div class="card-header  bg-info border-success">{{member.keyId}}</div>
@@ -33,12 +33,59 @@
 
     <div class="col-8">
 
-      <div class="alert alert-info" *ngIf="editForm.dirty"  >
+      <div class="alert alert-info"  >
         <strong>Information:</strong> You have made changes. Any unsaved changes will be lost
       </div>
       <div class="card border-success">
         <div class="card-header bg-transparent border-success">{{member.keyId}}</div>
         <div class="card-body text-success">
+
+          <div class="profile-button-container">
+            <button mat-raised-button (click)="addData()" class="profile-button">
+              Add Address
+            </button>
+            <button
+                mat-raised-button
+                [disabled]="! memberAddress.length"
+                (click)="removeData()"
+                class="profile-button">
+              Remove data
+            </button>
+          </div>
+
+            <div>
+              <table mat-table [dataSource]="memberAddress" class="mat-elevation-z8">
+                <ng-container matColumnDef="line1">
+                  <th mat-header-cell *matHeaderCellDef="let element" >Line1</th>
+                  <td mat-cell *matCellDef="let element" >{{element.line1}}</td>
+                </ng-container>
+                <ng-container matColumnDef="line2">
+                  <th mat-header-cell *matHeaderCellDef="let element">Line2</th>
+                  <td mat-cell *matCellDef="let element">{{element.line2}}</td>
+                </ng-container>
+                <ng-container matColumnDef="region">
+                  <th mat-header-cell *matHeaderCellDef="let element">Region</th>
+                  <td mat-cell *matCellDef="let element">{{element.region}}</td>
+                </ng-container>
+                <ng-container matColumnDef="city">
+                  <th mat-header-cell *matHeaderCellDef="let element">City</th>
+                  <td mat-cell *matCellDef="let element">{{element.city}}</td>
+                </ng-container>
+                <ng-container matColumnDef="country">
+                  <th mat-header-cell *matHeaderCellDef="let element">Country</th>
+                  <td mat-cell *matCellDef="let element">{{element.country}}</td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let element"><button  mat-raised-button>Edit</button></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay" ></tr>
+                <tr mat-row *matRowDef="let memberAddress; columns:columnsToDisplay" ></tr>
+              </table>
+            </div>
+
+
+
           <h5 class="card-title">Success card title</h5>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
             content.</p>

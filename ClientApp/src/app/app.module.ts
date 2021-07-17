@@ -23,7 +23,6 @@ import { ProductsComponent } from './products/products.component';
 import { invoiceitemComponent } from './invoiceitem/invoiceitem.component';
 import { PurchasesComponent } from './purchases/purchases.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { DatePipe } from '@angular/common';
 import {ConfirmDialogComponent } from './guards/confirm-dialog/confirm-dialog.component';
 import {ModalModule } from 'ngx-bootstrap/modal';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
@@ -36,6 +35,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
@@ -49,6 +49,7 @@ import { TabEnterDirective } from './_helper/tab-enter.directive';
 import { DbaccountReportComponent } from './reports/dbaccount-report/dbaccount-report.component';
 import { QuotationComponent } from './quotation/quotation.component';
 import { InvoiceTemplateComponent } from './invoice-template/invoice-template.component';
+import { AddressEditingComponent } from './account/profile/address-editing/address-editing.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { InvoiceTemplateComponent } from './invoice-template/invoice-template.co
    DbaccountReportComponent,
    QuotationComponent,
    InvoiceTemplateComponent,
+   AddressEditingComponent,
 
 
     ],
@@ -108,6 +110,8 @@ import { InvoiceTemplateComponent } from './invoice-template/invoice-template.co
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
+    MatTableModule,
+    MatDialogModule,
     TabsModule.forRoot()
 
   ],
