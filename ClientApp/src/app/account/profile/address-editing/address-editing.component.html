@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup">
   <div class="form-container ">
     <h2 class="section-header" mat-dialog-title> New Profile
-      <mat-icon tabindex="-1" class="float-right hand-icon" matRipple>close</mat-icon>
+      <mat-icon tabindex="-1" class="float-right hand-icon" matRipple (click)="onCancelClick()">close</mat-icon>
     </h2>
     <div mat-dialog-content>
        <mat-form-field class="w-100" color="primary">
@@ -36,8 +36,8 @@
         <input type="text" matInput formControlName="country">
       </mat-form-field>
         <div mat-dialog-actions class="mt mb" fxLayoutAlign="end center" >
-        <button mat-stroked-button color="warn" class="mr">Cancel</button>
-        <button mat-flat-button color="primary">Save</button>
+        <button mat-stroked-button color="warn" class="mr" (click)="onCancelClick()">Cancel</button>
+        <button mat-flat-button color="primary" (click)="onSaveClick()">Save</button>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-export interface MemberAddress {
+export class MemberAddress {
   id:number;
   line1: string;
   line2: string;

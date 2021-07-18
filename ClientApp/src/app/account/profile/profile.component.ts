@@ -5,8 +5,6 @@ import { MemberAddress } from 'app/models/memberaddress';
 import { MemberAddressService } from 'app/services/address.service';
 import { AuthService } from 'app/services/auth.service';
 import { map } from 'rxjs/operators';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AddressEditingComponent } from './address-editing/address-editing.component';
 import { DialogService } from 'app/services/dialog.service';
 
 
@@ -19,13 +17,14 @@ import { DialogService } from 'app/services/dialog.service';
 export class ProfileComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
-               private authService :AuthService,
                private addressService : MemberAddressService,
                private dialogService : DialogService
                ) { }
 
   member: Member ;
   memberAddress : MemberAddress[] =[];
+  newMemberAddress : MemberAddress
+
   columnsToDisplay: string[] = ['line1','line2','region','city','country','action']
 
   ngOnInit(): void {
@@ -50,7 +49,24 @@ export class ProfileComponent implements OnInit {
   }
   addData(){
 
-    this.dialogService.openDataChangerDialog()
+  this.newMemberAddress = new MemberAddress();
+  this.newMemberAddress.appUserId = this.member.id;
+
+  let dialogRef = this.dialogService.openDataChangerDialog(this.newMemberAddress)
+
+  dialogRef.afterClosed().subscribe((result)=>
+  {
+   if(result.action == 'Saved' && result.data)
+   {
+      this.memberAddress.push(result);
+
+   }
+
+  
+
+  })
+
+
 
   }
 

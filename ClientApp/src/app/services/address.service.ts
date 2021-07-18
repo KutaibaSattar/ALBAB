@@ -7,34 +7,35 @@ import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MemberAddressService extends DataService {
-
-  constructor( private httpClient: HttpClient) {
-
-
-    super(environment.apiUrl+ 'address', httpClient );
-
+  constructor(private httpClient: HttpClient) {
+    super(environment.apiUrl + 'address', httpClient);
   }
 
   public memberAddressSource$ = new ReplaySubject<MemberAddress[]>(null);
 
-  getAddressList()  {
+  getAddressList() {
     return this.getTableRecords().pipe(
-       map((res: MemberAddress[]) => {
+      map((res: MemberAddress[]) => {
         //this.products = res;
-       this.memberAddressSource$.next(res)
-       return res;
-       })
-     );
-      }
-  getMemberAddressList(id : number)  {
-    return this.getTableRecordId(id,'/getmemberAddresses').pipe(
-       map((res: MemberAddress[]) => {
+        this.memberAddressSource$.next(res);
+        return res;
+      })
+    );
+  }
+  getMemberAddressList(id: number) {
+    return this.getTableRecordId(id, '/getmemberAddresses').pipe(
+      map((res: MemberAddress[]) => {
         //this.products = res;
         return res;
-       })
-     );
-      }
+      })
+    );
+  }
+  newAddress(address : MemberAddress){
+
+    return this.createTableRecords(address);
+
+  }
 }
